@@ -2,7 +2,7 @@
 
 Gruppo AM04
 
-10722613
+-###10722613
 chiara.auriemma@mail.polimi.it
 Chiara Auriemma
 
