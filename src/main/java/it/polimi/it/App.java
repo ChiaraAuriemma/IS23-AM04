@@ -6,8 +6,8 @@ package it.polimi.it;
  */
 public class App 
 {
-    public static void main( String[] args )
-    {
-        System.out.println( "Hello World!" );
+    public static void main( String[] args ) {
+        System.out.println("Hello World!");
+        System.out.ptintl("secondo commit");
     }
 }
