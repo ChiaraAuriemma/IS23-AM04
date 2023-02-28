@@ -6,7 +6,7 @@
 
 - ### 10727489 francesco.benelle@mail.polimi.it Francesco Benelle
 
-- ### 10769576 giacomo.ballabio@mail.polimi.it Giacomo Ballabio
+- ### 10769576 giacomo2.ballabio@mail.polimi.it Giacomo Ballabio
 
 - ### 10721275 alberto1.cavallotti@mail.polimi.it Alberto Cavallotti
 
