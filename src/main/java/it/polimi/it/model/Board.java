@@ -1,4 +1,4 @@
 package it.polimi.it.model;
 
-public class Board {
+public abstract class Board {
 }
