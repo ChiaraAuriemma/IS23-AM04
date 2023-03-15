@@ -1,2 +1,5 @@
 # for target dir
 target/
+
+# for idea dir
+.idea/
