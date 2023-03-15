@@ -2,16 +2,16 @@ package it.polimi.it.model;
 
 import java.util.Random;
 public class TilesBag {
-    public int NremainingBlue;
-    public int NremainingCyan;
-    public int NremainingGreen;
-    public int NremainingYellow;
-    public int NremainingWhite;
-    public int NremainingPink;
-    public int NtotalRemaining;
+    public static int NremainingBlue;
+    public static int NremainingCyan;
+    public static int NremainingGreen;
+    public static int NremainingYellow;
+    public static int NremainingWhite;
+    public static int NremainingPink;
+    public static int NtotalRemaining;
 
 
-    Random rand = new Random();
+    static Random rand = new Random();
 
     //constructor
     public TilesBag(){
@@ -28,7 +28,7 @@ public class TilesBag {
         return NtotalRemaining;
     }
 
-    public Tile RandomTiles(){
+    public static Tile RandomTiles(){
         int random_color = 0;
         while(true) {
             random_color = rand.nextInt(6);

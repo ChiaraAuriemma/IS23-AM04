@@ -10,7 +10,6 @@ public class B2P extends Board{
 
         for(int i=0; i<9; i++){
             for(int j=0; j<9; j++){
-
                 if(i==0 || i==8){
                     Matrix[i][j] = new Tile(PossibleColors.XTILE);
                 }else if (i==1 && j<3) {
@@ -44,8 +43,6 @@ public class B2P extends Board{
                 }else{
                     Matrix[i][j] = TilesBag.RandomTiles();
                 }
-
-
             }
         }
     }

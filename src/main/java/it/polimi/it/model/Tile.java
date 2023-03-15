@@ -1,7 +1,7 @@
 package it.polimi.it.model;
 
 public class Tile {
-    private final PossibleColors Color;
+    static PossibleColors Color = null;
 
     public Tile() {
         Color = PossibleColors.DEFAULT;
@@ -11,7 +11,7 @@ public class Tile {
         this.Color = a;
     }
 
-    public PossibleColors getColor() {
-        return Color;
-    }
+   // String getColor(Tile){
+     //   return Tile.Color.name();
+    //}
 }
