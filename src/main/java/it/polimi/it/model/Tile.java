@@ -10,4 +10,8 @@ public class Tile {
     public Tile(PossibleColors a){
         this.Color = a;
     }
+
+    public PossibleColors getColor() {
+        return Color;
+    }
 }
