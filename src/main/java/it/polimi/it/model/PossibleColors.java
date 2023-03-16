@@ -1,58 +1,23 @@
 package it.polimi.it.model;
 
 public enum PossibleColors {
-    BLUE, CYAN, GREEN, YELLOW, WHITE, PINK, DEFAULT, XTILE;
+    BLUE("BLUE"),
+    CYAN("CYAN"),
+    GREEN("GREEN"),
+    YELLOW("YELLOW"),
+    WHITE("WHITE"),
+    PINK("PINK"),
+    DEFAULT("DEFAULT"),
+    XTILE("XTILE");
 
-    public enum getColor {
-        CYAN {
-            @Override
-            public String toString() {
-                return "CYAN";
-            }
-        },
-        GREEN {
-            @Override
-            public String toString() {
-                return "GREEN";
-            }
-        },
-        BLUE {
-            @Override
-            public String toString() {
-                return "BLUE";
-            }
-        },
-        PINK {
-            @Override
-            public String toString() {
-                return "PINK";
-            }
-        },
-        YELLOW {
-            @Override
-            public String toString() {
-                return "YELLOW";
-            }
-        },
-        WHITE {
-            @Override
-            public String toString() {
-                return "WHITE";
-            }
-        },
-        DEFAULT {
+    private final String Color;
 
-            @Override
-            public String toString() {
-                return "DEFAULT";
-            }
-        },
-        XTILE {
-
-            @Override
-            public String toString() {
-                return "XTILE";
-            }
-        };
+    PossibleColors(String Color) {
+        this.Color = Color;
     }
+
+    public String getColor() {
+        return Color;
+    }
+
 }
