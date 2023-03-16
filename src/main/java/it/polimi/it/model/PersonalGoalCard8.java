@@ -5,37 +5,21 @@ import java.util.HashMap;
 
 public class PersonalGoalCard8 extends PersonalGoalCard{
 
-    private Integer id;
-    private HashMap<PossibleColors, ArrayList<Integer>> Score;
-    private ArrayList<Integer> Position0;
-    private ArrayList<Integer> Position1;
-    private ArrayList<Integer> Position2;
-    private ArrayList<Integer> Position3;
-    private ArrayList<Integer> Position4;
-    private ArrayList<Integer> Position5;
-
-
     public PersonalGoalCard8(){
         super();
         this.id = 8;
-        this.Position0.add(0,0);
-        this.Position0.add(1,2);
-        this.Score.put(PossibleColors.PINK,Position0);
-        this.Position1.add(0,1);
-        this.Position1.add(1,4);
-        this.Score.put(PossibleColors.GREEN,Position1);
-        this.Position2.add(0,2);
-        this.Position2.add(1,3);
-        this.Score.put(PossibleColors.CYAN,Position2);
-        this.Position3.add(0,3);
-        this.Position3.add(1,0);
-        this.Score.put(PossibleColors.YELLOW,Position3);
-        this.Position4.add(0,3);
-        this.Position4.add(1,1);
-        this.Score.put(PossibleColors.WHITE,Position4);
-        this.Position5.add(0,4);
-        this.Position5.add(1,5);
-        this.Score.put(PossibleColors.BLUE,Position5);
+        this.Pinkpos.add(0,0);
+        this.Pinkpos.add(1,2);
+        this.Greenpos.add(0,1);
+        this.Greenpos.add(1,4);
+        this.Cyanpos.add(0,2);
+        this.Cyanpos.add(1,3);
+        this.Yellowpos.add(0,3);
+        this.Yellowpos.add(1,0);
+        this.Whitepos.add(0,3);
+        this.Whitepos.add(1,1);
+        this.Bluepos.add(0,4);
+        this.Bluepos.add(1,5);
     }
 
 }
