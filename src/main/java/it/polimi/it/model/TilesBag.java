@@ -1,6 +1,7 @@
 package it.polimi.it.model;
 
 import java.util.Random;
+
 public class TilesBag {
     public static int NremainingBlue;
     public static int NremainingCyan;
