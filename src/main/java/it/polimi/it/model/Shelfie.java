@@ -1,5 +1,7 @@
 package it.polimi.it.model;
 
+import java.util.Scanner;
+
 public class Shelfie{
 
     private String Player;
@@ -20,7 +22,7 @@ public class Shelfie{
         Shelf = new Tile[6][5];
 
         for(int i=0; i<6; i++){
-            for(int j=0; i<5; i++){
+            for(int j=0; j<5; j++){
                 Shelf[i][j] = new Tile(PossibleColors.DEFAULT);
             }
         }
@@ -38,7 +40,7 @@ public class Shelfie{
     }
 
 
-    PossibleColors getCell(int i, int j){
+    String getCell(int i, int j){
         return Shelf[i][j].getColor();
     }
 
@@ -50,10 +52,10 @@ public class Shelfie{
 
         int[] checkColumn = {0,0,0,0,0};
 
-        for(int j=0; i<6; i++){
+        for(int j=0; j<5; j++){
             int numDefault = 0;
-            for(int i=0; i<5; i++){
-                if(Shelf[i][j].getColor()=="DEFAULT"){
+            for(int i=0; i<6; i++){
+                if(Shelf[i][j].getColor().equals("DEFAULT")){
                     numDefault++;
                 }
             }
@@ -63,34 +65,75 @@ public class Shelfie{
         }
 
             column = 5; //settare valore in base a scelta utente
+
+
+        System.out.println("Scegli in che colonna inserire le tessere");
         //far selezionare a player le colonne
 
         return column;
     }
 
-    void AddTile(int column){
+    void AddTile(int column, Tile[] ChoosenTiles, int count) throws InvalidOrderException{
 
         boolean check = false;
-        int count = User.getCount();
 
-        while(check = false) {
+        while(!check) {
+
+            int Number1;
+            int Number2;
+            int Number3;
 
             System.out.println("Inserisci l'ordine in cui vuoi inserire le tessere: ");
 
-            //if valori non vanno bene fai ripartire
+            switch (count){
+                case 1:
+                    Scanner s = new Scanner(System.in);
+                    Number1 = s.nextInt();
 
-            //salvare ordine
+                    //fare eccezione per valori sbagliati nell'ordine
+                    break;
+                case 2:
+                    Scanner s1 = new Scanner(System.in);
+                    Number1 = s1.nextInt();
+
+                    //fare eccezione per valori sbagliati nell'ordine
+                    Scanner s2 = new Scanner(System.in);
+                    Number2 = s2.nextInt();
+
+                    //fare eccezione per valori sbagliati nell'ordine
+                    break;
+                case 3:
+                    Scanner s3 = new Scanner(System.in);
+                    Number1 = s3.nextInt();
+
+                    //fare eccezione per valori sbagliati nell'ordine
+
+                    Scanner s4 = new Scanner(System.in);
+                    Number2 = s4.nextInt();
+
+                    //fare eccezione per valori sbagliati nell'ordine
+
+                    Scanner s5 = new Scanner(System.in);
+                    Number3 = s5.nextInt();
+
+                    //fare eccezione per valori sbagliati nell'ordine
+                    break;
+
+                default:
+                    //eccezione per numero sbagliato di count
+
+            }
+
+
         }
-
-        Tile[] ChoosenTiles = Board.getChoosenTiles();
 
         int numTiles = 0;
 
         for(int i=0; i<6;i++)
         {
             if(numTiles < count - 1) {
-                if (Shelf[i][column] == "DEFAULT") {
-                    Shelf[i][column] = ChoosenTiles[numTiles].getColor();
+                if (Shelf[i][column].getColor().equals( "DEFAULT")) {
+                    Shelf[i][column] = new Tile(PossibleColors.ChoosenTiles[numTiles].getColor());
                     numTiles++;
                 }
             }
@@ -115,6 +158,28 @@ public class Shelfie{
 
         return EndToken1;
 
+    }
+
+    int PossibleTiles(){
+        int tmp = 0;
+        int count = 0;
+
+        for(int j=0; j<5; j++){
+            for(int i=0; i<5; i++){
+                if(Shelf[i][j].getColor().equals("DEFAULT")){
+                    count ++;
+                    if(count >= 3){
+                        return count;
+                    }
+                }
+            }
+            if(count > tmp){
+                tmp = count;
+            }
+        }
+
+
+        return tmp;
     }
 
     int getPersonalCardID(){
