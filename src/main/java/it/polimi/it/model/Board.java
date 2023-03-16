@@ -10,18 +10,24 @@ public abstract class Board {
 
     }
 
+    //Checks if a refill of the board is needed; eventually refills the board
     void Refill(){
         if(!CheckRefill()){
             return;
         }
+        int NremainingTiles=132;
         for(int i=0; i<9; i++){
             for(int j=0; j<9; j++){
                 if(Matrix[i][j].getColor().equals("DEFAULT")){
-                    Tile tile = TilesBag.RandomTiles();
-                    Matrix[i][j] = tile;
+                    NremainingTiles=TilesBag.getTotRemaining();
+                    if(NremainingTiles>0) {
+                        Tile tile = TilesBag.RandomTiles();
+                        Matrix[i][j] = tile;
+                    }
                 }
             }
         }
+        return;
     }
 
     private Boolean CheckRefill(){
@@ -80,6 +86,9 @@ public abstract class Board {
         for (int i=3; i>3-Number; i--){
             ChosenTiles[i] = new Tile(PossibleColors.DEFAULT);
         }
+        //Parte per la vera scelta:
+            //individuare a seconda di quante tiles si vuole prendere in totale, le "prendibili"
+            //cioè tutte quelle (coppie\triplette\singole tile) che sono tra loro adiacenti e con almeno un lato libero
 
         return ChosenTiles;
     }

@@ -25,7 +25,7 @@ public class TilesBag {
         NtotalRemaining = 132;
     }
 
-    public int getTotRemaining(){
+    public static int getTotRemaining(){
         return NtotalRemaining;
     }
 
