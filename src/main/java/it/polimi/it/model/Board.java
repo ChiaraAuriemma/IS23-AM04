@@ -64,17 +64,20 @@ public abstract class Board {
 
     }
 
-    Tile[] ChooseTiles(){
+    Tile[] ChooseTiles(int MaxFromShelfie){
         Tile[] ChosenTiles;
         ChosenTiles = new Tile[4];
         int Number=0;
+        int MaxRemainingOnBoard=0;
 
-        System.out.println("How many tiles would you like to get?");
+        MaxRemainingOnBoard = FindMaxAdjacent();
+
+        System.out.println("How many tiles would you like to get? \nYour Shelfie can contain a maximum of " + MaxFromShelfie + " new tiles!");
         Scanner s = new Scanner(System.in);
         Number = s.nextInt();
-        while(Number<0 || Number>4){
+        while(Number<=0 || Number>=4 || Number > MaxFromShelfie){//Checks that the number of tiles is ok with the parameters of both the shelf and the board
             Number = s.nextInt();
-            if (Number<=0 || Number>=4){
+            if (Number<=0 || Number>=4 || Number > MaxFromShelfie){
                 System.out.println("Retry!");
             }
         }
@@ -91,5 +94,57 @@ public abstract class Board {
             //cioè tutte quelle (coppie\triplette\singole tile) che sono tra loro adiacenti e con almeno un lato libero
 
         return ChosenTiles;
+    }
+
+    static int FindMaxAdjacent(){
+        int Max=0;
+        int Count=0;
+        int[][] Visited = new int[9][9];
+
+        //Initialize the 'Visited' Matrix to all 0
+        for(int a=0; a<9; a++){
+            for(int b=0; b<9; b++){
+                Visited[a][b]=0;
+            }
+        }
+
+        for(int i=0; i<9; i++){
+            for(int j=0; j<9; j++){
+                Count = 0;
+
+                if (!Matrix[i][j].getColor().equals("DEFAULT") && !Matrix[i][j].getColor().equals("DEFAULT")){
+
+                    if(  Matrix[i+1][j].getColor().equals("DEFAULT") || Matrix[i+1][j].getColor().equals("XTILE") ||
+                         Matrix[i][j+1].getColor().equals("DEFAULT") || Matrix[i][j+1].getColor().equals("XTILE") ||
+                         Matrix[i-1][j].getColor().equals("DEFAULT") || Matrix[i-1][j].getColor().equals("XTILE") ||
+                         Matrix[i][j-1].getColor().equals("DEFAULT") || Matrix[i][j-1].getColor().equals("XTILE") ){
+
+                            Count++;
+                            Visited[i][j]=1;
+                            Count = Count + CountAdjacent(i, j, Visited);
+                    }
+
+
+                    if (Count > Max){
+                        Max=Count;
+                    }
+                    if(Max>=3) {
+                        return Max;
+                    }
+                }
+            }
+        }
+        return Max;
+    }
+
+    int CountAdjacent(int i, int j, int[][] Visited){
+        int counter = 0;
+
+        if(i+1<9 && ){
+            Visited[i+1][j]=1;
+            counter = counter + CountAdjacent(i+i, j, Visited)
+        }
+
+        return counter;
     }
 }
