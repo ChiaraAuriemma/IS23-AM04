@@ -12,10 +12,12 @@ public class User {
 
     private Tile[] ChoosenTiles;
 
+    private String Type;
 
-    public  User(){
 
-        this.Nickname = setNickname();
+    public User() {
+
+        this.Nickname = Lobby.setNickname();
 
         this.Score = 0;
 
@@ -25,24 +27,29 @@ public class User {
 
         this.ChoosenTiles = new Tile[4];
 
+        this.Type = "GUEST";
+
     }
-    private void Play(){
+
+    private void Play() {
+
+        int max = Shelfie.PossibleTiles();
 
         //lock
-        ChoosenTiles =  Board.ChooseTiles();
+        ChoosenTiles = Board.ChooseTiles(max);
         //unlock
 
-        int count = Board.getCount();
+        int count = 0;
 
-        int column = Shelfie.ChooseColumn();
+        for (int i = 0; i < 4 || !ChoosenTiles[i].getColor().equals("DEFAULT"); i++) {
+            count++;
+        }
+
+        int column = Shelfie.ChooseColumn(count);
 
         Shelfie.AddTile(column, ChoosenTiles, count);
 
         Board.Refill();
-
-
-
-
 
     }
 
@@ -55,19 +62,23 @@ public class User {
         return Score;
     }
 
-    public String setNickname(){
-        //scanf
-
-        return Nickname;
-    }
-
-    public int getCount() {
-        return Count;
-    }
-
-    public boolean checkInGame(){
+    public boolean checkInGame() {
         //check se crasha
 
         return InGame;
     }
+
+    void ChangeType(String Nickname) {
+        Type = "Player";
+    }
+
+    /*void CreateGame(){
+        comando per creare partita;
+    }
+
+    void JoinGame(){
+        comando per joinare partita;
+    }
+     */
+
 }
