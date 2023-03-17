@@ -12,7 +12,7 @@ public class Shelfie{
 
     private boolean EndToken1;
 
-    private Tile[][] Shelf;
+    private static Tile[][] Shelf;
 
     private int PersonalCardID;
 
@@ -44,9 +44,7 @@ public class Shelfie{
         return Shelf[i][j].getColor();
     }
 
-    int ChooseColumn(){
-
-        int count = User.getCount();
+    static int ChooseColumn(int count){
 
         int column;
 
@@ -64,16 +62,15 @@ public class Shelfie{
             }
         }
 
-            column = 5; //settare valore in base a scelta utente
-
 
         System.out.println("Scegli in che colonna inserire le tessere");
-        //far selezionare a player le colonne
+        Scanner s = new Scanner(System.in);
+        column = s.nextInt();
 
         return column;
     }
 
-    void AddTile(int column, Tile[] ChoosenTiles, int count) throws InvalidOrderException{
+    static void AddTile(int column, Tile[] ChoosenTiles, int count) throws InvalidOrderException{
 
         boolean check = false;
 
@@ -91,6 +88,7 @@ public class Shelfie{
                     Number1 = s.nextInt();
 
                     //fare eccezione per valori sbagliati nell'ordine
+                    check=true;
                     break;
                 case 2:
                     Scanner s1 = new Scanner(System.in);
@@ -101,6 +99,7 @@ public class Shelfie{
                     Number2 = s2.nextInt();
 
                     //fare eccezione per valori sbagliati nell'ordine
+                    check=true;
                     break;
                 case 3:
                     Scanner s3 = new Scanner(System.in);
@@ -117,6 +116,8 @@ public class Shelfie{
                     Number3 = s5.nextInt();
 
                     //fare eccezione per valori sbagliati nell'ordine
+
+                    check=true;
                     break;
 
                 default:
@@ -160,7 +161,7 @@ public class Shelfie{
 
     }
 
-    int PossibleTiles(){
+    static int PossibleTiles(){
         int tmp = 0;
         int count = 0;
 

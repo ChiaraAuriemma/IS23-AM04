@@ -11,7 +11,7 @@ public abstract class Board {
     }
 
     //Checks if a refill of the board is needed; eventually refills the board
-    void Refill(){
+    static void Refill(){
         if(!CheckRefill()){
             return;
         }
@@ -64,7 +64,7 @@ public abstract class Board {
 
     }
 
-    Tile[] ChooseTiles(){
+    static Tile[] ChooseTiles(){
         Tile[] ChosenTiles;
         ChosenTiles = new Tile[4];
         int Number=0;
