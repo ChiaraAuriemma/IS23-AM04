@@ -91,5 +91,6 @@ public abstract class Board {
             //cioè tutte quelle (coppie\triplette\singole tile) che sono tra loro adiacenti e con almeno un lato libero
 
         return ChosenTiles;
+        //b
     }
 }
