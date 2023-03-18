@@ -33,7 +33,7 @@ public abstract class PersonalGoalCard extends Card{
         this.Greenpos = new ArrayList<Integer>(2);
     }
 
-
+    //Method to check how many personal points I have made
     public int CheckScore(Shelfie shelfie) {
         if(CheckColor.get(0) == 0 && shelfie.getCell(Pinkpos.get(0), Pinkpos.get(1)).equals("PINK")){
             NumCompletedTasks++;
