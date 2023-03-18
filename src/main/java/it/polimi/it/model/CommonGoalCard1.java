@@ -7,7 +7,7 @@ public class CommonGoalCard1 extends CommonGoalCard{
         this.id = 1;
     }
 
-    public Boolean CheckGoal(){
+    public Boolean CheckGoal(Shelfie shelfie){
 
     }
 }

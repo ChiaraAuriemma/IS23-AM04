@@ -9,5 +9,5 @@ public abstract class CommonGoalCard extends Card{
         this.name = "Common";
     }
 
-    public abstract Boolean CheckGoal();
+    public abstract Boolean CheckGoal(Shelfie shelfie);
 }
