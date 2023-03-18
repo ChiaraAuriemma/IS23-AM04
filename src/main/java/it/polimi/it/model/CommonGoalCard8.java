@@ -13,7 +13,7 @@ public class CommonGoalCard8 extends CommonGoalCard {
         String Cell3 = shelfie.getCell(4,5);
         String Cell4 = shelfie.getCell(4,0);
 
-        if(Cell1.equals(Cell2) && Cell2.equals(Cell3) && Cell3.equals(Cell4)){
+        if(!Cell1.equals("DEFAULT") &&  Cell1.equals(Cell2) && Cell2.equals(Cell3) && Cell3.equals(Cell4)){
             return true;
         }else {return false;}
 
