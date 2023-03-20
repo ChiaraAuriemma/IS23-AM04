@@ -545,4 +545,21 @@ public abstract class Board {
         }
         return 0;
     }
+
+
+    static void RemoveTiles(int row1, int row2, int row3, int col1, int col2, int col3){
+        if(row1>=0 && row1<=8 && col1>=0 && col1<=8){
+            Matrix[row1][col1] = new Tile(PossibleColors.DEFAULT);
+        }
+        if(row2>=0 && row2<=8 && col2>=0 && col2<=8){
+            Matrix[row2][col2] = new Tile(PossibleColors.DEFAULT);
+
+        }
+        if(row3>=0 && row3<=8 && col3>=0 && col3<=8){
+            Matrix[row3][col3] = new Tile(PossibleColors.DEFAULT);
+
+        }
+    }
 }
+
+

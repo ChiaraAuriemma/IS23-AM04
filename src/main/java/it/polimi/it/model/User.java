@@ -46,7 +46,7 @@ public class User {
 
     int[] ChooseSelectedTiles(int x1, int x2, int x3, int y1, int y2, int y3, String col1, String col2, String col3) {
 
-        Board.RemoveTiles(x1, x2, x3, y1, y2, y3, col1, col2, col3);
+        Board.RemoveTiles(x1, x2, x3, y1, y2, y3);
 
         return Shelfie.ChooseColumn(tilesNumber);
     }
