@@ -64,38 +64,6 @@ public abstract class Board {
 
     }
 
-    /*static Tile[] ChooseTiles(int MaxFromShelfie){
-        Tile[] ChosenTiles;
-        ChosenTiles = new Tile[4];
-        int Number=0;
-        int MaxRemainingOnBoard=0;
-
-        MaxRemainingOnBoard = FindMaxAdjacent();
-
-        System.out.println("How many tiles would you like to get? \nYour Shelfie can contain a maximum of " + MaxFromShelfie + " new tiles!");
-        Scanner s = new Scanner(System.in);
-        Number = s.nextInt();
-        while(Number<=0 || Number>=4 || Number > MaxFromShelfie){//Checks that the number of tiles is ok with the parameters of both the shelf and the board
-            Number = s.nextInt();
-            if (Number<=0 || Number>=4 || Number > MaxFromShelfie){
-                System.out.println("Retry!");
-            }
-        }
-
-        if (Number>0 && Number<4){
-            System.out.println("Now choose " + Number + " adjacent tiles from the board!");
-        }
-
-        for (int i=3; i>3-Number; i--){
-            ChosenTiles[i] = new Tile(PossibleColors.DEFAULT);
-        }
-        //Parte per la vera scelta:
-        //individuare a seconda di quante tiles si vuole prendere in totale, le "prendibili"
-        //cioè tutte quelle (coppie\triplette\singole tile) che sono tra loro adiacenti e con almeno un lato libero
-
-        return ChosenTiles;
-    }
-*/
     static int FindMaxAdjacent(int MaxFromShelfie){
         int Max=0;
         int Count=0;
@@ -158,6 +126,9 @@ public abstract class Board {
 
                     Count = Count + CountAdjacent(i, j, Visited);
 
+                    if (Count>=3){
+                        return Count;
+                    }
                     if (Count > Max){
                         Max=Count;
                     }
@@ -397,7 +368,6 @@ public abstract class Board {
         if(upOk==1){
             counter = counter + CountAdjacentSecondStage(rowUp, j, Visited);
         }
-
         if(counter>=2){
             return 2;
         }
@@ -418,11 +388,161 @@ public abstract class Board {
         if(counter>=2){
             return 2;
         }
-
         return counter;
     }
 
     static int CountAdjacentSecondStage(int i, int j, int Visited[][]){
+        int rowUp=i-1;
+        int ColLeft = j - 1;
+        int ColRight = j + 1;
+        int rowDown=i-1;
 
-    return 1;}
+        if(i>0){
+            if(Visited[i-1][j] == 0 && !Matrix[i-1][j].getColor().equals("DEFAULT") && !Matrix[i-1][j].getColor().equals("XTILE")){
+                //int up = 0;
+                if(rowUp==0 || rowUp==8 || j==0 || j==8){
+                    Visited[i][rowUp]=1;
+                }else{//controllo che la casella sopra abbia almeno una confinante con un void
+                    if (rowUp>=1){
+                        if(Matrix[rowUp-1][j].getColor().equals("DEFAULT") || Matrix[rowUp-1][j].getColor().equals("XTILE")){
+                            if (Visited[rowUp-1][j]==0){
+                                return 1;
+                            }
+                        }
+                    }
+                    if (j>=1){
+                        if(Matrix[rowUp][j-1].getColor().equals("DEFAULT") || Matrix[rowUp][j-1].getColor().equals("XTILE")){
+                            if (Visited[rowUp][j-1]==0){
+                                return 1;
+                            }
+                        }
+                    }
+                    if (rowUp<=7){
+                        if(Matrix[rowUp+1][j].getColor().equals("DEFAULT") || Matrix[rowUp+1][j].getColor().equals("XTILE")){
+                            if (Visited[rowUp+1][j]==0){
+                                return 1;
+                            }
+                        }
+                    }
+                    if (j<=7){
+                        if(Matrix[rowUp][j+1].getColor().equals("DEFAULT") || Matrix[rowUp][j+1].getColor().equals("XTILE")){
+                            if (Visited[rowUp][j+1]==0){
+                                return 1;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        if(j>0) {//controllo relativo alla casella a sinistra di quella data
+            if (Visited[i][j - 1] == 0 && !Matrix[i][j - 1].getColor().equals("DEFAULT") && !Matrix[i][j - 1].getColor().equals("XTILE")) {
+                if (i == 0 || i == 8 || ColLeft == 0 || ColLeft == 8) {
+                    return 1;
+                } else {//controllo che la casella sopra abbia almeno una confinante con un void
+                    if (i >= 1) {
+                        if (Matrix[i - 1][ColLeft].getColor().equals("DEFAULT") || Matrix[i - 1][ColLeft].getColor().equals("XTILE")) {
+                            if (Visited[i - 1][ColLeft] == 0) {
+                                return 1;
+                            }
+                        }
+                    }
+                    if (ColLeft >= 1) {
+                        if (Matrix[i][ColLeft - 1].getColor().equals("DEFAULT") || Matrix[i][ColLeft - 1].getColor().equals("XTILE")) {
+                            if (Visited[i][ColLeft - 1] == 0) {
+                                return 1;
+                            }
+                        }
+                    }
+                    if (i <= 7) {
+                        if (Matrix[i + 1][ColLeft].getColor().equals("DEFAULT") || Matrix[i + 1][ColLeft].getColor().equals("XTILE")) {
+                            if (Visited[i + 1][ColLeft] == 0) {
+                                return 1;
+                            }
+                        }
+                    }
+                    if (ColLeft <= 7) {
+                        if (Matrix[i][ColLeft + 1].getColor().equals("DEFAULT") || Matrix[i][ColLeft + 1].getColor().equals("XTILE")) {
+                            if (Visited[i][ColLeft + 1] == 0) {
+                                return 1;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        if(j<8) {//controllo relativo alla casella a destra di quella data
+            if (Visited[i][j + 1] == 0 && !Matrix[i][j + 1].getColor().equals("DEFAULT") && !Matrix[i][j + 1].getColor().equals("XTILE")) {
+                if (i == 0 || i == 8 || ColRight == 0 || ColRight == 8) {
+                    return 1;
+                } else {//controllo che la casella sopra abbia almeno una confinante con un void
+                    if (i >= 1) {
+                        if (Matrix[i - 1][ColRight].getColor().equals("DEFAULT") || Matrix[i - 1][ColRight].getColor().equals("XTILE")) {
+                            if (Visited[i - 1][ColRight] == 0) {
+                                return 1;
+                            }
+                        }
+                    }
+                    if (ColRight >= 1) {
+                        if (Matrix[i][ColRight - 1].getColor().equals("DEFAULT") || Matrix[i][ColRight - 1].getColor().equals("XTILE")) {
+                            if (Visited[i][ColRight - 1] == 0) {
+                                return 1;
+                            }
+                        }
+                    }
+                    if (i <= 7) {
+                        if (Matrix[i + 1][ColRight].getColor().equals("DEFAULT") || Matrix[i + 1][ColRight].getColor().equals("XTILE")) {
+                            if (Visited[i + 1][ColRight] == 0) {
+                                return 1;
+                            }
+                        }
+                    }
+                    if (ColRight <= 7) {
+                        if (Matrix[i][ColRight + 1].getColor().equals("DEFAULT") || Matrix[i][ColRight + 1].getColor().equals("XTILE")) {
+                            if (Visited[i][ColRight + 1] == 0) {
+                                return 1;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        if(i<8){//Riga sotto
+            if(Visited[i+1][j] == 0 && !Matrix[i+1][j].getColor().equals("DEFAULT") && !Matrix[i+1][j].getColor().equals("XTILE")){
+                if(rowDown==0 || rowDown==8 || j==0 || j==8){
+                    return 1;
+                }else{//controllo che la casella sopra abbia almeno una confinante con un void
+                    if (rowDown>=1){
+                        if(Matrix[rowDown-1][j].getColor().equals("DEFAULT") || Matrix[rowDown-1][j].getColor().equals("XTILE")){
+                            if (Visited[rowDown-1][j]==0){
+                                return 1;
+                            }
+                        }
+                    }
+                    if (j>=1){
+                        if(Matrix[rowDown][j-1].getColor().equals("DEFAULT") || Matrix[rowDown][j-1].getColor().equals("XTILE")){
+                            if (Visited[rowDown][j-1]==0){
+                                return 1;
+                            }
+                        }
+                    }
+                    if (rowDown<=7){
+                        if(Matrix[rowDown+1][j].getColor().equals("DEFAULT") || Matrix[rowDown+1][j].getColor().equals("XTILE")){
+                            if (Visited[rowDown+1][j]==0){
+                                return 1;
+                            }
+                        }
+                    }
+                    if (j<=7){
+                        if(Matrix[rowDown][j+1].getColor().equals("DEFAULT") || Matrix[rowDown][j+1].getColor().equals("XTILE")){
+                            if (Visited[rowDown][j+1]==0){
+                                return 1;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return 0;
+    }
 }
