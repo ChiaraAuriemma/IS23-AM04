@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public abstract class Board {
     //The maximum dimension of the board is a 9x9 matrix
-    public Tile[][] Matrix;
+    public static Tile[][] Matrix;
 
     public Board(){
 
@@ -30,7 +30,7 @@ public abstract class Board {
         return;
     }
 
-    private Boolean CheckRefill(){
+    private static Boolean CheckRefill(){
         for (int i=0; i<9; i++){
             for (int j=0; j<9; j++){
                 Tile til = Matrix[i][j];
@@ -64,7 +64,7 @@ public abstract class Board {
 
     }
 
-    static Tile[] ChooseTiles(int MaxFromShelfie){
+    /*static Tile[] ChooseTiles(int MaxFromShelfie){
         Tile[] ChosenTiles;
         ChosenTiles = new Tile[4];
         int Number=0;
@@ -95,10 +95,11 @@ public abstract class Board {
 
         return ChosenTiles;
     }
-
-    static int FindMaxAdjacent(){
+*/
+    static int FindMaxAdjacent(int MaxFromShelfie){
         int Max=0;
         int Count=0;
+        int MiddleCount=0;
         int[][] Visited = new int[9][9];
 
         //Initialize the 'Visited' Matrix to all 0
@@ -112,26 +113,61 @@ public abstract class Board {
             for(int j=0; j<9; j++){
                 Count = 0;
 
-                if (!Matrix[i][j].getColor().equals("DEFAULT") && !Matrix[i][j].getColor().equals("DEFAULT")){
+                if (!Matrix[i][j].getColor().equals("DEFAULT") && !Matrix[i][j].getColor().equals("DEFAULT")){//se la cella è colorata
 
-
-                            // Non va bene, potrebbe andare out of bound -> controllo singolarmente le varie direzioni e vedo se sono al limite della matrice
-                    if(  Matrix[i+1][j].getColor().equals("DEFAULT") || Matrix[i+1][j].getColor().equals("XTILE") ||
-                            Matrix[i][j+1].getColor().equals("DEFAULT") || Matrix[i][j+1].getColor().equals("XTILE") ||
-                            Matrix[i-1][j].getColor().equals("DEFAULT") || Matrix[i-1][j].getColor().equals("XTILE") ||
-                            Matrix[i][j-1].getColor().equals("DEFAULT") || Matrix[i][j-1].getColor().equals("XTILE") ){
-
-                        Count++;
+                    if(i==0 || i==8 || j==0 || j==8){//se la cella è esterna
+                        Count = 1;
                         Visited[i][j]=1;
-                        Count = Count + CountAdjacent(i, j, Visited);
+                    }else{//se la cella è interna, controllo che almeno una delle tile confinanti siano incolore
+                        MiddleCount=0;
+                        if (i>=1 && MiddleCount==0){
+                            if(Matrix[i-1][j].getColor().equals("DEFAULT") || Matrix[i-1][j].getColor().equals("XTILE")){
+                                MiddleCount++;
+                                Visited[i-1][j]=1;
+                            }
+                        }
+                        if (j>=1 && MiddleCount==0){
+                            if(Matrix[i][j-1].getColor().equals("DEFAULT") || Matrix[i][j-1].getColor().equals("XTILE")){
+                                MiddleCount++;
+                                Visited[i][j-1]=1;
+                            }
+                        }
+                        if (i<=7 && MiddleCount==0){
+                            if(Matrix[i+1][j].getColor().equals("DEFAULT") || Matrix[i+1][j].getColor().equals("XTILE")){
+                                MiddleCount++;
+                                Visited[i+1][j]=1;
+                            }
+                        }
+                        if (j<=7 && MiddleCount==0){
+                            if(Matrix[i][j+1].getColor().equals("DEFAULT") || Matrix[i][j+1].getColor().equals("XTILE")){
+                                MiddleCount++;
+                                Visited[i][j+1]=1;
+                            }
+                        }
+
+                        if(MiddleCount>0){//porto ad 1 il counter solo se la casella è a tutti gli effetti prendibile
+                            Count=1;
+                            MiddleCount=0;
+                        }
+                    }// A questo punto count è 1 se la tile può essere presa
+
+                    //controllo se posso andare oltre e aumentare il counter a 2 o 3,
+                    //ma prima verifico che effettivamente mi serva a qualcosa:
+
+                    if (MaxFromShelfie == 1){
+                        return 1;
                     }
 
+                    Count = Count + CountAdjacent(i, j, Visited);
 
                     if (Count > Max){
                         Max=Count;
                     }
+                    if(Max>=MaxFromShelfie){
+                        return MaxFromShelfie;
+                    }
                     if(Max>=3) {
-                        return Max;
+                        return 3;
                     }
                 }
             }
@@ -139,14 +175,52 @@ public abstract class Board {
         return Max;
     }
 
-    int CountAdjacent(int i, int j, int[][] Visited){
-        int counter = 0;
+    static int CountAdjacent(int i, int j, int[][] Visited){//parte da una posizione dalla matrice che è sicuramente prendibile
+        int counter = 0;                                //i e j sono esattamente quelle usate nel metodo chiamante, da cui partire
 
-        if(i+1<9 && ){
-            Visited[i+1][j]=1;
+        if(i>0){
+            if(Visited[i-1][j] == 0 && !Matrix[i-1][j].getColor().equals("DEFAULT") && !Matrix[i-1][j].getColor().equals("XTILE")){
+                //int up = 0;
+                int rowUp=i-1;
+                int MiddleCountUp=0;
+                if(rowUp==0 || rowUp==8 || j==0 || j==8){
+                    MiddleCountUp=1;
+                }else{//controllo che la casella sopra abbia almeno una confinante con un void
+                    if (rowUp>=1 && MiddleCountUp==0){
+                        if(Matrix[rowUp-1][j].getColor().equals("DEFAULT") || Matrix[rowUp-1][j].getColor().equals("XTILE")){
+                            MiddleCountUp++;
+                            Visited[rowUp-1][j]=1;
+                        }
+                    }
+                    if (j>=1 && MiddleCountUp==0){
+                        if(Matrix[rowUp][j-1].getColor().equals("DEFAULT") || Matrix[rowUp][j-1].getColor().equals("XTILE")){
+                            MiddleCountUp++;
+                            Visited[rowUp][j-1]=1;
+                        }
+                    }
+                    if (rowUp<=7 && MiddleCountUp==0){
+                        if(Matrix[rowUp+1][j].getColor().equals("DEFAULT") || Matrix[rowUp+1][j].getColor().equals("XTILE")){
+                            MiddleCountUp++;
+                            Visited[rowUp+1][j]=1;
+                        }
+                    }
+                    if (j<=7 && MiddleCountUp==0){
+                        if(Matrix[rowUp][j+1].getColor().equals("DEFAULT") || Matrix[rowUp][j+1].getColor().equals("XTILE")){
+                            MiddleCountUp++;
+                            Visited[rowUp][j+1]=1;
+                        }
+                    }
+
+                    if(MiddleCountUp>0){
+                        counter++;
+                    }
+                }
+            }
+
+
+            Visited[i-1][j]=1;
             counter = counter + CountAdjacent(i+i, j, Visited)
         }
 
         return counter;
     }
-}
