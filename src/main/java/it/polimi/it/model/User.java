@@ -1,18 +1,20 @@
 package it.polimi.it.model;
 
+import jdk.internal.foreign.abi.Binding;
+
+import java.util.ArrayList;
+
 public class User {
 
-    private String Nickname;
+    private final String Nickname;
 
-    private int Score;
+    private final int Score;
 
-    private boolean InGame;
-
-    private int Count;
-
-    private Tile[] ChoosenTiles;
+    private final boolean InGame;
 
     private String Type;
+
+    int tilesNumber;
 
 
     public User() {
@@ -21,37 +23,43 @@ public class User {
 
         this.Score = 0;
 
-        this.Count = 0;
-
         this.InGame = true;
-
-        this.ChoosenTiles = new Tile[4];
 
         this.Type = "GUEST";
 
     }
 
-    private void Play() {
+    int MaxValueOfTiles() {
 
         int max = Shelfie.PossibleTiles();
 
-        //lock
-        ChoosenTiles = Board.ChooseTiles(max);
-        //unlock
+        return Board.FindMaxAdjacent(max);
+    }
 
-        int count = 0;
+    ArrayList ChoosableTiles(int tilesValue) {
 
-        for (int i = 0; i < 4 || !ChoosenTiles[i].getColor().equals("DEFAULT"); i++) {
-            count++;
-        }
+        tilesNumber = tilesValue;
 
-        int column = Shelfie.ChooseColumn(count);
+        return Board.ChoosableTiles(tilesValue); //struttura dati
 
-        Shelfie.AddTile(column, ChoosenTiles, count);
+    }
+
+    int[] ChooseSelectedTiles(int x1, int x2, int x3, int y1, int y2, int y3, String col1, String col2, String col3) {
+
+        Board.RemoveTiles(x1, x2, x3, y1, y2, y3, col1, col2, col3);
+
+        return Shelfie.ChooseColumn(tilesNumber);
+    }
+
+    void InsertTile(int column, String[] colorOrder) {
+
+        Shelfie.AddTile(column, colorOrder, tilesNumber);
 
         Board.Refill();
 
     }
+
+
 
     public String getNickname() {
         return Nickname;
@@ -68,17 +76,18 @@ public class User {
         return InGame;
     }
 
-    void ChangeType(String Nickname) {
+    void CreateGame(String Nickname, int playerNumber){
         Type = "Player";
+
+        //costruttore di game
     }
 
-    /*void CreateGame(){
-        comando per creare partita;
+    void JoinGame(String Nickname){
+        Type = "Player";
+
+        //TODO
     }
 
-    void JoinGame(){
-        comando per joinare partita;
-    }
-     */
+
 
 }

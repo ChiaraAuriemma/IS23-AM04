@@ -1,7 +1,5 @@
 package it.polimi.it.model;
 
-import java.util.Scanner;
-
 public class Shelfie{
 
     private String Player;
@@ -41,12 +39,10 @@ public class Shelfie{
 
 
     String getCell(int i, int j){
-        return Shelf[i][j].getColor();
+        return Shelf[j][i].getColor();
     }
 
-    static int ChooseColumn(int count){
-
-        int column;
+    static int[] ChooseColumn(int count){
 
         int[] checkColumn = {0,0,0,0,0};
 
@@ -62,71 +58,10 @@ public class Shelfie{
             }
         }
 
-
-        System.out.println("Scegli in che colonna inserire le tessere");
-        Scanner s = new Scanner(System.in);
-        column = s.nextInt();
-
-        return column;
+        return checkColumn;
     }
 
-    static void AddTile(int column, Tile[] ChoosenTiles, int count) throws InvalidOrderException{
-
-        boolean check = false;
-
-        while(!check) {
-
-            int Number1;
-            int Number2;
-            int Number3;
-
-            System.out.println("Inserisci l'ordine in cui vuoi inserire le tessere: ");
-
-            switch (count){
-                case 1:
-                    Scanner s = new Scanner(System.in);
-                    Number1 = s.nextInt();
-
-                    //fare eccezione per valori sbagliati nell'ordine
-                    check=true;
-                    break;
-                case 2:
-                    Scanner s1 = new Scanner(System.in);
-                    Number1 = s1.nextInt();
-
-                    //fare eccezione per valori sbagliati nell'ordine
-                    Scanner s2 = new Scanner(System.in);
-                    Number2 = s2.nextInt();
-
-                    //fare eccezione per valori sbagliati nell'ordine
-                    check=true;
-                    break;
-                case 3:
-                    Scanner s3 = new Scanner(System.in);
-                    Number1 = s3.nextInt();
-
-                    //fare eccezione per valori sbagliati nell'ordine
-
-                    Scanner s4 = new Scanner(System.in);
-                    Number2 = s4.nextInt();
-
-                    //fare eccezione per valori sbagliati nell'ordine
-
-                    Scanner s5 = new Scanner(System.in);
-                    Number3 = s5.nextInt();
-
-                    //fare eccezione per valori sbagliati nell'ordine
-
-                    check=true;
-                    break;
-
-                default:
-                    //eccezione per numero sbagliato di count
-
-            }
-
-
-        }
+    static void AddTile(int column, String[] order, int count){
 
         int numTiles = 0;
 
@@ -134,7 +69,7 @@ public class Shelfie{
         {
             if(numTiles < count - 1) {
                 if (Shelf[i][column].getColor().equals( "DEFAULT")) {
-                    Shelf[i][column] = new Tile(PossibleColors.ChoosenTiles[numTiles].getColor());
+                    Shelf[i][column] = new Tile(PossibleColors.valueOf(order[i]));
                     numTiles++;
                 }
             }
