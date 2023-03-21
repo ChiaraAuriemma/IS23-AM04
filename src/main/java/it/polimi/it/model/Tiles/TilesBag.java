@@ -1,4 +1,4 @@
-package it.polimi.it.model;
+package it.polimi.it.model.Tiles;
 
 import java.util.Random;
 

@@ -1,8 +1,8 @@
 package it.polimi.it.model.Board;
 
-import it.polimi.it.model.PossibleColors;
-import it.polimi.it.model.Tile;
-import it.polimi.it.model.TilesBag;
+import it.polimi.it.model.Tiles.PossibleColors;
+import it.polimi.it.model.Tiles.Tile;
+import it.polimi.it.model.Tiles.TilesBag;
 
 public class B4P extends Board{
 

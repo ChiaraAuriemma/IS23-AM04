@@ -1,5 +1,8 @@
 package it.polimi.it.model;
 
+import it.polimi.it.model.Tiles.PossibleColors;
+import it.polimi.it.model.Tiles.Tile;
+
 public class Shelfie{
 
     private String Player;
