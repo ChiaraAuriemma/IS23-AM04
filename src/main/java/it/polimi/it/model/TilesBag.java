@@ -82,7 +82,6 @@ public class TilesBag {
                         return new Tile(row, col, PossibleColors.WHITE);
                     }
                     break;
-                // default: return new Tile(PossibleColors.DEFAULT);
             }
         }
     }

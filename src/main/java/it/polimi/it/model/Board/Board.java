@@ -405,7 +405,7 @@ public abstract class Board {
         return counter;
     }
 
-    int CountAdjacentSecondStage(int i, int j, int Visited[][]) {
+    int CountAdjacentSecondStage(int i, int j, int[][] Visited) {
         int rowUp = i - 1;
         int ColLeft = j - 1;
         int ColRight = j + 1;
@@ -561,7 +561,7 @@ public abstract class Board {
     }
 
 
-    public static void RemoveTiles(int row1, int row2, int row3, int col1, int col2, int col3) {
+    public void RemoveTiles(int row1, int row2, int row3, int col1, int col2, int col3) {
         if (row1 >= 0 && row1 <= 8 && col1 >= 0 && col1 <= 8) {
             Matrix[row1][col1] = new Tile(PossibleColors.DEFAULT);
         }
