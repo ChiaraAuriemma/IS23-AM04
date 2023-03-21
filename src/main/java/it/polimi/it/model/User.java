@@ -47,7 +47,7 @@ public class User {
                throw new IndexOutOfBoundsException();
            }
 
-           return board.FindMaxAdjacent(max);
+           return board.findMaxAdjacent(max);
 
         } else{
             throw new IsNotPlayerException(Type);
@@ -92,7 +92,7 @@ public class User {
                 shelf.AddTile(column, colorOrder, tilesNumber);
             }
 
-            board.Refill();
+            board.refill();
 
         } else{
 

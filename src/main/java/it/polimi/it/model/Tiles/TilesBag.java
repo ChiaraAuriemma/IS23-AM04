@@ -1,84 +1,97 @@
 package it.polimi.it.model.Tiles;
 
+import java.util.HashMap;
 import java.util.Random;
 
 public class TilesBag {
-    public static int NremainingBlue;
-    public static int NremainingCyan;
-    public static int NremainingGreen;
-    public static int NremainingYellow;
-    public static int NremainingWhite;
-    public static int NremainingPink;
-    public static int NtotalRemaining;
 
-
+    public static HashMap<PossibleColors, Integer> remainingTiles = new HashMap<>();
+    public static int totalRemaining;
     static Random rand = new Random();
 
-    //constructor
+
+    /**
+     * Constructor method of the TilesBag
+     * Initializes totalRemaining to 132, which is the total number of tiles in the bag when the bag is full
+     * Initializes an HashMap that uses the PossibleColors Enumeration as Key and stores, for each color, 22,
+     *      which is the maximum number of tiles of the same color that can be used during a game
+     */
     public TilesBag(){
-        NremainingBlue = 22;
-        NremainingCyan = 22;
-        NremainingGreen = 22;
-        NremainingPink = 22;
-        NremainingYellow = 22;
-        NremainingWhite = 22;
-        NtotalRemaining = 132;
+        remainingTiles.put(PossibleColors.CYAN, 22);
+        remainingTiles.put(PossibleColors.BLUE, 22);
+        remainingTiles.put(PossibleColors.GREEN, 22);
+        remainingTiles.put(PossibleColors.PINK, 22);
+        remainingTiles.put(PossibleColors.YELLOW, 22);
+        remainingTiles.put(PossibleColors.WHITE, 22);
+        totalRemaining = 132;
     }
 
+
+    /**
+     * Getter method
+     * @return the total number of the tiles that are still in the bag
+     */
     public static int getTotRemaining(){
-        return NtotalRemaining;
+        return totalRemaining;
     }
 
-    public static Tile RandomTiles(int row, int col){
-        int random_color = 0;
+
+    /**
+     * Extracts a random color and creates a Tile of that color
+     * @param row is the row parameter to be given to the constructor of the Tile
+     * @param col is the column parameter to be given to the constructor of the Tile
+     * @return the new Tile that got created
+     */
+    public static Tile randomTiles(int row, int col){
+        int random_color;
         while(true) {
             random_color = rand.nextInt(6);
             switch (random_color) {
 
                 case 0:
-                    if (NremainingBlue > 0) {
-                        NremainingBlue--;
-                        NtotalRemaining--;
+                    if (remainingTiles.get(PossibleColors.BLUE) > 0) {
+                        remainingTiles.put(PossibleColors.BLUE, remainingTiles.get(PossibleColors.BLUE)-1);
+                        totalRemaining--;
                         return new Tile(row, col, PossibleColors.BLUE);
                     }
                     break;
 
                 case 1:
-                    if (NremainingCyan > 0) {
-                        NremainingCyan--;
-                        NtotalRemaining--;
+                    if (remainingTiles.get(PossibleColors.CYAN) > 0) {
+                        remainingTiles.put(PossibleColors.CYAN, remainingTiles.get(PossibleColors.CYAN)-1);
+                        totalRemaining--;
                         return new Tile(row, col, PossibleColors.CYAN);
                     }
                     break;
 
                 case 2:
-                    if (NremainingGreen > 0) {
-                        NremainingGreen--;
-                        NtotalRemaining--;
+                    if (remainingTiles.get(PossibleColors.GREEN) > 0) {
+                        remainingTiles.put(PossibleColors.GREEN, remainingTiles.get(PossibleColors.GREEN)-1);
+                        totalRemaining--;
                         return new Tile(row, col, PossibleColors.GREEN);
                     }
                     break;
 
                 case 3:
-                    if (NremainingYellow > 0) {
-                        NremainingYellow--;
-                        NtotalRemaining--;
+                    if (remainingTiles.get(PossibleColors.YELLOW) > 0) {
+                        remainingTiles.put(PossibleColors.YELLOW, remainingTiles.get(PossibleColors.YELLOW)-1);
+                        totalRemaining--;
                         return new Tile(row, col, PossibleColors.YELLOW);
                     }
                     break;
 
                 case 4:
-                    if (NremainingPink > 0) {
-                        NremainingPink--;
-                        NtotalRemaining--;
+                    if (remainingTiles.get(PossibleColors.PINK) > 0) {
+                        remainingTiles.put(PossibleColors.PINK, remainingTiles.get(PossibleColors.PINK)-1);
+                        totalRemaining--;
                         return new Tile(row, col, PossibleColors.PINK);
                     }
                     break;
 
                 case 5:
-                    if (NremainingWhite > 0) {
-                        NremainingWhite--;
-                        NtotalRemaining--;
+                    if (remainingTiles.get(PossibleColors.WHITE) > 0) {
+                        remainingTiles.put(PossibleColors.WHITE, remainingTiles.get(PossibleColors.WHITE)-1);
+                        totalRemaining--;
                         return new Tile(row, col, PossibleColors.WHITE);
                     }
                     break;
