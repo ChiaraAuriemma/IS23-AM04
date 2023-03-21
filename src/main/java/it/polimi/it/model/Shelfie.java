@@ -12,10 +12,9 @@ public class Shelfie{
 
     private static Tile[][] Shelf;
 
-    private int PersonalCardID;
+    private final int PersonalCardID;
 
-
-    public Shelfie(String Nickname, int PersonalCardID){
+    public Shelfie(int PersonalCardID){
 
         Shelf = new Tile[6][5];
 
@@ -27,7 +26,7 @@ public class Shelfie{
 
         this.PersonalCardID = PersonalCardID;
 
-        this.Player = Nickname;
+        this.Player = User.getNickname();
 
         this.EndToken1 = false;
 
@@ -38,38 +37,39 @@ public class Shelfie{
     }
 
 
-    public String getCell(int row, int column){
-        return Shelf[column][row].getColor();
+    public String getCell(int column, int row){
+        return Shelf[row][column].getColor();
     }
 
-    static int[] ChooseColumn(int count){
+    boolean[] ChooseColumn(int count){
 
-        int[] checkColumn = {0,0,0,0,0};
+        boolean[] checkColumn = {false, false, false, false, false};
+        int numDefault;
 
         for(int column=0; column<5; column++){
-            int numDefault = 0;
+            numDefault = 0;
             for(int row=0; row<6; row++){
                 if(Shelf[row][column].getColor().equals("DEFAULT")){
                     numDefault++;
                 }
             }
             if(numDefault >= count){
-                checkColumn[column] = 1;
+                checkColumn[column] = true;
             }
         }
 
         return checkColumn;
     }
 
-    static void AddTile(int column, String[] order, int count){
+    void AddTile(int column, String[] order, int count){
 
         int numTiles = 0;
 
         for(int row=0; row<6; row++)
         {
-            if(numTiles < count - 1) {
-                if (Shelf[row][column].getColor().equals( "DEFAULT")) {
-                    Shelf[row][column] = new Tile(PossibleColors.valueOf(order[row]));
+            if(numTiles < order.length) {
+                if (Shelf[row][column].getColor().equals("DEFAULT")) {
+                    Shelf[row][column] = new Tile(PossibleColors.valueOf(order[numTiles]));
                     numTiles++;
                 }
             }
@@ -96,16 +96,20 @@ public class Shelfie{
 
     }
 
-    static int PossibleTiles(){
+    int PossibleTiles(){
+
         int tmp = 0;
-        int count = 0;
+        int count;
 
         for(int column=0; column<5; column++){
+
+            count = 0;
+
             for(int row=0; row<6; row++){
                 if(Shelf[row][column].getColor().equals("DEFAULT")){
                     count ++;
                     if(count >= 3){
-                        return count;
+                        return 3;
                     }
                 }
             }
@@ -113,8 +117,6 @@ public class Shelfie{
                 tmp = count;
             }
         }
-
-
         return tmp;
     }
 
