@@ -1,4 +1,8 @@
-package it.polimi.it.model;
+package it.polimi.it.model.Board;
+import it.polimi.it.model.PossibleColors;
+import it.polimi.it.model.Tile;
+import it.polimi.it.model.TilesBag;
+
 import java.util.Scanner;
 
 
@@ -19,7 +23,7 @@ public abstract class Board {
         for(int i=0; i<9; i++){
             for(int j=0; j<9; j++){
                 if(Matrix[i][j].getColor().equals("DEFAULT")){
-                    NremainingTiles=TilesBag.getTotRemaining();
+                    NremainingTiles= TilesBag.getTotRemaining();
                     if(NremainingTiles>0) {
                         Tile tile = TilesBag.RandomTiles();
                         Matrix[i][j] = tile;

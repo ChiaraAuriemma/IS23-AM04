@@ -1,5 +1,11 @@
 package it.polimi.it.model;
 
+import it.polimi.it.model.Board.B2P;
+import it.polimi.it.model.Board.B3P;
+import it.polimi.it.model.Board.B4P;
+import it.polimi.it.model.Board.Board;
+import it.polimi.it.model.Card.CommonGoalCards.CommonGoalCard;
+
 import java.util.ArrayList;
 
 import java.util.Optional;

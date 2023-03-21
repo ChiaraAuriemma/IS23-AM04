@@ -1,8 +1,4 @@
-package it.polimi.it.model;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+package it.polimi.it.model.Card.PersonalGoalCards;
 
 public class PersonalGoalCard2 extends PersonalGoalCard{
 

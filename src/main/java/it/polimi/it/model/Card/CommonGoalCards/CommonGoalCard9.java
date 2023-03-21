@@ -1,4 +1,6 @@
-package it.polimi.it.model;
+package it.polimi.it.model.Card.CommonGoalCards;
+
+import it.polimi.it.model.Shelfie;
 
 import java.util.ArrayList;
 import java.util.List;

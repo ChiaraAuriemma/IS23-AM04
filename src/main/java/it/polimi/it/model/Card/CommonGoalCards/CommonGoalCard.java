@@ -1,6 +1,9 @@
-package it.polimi.it.model;
+package it.polimi.it.model.Card.CommonGoalCards;
 
-public abstract class CommonGoalCard extends Card{
+import it.polimi.it.model.Card.Card;
+import it.polimi.it.model.Shelfie;
+
+public abstract class CommonGoalCard extends Card {
 
     protected int id;
     private final String name;

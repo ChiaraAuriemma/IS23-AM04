@@ -1,6 +1,6 @@
 package it.polimi.it.model;
 
-import jdk.internal.foreign.abi.Binding;
+import it.polimi.it.model.Board.Board;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,6 @@
-package it.polimi.it.model;
+package it.polimi.it.model.Card.CommonGoalCards;
+
+import it.polimi.it.model.Shelfie;
 
 public class CommonGoalCard1 extends CommonGoalCard{
 

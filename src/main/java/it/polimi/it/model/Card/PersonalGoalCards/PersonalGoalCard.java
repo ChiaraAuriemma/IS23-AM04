@@ -1,10 +1,12 @@
-package it.polimi.it.model;
+package it.polimi.it.model.Card.PersonalGoalCards;
+
+import it.polimi.it.model.Card.Card;
+import it.polimi.it.model.Shelfie;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
-public abstract class PersonalGoalCard extends Card{
+public abstract class PersonalGoalCard extends Card {
     protected int id;
     private final String name;
     private int NumCompletedTasks;

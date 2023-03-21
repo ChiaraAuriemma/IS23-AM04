@@ -1,5 +1,7 @@
 package it.polimi.it.model;
 
+import it.polimi.it.model.Board.Board;
+
 import java.util.ArrayList;
 
 

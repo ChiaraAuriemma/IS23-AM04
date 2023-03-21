@@ -1,7 +1,4 @@
-package it.polimi.it.model;
-
-import java.lang.reflect.Array;
-import java.util.*;
+package it.polimi.it.model.Card.PersonalGoalCards;
 
 public class PersonalGoalCard1 extends PersonalGoalCard{
 
