@@ -1,7 +1,7 @@
 package it.polimi.it.model.Tiles;
 
 public class Tile {
-    PossibleColors color = null;
+    PossibleColors color;
     int boardRow;
     int boardColumn;
 

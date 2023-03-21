@@ -27,7 +27,7 @@ public class TilesBag {
     }
 
     public static Tile randomTiles(int row, int col){
-        int random_color = 0;
+        int random_color;
         while(true) {
             random_color = rand.nextInt(6);
             switch (random_color) {

@@ -24,20 +24,18 @@ public abstract class Board {
         if (!checkrefill()) {
             return;
         }
-        int NremainingTiles = 132;
-        NremainingTiles = TilesBag.getTotRemaining();
+        int remainingTiles;
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
                 if (matrix[i][j].getColor().equals("DEFAULT")) {
-                    NremainingTiles = TilesBag.getTotRemaining();
-                    if (NremainingTiles > 0) {
+                    remainingTiles = TilesBag.getTotRemaining();
+                    if (remainingTiles > 0) {
                         Tile tile = TilesBag.randomTiles(i, j);
                         matrix[i][j] = tile;
                     }
                 }
             }
         }
-        return;
     }
 
     /**
@@ -85,10 +83,10 @@ public abstract class Board {
      * @param maxFromShelfie is the maximum number of tiles that can be contained in the columns of the player's Shelfie
      * @return the maximum number of Tiles that can be taken from the board, this number can't be higher than maxFromShelfie
      */
-    public int findmaxAdjacent(int maxFromShelfie) {
+    public int findMaxAdjacent(int maxFromShelfie) {
         int max = 0;
-        int count = 0;
-        int middlecount = 0;
+        int count;
+        int middlecount;
         int[][] visited = new int[9][9];
 
         //Initialize the 'visited' matrix to all 0
@@ -108,7 +106,7 @@ public abstract class Board {
                         visited[i][j] = 1;
                     } else {//se la cella è interna, controllo che almeno una delle tile confinanti siano incolore
                         middlecount = 0;
-                        if (i >= 1 && middlecount == 0) {
+                        if (i >= 1) {
                             if (matrix[i - 1][j].getColor().equals("DEFAULT") || matrix[i - 1][j].getColor().equals("XTILE")) {
                                 middlecount++;
                                 visited[i - 1][j] = 1;
