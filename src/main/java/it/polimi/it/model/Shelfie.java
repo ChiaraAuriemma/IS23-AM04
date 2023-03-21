@@ -38,7 +38,7 @@ public class Shelfie{
     }
 
 
-    String getCell(int i, int j){
+    public String getCell(int i, int j){
         return Shelf[j][i].getColor();
     }
 
