@@ -3,7 +3,6 @@ import it.polimi.it.model.PossibleColors;
 import it.polimi.it.model.Tile;
 import it.polimi.it.model.TilesBag;
 
-import java.util.Scanner;
 
 
 public abstract class Board {
@@ -14,7 +13,11 @@ public abstract class Board {
 
     }
 
-    //Checks if a refill of the board is needed; eventually refills the board
+
+    /**
+     * Checks if a refill of the board is needed calling method CheckRefill
+     * eventually refills the board, extracting random tiles from the TilesBag
+     */
     public static void Refill(){
         if(!CheckRefill()){
             return;
@@ -34,6 +37,10 @@ public abstract class Board {
         return;
     }
 
+    /**
+     * Given the Board matrix, checks if a refill is needed.
+     * @return a boolean value which is true if the boards needs a refill, false otherwise
+     */
     private static Boolean CheckRefill(){
         for (int i=0; i<9; i++){
             for (int j=0; j<9; j++){
@@ -68,6 +75,11 @@ public abstract class Board {
 
     }
 
+    /**
+     * Finds the maximum number of Tiles that can be taken from the board
+     * @param MaxFromShelfie is the maximum number of tiles that can be contained in the columns of the player's Shelfie
+     * @return the maximum number of Tiles that can be taken from the board, this number can't be higher than MaxFromShelfie
+     */
     public static int FindMaxAdjacent(int MaxFromShelfie){
         int Max=0;
         int Count=0;
@@ -123,11 +135,9 @@ public abstract class Board {
 
                     //controllo se posso andare oltre e aumentare il counter a 2 o 3,
                     //ma prima verifico che effettivamente mi serva a qualcosa:
-
                     if (MaxFromShelfie == 1){
                         return 1;
                     }
-
                     Count = Count + CountAdjacent(i, j, Visited);
 
                     if (Count>=3){
@@ -158,7 +168,6 @@ public abstract class Board {
         int ColLeft = j - 1;
         int ColRight = j + 1;
         int rowDown=i-1;
-
 
         if(i>0){
             if(Visited[i-1][j] == 0 && !Matrix[i-1][j].getColor().equals("DEFAULT") && !Matrix[i-1][j].getColor().equals("XTILE")){
@@ -204,11 +213,8 @@ public abstract class Board {
                         counter++;
                         upOk=1;
                     }
-
-
                 }
             }
-
         }
 
         if(j>0) {//controllo relativo alla casella a sinistra di quella data
@@ -240,7 +246,6 @@ public abstract class Board {
                                 MiddleCountLeft++;
                                 Visited[i + 1][ColLeft] = 1;
                             }
-
                         }
                     }
                     if (ColLeft <= 7 && MiddleCountLeft == 0) {
@@ -249,7 +254,6 @@ public abstract class Board {
                                 MiddleCountLeft++;
                                 Visited[i][ColLeft + 1] = 1;
                             }
-
                         }
                     }
                     if (MiddleCountLeft > 0) {
@@ -557,11 +561,9 @@ public abstract class Board {
         }
         if(row2>=0 && row2<=8 && col2>=0 && col2<=8){
             Matrix[row2][col2] = new Tile(PossibleColors.DEFAULT);
-
         }
         if(row3>=0 && row3<=8 && col3>=0 && col3<=8){
             Matrix[row3][col3] = new Tile(PossibleColors.DEFAULT);
-
         }
     }
 }

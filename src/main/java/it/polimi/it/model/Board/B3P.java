@@ -8,6 +8,11 @@ public class B3P extends Board{
 
     public Tile[][] Matrix;
 
+
+    /**
+     * Constructor of the board for 2 player
+     * Initializes a 9x9 matrix with the X or colored Tiles where needed
+     */
     public B3P(){
         Matrix = new Tile[9][9];
 
