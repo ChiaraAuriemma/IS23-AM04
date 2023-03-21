@@ -561,5 +561,3 @@ public abstract class Board {
         }
     }
 }
-
-
