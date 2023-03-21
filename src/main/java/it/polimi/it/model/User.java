@@ -1,6 +1,8 @@
 package it.polimi.it.model;
 
 import it.polimi.it.model.Board.Board;
+import it.polimi.it.model.Exceptions.IsNotGuestException;
+import it.polimi.it.model.Exceptions.IsNotPlayerException;
 
 import java.util.ArrayList;
 
@@ -113,7 +115,7 @@ public class User {
         return InGame;
     }
 
-    void CreateGame(String Nickname, int playerNumber) throws IsNotGuestException{
+    void CreateGame(String Nickname, int playerNumber) throws IsNotGuestException {
         if(Type.equals("GUEST")) {
 
             Type = "Player";

@@ -1,4 +1,4 @@
-package it.polimi.it.model;
+package it.polimi.it.model.Exceptions;
 
 public class IsNotGuestException extends Exception {
     private String Type;
