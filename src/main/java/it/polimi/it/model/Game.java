@@ -46,6 +46,10 @@ public class Game {
 
         //wait che i giocatori entrino nel gioco
         RandomPlayer();
+        DrawCommonCrads();
+        this.OrderPointer=0;
+        while(///end game????)
+
 
 
     }
@@ -104,15 +108,67 @@ public class Game {
 
         Random rnd = new Random();
 
-        int c1 = rnd.nextInt(12);
-        int c2 = rnd.nextInt(12);
+        int c1 = rnd.nextInt(11) + 1;
+        int c2 = rnd.nextInt(11) + 1;
         while(c1 == c2){
-            int c1 = rnd.nextInt(12);
-            int c2 = rnd.nextInt(12);
+            c1 = rnd.nextInt(11) + 1;
+            c2 = rnd.nextInt(11) + 1;
         }
 
-        // lo faccio io o lo fa la classe commongoalcard
-        if()
+        //instance of common card 1
+        if(c1 == 1) {
+            card1 = new CommonGoalCard1();
+        }else if (c1 == 2){
+            card1 = new CommonGoalCard2();
+        }else if (c1 == 3){
+            card1 = new CommonGoalCard3();
+        }else if (c1 == 4){
+            card1 = new CommonGoalCard4();
+        }else if (c1 == 5){
+            card1 = new CommonGoalCard5();
+        }else if (c1 == 6){
+            card1 = new CommonGoalCard6();
+        }else if (c1 == 7){
+            card1 = new CommonGoalCard7();
+        }else if (c1 == 8){
+            card1 = new CommonGoalCard8();
+        }else if (c1 == 9){
+            card1 = new CommonGoalCard9();
+        }else if (c1 == 10){
+            card1 = new CommonGoalCard10();
+        }else if (c1 == 11){
+            card1 = new CommonGoalCard11();
+        }else if (c1 == 12){
+            card1 = new CommonGoalCard12();
+        }
+
+        //instance of common card 2
+        if(c2 == 1) {
+            card2 = new CommonGoalCard1();
+        }else if (c2 == 2){
+            card2 = new CommonGoalCard2();
+        }else if (c2 == 3){
+            card2 = new CommonGoalCard3();
+        }else if (c2 == 4){
+            card2 = new CommonGoalCard4();
+        }else if (c2 == 5){
+            card2 = new CommonGoalCard5();
+        }else if (c2 == 6){
+            card2 = new CommonGoalCard6();
+        }else if (c2 == 7){
+            card2 = new CommonGoalCard7();
+        }else if (c2 == 8){
+            card2 = new CommonGoalCard8();
+        }else if (c2 == 9){
+            card2 = new CommonGoalCard9();
+        }else if (c2 == 10){
+            card2 = new CommonGoalCard10();
+        }else if (c2 == 11){
+            card2 = new CommonGoalCard11();
+        }else if (c2 == 12){
+            card2 = new CommonGoalCard12();
+        }
+
     }
 
     //metodi in più
