@@ -14,8 +14,8 @@ public class ControllerInterface {
 
    //metto gli attributi di collegamento con gli users e i flag a seconda degli user (tipo guest, creator, joiner, player)
 
-   public ControllerInterface (){
-       //add other ????????
+   public ControllerInterface (User user){
+       this.user = user;
    }
 
     public void CreateGameC (){
