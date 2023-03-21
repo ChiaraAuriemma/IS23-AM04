@@ -9,22 +9,22 @@ public class CommonGoalCard2 extends CommonGoalCard{
         this.id = 2;
     }
 
-    public Boolean CheckGoal(Shelfie shelfie){
-        int i,j;
+    public Boolean checkGoal(Shelfie shelfie){
+        int column,row;
         int stop;
-        int NumRightCol = 0;
+        int numRightCol = 0;
 
-        for(i=0; i<5 && NumRightCol<2; i++) {
+        for(column=0; column<5 && numRightCol<2; column++) {
             stop = 0;
-            for(j=0; j<5 && stop == 0; j++){
-                if(shelfie.getCell(i,j).equals(shelfie.getCell(i,j+1)) || shelfie.getCell(i,j).equals("DEFAULT"))
+            for(row=0; row<5 && stop == 0; row++){
+                if(shelfie.getCell(column,row).equals(shelfie.getCell(column,row+1)) || shelfie.getCell(column,row).equals("DEFAULT"))
                     stop=1;
             }
             if(stop==0)
-                NumRightCol++;
+                numRightCol++;
         }
 
-        if(NumRightCol == 2)
+        if(numRightCol == 2)
             return true;
         else return false;
 

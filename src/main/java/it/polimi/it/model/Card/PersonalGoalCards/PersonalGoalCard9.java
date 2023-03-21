@@ -6,18 +6,18 @@ public class PersonalGoalCard9 extends PersonalGoalCard{
     public PersonalGoalCard9(){
         super();
         this.id = 9;
-        this.Bluepos.add(0,0);
-        this.Bluepos.add(1,0);
-        this.Cyanpos.add(0,1);
-        this.Cyanpos.add(1,1);
-        this.Greenpos.add(0,2);
-        this.Greenpos.add(1,3);
-        this.Yellowpos.add(0,2);
-        this.Yellowpos.add(1,5);
-        this.Pinkpos.add(0,4);
-        this.Pinkpos.add(1,1);
-        this.Whitepos.add(0,4);
-        this.Whitepos.add(1,2);
+        this.bluePos.add(0,0);
+        this.bluePos.add(1,0);
+        this.cyanPos.add(0,1);
+        this.cyanPos.add(1,1);
+        this.greenPos.add(0,2);
+        this.greenPos.add(1,3);
+        this.yellowPos.add(0,2);
+        this.yellowPos.add(1,5);
+        this.pinkPos.add(0,4);
+        this.pinkPos.add(1,1);
+        this.whitePos.add(0,4);
+        this.whitePos.add(1,2);
     }
 
 }

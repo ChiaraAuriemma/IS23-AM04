@@ -9,13 +9,13 @@ public class CommonGoalCard8 extends CommonGoalCard {
         this.id = 8;
     }
 
-    public Boolean CheckGoal(Shelfie shelfie) {
-        String Cell1 = shelfie.getCell(0,0);
-        String Cell2 = shelfie.getCell(0,5);
-        String Cell3 = shelfie.getCell(4,5);
-        String Cell4 = shelfie.getCell(4,0);
+    public Boolean checkGoal(Shelfie shelfie) {
+        String cell1 = shelfie.getCell(0,0);
+        String cell2 = shelfie.getCell(0,5);
+        String cell3 = shelfie.getCell(4,5);
+        String cell4 = shelfie.getCell(4,0);
 
-        if(!Cell1.equals("DEFAULT") &&  Cell1.equals(Cell2) && Cell2.equals(Cell3) && Cell3.equals(Cell4)){
+        if(!cell1.equals("DEFAULT") &&  cell1.equals(cell2) && cell2.equals(cell3) && cell3.equals(cell4)){
             return true;
         }else {return false;}
 

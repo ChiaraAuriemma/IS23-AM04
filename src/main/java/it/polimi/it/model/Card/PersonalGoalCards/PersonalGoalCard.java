@@ -9,59 +9,59 @@ import java.util.List;
 public abstract class PersonalGoalCard extends Card {
     protected int id;
     private final String name;
-    private int NumCompletedTasks;
-    protected List<Integer> Pinkpos;
-    protected List<Integer> Cyanpos;
-    protected List<Integer> Yellowpos;
-    protected List<Integer> Bluepos;
-    protected List<Integer> Whitepos;
-    protected List<Integer> Greenpos;
-    private List<Integer> CheckColor;
+    private int numCompletedTasks;
+    protected List<Integer> pinkPos;
+    protected List<Integer> cyanPos;
+    protected List<Integer> yellowPos;
+    protected List<Integer> bluePos;
+    protected List<Integer> whitePos;
+    protected List<Integer> greenPos;
+    private List<Integer> checkColor;
 
 
     public PersonalGoalCard(){
         this.name = "Personal";
-        this.NumCompletedTasks = 0;
-        this.CheckColor = new ArrayList<Integer>(6);
+        this.numCompletedTasks = 0;
+        this.checkColor = new ArrayList<Integer>(6);
         int i;
         for(i=0; i<6; i++){
-            this.CheckColor.add(i,0);
+            this.checkColor.add(i,0);
         }
-        this.Pinkpos = new ArrayList<Integer>(2);
-        this.Cyanpos = new ArrayList<Integer>(2);
-        this.Yellowpos = new ArrayList<Integer>(2);
-        this.Bluepos = new ArrayList<Integer>(2);
-        this.Whitepos = new ArrayList<Integer>(2);
-        this.Greenpos = new ArrayList<Integer>(2);
+        this.pinkPos = new ArrayList<Integer>(2);
+        this.cyanPos = new ArrayList<Integer>(2);
+        this.yellowPos = new ArrayList<Integer>(2);
+        this.bluePos = new ArrayList<Integer>(2);
+        this.whitePos = new ArrayList<Integer>(2);
+        this.greenPos = new ArrayList<Integer>(2);
     }
 
-    //Method to check how many personal points I have made
-    public int CheckScore(Shelfie shelfie) {
-        if(CheckColor.get(0) == 0 && shelfie.getCell(Pinkpos.get(0), Pinkpos.get(1)).equals("PINK")){
-            NumCompletedTasks++;
-            CheckColor.add(0,1);
+
+    public int checkScore(Shelfie shelfie) {
+        if(checkColor.get(0) == 0 && shelfie.getCell(pinkPos.get(0), pinkPos.get(1)).equals("PINK")){
+            numCompletedTasks++;
+            checkColor.add(0,1);
         }
-        if(CheckColor.get(1) == 0 && shelfie.getCell(Cyanpos.get(0), Cyanpos.get(1)).equals("CYAN")){
-            NumCompletedTasks++;
-            CheckColor.add(1,1);
+        if(checkColor.get(1) == 0 && shelfie.getCell(cyanPos.get(0), cyanPos.get(1)).equals("CYAN")){
+            numCompletedTasks++;
+            checkColor.add(1,1);
         }
-        if(CheckColor.get(2)== 0 && shelfie.getCell(Yellowpos.get(0), Yellowpos.get(1)).equals("YELLOW")){
-            NumCompletedTasks++;
-            CheckColor.add(2,1);
+        if(checkColor.get(2)== 0 && shelfie.getCell(yellowPos.get(0), yellowPos.get(1)).equals("YELLOW")){
+            numCompletedTasks++;
+            checkColor.add(2,1);
         }
-        if(CheckColor.get(3) == 0 && shelfie.getCell(Bluepos.get(0), Bluepos.get(1)).equals("BLUE")){
-            NumCompletedTasks++;
-            CheckColor.add(3,1);
+        if(checkColor.get(3) == 0 && shelfie.getCell(bluePos.get(0), bluePos.get(1)).equals("BLUE")){
+            numCompletedTasks++;
+            checkColor.add(3,1);
         }
-        if(CheckColor.get(4) == 0 && shelfie.getCell(Whitepos.get(0), Whitepos.get(1)).equals("WHITE")){
-            NumCompletedTasks++;
-            CheckColor.add(4,1);
+        if(checkColor.get(4) == 0 && shelfie.getCell(whitePos.get(0), whitePos.get(1)).equals("WHITE")){
+            numCompletedTasks++;
+            checkColor.add(4,1);
         }
-        if(CheckColor.get(5) == 0 && shelfie.getCell(Greenpos.get(0), Greenpos.get(1)).equals("GREEN")){
-            NumCompletedTasks++;
-            CheckColor.add(5,1);
+        if(checkColor.get(5) == 0 && shelfie.getCell(greenPos.get(0), greenPos.get(1)).equals("GREEN")){
+            numCompletedTasks++;
+            checkColor.add(5,1);
         }
 
-        return NumCompletedTasks;
+        return numCompletedTasks;
     }
 }

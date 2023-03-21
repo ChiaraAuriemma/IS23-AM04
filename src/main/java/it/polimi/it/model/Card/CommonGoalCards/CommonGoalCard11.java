@@ -9,40 +9,40 @@ public class CommonGoalCard11 extends CommonGoalCard{
         this.id = 11;
     }
 
-    public Boolean CheckGoal(Shelfie shelfie){
-        String Cell1 = shelfie.getCell(0,5);
-        String Cell2 = shelfie.getCell(1,4);
-        String Cell3 = shelfie.getCell(2,3);
-        String Cell4 = shelfie.getCell(3,2);
-        String Cell5 = shelfie.getCell(4,1);
-        String Cell6 = shelfie.getCell(0,4);
-        String Cell7 = shelfie.getCell(1,3);
-        String Cell8 = shelfie.getCell(2,2);
-        String Cell9 = shelfie.getCell(3,1);
-        String Cell10 = shelfie.getCell(4,0);
-        String Cell11 = shelfie.getCell(0,0);
-        String Cell12 = shelfie.getCell(1,1);
-        String Cell13 = shelfie.getCell(3,3);
-        String Cell14 = shelfie.getCell(5,5);
-        String Cell15 = shelfie.getCell(0,1);
-        String Cell16 = shelfie.getCell(1,2);
-        String Cell17 = shelfie.getCell(3,4);
-        String Cell18 = shelfie.getCell(4,5);
+    public Boolean checkGoal(Shelfie shelfie){
+        String cell1 = shelfie.getCell(0,5);
+        String cell2 = shelfie.getCell(1,4);
+        String cell3 = shelfie.getCell(2,3);
+        String cell4 = shelfie.getCell(3,2);
+        String cell5 = shelfie.getCell(4,1);
+        String cell6 = shelfie.getCell(0,4);
+        String cell7 = shelfie.getCell(1,3);
+        String cell8 = shelfie.getCell(2,2);
+        String cell9 = shelfie.getCell(3,1);
+        String cell10 = shelfie.getCell(4,0);
+        String cell11 = shelfie.getCell(0,0);
+        String cell12 = shelfie.getCell(1,1);
+        String cell13 = shelfie.getCell(3,3);
+        String cell14 = shelfie.getCell(4,4);
+        String cell15 = shelfie.getCell(0,1);
+        String cell16 = shelfie.getCell(1,2);
+        String cell17 = shelfie.getCell(3,4);
+        String cell18 = shelfie.getCell(4,5);
 
 
-        if(!Cell1.equals("DEFAULT") && Cell1.equals(Cell2) && Cell2.equals(Cell3) && Cell3.equals(Cell4) && Cell4.equals(Cell5)){
+        if(!cell1.equals("DEFAULT") && cell1.equals(cell2) && cell2.equals(cell3) && cell3.equals(cell4) && cell4.equals(cell5)){
             return true;
         }
 
-        if(!Cell6.equals("DEFAULT") && Cell6.equals(Cell7) && Cell7.equals(Cell8) && Cell8.equals(Cell9) && Cell9.equals(Cell10)){
+        if(!cell6.equals("DEFAULT") && cell6.equals(cell7) && cell7.equals(cell8) && cell8.equals(cell9) && cell9.equals(cell10)){
             return true;
         }
 
-        if(!Cell11.equals("DEFAULT") && Cell11.equals(Cell12) && Cell12.equals(Cell8) && Cell8.equals(Cell13) && Cell13.equals(Cell14)){
+        if(!cell11.equals("DEFAULT") && cell11.equals(cell12) && cell12.equals(cell8) && cell8.equals(cell13) && cell13.equals(cell14)){
             return true;
         }
 
-        if(!Cell15.equals("DEFAULT") && Cell15.equals(Cell16) && Cell16.equals(Cell3) && Cell3.equals(Cell17) && Cell17.equals(Cell14)){
+        if(!cell15.equals("DEFAULT") && cell15.equals(cell16) && cell16.equals(cell3) && cell3.equals(cell17) && cell17.equals(cell18)){
             return true;
         }
 
