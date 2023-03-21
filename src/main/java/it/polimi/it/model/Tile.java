@@ -11,7 +11,7 @@ public class Tile {
         this.Color = Color;
     }
 
-   String getColor(){
+   public String getColor(){
         return Color.getColor();
     }
 }

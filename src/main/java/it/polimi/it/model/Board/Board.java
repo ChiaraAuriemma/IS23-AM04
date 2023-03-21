@@ -15,7 +15,7 @@ public abstract class Board {
     }
 
     //Checks if a refill of the board is needed; eventually refills the board
-    static void Refill(){
+    public static void Refill(){
         if(!CheckRefill()){
             return;
         }
@@ -68,7 +68,7 @@ public abstract class Board {
 
     }
 
-    static int FindMaxAdjacent(int MaxFromShelfie){
+    public static int FindMaxAdjacent(int MaxFromShelfie){
         int Max=0;
         int Count=0;
         int MiddleCount=0;
@@ -551,7 +551,7 @@ public abstract class Board {
     }
 
 
-    static void RemoveTiles(int row1, int row2, int row3, int col1, int col2, int col3){
+    public static void RemoveTiles(int row1, int row2, int row3, int col1, int col2, int col3){
         if(row1>=0 && row1<=8 && col1>=0 && col1<=8){
             Matrix[row1][col1] = new Tile(PossibleColors.DEFAULT);
         }
