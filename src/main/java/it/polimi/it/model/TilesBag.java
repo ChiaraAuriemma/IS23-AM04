@@ -1,6 +1,7 @@
 package it.polimi.it.model;
 
 import java.util.Random;
+
 public class TilesBag {
     public static int NremainingBlue;
     public static int NremainingCyan;
@@ -24,7 +25,7 @@ public class TilesBag {
         NtotalRemaining = 132;
     }
 
-    public int getTotRemaining(){
+    public static int getTotRemaining(){
         return NtotalRemaining;
     }
 
