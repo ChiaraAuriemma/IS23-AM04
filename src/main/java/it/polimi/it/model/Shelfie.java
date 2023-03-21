@@ -19,9 +19,9 @@ public class Shelfie{
 
         Shelf = new Tile[6][5];
 
-        for(int i=0; i<6; i++){
-            for(int j=0; j<5; j++){
-                Shelf[i][j] = new Tile(PossibleColors.DEFAULT);
+        for(int row=0; row<6; row++){
+            for(int column=0; column<5; column++){
+                Shelf[row][column] = new Tile(PossibleColors.DEFAULT);
             }
         }
 
@@ -38,23 +38,23 @@ public class Shelfie{
     }
 
 
-    public String getCell(int i, int j){
-        return Shelf[j][i].getColor();
+    public String getCell(int row, int column){
+        return Shelf[column][row].getColor();
     }
 
     static int[] ChooseColumn(int count){
 
         int[] checkColumn = {0,0,0,0,0};
 
-        for(int j=0; j<5; j++){
+        for(int column=0; column<5; column++){
             int numDefault = 0;
-            for(int i=0; i<6; i++){
-                if(Shelf[i][j].getColor().equals("DEFAULT")){
+            for(int row=0; row<6; row++){
+                if(Shelf[row][column].getColor().equals("DEFAULT")){
                     numDefault++;
                 }
             }
             if(numDefault >= count){
-                checkColumn[j] = 1;
+                checkColumn[column] = 1;
             }
         }
 
@@ -65,11 +65,11 @@ public class Shelfie{
 
         int numTiles = 0;
 
-        for(int i=0; i<6;i++)
+        for(int row=0; row<6; row++)
         {
             if(numTiles < count - 1) {
-                if (Shelf[i][column].getColor().equals( "DEFAULT")) {
-                    Shelf[i][column] = new Tile(PossibleColors.valueOf(order[i]));
+                if (Shelf[row][column].getColor().equals( "DEFAULT")) {
+                    Shelf[row][column] = new Tile(PossibleColors.valueOf(order[row]));
                     numTiles++;
                 }
             }
@@ -81,9 +81,9 @@ public class Shelfie{
 
         int count = 0;
 
-        for(int i=0; i<6; i++){
-            for(int j=0; i<5; i++){
-                if(Shelf[i][j].getColor().equals("DEFAULT")){
+        for(int row=0; row<6; row++){
+            for(int  column=0; column<5; column++){
+                if(Shelf[row][column].getColor().equals("DEFAULT")){
                     count ++;
                 }
             }
@@ -100,9 +100,9 @@ public class Shelfie{
         int tmp = 0;
         int count = 0;
 
-        for(int j=0; j<5; j++){
-            for(int i=0; i<5; i++){
-                if(Shelf[i][j].getColor().equals("DEFAULT")){
+        for(int column=0; column<5; column++){
+            for(int row=0; row<6; row++){
+                if(Shelf[row][column].getColor().equals("DEFAULT")){
                     count ++;
                     if(count >= 3){
                         return count;

@@ -56,7 +56,6 @@ public class User {
         Shelfie.AddTile(column, colorOrder, tilesNumber);
 
         Board.Refill();
-
     }
 
 
@@ -79,7 +78,7 @@ public class User {
     void CreateGame(String Nickname, int playerNumber){
         Type = "Player";
 
-        //costruttore di game
+        Game g = new Game(playerNumber);
     }
 
     void JoinGame(String Nickname){
