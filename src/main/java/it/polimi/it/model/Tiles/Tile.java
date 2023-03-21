@@ -25,4 +25,12 @@ public class Tile {
    public String getColor(){
         return Color.getColor();
     }
+
+
+    public int getRow(){
+        return this.BoardRow;
+    }
+    public int getColumn(){
+        return this.BoardColumn;
+    }
 }
