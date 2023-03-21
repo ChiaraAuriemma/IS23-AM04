@@ -49,7 +49,7 @@ public class B2P extends Board{
                 }else if (i==7 && j>5) {
                     Matrix[i][j] = new Tile(PossibleColors.XTILE);
                 }else{
-                    Tile tile = TilesBag.RandomTiles();
+                    Tile tile = TilesBag.RandomTiles(i, j);
                     Matrix[i][j] = tile;
                 }
             }

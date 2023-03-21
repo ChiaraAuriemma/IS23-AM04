@@ -47,7 +47,7 @@ public class B3P extends Board{
                 }else if (i==7 && j>5) {
                     Matrix[i][j] = new Tile(PossibleColors.XTILE);
                 }else{
-                    Matrix[i][j] = TilesBag.RandomTiles();
+                    Matrix[i][j] = TilesBag.RandomTiles(i, j);
                 }
             }
         }

@@ -7,6 +7,7 @@ public enum PossibleColors {
     YELLOW("YELLOW"),
     WHITE("WHITE"),
     PINK("PINK"),
+
     DEFAULT("DEFAULT"),
     XTILE("XTILE");
 
@@ -19,5 +20,6 @@ public enum PossibleColors {
     public String getColor() {
         return Color;
     }
+
 
 }

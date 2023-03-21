@@ -29,7 +29,7 @@ public class TilesBag {
         return NtotalRemaining;
     }
 
-    public static Tile RandomTiles(){
+    public static Tile RandomTiles(int row, int col){
         int random_color = 0;
         while(true) {
             random_color = rand.nextInt(6);
@@ -39,7 +39,7 @@ public class TilesBag {
                     if (NremainingBlue > 0) {
                         NremainingBlue--;
                         NtotalRemaining--;
-                        return new Tile(PossibleColors.BLUE);
+                        return new Tile(row, col, PossibleColors.BLUE);
                     }
                     break;
 
@@ -47,7 +47,7 @@ public class TilesBag {
                     if (NremainingCyan > 0) {
                         NremainingCyan--;
                         NtotalRemaining--;
-                        return new Tile(PossibleColors.CYAN);
+                        return new Tile(row, col, PossibleColors.CYAN);
                     }
                     break;
 
@@ -55,7 +55,7 @@ public class TilesBag {
                     if (NremainingGreen > 0) {
                         NremainingGreen--;
                         NtotalRemaining--;
-                        return new Tile(PossibleColors.GREEN);
+                        return new Tile(row, col, PossibleColors.GREEN);
                     }
                     break;
 
@@ -63,7 +63,7 @@ public class TilesBag {
                     if (NremainingYellow > 0) {
                         NremainingYellow--;
                         NtotalRemaining--;
-                        return new Tile(PossibleColors.YELLOW);
+                        return new Tile(row, col, PossibleColors.YELLOW);
                     }
                     break;
 
@@ -71,7 +71,7 @@ public class TilesBag {
                     if (NremainingPink > 0) {
                         NremainingPink--;
                         NtotalRemaining--;
-                        return new Tile(PossibleColors.PINK);
+                        return new Tile(row, col, PossibleColors.PINK);
                     }
                     break;
 
@@ -79,7 +79,7 @@ public class TilesBag {
                     if (NremainingWhite > 0) {
                         NremainingWhite--;
                         NtotalRemaining--;
-                        return new Tile(PossibleColors.WHITE);
+                        return new Tile(row, col, PossibleColors.WHITE);
                     }
                     break;
                 // default: return new Tile(PossibleColors.DEFAULT);
