@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class User {
 
-    private final String Nickname;
+    private static String Nickname;
 
     private final int Score;
 
@@ -16,10 +16,16 @@ public class User {
 
     int tilesNumber;
 
+    private Game game;
+
+    private Shelfie shelf;
+
+    private Board board;
+
 
     public User() {
 
-        this.Nickname = Lobby.setNickname();
+       // Nickname = Lobby.setNickname(); -> serve controller/view che fa impostare nickname a user dentro la lobby
 
         this.Score = 0;
 
@@ -29,38 +35,70 @@ public class User {
 
     }
 
-    int MaxValueOfTiles() {
+    int MaxValueOfTiles() throws IsNotPlayerException {
 
-        int max = Shelfie.PossibleTiles();
+        if (Type.equals("PLAYER")){
 
-        return Board.FindMaxAdjacent(max);
+           int max = shelf.PossibleTiles();
+
+           if(max < 0 || max > 3){
+               throw new IndexOutOfBoundsException();
+           }
+
+           return board.FindMaxAdjacent(max);
+
+        } else{
+            throw new IsNotPlayerException(Type);
+        }
     }
 
-    ArrayList ChoosableTiles(int tilesValue) {
+    ArrayList ChoosableTiles(int tilesValue) throws IsNotPlayerException {
 
-        tilesNumber = tilesValue;
+        if (Type.equals("PLAYER")){
 
-        return Board.ChoosableTiles(tilesValue); //struttura dati
+            tilesNumber = tilesValue;
 
+            return board.ChoosableTiles(tilesValue); //struttura dati
+
+        } else{
+
+            throw new IsNotPlayerException(Type);
+        }
     }
 
-    int[] ChooseSelectedTiles(int x1, int x2, int x3, int y1, int y2, int y3, String col1, String col2, String col3) {
+    boolean[] ChooseSelectedTiles(int x1, int x2, int x3, int y1, int y2, int y3, String col1, String col2, String col3) throws IsNotPlayerException {
 
-        Board.RemoveTiles(x1, x2, x3, y1, y2, y3);
+        if (Type.equals("PLAYER")){
 
-        return Shelfie.ChooseColumn(tilesNumber);
+             board.RemoveTiles(x1, x2, x3, y1, y2, y3);
+
+            return shelf.ChooseColumn(tilesNumber);
+
+        } else{
+
+            throw new IsNotPlayerException(Type);
+        }
     }
 
-    void InsertTile(int column, String[] colorOrder) {
+    void InsertTile(int column, String[] colorOrder) throws IsNotPlayerException, IndexOutOfBoundsException {
 
-        Shelfie.AddTile(column, colorOrder, tilesNumber);
+        if (Type.equals("PLAYER")){
+            if(column < 0 || column > 4){
+                throw new IndexOutOfBoundsException();
+            }else {
 
-        Board.Refill();
+                shelf.AddTile(column, colorOrder, tilesNumber);
+            }
+
+            board.Refill();
+
+        } else{
+
+            throw new IsNotPlayerException(Type);
+        }
     }
 
-
-
-    public String getNickname() {
+    public static String getNickname() {
         return Nickname;
     }
 
@@ -75,18 +113,33 @@ public class User {
         return InGame;
     }
 
-    void CreateGame(String Nickname, int playerNumber){
-        Type = "Player";
+    void CreateGame(String Nickname, int playerNumber) throws IsNotGuestException{
+        if(Type.equals("GUEST")) {
 
-        Game g = new Game(playerNumber);
+            Type = "Player";
+
+            Lobby.PickGuest();
+
+            this.game = new Game(playerNumber, this);
+
+        }else{
+            throw new IsNotGuestException(Type);
+        }
     }
 
-    void JoinGame(String Nickname){
-        Type = "Player";
+    void JoinGame(String Nickname, this) throws IsNotGuestException {
+        if(Type.equals("GUEST")) {
+            Type = "Player";
 
-        //TODO
+            Lobby.PickGuest();
+        }else{
+            throw new IsNotGuestException(Type);
+        }
     }
 
-
+    void CreateShelfie(int PersonalCardID){
+        this.shelf = new Shelfie(PersonalCardID);
+        this.board = game.getBoard();
+    }
 
 }
