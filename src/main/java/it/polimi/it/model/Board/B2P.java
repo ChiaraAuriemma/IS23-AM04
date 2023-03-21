@@ -13,9 +13,9 @@ public class B2P extends Board{
      * Initializes a 9x9 matrix with the X or colored Tiles where needed
      */
 
+
     public B2P(){
         matrix = new Tile[9][9];
-
         for(int i=0; i<9; i++){
             for(int j=0; j<9; j++){
                 if(i==0 || i==8){

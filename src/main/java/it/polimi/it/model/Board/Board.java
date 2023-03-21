@@ -8,20 +8,25 @@ import java.util.List;
 
 
 public abstract class Board {
-    //The maximum dimension of the board is a 9x9 matrix
+
     public static Tile[][] matrix;
 
+
+    /**
+     * Constructor method of the abstract class
+     * Gets specified in the classes: B2P, B3P and B4P
+     */
     public Board() {
 
     }
 
 
     /**
-     * Checks if a refill of the board is needed calling method checkrefill
-     * eventually refills the board, extracting random tiles from the TilesBag
+     * Checks if a refill of the board is needed calling method checkRefill
+     * Eventually refills the board, extracting random tiles from the TilesBag
      */
     public void refill() {
-        if (!checkrefill()) {
+        if (!checkRefill()) {
             return;
         }
         int remainingTiles;
@@ -38,17 +43,16 @@ public abstract class Board {
         }
     }
 
+
     /**
      * Given the Board matrix, checks if a refill is needed.
-     *
      * @return a boolean value which is true if the boards needs a refill, false otherwise
      */
-    private Boolean checkrefill() {
+    private Boolean checkRefill() {
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
                 Tile til = matrix[i][j];
                 if (!til.getColor().equals("DEFAULT") && !til.getColor().equals("XTILE")) {
-                    //you get in this branch if the tile in position i;j is a 'Color' tile;
                     if (i < 8) {
                         if (!matrix[i + 1][j].getColor().equals("DEFAULT") && !matrix[i + 1][j].getColor().equals("XTILE")) {
                             return false;
@@ -72,14 +76,12 @@ public abstract class Board {
                 }
             }
         }
-        //you get to this point of the method only if all the 'color' tiles don't have any adjacent
         return true;
-
     }
+
 
     /**
      * Finds the maximum number of Tiles that can be taken from the board
-     *
      * @param maxFromShelfie is the maximum number of tiles that can be contained in the columns of the player's Shelfie
      * @return the maximum number of Tiles that can be taken from the board, this number can't be higher than maxFromShelfie
      */
@@ -89,7 +91,6 @@ public abstract class Board {
         int middlecount;
         int[][] visited = new int[9][9];
 
-        //Initialize the 'visited' matrix to all 0
         for (int a = 0; a < 9; a++) {
             for (int b = 0; b < 9; b++) {
                 visited[a][b] = 0;
@@ -99,12 +100,11 @@ public abstract class Board {
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
                 count = 0;
-
-                if (!matrix[i][j].getColor().equals("DEFAULT") && !matrix[i][j].getColor().equals("DEFAULT")) {//se la cella è colorata
-                    if (i == 0 || i == 8 || j == 0 || j == 8) {//se la cella è esterna
+                if (!matrix[i][j].getColor().equals("DEFAULT") && !matrix[i][j].getColor().equals("DEFAULT")) {
+                    if (i == 0 || i == 8 || j == 0 || j == 8) {
                         count = 1;
                         visited[i][j] = 1;
-                    } else {//se la cella è interna, controllo che almeno una delle tile confinanti siano incolore
+                    } else {
                         middlecount = 0;
                         if (i >= 1) {
                             if (matrix[i - 1][j].getColor().equals("DEFAULT") || matrix[i - 1][j].getColor().equals("XTILE")) {
@@ -130,14 +130,12 @@ public abstract class Board {
                                 visited[i][j + 1] = 1;
                             }
                         }
-                        if (middlecount > 0) {//porto ad 1 il counter solo se la casella è a tutti gli effetti prendibile
+                        if (middlecount > 0) {
                             count = 1;
                             middlecount = 0;
                         }
-                    }// A questo punto count è 1 se la tile può essere presa
+                    }
 
-                    //controllo se posso andare oltre e aumentare il counter a 2 o 3,
-                    //ma prima verifico che effettivamente mi serva a qualcosa:
                     if (maxFromShelfie == 1) {
                         return 1;
                     }
@@ -161,8 +159,17 @@ public abstract class Board {
         return max;
     }
 
-    int countAdjacent(int i, int j, int[][] visited) {//parte da una posizione dalla matrice che è sicuramente prendibile
-        int counter = 0;                                //i e j sono esattamente quelle usate nel metodo chiamante, da cui partire
+    /**
+     * Starting from a given position of the matrix, counts how many tiles,
+     *      which are adjacent to the tile in the starting position can be taken in a single turn
+     * This method eventually calls countAdjacentSecondStage if needed
+     * @param i is the starting row
+     * @param j is the starting column
+     * @param visited is a matrix used to know if a given cell of the matrix has already been explored
+     * @return the number of take-able cells adjacent to the starting one
+     */
+    int countAdjacent(int i, int j, int[][] visited) {
+        int counter = 0;
         int upOk = 0;
         int downOk = 0;
         int leftOk = 0;
@@ -174,12 +181,11 @@ public abstract class Board {
 
         if (i > 0) {
             if (visited[i - 1][j] == 0 && !matrix[i - 1][j].getColor().equals("DEFAULT") && !matrix[i - 1][j].getColor().equals("XTILE")) {
-                //int up = 0;
                 int middlecountUp = 0;
                 if (rowUp == 0 || rowUp == 8 || j == 0 || j == 8) {
                     middlecountUp = 1;
                     visited[i][rowUp] = 1;
-                } else {//controllo che la casella sopra abbia almeno una confinante con un void
+                } else {
                     if (rowUp >= 1 && middlecountUp == 0) {
                         if (matrix[rowUp - 1][j].getColor().equals("DEFAULT") || matrix[rowUp - 1][j].getColor().equals("XTILE")) {
                             if (visited[rowUp - 1][j] == 0) {
@@ -219,14 +225,13 @@ public abstract class Board {
                 }
             }
         }
-
-        if (j > 0) {//controllo relativo alla casella a sinistra di quella data
+        if (j > 0) {
             if (visited[i][j - 1] == 0 && !matrix[i][j - 1].getColor().equals("DEFAULT") && !matrix[i][j - 1].getColor().equals("XTILE")) {
                 int middlecountLeft = 0;
                 if (i == 0 || i == 8 || colLeft == 0 || colLeft == 8) {
                     middlecountLeft = 1;
                     visited[i][colLeft] = 1;
-                } else {//controllo che la casella sopra abbia almeno una confinante con un void
+                } else {
                     if (i >= 1 && middlecountLeft == 0) {
                         if (matrix[i - 1][colLeft].getColor().equals("DEFAULT") || matrix[i - 1][colLeft].getColor().equals("XTILE")) {
                             if (visited[i - 1][colLeft] == 0) {
@@ -266,17 +271,16 @@ public abstract class Board {
                 }
             }
         }
-
         if (counter >= 2) {
             return 2;
         }
-        if (j < 8) {//controllo relativo alla casella a destra di quella data
+        if (j < 8) {
             if (visited[i][j + 1] == 0 && !matrix[i][j + 1].getColor().equals("DEFAULT") && !matrix[i][j + 1].getColor().equals("XTILE")) {
                 int middlecountRight = 0;
                 if (i == 0 || i == 8 || colRight == 0 || colRight == 8) {
                     middlecountRight = 1;
                     visited[i][colRight] = 1;
-                } else {//controllo che la casella sopra abbia almeno una confinante con un void
+                } else {
                     if (i >= 1 && middlecountRight == 0) {
                         if (matrix[i - 1][colRight].getColor().equals("DEFAULT") || matrix[i - 1][colRight].getColor().equals("XTILE")) {
                             if (visited[i - 1][colRight] == 0) {
@@ -299,7 +303,6 @@ public abstract class Board {
                                 middlecountRight++;
                                 visited[i + 1][colRight] = 1;
                             }
-
                         }
                     }
                     if (colRight <= 7 && middlecountRight == 0) {
@@ -308,7 +311,6 @@ public abstract class Board {
                                 middlecountRight++;
                                 visited[i][colRight + 1] = 1;
                             }
-
                         }
                     }
                     if (middlecountRight > 0) {
@@ -318,19 +320,16 @@ public abstract class Board {
                 }
             }
         }
-
         if (counter >= 2) {
             return 2;
         }
-
-        if (i < 8) {//Riga sotto
+        if (i < 8) {
             if (visited[i + 1][j] == 0 && !matrix[i + 1][j].getColor().equals("DEFAULT") && !matrix[i + 1][j].getColor().equals("XTILE")) {
-                //int Down = 0;
                 int middlecountDown = 0;
                 if (rowDown == 0 || rowDown == 8 || j == 0 || j == 8) {
                     middlecountDown = 1;
                     visited[i][rowDown] = 1;
-                } else {//controllo che la casella sopra abbia almeno una confinante con un void
+                } else {
                     if (rowDown >= 1 && middlecountDown == 0) {
                         if (matrix[rowDown - 1][j].getColor().equals("DEFAULT") || matrix[rowDown - 1][j].getColor().equals("XTILE")) {
                             if (visited[rowDown - 1][j] == 0) {
@@ -369,13 +368,10 @@ public abstract class Board {
                     }
                 }
             }
-
         }
-
         if (counter >= 2) {
             return 2;
         }
-
         if (upOk == 1) {
             counter = counter + countAdjacentSecondStage(rowUp, j, visited);
         }
@@ -403,6 +399,15 @@ public abstract class Board {
         return counter;
     }
 
+
+    /**
+     * Counts how many Tiles adjacent to the starting cell can be taken in a single turn
+     * This is a helper method that might only be called by countAdjacent
+     * @param i is the line of the starting cell
+     * @param j is the column of the starting cell
+     * @param visited is a matrix used to know if a given cell of the matrix has already been explored
+     * @return the number of take-able Tiles that are adjacent to the starting one
+     */
     int countAdjacentSecondStage(int i, int j, int[][] visited) {
         int rowUp = i - 1;
         int colLeft = j - 1;
@@ -411,10 +416,9 @@ public abstract class Board {
 
         if (i > 0) {
             if (visited[i - 1][j] == 0 && !matrix[i - 1][j].getColor().equals("DEFAULT") && !matrix[i - 1][j].getColor().equals("XTILE")) {
-                //int up = 0;
                 if (rowUp == 0 || rowUp == 8 || j == 0 || j == 8) {
                     visited[i][rowUp] = 1;
-                } else {//controllo che la casella sopra abbia almeno una confinante con un void
+                } else {
                     if (rowUp >= 1) {
                         if (matrix[rowUp - 1][j].getColor().equals("DEFAULT") || matrix[rowUp - 1][j].getColor().equals("XTILE")) {
                             if (visited[rowUp - 1][j] == 0) {
@@ -446,12 +450,11 @@ public abstract class Board {
                 }
             }
         }
-
-        if (j > 0) {//controllo relativo alla casella a sinistra di quella data
+        if (j > 0) {
             if (visited[i][j - 1] == 0 && !matrix[i][j - 1].getColor().equals("DEFAULT") && !matrix[i][j - 1].getColor().equals("XTILE")) {
                 if (i == 0 || i == 8 || colLeft == 0 || colLeft == 8) {
                     return 1;
-                } else {//controllo che la casella sopra abbia almeno una confinante con un void
+                } else {
                     if (i >= 1) {
                         if (matrix[i - 1][colLeft].getColor().equals("DEFAULT") || matrix[i - 1][colLeft].getColor().equals("XTILE")) {
                             if (visited[i - 1][colLeft] == 0) {
@@ -483,11 +486,11 @@ public abstract class Board {
                 }
             }
         }
-        if (j < 8) {//controllo relativo alla casella a destra di quella data
+        if (j < 8) {
             if (visited[i][j + 1] == 0 && !matrix[i][j + 1].getColor().equals("DEFAULT") && !matrix[i][j + 1].getColor().equals("XTILE")) {
                 if (i == 0 || i == 8 || colRight == 0 || colRight == 8) {
                     return 1;
-                } else {//controllo che la casella sopra abbia almeno una confinante con un void
+                } else {
                     if (i >= 1) {
                         if (matrix[i - 1][colRight].getColor().equals("DEFAULT") || matrix[i - 1][colRight].getColor().equals("XTILE")) {
                             if (visited[i - 1][colRight] == 0) {
@@ -523,7 +526,7 @@ public abstract class Board {
             if (visited[i + 1][j] == 0 && !matrix[i + 1][j].getColor().equals("DEFAULT") && !matrix[i + 1][j].getColor().equals("XTILE")) {
                 if (rowDown == 0 || rowDown == 8 || j == 0 || j == 8) {
                     return 1;
-                } else {//controllo che la casella sopra abbia almeno una confinante con un void
+                } else {
                     if (rowDown >= 1) {
                         if (matrix[rowDown - 1][j].getColor().equals("DEFAULT") || matrix[rowDown - 1][j].getColor().equals("XTILE")) {
                             if (visited[rowDown - 1][j] == 0) {
@@ -559,6 +562,17 @@ public abstract class Board {
     }
 
 
+    /**
+     * Removes the tiles that the player chose to take from the board
+     * Given the coordinate (row and column of the Tiles in the board)
+     *      Rows and Columns are set to -1 if the player took less than 3 Tiles
+     * @param row1 is the row of the first tile
+     * @param row2 is the row of the second tile
+     * @param row3 is the row of the third tile
+     * @param col1 is the column of the first tile
+     * @param col2 is the column of the second tile
+     * @param col3 is the column of the third tile
+     */
     public void RemoveTiles(int row1, int row2, int row3, int col1, int col2, int col3) {
         if (row1 >= 0 && row1 <= 8 && col1 >= 0 && col1 <= 8) {
             matrix[row1][col1] = new Tile(PossibleColors.DEFAULT);
@@ -572,6 +586,13 @@ public abstract class Board {
     }
 
 
+    /**
+     * Given the number of Tiles that a player wants to take from the board,
+     * Returns every combination of Tiles that can be taken following the rules of the game
+     * Eventually calls addTilesToTriplet
+     * @param size is the number of Tiles that the player wants to take from the board
+     * @return a List that contains a List of Tiles
+     */
     public List<List<Tile>> choosableTiles(int size) {
         List<List<Tile>> choosableTilesList = new ArrayList<>();
         int[][] visited = new int[9][9];
@@ -581,11 +602,9 @@ public abstract class Board {
                 visited[a][b] = 0;
             }
         }
-
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
                 if (!matrix[i][j].getColor().equals("DEFAULT") && !matrix[i][j].getColor().equals("XTILE") && visited[i][j] == 0) {
-
                     List<Tile> triplet = new ArrayList<>();
                     addTilesTotriplet(visited, i, j, triplet, size);
 
@@ -600,10 +619,19 @@ public abstract class Board {
         return choosableTilesList;
     }
 
+
+    /**
+     * Helper method that can be called only by choosableTiles
+     * Adds to the List of tiles 'triplet' the take-able tiles following the rules of the game
+     * This method is recursive and calls itself on every direction departing from the starting cell, if the triplet isn't completed
+     * @param visited is a matrix used to know if a given cell had already been explored
+     * @param i is the row of the starting Tile
+     * @param j is the column of the starting Tile
+     * @param triplet is the List in which a Tile is appended if is take-able
+     * @param size is the maximum size of the List 'triplet', once is reached the List can't be expanded and the traversing of the board stops
+     */
     private void addTilesTotriplet(int[][] visited, int i, int j, List<Tile> triplet, int size) {
-
         int ok = 0;
-
         if (i < 0 || i > 8 || j < 0 || j > 8 || visited[i][j] == 1 || matrix[i][j].getColor().equals("DEFAULT") || matrix[i][j].getColor().equals("XTILE")) {
             return;
         }
@@ -627,11 +655,9 @@ public abstract class Board {
                 ok = 1;
             }
         }
-
         if (ok == 0) {
             return;
         }
-
         switch (matrix[i][j].getColor()) {
             case "BLUE":
                 triplet.add(new Tile(i, j, PossibleColors.BLUE));
@@ -652,9 +678,7 @@ public abstract class Board {
                 triplet.add(new Tile(i, j, PossibleColors.PINK));
                 break;
         }
-
         if (triplet.size() < size) {
-
             addTilesTotriplet(visited, i - 1, j, triplet, size);
             addTilesTotriplet(visited, i + 1, j, triplet, size);
             addTilesTotriplet(visited, i, j - 1, triplet, size);

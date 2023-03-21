@@ -6,12 +6,16 @@ import java.util.Random;
 public class TilesBag {
 
     public static HashMap<PossibleColors, Integer> remainingTiles = new HashMap<>();
-
     public static int totalRemaining;
-
     static Random rand = new Random();
 
-    //constructor
+
+    /**
+     * Constructor method of the TilesBag
+     * Initializes totalRemaining to 132, which is the total number of tiles in the bag when the bag is full
+     * Initializes an HashMap that uses the PossibleColors Enumeration as Key and stores, for each color, 22,
+     *      which is the maximum number of tiles of the same color that can be used during a game
+     */
     public TilesBag(){
         remainingTiles.put(PossibleColors.CYAN, 22);
         remainingTiles.put(PossibleColors.BLUE, 22);
@@ -22,10 +26,22 @@ public class TilesBag {
         totalRemaining = 132;
     }
 
+
+    /**
+     * Getter method
+     * @return the total number of the tiles that are still in the bag
+     */
     public static int getTotRemaining(){
         return totalRemaining;
     }
 
+
+    /**
+     * Extracts a random color and creates a Tile of that color
+     * @param row is the row parameter to be given to the constructor of the Tile
+     * @param col is the column parameter to be given to the constructor of the Tile
+     * @return the new Tile that got created
+     */
     public static Tile randomTiles(int row, int col){
         int random_color;
         while(true) {

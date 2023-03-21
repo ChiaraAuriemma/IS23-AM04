@@ -7,19 +7,22 @@ public enum PossibleColors {
     YELLOW("YELLOW"),
     WHITE("WHITE"),
     PINK("PINK"),
-
     DEFAULT("DEFAULT"),
     XTILE("XTILE");
 
-    private final String Color;
+    private final String color;
 
-    PossibleColors(String Color) {
-        this.Color = Color;
+
+    PossibleColors(String color) {
+        this.color = color;
     }
 
+
+    /**
+     * Getter method
+     * @return the color specified by the enumeration
+     */
     public String getColor() {
-        return Color;
+        return color;
     }
-
-
 }

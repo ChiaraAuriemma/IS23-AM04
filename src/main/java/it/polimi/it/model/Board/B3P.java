@@ -10,12 +10,11 @@ public class B3P extends Board{
 
 
     /**
-     * Constructor of the board for 2 player
+     * Constructor of the board for 3 player
      * Initializes a 9x9 matrix with the X or colored Tiles where needed
      */
     public B3P(){
         matrix = new Tile[9][9];
-
         for(int i=0; i<9; i++){
             for(int j=0; j<9; j++){
                 if (i==0 && j!=3) {

@@ -8,6 +8,11 @@ public class B4P extends Board{
 
     public Tile[][] matrix;
 
+
+    /**
+     * Constructor of the board for 3 player
+     * Initializes a 9x9 matrix with the X or colored Tiles where needed
+     */
     public B4P(){
         matrix = new Tile[9][9];
         for(int i=0; i<9; i++){
