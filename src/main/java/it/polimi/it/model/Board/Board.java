@@ -573,7 +573,7 @@ public abstract class Board {
      * @param col2 is the column of the second tile
      * @param col3 is the column of the third tile
      */
-    public void RemoveTiles(int row1, int row2, int row3, int col1, int col2, int col3) {
+    public void removeTiles(int row1, int row2, int row3, int col1, int col2, int col3) {
         if (row1 >= 0 && row1 <= 8 && col1 >= 0 && col1 <= 8) {
             matrix[row1][col1] = new Tile(PossibleColors.DEFAULT);
         }
