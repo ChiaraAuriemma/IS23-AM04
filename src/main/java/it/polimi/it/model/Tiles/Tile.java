@@ -1,8 +1,20 @@
 package it.polimi.it.model.Tiles;
 
 public class Tile {
+
+    /**
+     * The color of the tile, taken from the Enumeration PossibleColors
+     */
     PossibleColors color;
+
+    /**
+     * Stores the row in which the Tile is positioned on the Board
+     */
     int boardRow;
+
+    /**
+     * Stores the column in which the Tile is positioned on the Board
+     */
     int boardColumn;
 
 

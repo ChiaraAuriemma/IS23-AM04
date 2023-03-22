@@ -6,14 +6,16 @@ import it.polimi.it.model.Tiles.TilesBag;
 
 public class B2P extends Board{
 
+    /**
+     * 9x9 Tiles matrix that represents the configuration of the Board when there are 2 players
+     */
     public Tile[][] matrix;
+
 
     /**
      * Constructor of the board for 2 player
      * Initializes a 9x9 matrix with the X or colored Tiles where needed
      */
-
-
     public B2P(){
         matrix = new Tile[9][9];
         for(int i=0; i<9; i++){

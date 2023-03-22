@@ -9,6 +9,10 @@ import java.util.List;
 
 public abstract class Board {
 
+
+    /**
+     * Matrix that represents the LivingRoom of the game
+     */
     public static Tile[][] matrix;
 
 

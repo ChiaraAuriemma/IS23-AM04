@@ -5,8 +5,20 @@ import java.util.Random;
 
 public class TilesBag {
 
+
+    /**
+     * Hashmap used to store the number of the remaining tiles of each color
+     */
     public static HashMap<PossibleColors, Integer> remainingTiles = new HashMap<>();
+
+    /**
+     * Stores the total number of the remaining Tiles
+     */
     public static int totalRemaining;
+
+    /**
+     * Used to extract a random number to choose which color is the Tile that gets extracted from the bad
+     */
     static Random rand = new Random();
 
 
