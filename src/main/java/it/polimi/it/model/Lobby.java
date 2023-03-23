@@ -5,9 +5,9 @@ import java.util.Scanner;
 
 public class Lobby {
 
-    private static String Nickname;
+    private static String nickname;
 
-    private static ArrayList<String> GuestList;
+    private static ArrayList<String> guestList;
 
     /*public static String setNickname() {
         Scanner s = new Scanner(System.in);
@@ -15,16 +15,16 @@ public class Lobby {
         return Nickname;
     }
     */
-    void CreateUser(){
+    void createUser(){
         User U = new User();
     }
 
-    public void setGuestList(String Nickname){
-        GuestList.add(Nickname);
+    public void setGuestList(String nickname){
+        guestList.add(nickname);
     }
 
-    public static String PickGuest(){
-        return GuestList.remove(0);
+    public static String pickGuest(){
+        return guestList.remove(0);
     }
 
 

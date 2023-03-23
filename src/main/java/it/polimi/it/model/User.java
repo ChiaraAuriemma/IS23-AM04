@@ -3,18 +3,20 @@ package it.polimi.it.model;
 import it.polimi.it.model.Board.Board;
 import it.polimi.it.model.Exceptions.IsNotGuestException;
 import it.polimi.it.model.Exceptions.IsNotPlayerException;
+import it.polimi.it.model.Tiles.Tile;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class User {
 
-    private static String Nickname;
+    private static String nickname;
 
-    private final int Score;
+    private final int score;
 
-    private final boolean InGame;
+    private final boolean inGame;
 
-    private String Type;
+    private String type;
 
     int tilesNumber;
 
@@ -29,19 +31,19 @@ public class User {
 
        // Nickname = Lobby.setNickname(); -> serve controller/view che fa impostare nickname a user dentro la lobby
 
-        this.Score = 0;
+        this.score = 0;
 
-        this.InGame = true;
+        this.inGame = true;
 
-        this.Type = "GUEST";
+        this.type = "GUEST";
 
     }
 
-    int MaxValueOfTiles() throws IsNotPlayerException {
+    int maxValueOfTiles() throws IsNotPlayerException {
 
-        if (Type.equals("PLAYER")){
+        if (type.equals("PLAYER")){
 
-           int max = shelf.PossibleTiles();
+           int max = shelf.possibleTiles();
 
            if(max < 0 || max > 3){
                throw new IndexOutOfBoundsException();
@@ -50,97 +52,97 @@ public class User {
            return board.findMaxAdjacent(max);
 
         } else{
-            throw new IsNotPlayerException(Type);
+            throw new IsNotPlayerException("Sei un Guest, non puoi usare questo metodo");
         }
     }
 
-    ArrayList ChoosableTiles(int tilesValue) throws IsNotPlayerException {
+    List<List<Tile>> choosableTiles(int tilesValue) throws IsNotPlayerException {
 
-        if (Type.equals("PLAYER")){
+        if (type.equals("PLAYER")){
 
             tilesNumber = tilesValue;
 
-            return board.ChoosableTiles(tilesValue); //struttura dati
+            return board.choosableTiles(tilesValue);
 
         } else{
 
-            throw new IsNotPlayerException(Type);
+            throw new IsNotPlayerException("Sei un Guest, non puoi usare questo metodo");
         }
     }
 
-    boolean[] ChooseSelectedTiles(int x1, int x2, int x3, int y1, int y2, int y3, String col1, String col2, String col3) throws IsNotPlayerException {
+    boolean[] chooseSelectedTiles(int x1, int x2, int x3, int y1, int y2, int y3, String col1, String col2, String col3) throws IsNotPlayerException {
 
-        if (Type.equals("PLAYER")){
+        if (type.equals("PLAYER")){
 
-             board.RemoveTiles(x1, x2, x3, y1, y2, y3);
+             board.removeTiles(x1, x2, x3, y1, y2, y3);
 
-            return shelf.ChooseColumn(tilesNumber);
+            return shelf.chooseColumn(tilesNumber);
 
         } else{
 
-            throw new IsNotPlayerException(Type);
+            throw new IsNotPlayerException("Sei un Guest, non puoi usare questo metodo");
         }
     }
 
-    void InsertTile(int column, String[] colorOrder) throws IsNotPlayerException, IndexOutOfBoundsException {
+    void insertTile(int column, String[] colorOrder) throws IsNotPlayerException, IndexOutOfBoundsException {
 
-        if (Type.equals("PLAYER")){
+        if (type.equals("PLAYER")){
             if(column < 0 || column > 4){
                 throw new IndexOutOfBoundsException();
             }else {
 
-                shelf.AddTile(column, colorOrder, tilesNumber);
+                shelf.addTile(column, colorOrder, tilesNumber);
             }
 
             board.refill();
 
         } else{
 
-            throw new IsNotPlayerException(Type);
+            throw new IsNotPlayerException("Sei un Guest, non puoi usare questo metodo");
         }
     }
 
     public static String getNickname() {
-        return Nickname;
+        return nickname;
     }
 
 
     public int getScore() {
-        return Score;
+        return score;
     }
 
     public boolean checkInGame() {
         //check se crasha
 
-        return InGame;
+        return inGame;
     }
 
-    void CreateGame(String Nickname, int playerNumber) throws IsNotGuestException {
-        if(Type.equals("GUEST")) {
+    void createGame(String Nickname, int playerNumber) throws IsNotGuestException {
+        if(type.equals("GUEST")) {
 
-            Type = "Player";
+            type = "Player";
 
-            Lobby.PickGuest();
+            Lobby.pickGuest();
 
             this.game = new Game(playerNumber, this);
 
         }else{
-            throw new IsNotGuestException(Type);
+            throw new IsNotGuestException("Sei un Player, non puoi usare questo metodo");
         }
     }
 
-    void JoinGame(String Nickname, this) throws IsNotGuestException {
-        if(Type.equals("GUEST")) {
-            Type = "Player";
+    void joinGame(String Nickname, this) throws IsNotGuestException {
+        if(type.equals("GUEST")) {
+            type = "Player";
 
-            Lobby.PickGuest();
+            Lobby.pickGuest();
         }else{
-            throw new IsNotGuestException(Type);
+            throw new IsNotGuestException("Sei un Player, non puoi usare questo metodo");
         }
     }
 
-    void CreateShelfie(int PersonalCardID){
-        this.shelf = new Shelfie(PersonalCardID);
+    void createShelfie(int personalCardID){
+        this.shelf = new Shelfie(personalCardID);
         this.board = game.getBoard();
     }
 

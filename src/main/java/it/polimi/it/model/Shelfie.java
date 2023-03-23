@@ -5,46 +5,46 @@ import it.polimi.it.model.Tiles.Tile;
 
 public class Shelfie{
 
-    private String Player;
+    private String player;
 
-    private int CommonToken1;
+    private int commonToken1;
 
-    private int CommonToken2;
+    private int commonToken2;
 
-    private boolean EndToken1;
+    private boolean endToken1;
 
-    private static Tile[][] Shelf;
+    private static Tile[][] shelf;
 
-    private final int PersonalCardID;
+    private final int personalCardID;
 
-    public Shelfie(int PersonalCardID){
+    public Shelfie(int personalCardID){
 
-        Shelf = new Tile[6][5];
+        shelf = new Tile[6][5];
 
         for(int row=0; row<6; row++){
             for(int column=0; column<5; column++){
-                Shelf[row][column] = new Tile(PossibleColors.DEFAULT);
+                shelf[row][column] = new Tile(PossibleColors.DEFAULT);
             }
         }
 
-        this.PersonalCardID = PersonalCardID;
+        this.personalCardID = personalCardID;
 
-        this.Player = User.getNickname();
+        this.player = User.getNickname();
 
-        this.EndToken1 = false;
+        this.endToken1 = false;
 
-        this.CommonToken1 = 0;
+        this.commonToken1 = 0;
 
-        this.CommonToken2 = 0;
+        this.commonToken2 = 0;
 
     }
 
 
     public String getCell(int column, int row){
-        return Shelf[row][column].getColor();
+        return shelf[row][column].getColor();
     }
 
-    boolean[] ChooseColumn(int count){
+    boolean[] chooseColumn(int count){
 
         boolean[] checkColumn = {false, false, false, false, false};
         int numDefault;
@@ -52,7 +52,7 @@ public class Shelfie{
         for(int column=0; column<5; column++){
             numDefault = 0;
             for(int row=0; row<6; row++){
-                if(Shelf[row][column].getColor().equals("DEFAULT")){
+                if(shelf[row][column].getColor().equals("DEFAULT")){
                     numDefault++;
                 }
             }
@@ -64,15 +64,15 @@ public class Shelfie{
         return checkColumn;
     }
 
-    void AddTile(int column, String[] order, int count){
+    void addTile(int column, String[] order, int count){
 
         int numTiles = 0;
 
         for(int row=0; row<6; row++)
         {
             if(numTiles < order.length) {
-                if (Shelf[row][column].getColor().equals("DEFAULT")) {
-                    Shelf[row][column] = new Tile(PossibleColors.valueOf(order[numTiles]));
+                if (shelf[row][column].getColor().equals("DEFAULT")) {
+                    shelf[row][column] = new Tile(PossibleColors.valueOf(order[numTiles]));
                     numTiles++;
                 }
             }
@@ -80,28 +80,28 @@ public class Shelfie{
 
     }
 
-    boolean CheckEnd(){
+    boolean checkEnd(){
 
         int count = 0;
 
         for(int row=0; row<6; row++){
             for(int  column=0; column<5; column++){
-                if(Shelf[row][column].getColor().equals("DEFAULT")){
+                if(shelf[row][column].getColor().equals("DEFAULT")){
                     count ++;
                 }
             }
         }
         if(count == 0){
-            EndToken1 = true;
+            endToken1 = true;
         }
 
-        return EndToken1;
+        return endToken1;
 
     }
 
-    int PossibleTiles(){
+    int possibleTiles(){
 
-        int tmp = 0;
+        int total = 0;
         int count;
 
         for(int column=0; column<5; column++){
@@ -109,37 +109,37 @@ public class Shelfie{
             count = 0;
 
             for(int row=0; row<6; row++){
-                if(Shelf[row][column].getColor().equals("DEFAULT")){
+                if(shelf[row][column].getColor().equals("DEFAULT")){
                     count ++;
                     if(count >= 3){
                         return 3;
                     }
                 }
             }
-            if(count > tmp){
-                tmp = count;
+            if(count > total){
+                total = count;
             }
         }
-        return tmp;
+        return total;
     }
 
     int getPersonalCardID(){
-        return PersonalCardID;
+        return personalCardID;
     }
 
     void setCommonToken1(int val){
-        CommonToken1 = val;
+        commonToken1 = val;
     }
 
     void setCommonToken2(int val){
-        CommonToken2 = val;
+        commonToken2 = val;
     }
 
     int getCommonToken1(){
-        return CommonToken1;
+        return commonToken1;
     }
 
     int getCommonToken2(){
-        return CommonToken2;
+        return commonToken2;
     }
 }

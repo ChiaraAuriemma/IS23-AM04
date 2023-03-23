@@ -4,17 +4,17 @@ public enum UserType {
     GUEST("GUEST"),
     PLAYER("PLAYER");
 
-    private String Type;
+    private String type;
 
     UserType(String Type){
-        this.Type = "GUEST";
+        this.type = "GUEST";
     }
 
     public String getType() {
-        return Type;
+        return type;
     }
 
     public void setType() {
-        Type = "PLAYER";
+        type = "PLAYER";
     }
 }
