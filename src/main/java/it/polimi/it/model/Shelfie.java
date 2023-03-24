@@ -7,6 +7,8 @@ public class Shelfie{
 
     private String player;
 
+    private User user;
+
     private int commonToken1;
 
     private int commonToken2;
@@ -29,7 +31,7 @@ public class Shelfie{
 
         this.personalCardID = personalCardID;
 
-        this.player = User.getNickname();
+        this.player = user.getNickname();
 
         this.endToken1 = false;
 
