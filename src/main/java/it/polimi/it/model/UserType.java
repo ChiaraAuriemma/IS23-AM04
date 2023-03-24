@@ -1,20 +1,28 @@
 package it.polimi.it.model;
 
-public enum UserType {
-    GUEST("GUEST"),
-    PLAYER("PLAYER");
+import it.polimi.it.model.Tiles.Tile;
 
-    private String type;
+import java.util.List;
 
-    UserType(String Type){
-        this.type = "GUEST";
-    }
+public interface UserType {
 
-    public String getType() {
-        return type;
-    }
+    public List<List<Tile>> choosableTiles(int tilesNum);
 
-    public void setType() {
-        type = "PLAYER";
-    }
+    public boolean[] chooseSelectedTiles(List<Tile> choosen);
+
+    public void inserTile(int column, String[] colorOrder);
+
+    public String getNickname();
+
+    public int getScore();
+
+    public boolean checkInGame();
+
+    void createGame(String Nickname, int playerNumber, User user);
+
+    void joinGame(String Nickname, User User);
+
+    Shelfie createShelfie(int personalCardID);
+
+    public int maxValueofTiles();
 }
