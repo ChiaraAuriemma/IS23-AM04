@@ -3,6 +3,8 @@ package it.polimi.it.model;
 import it.polimi.it.model.Tiles.PossibleColors;
 import it.polimi.it.model.Tiles.Tile;
 
+import java.util.List;
+
 public class Shelfie{
 
     private String player;
@@ -66,15 +68,15 @@ public class Shelfie{
         return checkColumn;
     }
 
-    void addTile(int column, String[] order, int count){
+    void addTile(int column, List<Tile> choosen){
 
         int numTiles = 0;
 
         for(int row=0; row<6; row++)
         {
-            if(numTiles < order.length) {
+            if(numTiles < choosen.size()) {
                 if (shelf[row][column].getColor().equals("DEFAULT")) {
-                    shelf[row][column] = new Tile(PossibleColors.valueOf(order[numTiles]));
+                    shelf[row][column] = choosen.get(numTiles);
                     numTiles++;
                 }
             }
@@ -95,6 +97,8 @@ public class Shelfie{
         }
         if(count == 0){
             endToken1 = true;
+        }else {
+            endToken1 = false;
         }
 
         return endToken1;

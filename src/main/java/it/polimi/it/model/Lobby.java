@@ -11,8 +11,8 @@ public class Lobby {
 
     /*public static String setNickname() {
         Scanner s = new Scanner(System.in);
-        Nickname = s.nextLine();
-        return Nickname;
+        nickname = s.nextLine();
+        return nickname;
     }
     */
     void createUser(){
