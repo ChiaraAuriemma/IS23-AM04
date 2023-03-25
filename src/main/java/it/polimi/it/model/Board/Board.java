@@ -52,7 +52,7 @@ public abstract class Board {
      * Given the Board matrix, checks if a refill is needed.
      * @return a boolean value which is true if the boards needs a refill, false otherwise
      */
-    private Boolean checkRefill() {
+    public Boolean checkRefill() {
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
                 Tile til = matrix[i][j];
