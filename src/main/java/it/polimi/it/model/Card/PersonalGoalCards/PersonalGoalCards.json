@@ -1,0 +1,99 @@
+[{
+  "pinkPos" : ["0","5"],
+  "cyanPos" : ["2", "0"],
+  "yellowPos" : ["1", "2"],
+  "bluePos" : ["2", "5"],
+  "whitePos" : ["3","3"],
+  "greenPos" : ["4", "4"]
+},
+  {
+    "pinkPos" : ["1","4"],
+    "cyanPos" : ["2", "1"],
+    "yellowPos" : ["2", "3"],
+    "bluePos" : ["4", "0"],
+    "whitePos" : ["4","2"],
+    "greenPos" : ["0", "3"]
+  },
+  {
+    "pinkPos" : ["2","3"],
+    "cyanPos" : ["4", "2"],
+    "yellowPos" : ["3", "4"],
+    "bluePos" : ["0", "4"],
+    "whitePos" : ["0","0"],
+    "greenPos" : ["1", "2"]
+  },
+  {
+    "pinkPos" : ["3","2"],
+    "cyanPos" : ["0", "3"],
+    "yellowPos" : ["4", "5"],
+    "bluePos" : ["2", "3"],
+    "whitePos" : ["1","1"],
+    "greenPos" : ["2", "1"]
+  },
+  {
+    "pinkPos" : ["4","1"],
+    "cyanPos" : ["1", "4"],
+    "yellowPos" : ["0", "0"],
+    "bluePos" : ["1", "2"],
+    "whitePos" : ["2","2"],
+    "greenPos" : ["3", "0"]
+  },
+
+  {
+    "pinkPos" : ["0","0"],
+    "cyanPos" : ["2", "5"],
+    "yellowPos" : ["1", "1"],
+    "bluePos" : ["3", "1"],
+    "whitePos" : ["3","3"],
+    "greenPos" : ["4", "5"]
+  },
+  {
+    "pinkPos" : ["1","3"],
+    "cyanPos" : ["0", "2"],
+    "yellowPos" : ["4", "1"],
+    "bluePos" : ["3", "4"],
+    "whitePos" : ["2","0"],
+    "greenPos" : ["0", "5"]
+  },
+  {
+    "pinkPos" : ["0","2"],
+    "cyanPos" : ["2", "3"],
+    "yellowPos" : ["3", "0"],
+    "bluePos" : ["4", "5"],
+    "whitePos" : ["3","1"],
+    "greenPos" : ["1", "4"]
+  },
+  {
+    "pinkPos" : ["4","1"],
+    "cyanPos" : ["1", "1"],
+    "yellowPos" : ["2", "5"],
+    "bluePos" : ["0", "0"],
+    "whitePos" : ["4","2"],
+    "greenPos" : ["2", "3"]
+  },
+  {
+    "pinkPos" : ["3","0"],
+    "cyanPos" : ["4", "5"],
+    "yellowPos" : ["1", "4"],
+    "bluePos" : ["1", "1"],
+    "whitePos" : ["0","3"],
+    "greenPos" : ["3", "2"]
+  },
+  {
+    "pinkPos" : ["2","5"],
+    "cyanPos" : ["3", "0"],
+    "yellowPos" : ["0", "3"],
+    "bluePos" : ["2", "2"],
+    "whitePos" : ["1","4"],
+    "greenPos" : ["4", "1"]
+  },
+  {
+    "pinkPos" : ["1","4"],
+    "cyanPos" : ["3", "2"],
+    "yellowPos" : ["4", "1"],
+    "bluePos" : ["2", "3"],
+    "whitePos" : ["2","5"],
+    "greenPos" : ["0", "0"]
+  }
+]
+
