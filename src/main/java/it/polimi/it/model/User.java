@@ -10,7 +10,7 @@ public class User {
     private UserType type;
     private static String nickname;
 
-    private final int score;
+    private int score;
 
     private final boolean inGame;
 
@@ -22,7 +22,7 @@ public class User {
 
     private Board board;
 
-    public User(int score, boolean inGame){
+    public User(){
 
         //nickname = Lobby.setNickname();
 
@@ -33,12 +33,12 @@ public class User {
         this.type = new Guest();
     }
 
-    public void setGuestType(UserType GuestState){
-        this.type = GuestState;
+    public void setGuestType(UserType type){
+        this.type = type;
     }
 
-    public void setPlayerType(UserType PlayerState){
-        this.type = PlayerState;
+    public void setPlayerType(UserType type){
+        this.type = type;
     }
     public int maxValueOfTiles(){
         return type.maxValueofTiles();
@@ -52,20 +52,24 @@ public class User {
         return type.chooseSelectedTiles(choosen);
     }
 
-    public void inserTile(int column, String[] colorOrder){
-        type.inserTile(column, colorOrder);
+    public void inserTile(int column, List<Tile> choosen){
+        type.inserTile(column, choosen);
     }
 
     public String getNickname(){
-        return type.getNickname();
+        return nickname;
     }
 
     public int getScore(){
-        return type.getScore();
+        return score;
     }
 
-    public boolean checkInGame(){
-        return type.checkInGame();
+    public void setScore(int val){
+        score = val;
+    }
+
+    public boolean checkInGame(User user){
+        return type.checkInGame(this);
     }
 
 
@@ -80,5 +84,13 @@ public class User {
     public Shelfie createShelfie(int personalCardID){
 
         return type.createShelfie(personalCardID);
+    }
+
+    public Shelfie getShelf(User user){
+        return type.getShelf(this);
+    }
+
+    public Board getBoard(User user){
+        return type.getBoard(this);
     }
 }

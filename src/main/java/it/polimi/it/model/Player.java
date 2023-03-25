@@ -33,35 +33,25 @@ public class Player implements UserType {
     }
 
     @Override
-    public void inserTile(int column, String[] colorOrder) {
+    public void inserTile(int column, List<Tile> choosen) {
 
         if(column < 0 || column > 4){
+
             throw new IndexOutOfBoundsException();
+
         }else {
 
-            shelf.addTile(column, colorOrder, tilesNumber);
+            shelf.addTile(column, choosen);
         }
 
         board.refill();
     }
 
     @Override
-    public String getNickname() {
-        //return nickname;
-        return null;
-    }
+    public boolean checkInGame(User user) {
 
-    @Override
-    public int getScore() {
-        return score;
-    }
-
-    public void setScore(int val){
-        score = val;
-    }
-    @Override
-    public boolean checkInGame() {
-        return false;
+        //vedere quando crasha
+        return true;
     }
 
     @Override
@@ -76,6 +66,7 @@ public class Player implements UserType {
 
     @Override
     public Shelfie createShelfie(int personalCardID) {
+
         this.board = game.getBoard();
         return this.shelf = new Shelfie(personalCardID);
     }
@@ -90,5 +81,15 @@ public class Player implements UserType {
         }
 
         return board.findMaxAdjacent(max);
+    }
+
+    @Override
+    public Shelfie getShelf(User user){
+        return this.shelf;
+    }
+
+    @Override
+    public Board getBoard(User user){
+        return this.board;
     }
 }

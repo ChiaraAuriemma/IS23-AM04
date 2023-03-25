@@ -1,13 +1,12 @@
 package it.polimi.it.model;
 
+import it.polimi.it.model.Board.Board;
 import it.polimi.it.model.Tiles.Tile;
 
 import java.util.List;
 
 public class Guest implements UserType {
     private Game game;
-
-    UserType PlayerState;
 
     @Override
     public List<List<Tile>> choosableTiles(int tilesNum) {
@@ -20,20 +19,11 @@ public class Guest implements UserType {
     }
 
     @Override
-    public void inserTile(int column, String[] colorOrder) {
+    public void inserTile(int column, List<Tile> choosen) {
 
     }
-
     @Override
-    public String getNickname() {
-        return null;
-    }
-    @Override
-    public int getScore() {
-        return 0;
-    }
-    @Override
-    public boolean checkInGame() {
+    public boolean checkInGame(User user) {
         return false;
     }
 
@@ -42,9 +32,9 @@ public class Guest implements UserType {
 
         Lobby.pickGuest();
 
-        //this.game = new Game(playerNumber, this);
+        //this.game = new Game(playerNumber, user);
 
-        user.setPlayerType(PlayerState);
+        user.setPlayerType(new Player());
     }
 
     @Override
@@ -52,7 +42,7 @@ public class Guest implements UserType {
 
         Lobby.pickGuest();
 
-        user.setPlayerType(PlayerState);
+        user.setPlayerType(new Player());
 
     }
 
@@ -64,5 +54,15 @@ public class Guest implements UserType {
     @Override
     public int maxValueofTiles() {
         return 0;
+    }
+
+    @Override
+    public Shelfie getShelf(User user){
+        return null;
+    }
+
+    @Override
+    public Board getBoard(User user){
+        return null;
     }
 }
