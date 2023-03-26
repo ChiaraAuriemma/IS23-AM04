@@ -9,25 +9,34 @@ import java.util.ArrayList;
 public class ControllerInterface {
 
     private User user;
-    private Game game;
-   private Integer NumPlayer;
-   private Board board;
 
-   //metto gli attributi di collegamento con gli users e i flag a seconda degli user (tipo guest, creator, joiner, player)
+    private Integer numPlayer;
 
-   public ControllerInterface (User user){
-       this.user = user;
+    public ControllerInterface (String nickname){
+        // prima controllo in lobby se il nome esiste già
+       this.user = new User(nickname);
    }
 
-    public void CreateGameC (){
-        this.game = new Game(NumPlayer);
-        this.board = this.game.getBoard();
+    public void createGameC (int numPlayer){
+        this.numPlayer = numPlayer;
+        this.user.createGame(this.user, this.numPlayer);
     }
 
-    public ArrayList<Tile> ChooseTileC (){
-        this.board.ChooseTile();//cosa passo a choosetile e cosa mi ritorna ???
-        // ma soprattutto ... come la collego con play() di User ... parlo con albertone
+    public void joinGameC (){
+       this.user.joinGame();
     }
 
+    public void choosableTilesC (int tilesValue){
+       this.user.choosableTiles (tilesValue);
+    }
+
+    //troppi elementiiiiiiiii passati per parametroooooo
+    public void chooseSelectedTilesC (int x1, int x2, int x3, int y1, int y2, int y3, String col1, String col2, String col3){
+       this.user.ChooseSelectedTiles(x1,x2,x3,y1,y2,y3,col1,col2,col3);
+    }
+
+    public void insertTileC (int column, String[] colorOrder){
+       this.user.insertTile (column, colorOrder);
+    }
 
 }

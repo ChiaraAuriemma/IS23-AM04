@@ -4,7 +4,8 @@ import it.polimi.it.model.Board.B2P;
 import it.polimi.it.model.Board.B3P;
 import it.polimi.it.model.Board.B4P;
 import it.polimi.it.model.Board.Board;
-import it.polimi.it.model.Card.CommonGoalCards.CommonGoalCard;
+import it.polimi.it.model.Card.CommonGoalCards.*;
+import it.polimi.it.model.Card.PersonalGoalCards.*;
 
 import java.util.ArrayList;
 
@@ -14,105 +15,142 @@ import java.util.Random;
 
 public class Game {
 
-    private User Player1;
-    private User Player2;
-    private Optional<User> Player3;
-    private Optional<User> Player4;
-
-    private  List<Integer> Order ;
-    private  Integer OrderPointer;
-
-    private  Integer NumPlayer;
-
-    private  Integer EndToken;
-
-    //altri attributi
+    private List<User> players;
+    private  Integer numplayers;
     private Board board;
 
+
+    private  List<Integer> order ;
+    private  Integer orderPointer;
+
+
+    private List<Integer> points;
+    private List<PersonalGoalCard> cards;
     private CommonGoalCard card1;
     private CommonGoalCard card2;
 
-    public Game(Integer NumPlayer){
-        this.Order = new ArrayList<Integer>(NumPlayer);
-        this.NumPlayer = NumPlayer;
 
-        if(NumPlayer == 2){
+    private List<Integer> checkPersonalScore; // vedo dove inizializzarlo a tutti zeri
+    private List<Integer> commonToken1;
+    private List<Integer> commonToken2;
+    private  Integer endToken;
+
+
+
+
+    public Game(Integer numplayers, User host){
+        this.order = new ArrayList<Integer>(numplayers);
+        this.orderPointer = 0;
+        this.endToken = -1;
+        this.numplayers = numplayers;
+        this.players.add(0,host); // controllo se è empty ???
+
+        this.commonToken1.add(0,8);
+        this.commonToken1.add(2,4);
+        this.commonToken2.add(0,8);
+        this.commonToken2.add(2,4);
+        if(numplayers == 2){
             this.board = new B2P();
-        }else if(NumPlayer == 3){
+
+            this.commonToken1.add(1,0);
+            this.commonToken1.add(3,0);
+            this.commonToken2.add(1,0);
+            this.commonToken2.add(3,0);
+
+        }else if(numplayers == 3){
             this.board = new B3P();
+
+            this.commonToken1.add(1,6);
+            this.commonToken1.add(3,0);
+            this.commonToken2.add(1,6);
+            this.commonToken2.add(3,0);
+
         }else{
             this.board = new B4P();
+
+            this.commonToken1.add(1,6);
+            this.commonToken1.add(3,2);
+            this.commonToken2.add(1,6);
+            this.commonToken2.add(3,2);
+
         }
 
-        //wait che i giocatori entrino nel gioco
-        RandomPlayer();
-        DrawCommonCrads();
-        this.OrderPointer=0;
-        while(///end game????)
-
-
+        //mostro alla view
 
     }
 
-    private void RandomPlayer () {
-        this.OrderPointer = 0;
+    private void randomplayers () {
+        this.orderPointer = 0;
         Random rdn = new Random();
 
-        boolean[] CherckPlayer;
-        CherckPlayer = new boolean[]{false, false, false, false};
+        boolean[] checkplayers;
+        checkplayers = new boolean[]{false, false, false, false};
 
-        for(int i=this.NumPlayer - 1; i > 0; i--){
+        for(int i=this.numplayers - 1; i > 0; i--){
 
             int position = rdn.nextInt(i);
-            while(CherckPlayer[position] == false){
+            while(checkplayers[position] == false){
                 position = rdn.nextInt(i);
             }
 
-            CherckPlayer[position] = true;
-            Integer pos = Integer.valueOf(position + 1);
-            this.Order.add(i,pos);
+            checkplayers[position] = true;
+            Integer pos = Integer.valueOf(position);
+            this.order.add(i,pos);
         }
 
         int j = 0;
-        while(CherckPlayer[j] == true) j++;
+        while(checkplayers[j] == true) j++;
 
-        Integer pos = Integer.valueOf(j+1);
-        this.Order.add(0,pos);
+        Integer pos = Integer.valueOf(j);
+        this.order.add(0,pos);
 
     }
 
 
-    void CallNextPlayer (){
-        Integer NextPlayer = this.Order.get(OrderPointer);
+    void callNextplayers (){
+        Integer nextplayers = this.order.get(orderPointer);
 
-        if(NextPlayer == 1){
-            Player1.Play();
-        }else if (NextPlayer == 2{
-            Player2.Play();
-        }else if (NextPlayer == 3){
-            Player3.Play();
+        if(this.endToken != -1 && this.orderPointer == 0){
+            //game finisce mostro a video la classifica finale
         }else{
-            Player4.Play();
+
+            players.get(nextplayers).play();
+
+
+            if(orderPointer == 3){
+                orderPointer = 0;
+            }else{
+                orderPointer ++;
+            }
         }
 
-
-        if(OrderPointer == 3){
-            OrderPointer = 0;
-        }else{
-            OrderPointer ++;
-        }
     }
 
-    //questa classe sarà chiamta da CreateGame quindi va bene anche privata
-    private void DrawCommonCrads(){
+    void endGame (){
+        if (orderPointer == 0){
+            this.endToken = 3;
+            //aggiungo il punto di end
+            this.points.add(3, this.points.get(3) + 1);
+        }else{
+            this.endToken = orderPointer - 1;
+            //aggiungo il punto di end
+            this.points.set(orderPointer - 1, this.points.get(orderPointer - 1) + 1);
+        }
+        //mostro alla view chi ha finito per primo
+        //mostro alla view anche che è stato messo il punto in più
+
+        callNextplayers();
+    }
+
+    private void drawCommonCrads(){
 
         Random rnd = new Random();
 
-        int c1 = rnd.nextInt(11) + 1;
-        int c2 = rnd.nextInt(11) + 1;
+        int c1 = rnd.nextInt(12) + 1;
+        int c2 = rnd.nextInt(12) + 1;
         while(c1 == c2){
-            c1 = rnd.nextInt(11) + 1;
-            c2 = rnd.nextInt(11) + 1;
+            c1 = rnd.nextInt(12) + 1;
+            c2 = rnd.nextInt(12) + 1;
         }
 
         //instance of common card 1
@@ -175,4 +213,175 @@ public class Game {
     Board getBoard(){
         return this.board;
     }
+
+    void joinGame (User joiner ){
+
+        this.players.add(joiner);
+        //mostro alla view
+        if(this.players.size() == this.numplayers){
+
+            randomplayers();
+            for(int i=0; i < this.numplayers; i++){
+                this.cards.add(i,drawPersonalCard());
+                //come passo a user la sua carta ???? parlo con bertossss
+                this.players.get(i).createShelfie();
+            }
+
+            drawCommonCrads();
+            //mostro alla view
+            //mostro alla view chi ha il sofà d'inizio
+            callNextplayers();
+
+        }
+
+        return;
+    }
+
+    private PersonalGoalCard drawPersonalCard (){
+
+        PersonalGoalCard card;
+        Random rnd = new Random();
+        int c = rnd.nextInt(12) + 1;
+
+
+        switch (c){
+            case 1:
+                card = new PersonalGoalCard1();
+                break;
+            case 2:
+                card = new PersonalGoalCard2();
+                break;
+            case 3:
+                card = new PersonalGoalCard3();
+                break;
+            case 4:
+                card = new PersonalGoalCard4();
+                break;
+            case 5:
+                card = new PersonalGoalCard5();
+                break;
+            case 6:
+                card = new PersonalGoalCard6();
+                break;
+            case 7:
+                card = new PersonalGoalCard7();
+                break;
+            case 8:
+                card = new PersonalGoalCard8();
+                break;
+            case 9:
+                card = new PersonalGoalCard9();
+                break;
+            case 10:
+                card = new PersonalGoalCard10();
+                break;
+            case 11:
+                card = new PersonalGoalCard11();
+                break;
+            case 12:
+                card = new PersonalGoalCard12();
+                break;
+        }
+
+        while(!cards.contains(c)){
+            c = rnd.nextInt(12) + 1;
+
+            switch (c){
+                case 1:
+                    card = new PersonalGoalCard1();
+                    break;
+                case 2:
+                    card = new PersonalGoalCard2();
+                    break;
+                case 3:
+                    card = new PersonalGoalCard3();
+                    break;
+                case 4:
+                    card = new PersonalGoalCard4();
+                    break;
+                case 5:
+                    card = new PersonalGoalCard5();
+                    break;
+                case 6:
+                    card = new PersonalGoalCard6();
+                    break;
+                case 7:
+                    card = new PersonalGoalCard7();
+                    break;
+                case 8:
+                    card = new PersonalGoalCard8();
+                    break;
+                case 9:
+                    card = new PersonalGoalCard9();
+                    break;
+                case 10:
+                    card = new PersonalGoalCard10();
+                    break;
+                case 11:
+                    card = new PersonalGoalCard11();
+                    break;
+                case 12:
+                    card = new PersonalGoalCard12();
+                    break;
+            }
+
+        }
+
+        this.cards.add(card); //risolvo
+        return card;
+    }
+
+    private void pointCount(){
+        Integer i = this.order.get(orderPointer - 1);
+        User player = this.players.get(i);
+        PersonalGoalCard persCard = this.cards.get(i);
+
+        Shelfie shelfie = player.getShelfie();
+
+        //points from personal cards
+        Integer personalScore = persCard.checkScore(shelfie);
+        while(this.checkPersonalScore.get(i) < personalScore){
+            this.checkPersonalScore.set(i,this.checkPersonalScore.get(i) + 1);//va in loop?
+
+            if(this.checkPersonalScore.get(i) <= 2){
+                this.points.set(i, this.points.get(i) + 1);
+            }else if(this.checkPersonalScore.get(i) >= 3 && this.checkPersonalScore.get(i) <= 4){
+                this.points.set(i, this.points.get(i) + 2);
+            }else {
+                this.points.set(i, this.points.get(i) + 3);
+            }
+        }
+        //i punti dell'endtoken sono dati dal metodo end game
+
+        //points from common card 1
+        if(player.getCommonToken1() == 0 && card1.CheckGoal(shelfie) ){
+
+            int i=0;
+            while(this.commonToken1.get(i) == 0){
+                i++;
+            }
+
+            setCommonToken1(this.commonToken1.get(i));
+            this.points.set(i, this.points.get(i) + this.commonToken1.get(i));
+            this.commonToken1.set(i, 0);
+        }
+
+        //points from common card 2
+        if(player.getCommonToken2() == 0 && card2.CheckGoal(shelfie) ){
+
+            int i=0;
+            while(this.commonToken2.get(i) == 0){
+                i++;
+            }
+
+            setCommonToken2(this.commonToken2.get(i));
+            this.points.set(i, this.points.get(i) + this.commonToken2.get(i));
+            this.commonToken2.set(i, 0);
+        }
+
+
+        //punti per le caselle adiacenti ?? chiedo cosa ha fatto albertone
+        //mostro alla view
+    }
+
 }
