@@ -76,9 +76,7 @@ public class Shelfie{
         {
             if(numTiles < choosen.size()) {
                 if (shelf[row][column].getColor().equals("DEFAULT")) {
-                    shelf[row][column] = choosen.get(numTiles);
-                    //shelf[row][column].setRow(row);
-                    //shelf[row][column].setColumn(column);
+                    shelf[row][column] = new Tile(row, column, PossibleColors.valueOf(choosen.get(numTiles).getColor()));
                     numTiles++;
                 }
             }

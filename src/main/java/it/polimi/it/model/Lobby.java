@@ -6,10 +6,12 @@ public class Lobby {
 
     private static String nickname;
 
-    private static ArrayList<String> guestList;
+    private static ArrayList<User> userList;
+
+    private Game game;
 
     public Lobby() {
-        guestList = new ArrayList<>();
+        userList = new ArrayList<>();
     }
 
     /*public static String setNickname() {
@@ -18,13 +20,26 @@ public class Lobby {
         return nickname;
     }
     */
-    void createUser(){
-        User U = new User();
-        guestList.add(nickname);
+    void createUser(String nickname){
+        User user = new User(nickname);
+        userList.add(user);
     }
 
-    public static void pickGuest(){
-        guestList.remove(0);
+    public void createGame(User user, int playerNumber) {
+
+        pickGuest(user);
+
+        this.game = new Game(playerNumber, user);
+    }
+
+    public void joinGame(User user) {
+
+        pickGuest(user);
+
+    }
+
+    public static void pickGuest(User user){
+        userList.remove(user);
     }
 
 

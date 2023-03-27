@@ -7,90 +7,90 @@ import java.util.List;
 
 public class User {
 
-    private UserType type;
-    private static String nickname;
 
-    private int score;
-
-    private final boolean inGame;
-
-    int tilesNumber;
+    private Board board;
 
     private Game game;
 
     private Shelfie shelf;
 
-    private Board board;
+    private int tilesNumber;
+    private final String nickname;
 
-    public User(){
+    private int score;
 
-        //nickname = Lobby.setNickname();
+    private final boolean inGame;
+
+    public User(String nickname){
+
+        this.nickname = nickname;
 
         this.score = 0;
 
         this.inGame = true;
-
-        this.type = new Guest();
     }
 
-    public void setGuestType(UserType type){
-        this.type = type;
+    public List<List<Tile>> choosableTiles(int tilesNum) {
+
+        tilesNumber = tilesNum;
+
+        return board.choosableTiles(tilesNum);
     }
 
-    public void setPlayerType(UserType type){
-        this.type = type;
-    }
-    public int maxValueOfTiles(){
-        return type.maxValueofTiles();
+    public boolean[] chooseSelectedTiles(List<Tile> choosen) {
+
+        board.removeTiles(choosen);
+
+        return shelf.chooseColumn(tilesNumber);
     }
 
-    public List<List<Tile>> choosableTiles(int tilesNum){
-        return type.choosableTiles(tilesNum);
-    }
+    public void insertTile(int column, List<Tile> choosen) {
 
-    public boolean[] chooseSelectedTiles(List<Tile> choosen){
-        return type.chooseSelectedTiles(choosen);
-    }
+        if(column < 0 || column > 4){
 
-    public void inserTile(int column, List<Tile> choosen){
-        type.inserTile(column, choosen);
-    }
+            throw new IndexOutOfBoundsException();
 
-    public String getNickname(){
-        return nickname;
-    }
+        }else {
 
-    public int getScore(){
-        return score;
-    }
+            shelf.addTile(column, choosen);
+        }
 
-    public void setScore(int val){
-        score = val;
-    }
-
-    public boolean checkInGame(User user){
-        return type.checkInGame(this);
+        board.refill();
     }
 
 
-    public void createGame(String nickname, int playerNumber){
-        type.createGame(nickname, playerNumber, this);
+    public boolean checkInGame(User user) {
+
+        //vedere quando crasha
+        return true;
     }
 
-    public void joinGame(String nickname, User User){
-        type.joinGame(nickname, this);
+    public Shelfie createShelfie(int personalCardID) {
+
+        this.board = game.getBoard();
+        return this.shelf = new Shelfie(personalCardID);
     }
 
-    public Shelfie createShelfie(int personalCardID){
+    public int maxValueofTiles() throws IndexOutOfBoundsException{
 
-        return type.createShelfie(personalCardID);
+        int max = shelf.possibleTiles();
+
+        if(max < 0 || max > 3){
+            throw new IndexOutOfBoundsException();
+        }
+
+        return board.findMaxAdjacent(max);
     }
 
     public Shelfie getShelfie(User user){
-        return type.getShelfie(this);
+        return this.shelf;
     }
 
     public Board getBoard(User user){
-        return type.getBoard(this);
+        return this.board;
+    }
+
+    public String getNickname() {
+        return this.nickname;
     }
 }
