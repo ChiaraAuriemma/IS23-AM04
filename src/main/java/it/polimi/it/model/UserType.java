@@ -23,7 +23,7 @@ public interface UserType {
 
     public int maxValueofTiles();
 
-    public Shelfie getShelf(User user);
+    public Shelfie getShelfie(User user);
 
     public Board getBoard(User user);
 }

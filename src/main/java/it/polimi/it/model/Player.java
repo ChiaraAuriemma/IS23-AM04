@@ -27,7 +27,7 @@ public class Player implements UserType {
     @Override
     public boolean[] chooseSelectedTiles(List<Tile> choosen) {
 
-        //board.removeTiles(choosen);
+        board.removeTiles(choosen);
 
         return shelf.chooseColumn(tilesNumber);
     }
@@ -84,7 +84,7 @@ public class Player implements UserType {
     }
 
     @Override
-    public Shelfie getShelf(User user){
+    public Shelfie getShelfie(User user){
         return this.shelf;
     }
 

@@ -44,8 +44,8 @@ public class Shelfie{
     }
 
 
-    public String getCell(int column, int row){
-        return shelf[row][column].getColor();
+    public Tile getCell(int column, int row){
+        return shelf[row][column];
     }
 
     boolean[] chooseColumn(int count){
@@ -77,6 +77,8 @@ public class Shelfie{
             if(numTiles < choosen.size()) {
                 if (shelf[row][column].getColor().equals("DEFAULT")) {
                     shelf[row][column] = choosen.get(numTiles);
+                    //shelf[row][column].setRow(row);
+                    //shelf[row][column].setColumn(column);
                     numTiles++;
                 }
             }
@@ -148,4 +150,6 @@ public class Shelfie{
     int getCommonToken2(){
         return commonToken2;
     }
+
+    Tile[][] getShelf(){return shelf;}
 }

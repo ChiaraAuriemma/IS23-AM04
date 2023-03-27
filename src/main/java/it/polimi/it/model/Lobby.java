@@ -1,13 +1,16 @@
 package it.polimi.it.model;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Lobby {
 
     private static String nickname;
 
     private static ArrayList<String> guestList;
+
+    public Lobby() {
+        guestList = new ArrayList<>();
+    }
 
     /*public static String setNickname() {
         Scanner s = new Scanner(System.in);
@@ -17,14 +20,11 @@ public class Lobby {
     */
     void createUser(){
         User U = new User();
-    }
-
-    public void setGuestList(String nickname){
         guestList.add(nickname);
     }
 
-    public static String pickGuest(){
-        return guestList.remove(0);
+    public static void pickGuest(){
+        guestList.remove(0);
     }
 
 

@@ -32,7 +32,7 @@ public class Guest implements UserType {
 
         Lobby.pickGuest();
 
-        //this.game = new Game(playerNumber, user);
+        this.game = new Game(playerNumber, user);
 
         user.setPlayerType(new Player());
     }
@@ -57,7 +57,7 @@ public class Guest implements UserType {
     }
 
     @Override
-    public Shelfie getShelf(User user){
+    public Shelfie getShelfie(User user){
         return null;
     }
 

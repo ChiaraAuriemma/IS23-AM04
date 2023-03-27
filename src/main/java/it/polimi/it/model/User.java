@@ -86,8 +86,8 @@ public class User {
         return type.createShelfie(personalCardID);
     }
 
-    public Shelfie getShelf(User user){
-        return type.getShelf(this);
+    public Shelfie getShelfie(User user){
+        return type.getShelfie(this);
     }
 
     public Board getBoard(User user){
