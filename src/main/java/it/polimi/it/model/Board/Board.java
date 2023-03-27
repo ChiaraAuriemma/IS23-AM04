@@ -577,11 +577,18 @@ public abstract class Board {
      * @param col2 is the column of the second tile
      * @param col3 is the column of the third tile
      */
-    public void removeTiles(List<Tile> choosenTiles) {
 
-        int size = choosenTiles.size();
 
-        for (Tile choosenTile : choosenTiles) {
+    /**
+     * Removes the tiles that the player chose to take from the board
+     * Given the coordinate (row and column of the Tiles in the board)
+     * @param chosenTiles is a list of tiles in which are stored the Tiles chosen by the player
+     */
+    public void removeTiles(List<Tile> chosenTiles) {
+
+        int size = chosenTiles.size();
+
+        for (Tile choosenTile : chosenTiles) {
             int row = choosenTile.getRow();
             int col = choosenTile.getColumn();
             matrix[row][col] = new Tile(PossibleColors.DEFAULT);
