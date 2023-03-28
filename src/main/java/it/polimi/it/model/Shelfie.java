@@ -3,13 +3,10 @@ package it.polimi.it.model;
 import it.polimi.it.model.Tiles.PossibleColors;
 import it.polimi.it.model.Tiles.Tile;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class Shelfie{
-
-    private String player;
-
-    private User user;
 
     private int commonToken1;
 
@@ -19,9 +16,7 @@ public class Shelfie{
 
     private static Tile[][] shelf;
 
-    private final int personalCardID;
-
-    public Shelfie(int personalCardID){
+    public Shelfie(){
 
         shelf = new Tile[6][5];
 
@@ -30,10 +25,6 @@ public class Shelfie{
                 shelf[row][column] = new Tile(PossibleColors.DEFAULT);
             }
         }
-
-        this.personalCardID = personalCardID;
-
-        this.player = user.getNickname();
 
         this.endToken1 = false;
 
@@ -47,6 +38,7 @@ public class Shelfie{
     public Tile getCell(int column, int row){
         return shelf[row][column];
     }
+
 
     boolean[] chooseColumn(int count){
 
@@ -129,10 +121,6 @@ public class Shelfie{
         return total;
     }
 
-    int getPersonalCardID(){
-        return personalCardID;
-    }
-
     void setCommonToken1(int val){
         commonToken1 = val;
     }
@@ -150,4 +138,60 @@ public class Shelfie{
     }
 
     Tile[][] getShelf(){return shelf;}
+
+    int checkAdjacentsPoints() {
+
+        int total = 0;
+
+        boolean[][] visited = new boolean[6][5];
+        int[][] directions = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+
+        for (int row = 0; row < 6; row++) {
+            for (int col = 0; col < 5; col++) {
+                if (!visited[row][col]) {
+                    int count = searchAdjacents(shelf, visited, directions, row, col, shelf[row][col].getColor());
+
+                    if (count >= 3) {
+                        switch (count) {
+                            case 3:
+                                total = total + 2;
+                                break;
+                            case 4:
+                                total = total + 3;
+                                break;
+                            case 5:
+                                total = total + 5;
+                                break;
+                            default:
+                                total = total + 8;
+                                break;
+                        }
+                    }
+                }
+            }
+
+
+        }
+        return total;
+    }
+
+    private int searchAdjacents (Tile[][] shelf, boolean[][] visited, int[][] directions, int row, int col, String color) {
+
+        visited[row][col] = true;
+        int count = 1;
+
+        for (int[] dir : directions) {
+            int newRow = row + dir[0];
+            int newCol = col + dir[1];
+
+            if (newRow >= 0 && newRow < 6 && newCol >= 0 && newCol < 5 &&
+                    !visited[newRow][newCol] && shelf[newRow][newCol].getColor().equals(color)) {
+                count += searchAdjacents(shelf, visited, directions, newRow, newCol, color);
+            }
+        }
+
+        return count;
+    }
 }
+
+
