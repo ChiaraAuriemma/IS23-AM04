@@ -17,7 +17,7 @@ public class CommonGoalCard6 extends CommonGoalCard{
         for(row=0; row<6 && numRightLine<2; row++) {
             stop = 0;
             for(column=0; column<4 && stop == 0; column++){
-                if(shelfie.getCell(column,row).equals(shelfie.getCell(column+1,row)) || shelfie.getCell(column,row).equals("DEFAULT"))
+                if(shelfie.getCell(column,row).getColor().equals(shelfie.getCell(column+1,row).getColor()) || shelfie.getCell(column,row).getColor().equals("DEFAULT"))
                     stop=1;
             }
             if(stop==0)

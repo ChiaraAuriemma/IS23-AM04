@@ -23,32 +23,32 @@ public class CommonGoalCard9 extends CommonGoalCard{
         int i,column,row,tmp;
         for(column=0;column<5;column++){
             for(row=0; row<6; row++){
-                if(shelfie.getCell(column,row).equals("PINK")){
+                if(shelfie.getCell(column,row).getColor().equals("PINK")){
                     tmp = numColor.get(0);
                     tmp++;
                     numColor.add(0,tmp);
                 }
-                if(shelfie.getCell(column,row).equals("CYAN")){
+                if(shelfie.getCell(column,row).getColor().equals("CYAN")){
                     tmp = numColor.get(1);
                     tmp++;
                     numColor.add(1,tmp);
                 }
-                if(shelfie.getCell(column,row).equals("YELLOW")){
+                if(shelfie.getCell(column,row).getColor().equals("YELLOW")){
                     tmp = numColor.get(2);
                     tmp++;
                     numColor.add(2,tmp);
                 }
-                if(shelfie.getCell(column,row).equals("BLUE")){
+                if(shelfie.getCell(column,row).getColor().equals("BLUE")){
                     tmp = numColor.get(3);
                     tmp++;
                     numColor.add(3,tmp);
                 }
-                if(shelfie.getCell(column,row).equals("WHITE")){
+                if(shelfie.getCell(column,row).getColor().equals("WHITE")){
                     tmp = numColor.get(4);
                     tmp++;
                     numColor.add(4,tmp);
                 }
-                if(shelfie.getCell(column,row).equals("GREEN")){
+                if(shelfie.getCell(column,row).getColor().equals("GREEN")){
                     tmp = numColor.get(5);
                     tmp++;
                     numColor.add(5,tmp);

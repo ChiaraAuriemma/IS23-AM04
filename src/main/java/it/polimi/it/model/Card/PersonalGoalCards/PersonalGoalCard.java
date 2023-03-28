@@ -47,27 +47,27 @@ public class PersonalGoalCard {
     }
 
     public int checkScore(Shelfie shelfie) {
-        if(checkColor.get(0) == 0 && shelfie.getCell(pinkPos.get(0).getAsInt(), pinkPos.get(1).getAsInt()).equals("PINK")){
+        if(checkColor.get(0) == 0 && shelfie.getCell(pinkPos.get(0).getAsInt(), pinkPos.get(1).getAsInt()).getColor().equals("PINK")){
             numCompletedTasks++;
             checkColor.add(0,1);
         }
-        if(checkColor.get(1) == 0 && shelfie.getCell(cyanPos.get(0).getAsInt(), cyanPos.get(1).getAsInt()).equals("CYAN")){
+        if(checkColor.get(1) == 0 && shelfie.getCell(cyanPos.get(0).getAsInt(), cyanPos.get(1).getAsInt()).getColor().equals("CYAN")){
             numCompletedTasks++;
             checkColor.add(1,1);
         }
-        if(checkColor.get(2)== 0 && shelfie.getCell(yellowPos.get(0).getAsInt(), yellowPos.get(1).getAsInt()).equals("YELLOW")){
+        if(checkColor.get(2)== 0 && shelfie.getCell(yellowPos.get(0).getAsInt(), yellowPos.get(1).getAsInt()).getColor().equals("YELLOW")){
             numCompletedTasks++;
             checkColor.add(2,1);
         }
-        if(checkColor.get(3) == 0 && shelfie.getCell(bluePos.get(0).getAsInt(), bluePos.get(1).getAsInt()).equals("BLUE")){
+        if(checkColor.get(3) == 0 && shelfie.getCell(bluePos.get(0).getAsInt(), bluePos.get(1).getAsInt()).getColor().equals("BLUE")){
             numCompletedTasks++;
             checkColor.add(3,1);
         }
-        if(checkColor.get(4) == 0 && shelfie.getCell(whitePos.get(0).getAsInt(), whitePos.get(1).getAsInt()).equals("WHITE")){
+        if(checkColor.get(4) == 0 && shelfie.getCell(whitePos.get(0).getAsInt(), whitePos.get(1).getAsInt()).getColor().equals("WHITE")){
             numCompletedTasks++;
             checkColor.add(4,1);
         }
-        if(checkColor.get(5) == 0 && shelfie.getCell(greenPos.get(0).getAsInt(), greenPos.get(1).getAsInt()).equals("GREEN")){
+        if(checkColor.get(5) == 0 && shelfie.getCell(greenPos.get(0).getAsInt(), greenPos.get(1).getAsInt()).getColor().equals("GREEN")){
             numCompletedTasks++;
             checkColor.add(5,1);
         }
