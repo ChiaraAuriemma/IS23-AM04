@@ -9,7 +9,8 @@ public class B3P extends Board{
     /**
      * 9x9 Tiles matrix that represents the configuration of the Board when there are 3 players
      */
-    public Tile[][] matrix;
+   // public Tile[][] matrix;
+    //protected TilesBag bag = new TilesBag();
 
 
     /**

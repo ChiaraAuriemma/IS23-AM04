@@ -9,7 +9,8 @@ public class B4P extends Board{
     /**
      * 9x9 Tiles matrix that represents the configuration of the Board when there are 4 players
      */
-    public Tile[][] matrix;
+    //public Tile[][] matrix;
+    //public TilesBag bag = new TilesBag();
 
 
     /**

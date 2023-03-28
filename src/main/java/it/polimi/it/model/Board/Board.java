@@ -13,7 +13,8 @@ public abstract class Board {
     /**
      * Matrix that represents the LivingRoom of the game
      */
-    public static Tile[][] matrix;
+    protected Tile[][] matrix;
+    protected TilesBag bag = new TilesBag();
 
 
     /**
@@ -55,8 +56,8 @@ public abstract class Board {
     public Boolean checkRefill() {
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
-                Tile til = matrix[i][j];
-                if (!til.getColor().equals("DEFAULT") && !til.getColor().equals("XTILE")) {
+                //Tile til = matrix[i][j];
+                if (!matrix[i][j].getColor().equals("DEFAULT") && !matrix[i][j].getColor().equals("XTILE")) {
                     if (i < 8) {
                         if (!matrix[i + 1][j].getColor().equals("DEFAULT") && !matrix[i + 1][j].getColor().equals("XTILE")) {
                             return false;

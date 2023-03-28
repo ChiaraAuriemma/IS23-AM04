@@ -9,17 +9,14 @@ public class TilesBag {
     /**
      * Hashmap used to store the number of the remaining tiles of each color
      */
-    public static HashMap<PossibleColors, Integer> remainingTiles = new HashMap<>();
+    private static HashMap<PossibleColors, Integer> remainingTiles = new HashMap<>();
 
     /**
      * Stores the total number of the remaining Tiles
      */
-    public static int totalRemaining;
+    private int totalRemaining;
 
-    /**
-     * Used to extract a random number to choose which color is the Tile that gets extracted from the bad
-     */
-    static Random rand = new Random();
+
 
 
     /**
@@ -43,7 +40,7 @@ public class TilesBag {
      * Getter method
      * @return the total number of the tiles that are still in the bag
      */
-    public static int getTotRemaining(){
+    public int getTotRemaining(){
         return totalRemaining;
     }
 
@@ -54,8 +51,14 @@ public class TilesBag {
      * @param col is the column parameter to be given to the constructor of the Tile
      * @return the new Tile that got created
      */
-    public static Tile randomTiles(int row, int col){
+    public Tile randomTiles(int row, int col){
         int random_color;
+
+        /**
+         * Used to extract a random number to choose which color is the Tile that gets extracted from the bad
+         */
+        Random rand = new Random();
+
         while(true) {
             random_color = rand.nextInt(6);
             switch (random_color) {
