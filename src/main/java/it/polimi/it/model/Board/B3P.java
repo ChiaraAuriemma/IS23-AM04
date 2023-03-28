@@ -50,7 +50,7 @@ public class B3P extends Board{
                 }else if (i==7 && j>5) {
                     matrix[i][j] = new Tile(PossibleColors.XTILE);
                 }else{
-                    matrix[i][j] = TilesBag.randomTiles(i, j);
+                    matrix[i][j] = bag.randomTiles(i, j);
                 }
             }
         }

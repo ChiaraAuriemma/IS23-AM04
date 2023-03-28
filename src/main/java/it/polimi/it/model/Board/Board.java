@@ -38,9 +38,9 @@ public abstract class Board {
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
                 if (matrix[i][j].getColor().equals("DEFAULT")) {
-                    remainingTiles = TilesBag.getTotRemaining();
+                    remainingTiles = bag.getTotRemaining();
                     if (remainingTiles > 0) {
-                        Tile tile = TilesBag.randomTiles(i, j);
+                        Tile tile = bag.randomTiles(i, j);
                         matrix[i][j] = tile;
                     }
                 }
