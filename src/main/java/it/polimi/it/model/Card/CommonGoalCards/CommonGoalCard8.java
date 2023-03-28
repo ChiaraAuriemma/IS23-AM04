@@ -10,10 +10,10 @@ public class CommonGoalCard8 extends CommonGoalCard {
     }
 
     public Boolean checkGoal(Shelfie shelfie) {
-        String cell1 = shelfie.getCell(0,0);
-        String cell2 = shelfie.getCell(0,5);
-        String cell3 = shelfie.getCell(4,5);
-        String cell4 = shelfie.getCell(4,0);
+        String cell1 = shelfie.getCell(0,0).getColor();
+        String cell2 = shelfie.getCell(0,5).getColor();
+        String cell3 = shelfie.getCell(4,5).getColor();
+        String cell4 = shelfie.getCell(4,0).getColor();
 
         if(!cell1.equals("DEFAULT") &&  cell1.equals(cell2) && cell2.equals(cell3) && cell3.equals(cell4)){
             return true;

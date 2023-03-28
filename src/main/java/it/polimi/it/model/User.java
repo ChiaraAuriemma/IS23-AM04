@@ -6,13 +6,11 @@ import it.polimi.it.model.Tiles.Tile;
 import java.util.List;
 
 public class User {
-
-
     private Board board;
 
-    private Game game;
-
     private Shelfie shelf;
+
+    private Game game;
 
     private int tilesNumber;
     private final String nickname;
@@ -65,10 +63,10 @@ public class User {
         return true;
     }
 
-    public Shelfie createShelfie(int personalCardID) {
+    public Shelfie createShelfie() {
 
-        this.board = game.getBoard();
-        return this.shelf = new Shelfie(personalCardID);
+        this.board = this.game.getBoard();
+        return this.shelf = new Shelfie();
     }
 
     public int maxValueofTiles() throws IndexOutOfBoundsException{
@@ -92,5 +90,9 @@ public class User {
 
     public String getNickname() {
         return this.nickname;
+    }
+
+    public void setGame(Game game){
+        this.game = game;
     }
 }

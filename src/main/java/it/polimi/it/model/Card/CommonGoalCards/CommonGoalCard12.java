@@ -10,29 +10,29 @@ public class CommonGoalCard12 extends CommonGoalCard{
     }
 
     public Boolean checkGoal(Shelfie shelfie){
-        String cell1 = shelfie.getCell(0,5);
-        String cell2 = shelfie.getCell(1,4);
-        String cell3 = shelfie.getCell(2,3);
-        String cell4 = shelfie.getCell(3,2);
-        String cell5 = shelfie.getCell(4,1);
-        String cell6 = shelfie.getCell(0,4);
-        String cell7 = shelfie.getCell(1,3);
-        String cell8 = shelfie.getCell(2,2);
-        String cell9 = shelfie.getCell(3,1);
-        String cell10 = shelfie.getCell(4,0);
-        String cell11 = shelfie.getCell(0,0);
-        String cell12 = shelfie.getCell(1,1);
-        String cell13 = shelfie.getCell(3,3);
-        String cell14 = shelfie.getCell(4,4);
-        String cell15 = shelfie.getCell(0,1);
-        String cell16 = shelfie.getCell(1,2);
-        String cell17 = shelfie.getCell(3,4);
-        String cell18 = shelfie.getCell(4,5);
-        String cell19 = shelfie.getCell(0,2);
-        String cell20 = shelfie.getCell(1,5);
-        String cell21 = shelfie.getCell(2,4);
-        String cell22 = shelfie.getCell(4,2);
-        String cell23 = shelfie.getCell(3,5);
+        String cell1 = shelfie.getCell(0,5).getColor();
+        String cell2 = shelfie.getCell(1,4).getColor();
+        String cell3 = shelfie.getCell(2,3).getColor();
+        String cell4 = shelfie.getCell(3,2).getColor();
+        String cell5 = shelfie.getCell(4,1).getColor();
+        String cell6 = shelfie.getCell(0,4).getColor();
+        String cell7 = shelfie.getCell(1,3).getColor();
+        String cell8 = shelfie.getCell(2,2).getColor();
+        String cell9 = shelfie.getCell(3,1).getColor();
+        String cell10 = shelfie.getCell(4,0).getColor();
+        String cell11 = shelfie.getCell(0,0).getColor();
+        String cell12 = shelfie.getCell(1,1).getColor();
+        String cell13 = shelfie.getCell(3,3).getColor();
+        String cell14 = shelfie.getCell(4,4).getColor();
+        String cell15 = shelfie.getCell(0,1).getColor();
+        String cell16 = shelfie.getCell(1,2).getColor();
+        String cell17 = shelfie.getCell(3,4).getColor();
+        String cell18 = shelfie.getCell(4,5).getColor();
+        String cell19 = shelfie.getCell(0,2).getColor();
+        String cell20 = shelfie.getCell(1,5).getColor();
+        String cell21 = shelfie.getCell(2,4).getColor();
+        String cell22 = shelfie.getCell(4,2).getColor();
+        String cell23 = shelfie.getCell(3,5).getColor();
 
 
         if(!cell1.equals("DEFAULT") && !cell2.equals("DEFAULT") && !cell3.equals("DEFAULT") && !cell4.equals("DEFAULT") && !cell5.equals("DEFAULT")

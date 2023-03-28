@@ -27,18 +27,18 @@ public class Lobby {
 
     public void createGame(User user, int playerNumber) {
 
-        pickGuest(user);
+        pickUser(user);
 
         this.game = new Game(playerNumber, user);
     }
 
     public void joinGame(User user) {
 
-        pickGuest(user);
+        pickUser(user);
 
     }
 
-    public static void pickGuest(User user){
+    public static void pickUser(User user){
         userList.remove(user);
     }
 
