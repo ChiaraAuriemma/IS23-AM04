@@ -1,4 +1,4 @@
-package it.polimi.it.model.Card.CommonGoalCards;
+/*package it.polimi.it.model.Card.CommonGoalCards;
 
 import it.polimi.it.model.Shelfie;
 import it.polimi.it.model.Tiles.Tile;
@@ -27,7 +27,7 @@ public class CommonGoalCard1 extends CommonGoalCard{
                         && shelfie.getCell(column +1, row).equals(shelfie.getCell(column +1,row +1 ))
                         && shelfie.getCell(column+1,row+1).equals(shelfie.getCell(column,row +1))){
 
-                    if(shelfie.getCell(column,row).equals("PINK")){
+                    /*if(shelfie.getCell(column,row).equals("PINK")){
                         if(!tmpPink.isPresent())
                             tmpPink =
                     }
@@ -36,4 +36,6 @@ public class CommonGoalCard1 extends CommonGoalCard{
             }
         }
     }
+        return false;
 }
+*/
