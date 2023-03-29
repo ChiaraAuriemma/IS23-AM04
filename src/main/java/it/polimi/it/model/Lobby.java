@@ -4,42 +4,43 @@ import java.util.ArrayList;
 
 public class Lobby {
 
-    private static String nickname;
-
-    private static ArrayList<User> userList;
-
+    private ArrayList<User> userList;
     private Game game;
 
     public Lobby() {
-        userList = new ArrayList<>();
+        userList = new ArrayList<User>();
     }
 
-    /*public static String setNickname() {
-        Scanner s = new Scanner(System.in);
-        nickname = s.nextLine();
-        return nickname;
-    }
-    */
-    void createUser(String nickname){
+    User createUser(String nickname){
         User user = new User(nickname);
         userList.add(user);
+
+        return user;
     }
 
-    public void createGame(User user, int playerNumber) {
+    void createGame(User user, int playerNumber) {
 
         pickUser(user);
 
         this.game = new Game(playerNumber, user);
     }
 
-    public void joinGame(User user) {
+    void joinGame(User user) {
 
         pickUser(user);
 
     }
 
-    public static void pickUser(User user){
+    void pickUser(User user){
         userList.remove(user);
+    }
+
+    ArrayList<User> getUserList(){
+        return this.userList;
+    }
+
+    Game getGame(){
+        return this.game;
     }
 
 
