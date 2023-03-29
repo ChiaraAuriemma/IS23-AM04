@@ -7,11 +7,7 @@ import it.polimi.it.model.Board.Board;
 import it.polimi.it.model.Card.CommonGoalCards.*;
 import it.polimi.it.model.Card.PersonalGoalCards.*;
 
-import java.util.ArrayList;
-
-import java.util.Optional;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class Game {
 
@@ -24,13 +20,13 @@ public class Game {
     private  Integer orderPointer;
 
 
-    private List<Integer> points;
+    private ArrayList<Integer> points;
     private List<PersonalGoalCard> cards;
     private CommonGoalCard card1;
     private CommonGoalCard card2;
 
 
-    private List<Integer> checkPersonalScore; // vedo dove inizializzarlo a tutti zeri
+    private List<Integer> checkPersonalScore;
     private List<Integer> commonToken1;
     private List<Integer> commonToken2;
     private  Integer endToken;
@@ -43,35 +39,48 @@ public class Game {
         this.orderPointer = 0;
         this.endToken = -1;
         this.numplayers = numplayers;
+        host.setGame(this);
+        this.players = new ArrayList<>(numplayers);
         this.players.add(0,host); // controllo se è empty ???
 
+        //start all the player points to zero
+        this.points = new ArrayList<>(Collections.nCopies(numplayers, 0));
+        //start all the players score from personal cards to zero
+        this.checkPersonalScore = new ArrayList<>(Collections.nCopies(numplayers,0));
+
+
+        this.commonToken1 = new ArrayList<>(numplayers);
+        this.commonToken2 = new ArrayList<>(numplayers);
+
+
         this.commonToken1.add(0,8);
+        this.commonToken1.add(1,0);
         this.commonToken1.add(2,4);
+        this.commonToken1.add(3,0);
+
         this.commonToken2.add(0,8);
+        this.commonToken2.add(1,0);
         this.commonToken2.add(2,4);
+        this.commonToken2.add(3,0);
+
         if(numplayers == 2){
             this.board = new B2P();
-
-            this.commonToken1.add(1,0);
-            this.commonToken1.add(3,0);
-            this.commonToken2.add(1,0);
-            this.commonToken2.add(3,0);
 
         }else if(numplayers == 3){
             this.board = new B3P();
 
-            this.commonToken1.add(1,6);
-            this.commonToken1.add(3,0);
-            this.commonToken2.add(1,6);
-            this.commonToken2.add(3,0);
+            this.commonToken1.set(1,6);
+            this.commonToken1.set(3,0);
+            this.commonToken2.set(1,6);
+            this.commonToken2.set(3,0);
 
         }else{
             this.board = new B4P();
 
-            this.commonToken1.add(1,6);
-            this.commonToken1.add(3,2);
-            this.commonToken2.add(1,6);
-            this.commonToken2.add(3,2);
+            this.commonToken1.set(1,6);
+            this.commonToken1.set(3,2);
+            this.commonToken2.set(1,6);
+            this.commonToken2.set(3,2);
 
         }
 
@@ -108,14 +117,17 @@ public class Game {
 
 
     void callNextplayers (){
-        Integer nextplayers = this.order.get(orderPointer);
+        Integer nextplayer = this.order.get(orderPointer);
+        int maxTiles;
 
         if(this.endToken != -1 && this.orderPointer == 0){
             //game finisce mostro a video la classifica finale
         }else{
 
-            players.get(nextplayers).play();
-
+            maxTiles = players.get(nextplayer).maxValueOfTiles();
+            //gestisco l'avvio del turno (notifico alla view)
+            //tipo con:
+            //virtualView.play(player.get(nextplayer), maxTiles);
 
             if(orderPointer == 3){
                 orderPointer = 0;
@@ -216,11 +228,13 @@ public class Game {
 
     void joinGame (User joiner ){
 
+        joiner.setGame(this);
         this.players.add(joiner);
         //mostro alla view
         if(this.players.size() == this.numplayers){
 
             randomplayers();
+            this.cards = new ArrayList<>();
             for(int i=0; i < this.numplayers; i++){
                 this.cards.add(i,drawPersonalCard());
                 //come passo a user la sua carta ???? parlo con bertossss
@@ -241,93 +255,14 @@ public class Game {
 
         PersonalGoalCard card;
         Random rnd = new Random();
-        int c = rnd.nextInt(12) + 1;
+        Integer id;
 
 
-        switch (c){
-            case 1:
-                card = new PersonalGoalCard1();
-                break;
-            case 2:
-                card = new PersonalGoalCard2();
-                break;
-            case 3:
-                card = new PersonalGoalCard3();
-                break;
-            case 4:
-                card = new PersonalGoalCard4();
-                break;
-            case 5:
-                card = new PersonalGoalCard5();
-                break;
-            case 6:
-                card = new PersonalGoalCard6();
-                break;
-            case 7:
-                card = new PersonalGoalCard7();
-                break;
-            case 8:
-                card = new PersonalGoalCard8();
-                break;
-            case 9:
-                card = new PersonalGoalCard9();
-                break;
-            case 10:
-                card = new PersonalGoalCard10();
-                break;
-            case 11:
-                card = new PersonalGoalCard11();
-                break;
-            case 12:
-                card = new PersonalGoalCard12();
-                break;
-        }
+        do{
+            id = Integer.valueOf(rnd.nextInt(12) + 1);
+            card  = new PersonalGoalCard(id);
+        }while(!this.cards.contains(card));
 
-        while(!cards.contains(c)){
-            c = rnd.nextInt(12) + 1;
-
-            switch (c){
-                case 1:
-                    card = new PersonalGoalCard1();
-                    break;
-                case 2:
-                    card = new PersonalGoalCard2();
-                    break;
-                case 3:
-                    card = new PersonalGoalCard3();
-                    break;
-                case 4:
-                    card = new PersonalGoalCard4();
-                    break;
-                case 5:
-                    card = new PersonalGoalCard5();
-                    break;
-                case 6:
-                    card = new PersonalGoalCard6();
-                    break;
-                case 7:
-                    card = new PersonalGoalCard7();
-                    break;
-                case 8:
-                    card = new PersonalGoalCard8();
-                    break;
-                case 9:
-                    card = new PersonalGoalCard9();
-                    break;
-                case 10:
-                    card = new PersonalGoalCard10();
-                    break;
-                case 11:
-                    card = new PersonalGoalCard11();
-                    break;
-                case 12:
-                    card = new PersonalGoalCard12();
-                    break;
-            }
-
-        }
-
-        this.cards.add(card); //risolvo
         return card;
     }
 
@@ -361,7 +296,7 @@ public class Game {
                 i++;
             }
 
-            setCommonToken1(this.commonToken1.get(i));
+            player.setCommonToken1(this.commonToken1.get(i));
             this.points.set(i, this.points.get(i) + this.commonToken1.get(i));
             this.commonToken1.set(i, 0);
         }
@@ -374,7 +309,7 @@ public class Game {
                 i++;
             }
 
-            setCommonToken2(this.commonToken2.get(i));
+            player.setCommonToken2(this.commonToken2.get(i));
             this.points.set(i, this.points.get(i) + this.commonToken2.get(i));
             this.commonToken2.set(i, 0);
         }
@@ -383,5 +318,6 @@ public class Game {
         //punti per le caselle adiacenti ?? chiedo cosa ha fatto albertone
         //mostro alla view
     }
+    // IMPOARTE :     checkAdjacentsPoints() di player
 
 }
