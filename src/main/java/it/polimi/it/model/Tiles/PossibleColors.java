@@ -13,6 +13,7 @@ public enum PossibleColors {
     private final String color;
 
 
+    //bro è un costruttore
     PossibleColors(String color) {
         this.color = color;
     }

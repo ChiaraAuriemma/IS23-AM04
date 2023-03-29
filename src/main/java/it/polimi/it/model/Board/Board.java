@@ -13,7 +13,8 @@ public abstract class Board {
     /**
      * Matrix that represents the LivingRoom of the game
      */
-    public static Tile[][] matrix;
+    protected Tile[][] matrix;
+    protected TilesBag bag = new TilesBag();
 
 
     /**
@@ -37,9 +38,9 @@ public abstract class Board {
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
                 if (matrix[i][j].getColor().equals("DEFAULT")) {
-                    remainingTiles = TilesBag.getTotRemaining();
+                    remainingTiles = bag.getTotRemaining();
                     if (remainingTiles > 0) {
-                        Tile tile = TilesBag.randomTiles(i, j);
+                        Tile tile = bag.randomTiles(i, j);
                         matrix[i][j] = tile;
                     }
                 }
@@ -55,8 +56,8 @@ public abstract class Board {
     public Boolean checkRefill() {
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
-                Tile til = matrix[i][j];
-                if (!til.getColor().equals("DEFAULT") && !til.getColor().equals("XTILE")) {
+                //Tile til = matrix[i][j];
+                if (!matrix[i][j].getColor().equals("DEFAULT") && !matrix[i][j].getColor().equals("XTILE")) {
                     if (i < 8) {
                         if (!matrix[i + 1][j].getColor().equals("DEFAULT") && !matrix[i + 1][j].getColor().equals("XTILE")) {
                             return false;
@@ -577,15 +578,21 @@ public abstract class Board {
      * @param col2 is the column of the second tile
      * @param col3 is the column of the third tile
      */
-    public void removeTiles(int row1, int row2, int row3, int col1, int col2, int col3) {
-        if (row1 >= 0 && row1 <= 8 && col1 >= 0 && col1 <= 8) {
-            matrix[row1][col1] = new Tile(PossibleColors.DEFAULT);
-        }
-        if (row2 >= 0 && row2 <= 8 && col2 >= 0 && col2 <= 8) {
-            matrix[row2][col2] = new Tile(PossibleColors.DEFAULT);
-        }
-        if (row3 >= 0 && row3 <= 8 && col3 >= 0 && col3 <= 8) {
-            matrix[row3][col3] = new Tile(PossibleColors.DEFAULT);
+
+
+    /**
+     * Removes the tiles that the player chose to take from the board
+     * Given the coordinate (row and column of the Tiles in the board)
+     * @param chosenTiles is a list of tiles in which are stored the Tiles chosen by the player
+     */
+    public void removeTiles(List<Tile> chosenTiles) {
+
+        int size = chosenTiles.size();
+
+        for (Tile choosenTile : chosenTiles) {
+            int row = choosenTile.getRow();
+            int col = choosenTile.getColumn();
+            matrix[row][col] = new Tile(PossibleColors.DEFAULT);
         }
     }
 

@@ -1,30 +1,46 @@
 package it.polimi.it.model;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Lobby {
 
-    private static String nickname;
+    private ArrayList<User> userList;
+    private Game game;
 
-    private static ArrayList<String> guestList;
-
-    /*public static String setNickname() {
-        Scanner s = new Scanner(System.in);
-        nickname = s.nextLine();
-        return nickname;
-    }
-    */
-    void createUser(){
-        User U = new User();
+    public Lobby() {
+        userList = new ArrayList<User>();
     }
 
-    public void setGuestList(String nickname){
-        guestList.add(nickname);
+    User createUser(String nickname){
+        User user = new User(nickname);
+        userList.add(user);
+
+        return user;
     }
 
-    public static String pickGuest(){
-        return guestList.remove(0);
+    void createGame(User user, int playerNumber) {
+
+        pickUser(user);
+
+        this.game = new Game(playerNumber, user);
+    }
+
+    void joinGame(User user) {
+
+        pickUser(user);
+
+    }
+
+    void pickUser(User user){
+        userList.remove(user);
+    }
+
+    ArrayList<User> getUserList(){
+        return this.userList;
+    }
+
+    Game getGame(){
+        return this.game;
     }
 
 

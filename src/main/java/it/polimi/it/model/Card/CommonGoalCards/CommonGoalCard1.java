@@ -23,11 +23,11 @@ public class CommonGoalCard1 extends CommonGoalCard{
         int column,row;
         for(column=0;column<5;column++){
             for(row=0; row<6; row++){
-                if(shelfie.getCell(column,row).equals(shelfie.getCell(column+1,row))
-                        && shelfie.getCell(column +1, row).equals(shelfie.getCell(column +1,row +1 ))
-                        && shelfie.getCell(column+1,row+1).equals(shelfie.getCell(column,row +1))){
+                if(shelfie.getCell(column,row).getColor().equals(shelfie.getCell(column+1,row).getColor())
+                        && shelfie.getCell(column +1, row).getColor().equals(shelfie.getCell(column +1,row +1 ).getColor())
+                        && shelfie.getCell(column+1,row+1).getColor().equals(shelfie.getCell(column,row +1).getColor())){
 
-                    if(shelfie.getCell(column,row).equals("PINK")){
+                    if(shelfie.getCell(column,row).getColor().equals("PINK")){
                         if(!tmpPink.isPresent())
                             tmpPink =
                     }

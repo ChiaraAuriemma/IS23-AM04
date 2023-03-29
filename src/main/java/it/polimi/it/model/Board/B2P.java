@@ -9,7 +9,8 @@ public class B2P extends Board{
     /**
      * 9x9 Tiles matrix that represents the configuration of the Board when there are 2 players
      */
-    public Tile[][] matrix;
+    //public Tile[][] matrix;
+    //public TilesBag bag = new TilesBag();
 
 
     /**
@@ -51,7 +52,7 @@ public class B2P extends Board{
                 }else if (i==7 && j>5) {
                     matrix[i][j] = new Tile(PossibleColors.XTILE);
                 }else{
-                    Tile tile = TilesBag.randomTiles(i, j);
+                    Tile tile = bag.randomTiles(i, j);
                     matrix[i][j] = tile;
                 }
             }
