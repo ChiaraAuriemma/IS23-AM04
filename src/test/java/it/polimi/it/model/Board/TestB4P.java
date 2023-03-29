@@ -175,9 +175,141 @@ public class TestB4P {
         assertNotEquals(d.getColor(), matrix.matrix[3][3].getColor());
         assertEquals(b.getColor(), matrix.matrix[3][3].getColor());
 
-        if(!matrix.checkRefill()){
+        if(matrix.checkRefill()){
             fail("This board doesn't need a refill!");
         }
+    }
+
+
+
+
+
+    @Test
+    public void Board2Refill() {
+        Tile x = new Tile(PossibleColors.XTILE);
+        Tile d = new Tile(PossibleColors.DEFAULT);
+
+        for (int i=0; i<9; i++){
+            for (int j=0; j<9; j++){
+                if (i==0 && j<3) {
+                    assertEquals(x.getColor(), matrix.matrix[i][j].getColor());
+                }else if (i==0 && j>4) {
+                    assertEquals(x.getColor(), matrix.matrix[i][j].getColor());
+                }else if (i==8 && j<4) {
+                    assertEquals(x.getColor(), matrix.matrix[i][j].getColor());
+                }else if (i==8 && j>5) {
+                    assertEquals(x.getColor(), matrix.matrix[i][j].getColor());
+                }else if (i==1 && j<3) {
+                    assertEquals(x.getColor(), matrix.matrix[i][j].getColor());
+                }else if (i==2 && j<2) {
+                    assertEquals(x.getColor(), matrix.matrix[i][j].getColor());
+                }else if (i==1 && j>5) {
+                    assertEquals(x.getColor(), matrix.matrix[i][j].getColor());
+                }else if (i==2 && j>6) {
+                    assertEquals(x.getColor(), matrix.matrix[i][j].getColor());
+                }else if (i==3 && j==0) {
+                    assertEquals(x.getColor(), matrix.matrix[i][j].getColor());
+                }else if (i==5 && j==8) {
+                    assertEquals(x.getColor(), matrix.matrix[i][j].getColor());
+                }else if (i==6 && j<2) {
+                    assertEquals(x.getColor(), matrix.matrix[i][j].getColor());
+                }else if (i==6 && j>6) {
+                    assertEquals(x.getColor(), matrix.matrix[i][j].getColor());
+                }else if (i==7 && j<3) {
+                    assertEquals(x.getColor(), matrix.matrix[i][j].getColor());
+                }else if (i==7 && j>5) {
+                    assertEquals(x.getColor(), matrix.matrix[i][j].getColor());
+                }else{
+                    matrix.matrix[i][j] = new Tile(i, j, PossibleColors.DEFAULT);
+                    assertEquals(d.getColor(), matrix.matrix[i][j].getColor());
+                    assertSame(i, matrix.matrix[i][j].getRow());
+                    assertSame(j, matrix.matrix[i][j].getColumn());
+                }
+            }
+        }
+
+        if(!matrix.checkRefill()){
+            fail("This board is empty, should be refilled!");
+        }
+
+
+
+
+
+        Tile g = new Tile(PossibleColors.GREEN);
+        Tile p = new Tile(PossibleColors.PINK);
+        Tile c = new Tile(PossibleColors.CYAN);
+        Tile w = new Tile(PossibleColors.WHITE);
+
+
+        matrix.matrix[3][2] = new Tile(3, 2, PossibleColors.GREEN);
+        matrix.matrix[2][5] = new Tile(2, 5, PossibleColors.PINK);
+        matrix.matrix[5][6] = new Tile(5, 6, PossibleColors.CYAN);
+        matrix.matrix[6][3] = new Tile(6, 3, PossibleColors.WHITE);
+
+
+        assertNotEquals(x.getColor(), matrix.matrix[3][2].getColor());
+        assertNotEquals(d.getColor(), matrix.matrix[3][2].getColor());
+        assertEquals(g.getColor(), matrix.matrix[3][2].getColor());
+
+        assertNotEquals(x.getColor(), matrix.matrix[2][5].getColor());
+        assertNotEquals(d.getColor(), matrix.matrix[2][5].getColor());
+        assertEquals(p.getColor(), matrix.matrix[2][5].getColor());
+
+        assertNotEquals(x.getColor(), matrix.matrix[5][6].getColor());
+        assertNotEquals(d.getColor(), matrix.matrix[5][6].getColor());
+        assertEquals(c.getColor(), matrix.matrix[5][6].getColor());
+
+        assertNotEquals(x.getColor(), matrix.matrix[6][3].getColor());
+        assertNotEquals(d.getColor(), matrix.matrix[6][3].getColor());
+        assertEquals(w.getColor(), matrix.matrix[6][3].getColor());
+
+        if(!matrix.checkRefill()){
+            fail("This board needs a refill!");
+        }
+
+        matrix.refill();
+
+        for (int i=0; i<9; i++){
+            for (int j=0; j<9; j++){
+                if (i==0 && j<3) {
+                    assertEquals(x.getColor(), matrix.matrix[i][j].getColor());
+                }else if (i==0 && j>4) {
+                    assertEquals(x.getColor(), matrix.matrix[i][j].getColor());
+                }else if (i==8 && j<4) {
+                    assertEquals(x.getColor(), matrix.matrix[i][j].getColor());
+                }else if (i==8 && j>5) {
+                    assertEquals(x.getColor(), matrix.matrix[i][j].getColor());
+                }else if (i==1 && j<3) {
+                    assertEquals(x.getColor(), matrix.matrix[i][j].getColor());
+                }else if (i==2 && j<2) {
+                    assertEquals(x.getColor(), matrix.matrix[i][j].getColor());
+                }else if (i==1 && j>5) {
+                    assertEquals(x.getColor(), matrix.matrix[i][j].getColor());
+                }else if (i==2 && j>6) {
+                    assertEquals(x.getColor(), matrix.matrix[i][j].getColor());
+                }else if (i==3 && j==0) {
+                    assertEquals(x.getColor(), matrix.matrix[i][j].getColor());
+                }else if (i==5 && j==8) {
+                    assertEquals(x.getColor(), matrix.matrix[i][j].getColor());
+                }else if (i==6 && j<2) {
+                    assertEquals(x.getColor(), matrix.matrix[i][j].getColor());
+                }else if (i==6 && j>6) {
+                    assertEquals(x.getColor(), matrix.matrix[i][j].getColor());
+                }else if (i==7 && j<3) {
+                    assertEquals(x.getColor(), matrix.matrix[i][j].getColor());
+                }else if (i==7 && j>5) {
+                    assertEquals(x.getColor(), matrix.matrix[i][j].getColor());
+                }else{
+                    assertNotEquals(x.getColor(), matrix.matrix[i][j].getColor());
+                    assertNotEquals(d.getColor(), matrix.matrix[i][j].getColor());
+                    assertSame(i, matrix.matrix[i][j].getRow());
+                    assertSame(j, matrix.matrix[i][j].getColumn());
+                }
+                //funziona
+            }
+        }
+
     }
 
 }
