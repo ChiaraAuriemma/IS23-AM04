@@ -1,6 +1,8 @@
 package it.polimi.it.model;
 
 import it.polimi.it.model.Board.Board;
+import it.polimi.it.model.Exception.InvalidTileException;
+import it.polimi.it.model.Exception.WrongListException;
 import it.polimi.it.model.Tiles.Tile;
 
 import java.util.List;
@@ -15,61 +17,65 @@ public class User {
     private int tilesNumber;
     private final String nickname;
 
-    private int score;
-
     private final boolean inGame;
 
     public User(String nickname){
 
         this.nickname = nickname;
 
-        this.score = 0;
-
         this.inGame = true;
     }
 
-    public List<List<Tile>> choosableTiles(int tilesNum) {
+    List<List<Tile>> choosableTiles(int tilesNum) throws WrongListException {
 
         tilesNumber = tilesNum;
 
-        return board.choosableTiles(tilesNum);
+        List<List<Tile>> choosableList = board.choosableTiles(tilesNum);
+        if(choosableList == null || choosableList.size() == 0){
+            throw new WrongListException("La lista di scelte possibili non è utilizzabile");
+        }
+        return choosableList;
     }
 
-    public boolean[] chooseSelectedTiles(List<Tile> choosen) {
+    boolean[] chooseSelectedTiles(List<Tile> chosen) throws InvalidTileException {
 
-        board.removeTiles(choosen);
+        for(Tile t : chosen){
+            if(t.getColor().equals("XTILE") || t.getColor().equals("DEFAULt")){
+                throw new InvalidTileException("Non è possibile avere questo tipo di tile nella scelta");
+            }
+        }
+
+        board.removeTiles(chosen);
 
         return shelf.chooseColumn(tilesNumber);
     }
 
-    public void insertTile(int column, List<Tile> choosen) {
+    void insertTile(int column, List<Tile> chosen) throws IndexOutOfBoundsException {
 
         if(column < 0 || column > 4){
 
             throw new IndexOutOfBoundsException();
 
         }else {
-
-            shelf.addTile(column, choosen);
+            shelf.addTile(column, chosen);
         }
 
         board.refill();
     }
 
 
-    public boolean checkInGame(User user) {
+    boolean checkInGame(User user) {
 
         //vedere quando crasha
         return true;
     }
-
-    public Shelfie createShelfie() {
+    Shelfie createShelfie() {
 
         this.board = this.game.getBoard();
         return this.shelf = new Shelfie();
     }
 
-    public int maxValueofTiles() throws IndexOutOfBoundsException{
+    int maxValueOfTiles() throws IndexOutOfBoundsException{
 
         int max = shelf.possibleTiles();
 
