@@ -54,9 +54,6 @@ public class TilesBag {
     public Tile randomTiles(int row, int col){
         int random_color;
 
-        /**
-         * Used to extract a random number to choose which color is the Tile that gets extracted from the bad
-         */
         Random rand = new Random();
 
         while(true) {

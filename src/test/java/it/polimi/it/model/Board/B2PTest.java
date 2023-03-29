@@ -81,4 +81,10 @@ public class B2PTest {
             fail("This board is full, shouldn't be refilled!");
         }
     }
+
+
+    /*@Test
+    public void randomChecks(){
+        for()
+    }*/
 }
