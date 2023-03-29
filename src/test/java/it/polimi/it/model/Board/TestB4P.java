@@ -169,7 +169,7 @@ public class TestB4P {
             fail("This board needs a refill!");
         }
 
-        Tile b = new Tile(PossibleColors.GREEN);
+        Tile b = new Tile(PossibleColors.BLUE);
         matrix.matrix[3][3] = new Tile(3, 3, PossibleColors.BLUE);
         assertNotEquals(x.getColor(), matrix.matrix[3][3].getColor());
         assertNotEquals(d.getColor(), matrix.matrix[3][3].getColor());
