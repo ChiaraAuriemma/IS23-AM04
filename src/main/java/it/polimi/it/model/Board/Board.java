@@ -35,6 +35,15 @@ public abstract class Board {
         if (!checkRefill()) {
             return;
         }
+
+        for (int a=0; a<9; a++){
+            for (int b=0; b<9; b++){
+                if(!matrix[a][b].getColor().equals("DEFAULT") && !matrix[a][b].getColor().equals("XTILE")){
+                    bag.boardCleaner(matrix[a][b].getColor());
+                    matrix[a][b] = new Tile(PossibleColors.DEFAULT);
+                }
+            }
+        }
         int remainingTiles;
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
@@ -59,9 +68,12 @@ public abstract class Board {
             for (int j = 0; j < 9; j++) {
                 //Tile til = matrix[i][j];
                 if (!matrix[i][j].getColor().equals("DEFAULT") && !matrix[i][j].getColor().equals("XTILE")) {
+                    // eseguo i controlli solo se la tessera è colorata:
+
+
                     if (i < 8) {
                         if (!matrix[i + 1][j].getColor().equals("DEFAULT") && !matrix[i + 1][j].getColor().equals("XTILE")) {
-                            return false;
+                            return false;//dato che ho trovato un'altra tessera colorata a fianco di una tessera colorata, il refill non è necessario
                         }
                     }
                     if (i > 0) {
@@ -285,7 +297,7 @@ public abstract class Board {
                     middlecountRight = 1;
                     visited[i][colRight] = 1;
                 } else {
-                    if (i >= 1 && middlecountRight == 0) {
+                    if (i >= 1) {
                         if (matrix[i - 1][colRight].getColor().equals("DEFAULT") || matrix[i - 1][colRight].getColor().equals("XTILE")) {
                             if (visited[i - 1][colRight] == 0) {
                                 middlecountRight++;

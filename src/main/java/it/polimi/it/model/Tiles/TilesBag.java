@@ -36,6 +36,7 @@ public class TilesBag {
     }
 
 
+
     /**
      * Getter method
      * @return the total number of the tiles that are still in the bag
@@ -109,5 +110,30 @@ public class TilesBag {
                     break;
             }
         }
+
+
+    }
+    public void boardCleaner(String colorRetrieved){
+        switch (colorRetrieved){
+            case "BLUE":
+                remainingTiles.put(PossibleColors.BLUE, remainingTiles.get(PossibleColors.BLUE)+1);
+                break;
+            case "GREEN":
+                remainingTiles.put(PossibleColors.GREEN, remainingTiles.get(PossibleColors.GREEN)+1);
+                break;
+            case "CYAN":
+                remainingTiles.put(PossibleColors.CYAN, remainingTiles.get(PossibleColors.CYAN)+1);
+                break;
+            case "YELLOW":
+                remainingTiles.put(PossibleColors.YELLOW, remainingTiles.get(PossibleColors.YELLOW)+1);
+                break;
+            case "WHITE":
+                remainingTiles.put(PossibleColors.WHITE, remainingTiles.get(PossibleColors.WHITE)+1);
+                break;
+            case "PINK":
+                remainingTiles.put(PossibleColors.PINK, remainingTiles.get(PossibleColors.PINK)+1);
+                break;
+        }
+        totalRemaining++;
     }
 }
