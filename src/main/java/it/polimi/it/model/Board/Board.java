@@ -4,6 +4,7 @@ import it.polimi.it.model.Tiles.Tile;
 import it.polimi.it.model.Tiles.TilesBag;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 
@@ -111,25 +112,23 @@ public abstract class Board {
                         visited[i][j] = 1;
                     } else {
                         middlecount = 0;
-                        if (i >= 1) {
-                            if (matrix[i - 1][j].getColor().equals("DEFAULT") || matrix[i - 1][j].getColor().equals("XTILE")) {
-                                middlecount++;
-                                visited[i - 1][j] = 1;
-                            }
+                        if (matrix[i - 1][j].getColor().equals("DEFAULT") || matrix[i - 1][j].getColor().equals("XTILE")) {
+                            middlecount++;
+                            visited[i - 1][j] = 1;
                         }
-                        if (j >= 1 && middlecount == 0) {
+                        if (middlecount == 0) {
                             if (matrix[i][j - 1].getColor().equals("DEFAULT") || matrix[i][j - 1].getColor().equals("XTILE")) {
                                 middlecount++;
                                 visited[i][j - 1] = 1;
                             }
                         }
-                        if (i <= 7 && middlecount == 0) {
+                        if (middlecount == 0) {
                             if (matrix[i + 1][j].getColor().equals("DEFAULT") || matrix[i + 1][j].getColor().equals("XTILE")) {
                                 middlecount++;
                                 visited[i + 1][j] = 1;
                             }
                         }
-                        if (j <= 7 && middlecount == 0) {
+                        if (middlecount == 0) {
                             if (matrix[i][j + 1].getColor().equals("DEFAULT") || matrix[i][j + 1].getColor().equals("XTILE")) {
                                 middlecount++;
                                 visited[i][j + 1] = 1;
@@ -570,19 +569,6 @@ public abstract class Board {
     /**
      * Removes the tiles that the player chose to take from the board
      * Given the coordinate (row and column of the Tiles in the board)
-     *      Rows and Columns are set to -1 if the player took less than 3 Tiles
-     * @param row1 is the row of the first tile
-     * @param row2 is the row of the second tile
-     * @param row3 is the row of the third tile
-     * @param col1 is the column of the first tile
-     * @param col2 is the column of the second tile
-     * @param col3 is the column of the third tile
-     */
-
-
-    /**
-     * Removes the tiles that the player chose to take from the board
-     * Given the coordinate (row and column of the Tiles in the board)
      * @param chosenTiles is a list of tiles in which are stored the Tiles chosen by the player
      */
     public void removeTiles(List<Tile> chosenTiles) {
@@ -606,23 +592,18 @@ public abstract class Board {
      */
     public List<List<Tile>> choosableTiles(int size) {
         List<List<Tile>> choosableTilesList = new ArrayList<>();
-        int[][] visited = new int[9][9];
 
-        for (int a = 0; a < 9; a++) {
-            for (int b = 0; b < 9; b++) {
-                visited[a][b] = 0;
-            }
-        }
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
-                if (!matrix[i][j].getColor().equals("DEFAULT") && !matrix[i][j].getColor().equals("XTILE") && visited[i][j] == 0) {
+                if (!matrix[i][j].getColor().equals("DEFAULT") && !matrix[i][j].getColor().equals("XTILE")) {
                     List<Tile> triplet = new ArrayList<>();
-                    addTilesTotriplet(visited, i, j, triplet, size);
+                    addTilesTotriplet(i, j, triplet, size);
 
-                    if (triplet.size() == 1 && size == 1) {
-                        choosableTilesList.add(triplet);
-                    } else if (triplet.size() == size) {
-                        choosableTilesList.add(triplet);
+                    boolean tripletAlreadyIn = choosableTilesList.stream().anyMatch(list -> new HashSet<>(list).containsAll(triplet));
+                    if(!tripletAlreadyIn){
+                        if (triplet.size() == size) {
+                            choosableTilesList.add(triplet);
+                        }
                     }
                 }
             }
@@ -631,33 +612,36 @@ public abstract class Board {
     }
 
 
+
     /**
      * Helper method that can be called only by choosableTiles
      * Adds to the List of tiles 'triplet' the take-able tiles following the rules of the game
      * This method is recursive and calls itself on every direction departing from the starting cell, if the triplet isn't completed
-     * @param visited is a matrix used to know if a given cell had already been explored
      * @param i is the row of the starting Tile
      * @param j is the column of the starting Tile
      * @param triplet is the List in which a Tile is appended if is take-able
      * @param size is the maximum size of the List 'triplet', once is reached the List can't be expanded and the traversing of the board stops
      */
-    private void addTilesTotriplet(int[][] visited, int i, int j, List<Tile> triplet, int size) {
+    private void addTilesTotriplet(int i, int j, List<Tile> triplet, int size) {
         int ok = 0;
-        if (i < 0 || i > 8 || j < 0 || j > 8 || visited[i][j] == 1 || matrix[i][j].getColor().equals("DEFAULT") || matrix[i][j].getColor().equals("XTILE")) {
+        //Tile current = new Tile(i, j, matrix[i][j].getColor())
+        if(triplet.contains(matrix[i][j])){//se questa Tile fa già parte della lista Triplet non ha senso farci dei controlli
             return;
         }
-        visited[i][j] = 1;
+        if (i < 0 || i > 8 || j < 0 || j > 8 || matrix[i][j].getColor().equals("DEFAULT") || matrix[i][j].getColor().equals("XTILE")) {
+            return;
+        }
         if (i == 0 || j == 0 || i == 8 || j == 8) {
             ok = 1;
-        } else if (i > 1 && ok == 0) {
+        } else if (i >= 1) {
             if (matrix[i - 1][j].getColor().equals("DEFAULT") || matrix[i - 1][j].getColor().equals("XTILE")) {
                 ok = 1;
             }
-        } else if (j > 1 && ok == 0) {
+        } else if (j >= 1) {
             if (matrix[i][j - 1].getColor().equals("DEFAULT") || matrix[i][j - 1].getColor().equals("XTILE")) {
                 ok = 1;
             }
-        } else if (i < 8 && ok == 0) {
+        } else if (i < 8) {
             if (matrix[i + 1][j].getColor().equals("DEFAULT") || matrix[i + 1][j].getColor().equals("XTILE")) {
                 ok = 1;
             }
@@ -690,10 +674,10 @@ public abstract class Board {
                 break;
         }
         if (triplet.size() < size) {
-            addTilesTotriplet(visited, i - 1, j, triplet, size);
-            addTilesTotriplet(visited, i + 1, j, triplet, size);
-            addTilesTotriplet(visited, i, j - 1, triplet, size);
-            addTilesTotriplet(visited, i, j + 1, triplet, size);
+            addTilesTotriplet(i - 1, j, triplet, size);
+            addTilesTotriplet(i + 1, j, triplet, size);
+            addTilesTotriplet(i, j - 1, triplet, size);
+            addTilesTotriplet( i, j + 1, triplet, size);
         }
     }
 }
