@@ -5,17 +5,17 @@ public class Tile {
     /**
      * The color of the tile, taken from the Enumeration PossibleColors
      */
-    PossibleColors color;
+    private PossibleColors color;
 
     /**
      * Stores the row in which the Tile is positioned on the Board
      */
-    int boardRow;
+    private int boardRow;
 
     /**
      * Stores the column in which the Tile is positioned on the Board
      */
-    int boardColumn;
+    private int boardColumn;
 
 
     /**

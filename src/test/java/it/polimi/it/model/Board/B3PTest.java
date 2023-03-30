@@ -1,6 +1,7 @@
 package it.polimi.it.model.Board;
 
 
+
 import it.polimi.it.model.Tiles.PossibleColors;
 import it.polimi.it.model.Tiles.Tile;
 import it.polimi.it.model.Tiles.TilesBag;
@@ -10,15 +11,13 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+public class B3PTest {
 
-public class B2PTest {
-    private B2P matrix;
+    private B3P matrix;
     private TilesBag bag;
-
     @Before
-    public void B2P() {
-        this.matrix = new B2P();
+    public void B3P() {
+        this.matrix = new B3P();
         this.bag= new TilesBag();
     }
 
@@ -28,6 +27,7 @@ public class B2PTest {
     }
 
 
+
     @Test
     public void correctInitialization() {
         Tile x = new Tile(PossibleColors.XTILE);
@@ -35,31 +35,29 @@ public class B2PTest {
 
         for (int i=0; i<9; i++){
             for (int j=0; j<9; j++){
-                if(i==0 || i==8){
+                if(i==0 && j!=3){
                     assertEquals(x.getColor(), matrix.matrix[i][j].getColor());
                 }else if (i==1 && j<3) {
                     assertEquals(x.getColor(), matrix.matrix[i][j].getColor());
-                }else if (i==2 && j<3) {
+                }else if (i==8 && j!=5) {
+                    assertEquals(x.getColor(), matrix.matrix[i][j].getColor());
+                }else if (i==2 && j<2) {
                     assertEquals(x.getColor(), matrix.matrix[i][j].getColor());
                 }else if (i==1 && j>4) {
                     assertEquals(x.getColor(), matrix.matrix[i][j].getColor());
-                }else if (i==2 && j>5) {
+                }else if (i==2 && j>6) {
                     assertEquals(x.getColor(), matrix.matrix[i][j].getColor());
                 }else if (i==3 && j<2) {
-                    assertEquals(x.getColor(), matrix.matrix[i][j].getColor());
-                }else if (i==3 && j==8) {
                     assertEquals(x.getColor(), matrix.matrix[i][j].getColor());
                 }else if (i==4 && j==0) {
                     assertEquals(x.getColor(), matrix.matrix[i][j].getColor());
                 }else if (i==4 && j==8) {
                     assertEquals(x.getColor(), matrix.matrix[i][j].getColor());
-                }else if (i==5 && j==0) {
-                    assertEquals(x.getColor(), matrix.matrix[i][j].getColor());
                 }else if (i==5 && j>6) {
                     assertEquals(x.getColor(), matrix.matrix[i][j].getColor());
-                }else if (i==6 && j<3) {
+                }else if (i==6 && j<2) {
                     assertEquals(x.getColor(), matrix.matrix[i][j].getColor());
-                }else if (i==6 && j>5) {
+                }else if (i==6 && j>6) {
                     assertEquals(x.getColor(), matrix.matrix[i][j].getColor());
                 }else if (i==7 && j<4) {
                     assertEquals(x.getColor(), matrix.matrix[i][j].getColor());
@@ -75,16 +73,29 @@ public class B2PTest {
         }
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     @Test
     public void refillChecker(){
         if(matrix.checkRefill()){
             fail("This board is full, shouldn't be refilled!");
         }
     }
-
-
-    /*@Test
-    public void randomChecks(){
-        for()
-    }*/
 }

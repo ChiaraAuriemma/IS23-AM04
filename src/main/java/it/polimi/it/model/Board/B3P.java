@@ -9,7 +9,8 @@ public class B3P extends Board{
     /**
      * 9x9 Tiles matrix that represents the configuration of the Board when there are 3 players
      */
-    public Tile[][] matrix;
+   // public Tile[][] matrix;
+    //protected TilesBag bag = new TilesBag();
 
 
     /**
@@ -49,7 +50,7 @@ public class B3P extends Board{
                 }else if (i==7 && j>5) {
                     matrix[i][j] = new Tile(PossibleColors.XTILE);
                 }else{
-                    matrix[i][j] = TilesBag.randomTiles(i, j);
+                    matrix[i][j] = bag.randomTiles(i, j);
                 }
             }
         }
