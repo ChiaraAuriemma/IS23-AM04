@@ -1,12 +1,12 @@
 [{
-  "type" : "column",
+  "type" : "2",
   "i" : "4",
   "j" : "5",
   "addToColumn" : "0",
   "addToRow" : "1"
 },
   {
-    "type" : "row",
+    "type" : "6",
     "i" : "5",
     "j" : "4",
     "addToColumn" : "1",

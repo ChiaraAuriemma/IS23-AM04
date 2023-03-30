@@ -1,52 +1,51 @@
 package it.polimi.it.model.Card.CommonGoalCards;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
+import com.google.gson.stream.JsonReader;
 import it.polimi.it.model.Shelfie;
+
+import java.io.FileReader;
+import java.util.List;
 
 public class CommonGoalCard11 extends CommonGoalCard{
 
-    public CommonGoalCard11(){
+    public CommonGoalCard11(int id){ //carte 8 e 11
         super();
-        this.id = 11;
+        this.id = id;
     }
 
     public Boolean checkGoal(Shelfie shelfie){
-        String cell1 = shelfie.getCell(0,5).getColor();
-        String cell2 = shelfie.getCell(1,4).getColor();
-        String cell3 = shelfie.getCell(2,3).getColor();
-        String cell4 = shelfie.getCell(3,2).getColor();
-        String cell5 = shelfie.getCell(4,1).getColor();
-        String cell6 = shelfie.getCell(0,4).getColor();
-        String cell7 = shelfie.getCell(1,3).getColor();
-        String cell8 = shelfie.getCell(2,2).getColor();
-        String cell9 = shelfie.getCell(3,1).getColor();
-        String cell10 = shelfie.getCell(4,0).getColor();
-        String cell11 = shelfie.getCell(0,0).getColor();
-        String cell12 = shelfie.getCell(1,1).getColor();
-        String cell13 = shelfie.getCell(3,3).getColor();
-        String cell14 = shelfie.getCell(4,4).getColor();
-        String cell15 = shelfie.getCell(0,1).getColor();
-        String cell16 = shelfie.getCell(1,2).getColor();
-        String cell17 = shelfie.getCell(3,4).getColor();
-        String cell18 = shelfie.getCell(4,5).getColor();
+        int i,j;
+        Gson gson = new Gson();
+        try {
+            JsonReader reader = new JsonReader(new FileReader("CommonGoalCard12.json"));
+            JsonArray jsonArray = gson.fromJson(reader, JsonArray.class);
+            for(j=0; jsonArray.get(j).getAsJsonObject().get("type").getAsInt() != id ; j++);
+            for(i=j;jsonArray.get(i).getAsJsonObject().get("type").getAsInt() == id;i++){
+                JsonObject jsonObject = jsonArray.get(i).getAsJsonObject();
+                String cell1 = shelfie.getCell(jsonObject.get("mustBeEqual1").getAsJsonArray().get(0).getAsInt(),jsonObject.get("mustBeEqual1").getAsJsonArray().get(1).getAsInt()).getColor();
+                String cell2 = shelfie.getCell(jsonObject.get("mustBeEqual2").getAsJsonArray().get(0).getAsInt(),jsonObject.get("mustBeEqual2").getAsJsonArray().get(1).getAsInt()).getColor();
+                String cell3 = shelfie.getCell(jsonObject.get("mustBeEqual3").getAsJsonArray().get(0).getAsInt(),jsonObject.get("mustBeEqual3").getAsJsonArray().get(1).getAsInt()).getColor();
+                String cell4 = shelfie.getCell(jsonObject.get("mustBeEqual4").getAsJsonArray().get(0).getAsInt(),jsonObject.get("mustBeEqual4").getAsJsonArray().get(1).getAsInt()).getColor();
+                if(jsonObject.get("exception").getAsInt() == 1){
+                    String cell5 = shelfie.getCell(jsonObject.get("mustBeEqual5").getAsJsonArray().get(0).getAsInt(),jsonObject.get("mustBeEqual5").getAsJsonArray().get(1).getAsInt()).getColor();
+                    if(!cell1.equals("DEFAULT") && cell1.equals(cell2) && cell2.equals(cell3) && cell3.equals(cell4) && cell4.equals(cell5)){
+                        return true;
+                    }
+                }else if(!cell1.equals("DEFAULT") &&  cell1.equals(cell2) && cell2.equals(cell3) && cell3.equals(cell4))
+                    return true;
 
+            }
 
-        if(!cell1.equals("DEFAULT") && cell1.equals(cell2) && cell2.equals(cell3) && cell3.equals(cell4) && cell4.equals(cell5)){
-            return true;
+            return false;
+
+        }catch (Exception e){
+            return false;
         }
-
-        if(!cell6.equals("DEFAULT") && cell6.equals(cell7) && cell7.equals(cell8) && cell8.equals(cell9) && cell9.equals(cell10)){
-            return true;
-        }
-
-        if(!cell11.equals("DEFAULT") && cell11.equals(cell12) && cell12.equals(cell8) && cell8.equals(cell13) && cell13.equals(cell14)){
-            return true;
-        }
-
-        if(!cell15.equals("DEFAULT") && cell15.equals(cell16) && cell16.equals(cell3) && cell3.equals(cell17) && cell17.equals(cell18)){
-            return true;
-        }
-
-        return false;
 
     }
 }

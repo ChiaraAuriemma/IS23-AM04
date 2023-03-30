@@ -1,0 +1,52 @@
+[
+  {
+    "noDefault1" : ["0","5"],
+    "noDefault2" : ["1", "4"],
+    "noDefault3" : ["2", "3"],
+    "noDefault4" : ["3", "2"],
+    "noDefault5" : ["4", "1"],
+    "yesDefault1" : ["1","5"],
+    "yesDefault2" : ["2","4"],
+    "yesDefault3" : ["3","3"],
+    "yesDefault4" : ["4","2"],
+    "exception" : "0"
+  },
+  {
+    "noDefault1" : ["0", "4"],
+    "noDefault2" : ["1", "3"],
+    "noDefault3" : ["2", "2"],
+    "noDefault4" : ["3", "1"],
+    "noDefault5" : ["4", "0"],
+    "yesDefault1" : ["0","5"],
+    "yesDefault2" : ["1","4"],
+    "yesDefault3" : ["2","3"],
+    "yesDefault4" : ["3","2"],
+    "yesDefault5" : ["4","1"],
+    "exception" : "1"
+  },
+  {
+    "noDefault1" : ["0", "0"],
+    "noDefault2" : ["1", "1"],
+    "noDefault3" : ["2", "2"],
+    "noDefault4" : ["3", "3"],
+    "noDefault5" : ["4", "4"],
+    "yesDefault1" : ["0","1"],
+    "yesDefault2" : ["1","2"],
+    "yesDefault3" : ["2","3"],
+    "yesDefault4" : ["3","4"],
+    "yesDefault5" : ["4","5"],
+    "exception" : "1"
+  },
+  {
+    "noDefault1" : ["0", "1"],
+    "noDefault2" : ["1", "2"],
+    "noDefault3" : ["2", "3"],
+    "noDefault4" : ["3", "4"],
+    "noDefault5" : ["4", "5"],
+    "yesDefault1" : ["0","2"],
+    "yesDefault2" : ["1","3"],
+    "yesDefault3" : ["2","4"],
+    "yesDefault4" : ["3","5"],
+    "exception" : "0"
+  }
+]
