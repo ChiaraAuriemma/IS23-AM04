@@ -206,7 +206,7 @@ public abstract class Board {
         for (Tile choosenTile : chosenTiles) {
             int row = choosenTile.getRow();
             int col = choosenTile.getColumn();
-            matrix[row][col] = new Tile(PossibleColors.DEFAULT);
+            matrix[row][col] = new Tile(row, col, PossibleColors.DEFAULT);
         }
     }
 
