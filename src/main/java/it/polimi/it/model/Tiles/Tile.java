@@ -1,5 +1,7 @@
 package it.polimi.it.model.Tiles;
 
+import java.util.Objects;
+
 public class Tile {
 
     /**
@@ -76,5 +78,19 @@ public class Tile {
      */
     public int getColumn(){
         return this.boardColumn;
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Tile tile = (Tile) o;
+        return boardRow == tile.boardRow && boardColumn == tile.boardColumn && color == tile.color;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(color, boardRow, boardColumn);
     }
 }

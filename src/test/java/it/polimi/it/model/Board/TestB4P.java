@@ -359,22 +359,53 @@ public class TestB4P {
         }
 
         int max = matrix.findMaxAdjacent(3);
-        assertSame(2, max);
+        assertEquals(3, max);
 
         List<List<Tile>> a1 = matrix.choosableTiles(1);
+        System.out.println("Versione gruppi da 1");
+        for (List<Tile> inner : a1) {
+            for (Tile t: inner){
+                System.out.print(t.getRow() +" "+ t.getColumn() +" " + " __ ");
+            }
+            System.out.println();
+        }
+        //System.out.println(a1);
+
         if(a1.size()!=20){
-            fail("This doesn't have 3 adjacent take-able Tiles!");
+            fail("This doesn't have 1 adjacent take-able Tiles!");
         }
+
+
+
+
         List<List<Tile>> a2 = matrix.choosableTiles(2);
-        if(a2.size()!=8){
-            fail("This doesn't have 3 adjacent take-able Tiles!");
+        System.out.println("Versione gruppi da 2");
+        for (List<Tile> inner : a2) {
+            for (Tile t: inner){
+                System.out.print(t.getRow() +" "+ t.getColumn() +" " + " __ ");
+            }
+            System.out.println();
         }
+        //List<List<Tile>> a2 = matrix.choosableTiles(2);
+        if(a2.size()!=8){
+            fail("This doesn't have 2 adjacent take-able Tiles!");
+        }
+
+
         List<List<Tile>> a3 = matrix.choosableTiles(3);
-        if(a3.size()!=0){
+        System.out.println("Versione gruppi da 3");
+        System.out.println("Size lista gruppi da 3: " + a3.size());
+        for (List<Tile> inner : a3) {
+            for (Tile t: inner){
+                System.out.print(t.getRow() +" "+ t.getColumn() +" " + " __ ");
+            }
+            System.out.println();
+        }
+        //List<List<Tile>> a3 = matrix.choosableTiles(3);
+        if(a3.size()!=4){
             fail("This doesn't have 3 adjacent take-able Tiles!");
         }
     }
-
 
 
 }
