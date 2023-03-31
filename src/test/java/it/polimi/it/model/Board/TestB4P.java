@@ -6,6 +6,7 @@ import it.polimi.it.model.Tiles.TilesBag;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
 import java.util.List;
 
 import static org.junit.Assert.*;

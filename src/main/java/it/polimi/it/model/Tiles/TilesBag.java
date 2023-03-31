@@ -110,9 +110,13 @@ public class TilesBag {
                     break;
             }
         }
-
-
     }
+
+    /**
+     * Given a color of a tile, puts it back in the bag.
+     * This method is used when a refill is needed and there are still some tiles on the board.
+     * @param colorRetrieved is the color of the tile that needs to be put back in the bag from the Board
+     */
     public void boardCleaner(String colorRetrieved){
         switch (colorRetrieved){
             case "BLUE":
