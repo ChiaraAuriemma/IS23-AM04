@@ -12,9 +12,8 @@ import java.util.Map;
 
 public class CommonGoalCard12 extends CommonGoalCard{
 
-    public CommonGoalCard12(){ //solo carta 12
-        super();
-        this.id = 12;
+    public CommonGoalCard12(int id){ //solo carta 12
+        super(id);
     }
 
     public Boolean checkGoal(Shelfie shelfie){

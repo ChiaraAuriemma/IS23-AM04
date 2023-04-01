@@ -16,11 +16,14 @@ public class CommonGoalCard1 extends CommonGoalCard{
     private List<Tile> white;
     private List<Tile> green;
 
-    public CommonGoalCard1(){
-        super();
-        this.id = 1;
+    public CommonGoalCard1(int id){
+        super(id);
         this.pink = new ArrayList<Tile>(8);
-        // inserire il resto
+        this.cyan = new ArrayList<Tile>(8);
+        this.yellow = new ArrayList<Tile>(8);
+        this.blue = new ArrayList<Tile>(8);
+        this.white = new ArrayList<Tile>(8);
+        this.green = new ArrayList<Tile>(8);
     }
 
     public Boolean checkGoal(Shelfie shelfie){
