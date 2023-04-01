@@ -9,9 +9,8 @@ public class CommonGoalCard9 extends CommonGoalCard{
 
     private List<Integer> numColor;
 
-    public CommonGoalCard9(){
-        super();
-        this.id = 9;
+    public CommonGoalCard9(int id){
+        super(id);
         this.numColor = new ArrayList<Integer>(6);
         int i;
         for(i=0; i<6; i++) {

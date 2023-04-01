@@ -14,8 +14,7 @@ import java.util.List;
 public class CommonGoalCard11 extends CommonGoalCard{
 
     public CommonGoalCard11(int id){ //carte 8 e 11
-        super();
-        this.id = id;
+        super(id);
     }
 
     public Boolean checkGoal(Shelfie shelfie){
