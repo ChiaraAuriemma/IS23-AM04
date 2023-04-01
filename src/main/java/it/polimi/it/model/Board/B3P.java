@@ -7,13 +7,6 @@ import it.polimi.it.model.Tiles.TilesBag;
 public class B3P extends Board{
 
     /**
-     * 9x9 Tiles matrix that represents the configuration of the Board when there are 3 players
-     */
-   // public Tile[][] matrix;
-    //protected TilesBag bag = new TilesBag();
-
-
-    /**
      * Constructor of the board for 3 player
      * Initializes a 9x9 matrix with the X or colored Tiles where needed
      */

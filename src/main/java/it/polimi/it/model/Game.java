@@ -87,7 +87,7 @@ public class Game {
         //mostro alla view
 
     }
-
+/*
     private void randomplayers () {
         this.orderPointer = 0;
         Random rdn = new Random();
@@ -319,5 +319,5 @@ public class Game {
         //mostro alla view
     }
     // IMPOARTE :     checkAdjacentsPoints() di player
-
+*/
 }
