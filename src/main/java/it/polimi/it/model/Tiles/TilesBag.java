@@ -57,6 +57,10 @@ public class TilesBag {
 
         Random rand = new Random();
 
+        if (totalRemaining==0){
+            return new Tile(PossibleColors.DEFAULT);
+        }
+
         while(true) {
             random_color = rand.nextInt(6);
             switch (random_color) {

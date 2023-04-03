@@ -7,6 +7,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -405,7 +406,52 @@ public class TestB4P {
         if(a3.size()!=4){
             fail("This doesn't have 3 adjacent take-able Tiles!");
         }
+
+
+        if (matrix.findMaxAdjacent(3)!=3){
+            fail("...!");
+        }
+        if (matrix.findMaxAdjacent(1)!=1){
+            fail("...!");
+        }
+        if (matrix.findMaxAdjacent(2)!=2){
+            fail("...!");
+        }
     }
 
+    @Test
+    public  void deleter(){
+        Tile x = new Tile(PossibleColors.XTILE);
+        Tile d = new Tile(PossibleColors.DEFAULT);
+
+        assertNotEquals(x.getColor(), matrix.matrix[3][3].getColor());
+        assertNotEquals(d.getColor(), matrix.matrix[3][3].getColor());
+        assertNotEquals(x.getColor(), matrix.matrix[3][4].getColor());
+        assertNotEquals(d.getColor(), matrix.matrix[3][4].getColor());
+
+        List<Tile> toBeRemoved = new ArrayList<>();
+        toBeRemoved.add(matrix.matrix[3][3]);
+        toBeRemoved.add(matrix.matrix[3][4]);
+
+        for (Tile t: toBeRemoved){
+            System.out.println(t.getRow() +" "+ t.getColumn() +" " + t.getColor() + " __ ");
+        }
+
+        matrix.removeTiles(toBeRemoved);
+        assertEquals(d.getColor(), matrix.matrix[3][3].getColor());
+        assertEquals(d.getColor(), matrix.matrix[3][4].getColor());
+
+
+        if (matrix.checkRefill()){
+            fail("shouldn't be refilling!");
+        }
+
+        int max = matrix.findMaxAdjacent(3);
+        System.out.println(max);
+        if (max!=3){
+            fail("...");
+        }
+
+    }
 
 }

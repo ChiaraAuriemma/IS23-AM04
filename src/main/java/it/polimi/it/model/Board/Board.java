@@ -204,7 +204,6 @@ public abstract class Board {
      * @param chosenTiles is a list of tiles in which are stored the Tiles chosen by the player
      */
     public void removeTiles(List<Tile> chosenTiles) {
-
         for (Tile choosenTile : chosenTiles) {
             int row = choosenTile.getRow();
             int col = choosenTile.getColumn();
@@ -223,8 +222,6 @@ public abstract class Board {
     public List<List<Tile>> choosableTiles(int size) {
         List<List<Tile>> choosableTilesList = new ArrayList<>();
         boolean tripletAlreadyIn;
-        //int notAdd;
-        //int countPresent;
         Set<Tile> test = new HashSet<>();
 
         for (int i = 0; i < 9; i++) {
@@ -233,31 +230,8 @@ public abstract class Board {
                     List<Tile> triplet = new ArrayList<>();
                     addTilesTotriplet(i, j, triplet, size);
 
-
-                    /*tripletAlreadyIn = choosableTilesList.stream().anyMatch(list -> {
-                        Set<Tile> tmp = new HashSet<>(list);
-                        return tmp.containsAll(triplet);
-                    });*/
-
                     tripletAlreadyIn = choosableTilesList.stream().anyMatch(list -> new HashSet<>(list).containsAll(triplet));
                     if(!tripletAlreadyIn){
-                    /*notAdd=0;
-                    for (List<Tile> inner: choosableTilesList){
-                        countPresent=0;
-                        for (Tile t: inner){
-                            for(Tile tr: triplet){
-                                if(tr.equals(t)){
-                                    countPresent++;
-                                }
-                            }
-
-                        }
-                        if (countPresent == size){
-                            notAdd=1;
-                        }
-                    }
-
-                    if (notAdd==0){*/
                         if (triplet.size() == size) {
                             choosableTilesList.add(triplet);
                         }
@@ -281,7 +255,6 @@ public abstract class Board {
      */
     private void addTilesTotriplet(int i, int j, List<Tile> triplet, int size) {
         int ok = 0;
-        //Tile current = new Tile(i, j, matrix[i][j].getColor())
 
         if (i < 0 || i > 8 || j < 0 || j > 8 || matrix[i][j].getColor().equals("DEFAULT") || matrix[i][j].getColor().equals("XTILE")) {
             return;
