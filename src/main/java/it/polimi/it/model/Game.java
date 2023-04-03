@@ -174,7 +174,7 @@ public class Game {
             c2 = rnd.nextInt(12) + 1;
         }while(c1 == c2);
 
-        deck.createCard(c1,c2);
+        deck.createCards(c1,c2);
         this.card1 = deck.getCommonCard1();
         this.card2 = deck.getCommonCard2();
     }
@@ -191,7 +191,7 @@ public class Game {
         //view: mostro alla view
         if(this.players.size() == this.numplayers){
 
-                randomPlayers();
+            randomPlayers();
             this.cards = new ArrayList<>();
             for(int i=0; i < this.numplayers; i++){
                 this.cards.add(i,drawPersonalCard());
