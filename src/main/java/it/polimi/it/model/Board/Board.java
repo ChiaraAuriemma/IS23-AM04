@@ -3,10 +3,7 @@ import it.polimi.it.model.Tiles.PossibleColors;
 import it.polimi.it.model.Tiles.Tile;
 import it.polimi.it.model.Tiles.TilesBag;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 
 public abstract class Board {
@@ -227,13 +224,46 @@ public abstract class Board {
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
                 if (!matrix[i][j].getColor().equals("DEFAULT") && !matrix[i][j].getColor().equals("XTILE")) {
-                    List<Tile> triplet = new ArrayList<>();
-                    addTilesTotriplet(i, j, triplet, size);
+                    List<Tile> tripletDD = new ArrayList<>();
+                    addTilesTotripletDD(i, j, tripletDD, size);
 
-                    tripletAlreadyIn = choosableTilesList.stream().anyMatch(list -> new HashSet<>(list).containsAll(triplet));
+                    tripletAlreadyIn = choosableTilesList.stream().anyMatch(list -> new HashSet<>(list).containsAll(tripletDD));
                     if(!tripletAlreadyIn){
-                        if (triplet.size() == size) {
-                            choosableTilesList.add(triplet);
+                        if (tripletDD.size() == size) {
+                            choosableTilesList.add(tripletDD);
+                        }
+                    }
+
+                    List<Tile> tripletRR = new ArrayList<>();
+                    addTilesTotripletRR(i, j, tripletRR, size);
+
+                    tripletAlreadyIn = choosableTilesList.stream().anyMatch(list -> new HashSet<>(list).containsAll(tripletRR));
+                    if(!tripletAlreadyIn){
+                        if (tripletRR.size() == size) {
+                            choosableTilesList.add(tripletRR);
+                        }
+                    }
+
+
+                    List<Tile> tripletDR = new ArrayList<>();
+                    addTilesTotripletDR(i, j, tripletDR, size);
+
+                    tripletAlreadyIn = choosableTilesList.stream().anyMatch(list -> new HashSet<>(list).containsAll(tripletDR));
+                    if(!tripletAlreadyIn){
+                        if (tripletDR.size() == size) {
+                            choosableTilesList.add(tripletDR);
+                        }
+                    }
+
+
+
+                    List<Tile> tripletRD = new ArrayList<>();
+                    addTilesTotripletRD(i, j, tripletRR, size);
+
+                    tripletAlreadyIn = choosableTilesList.stream().anyMatch(list -> new HashSet<>(list).containsAll(tripletRD));
+                    if(!tripletAlreadyIn){
+                        if (tripletRD.size() == size) {
+                            choosableTilesList.add(tripletRD);
                         }
                     }
                 }
@@ -241,7 +271,6 @@ public abstract class Board {
         }
         return choosableTilesList;
     }
-
 
 
     /**
@@ -253,7 +282,122 @@ public abstract class Board {
      * @param triplet is the List in which a Tile is appended if is take-able
      * @param size is the maximum size of the List 'triplet', once is reached the List can't be expanded and the traversing of the board stops
      */
-    private void addTilesTotriplet(int i, int j, List<Tile> triplet, int size) {
+    /*public void addTilesTotriplet(int i, int j, List<Tile> triplet, int size, List<List<Tile>> choosableTilesList) {
+        int ok = 0;
+
+        if (triplet.size()>=size){
+            return;
+        }
+
+        if (i < 0 || i > 8 || j < 0 || j > 8 || matrix[i][j].getColor().equals("DEFAULT") || matrix[i][j].getColor().equals("XTILE")) {
+            return;
+        }
+        if(triplet.contains(matrix[i][j])){//se questa Tile fa già parte della lista Triplet non ha senso farci dei controlli
+            return;
+        }
+        if (i == 0 || j == 0 || i == 8 || j == 8) {
+            ok = 1;
+        } else {
+            if (i >= 1) {
+                if (matrix[i - 1][j].getColor().equals("DEFAULT") || matrix[i - 1][j].getColor().equals("XTILE")) {
+                    ok = 1;
+                }
+            }
+
+            if (j >= 1) {
+                if (matrix[i][j - 1].getColor().equals("DEFAULT") || matrix[i][j - 1].getColor().equals("XTILE")) {
+                    ok = 1;
+                }
+            }
+            if (i <= 7) {
+                if (matrix[i + 1][j].getColor().equals("DEFAULT") || matrix[i + 1][j].getColor().equals("XTILE")) {
+                    ok = 1;
+                }
+            }
+            if (j <= 7) {
+                if (matrix[i][j + 1].getColor().equals("DEFAULT") || matrix[i][j + 1].getColor().equals("XTILE")) {
+                    ok = 1;
+                }
+            }
+        }
+        if (ok == 0) {
+            return;
+        }
+        switch (matrix[i][j].getColor()) {
+            case "BLUE":
+                triplet.add(new Tile(i, j, PossibleColors.BLUE));
+                break;
+            case "GREEN":
+                triplet.add(new Tile(i, j, PossibleColors.GREEN));
+                break;
+            case "CYAN":
+                triplet.add(new Tile(i, j, PossibleColors.CYAN));
+                break;
+            case "YELLOW":
+                triplet.add(new Tile(i, j, PossibleColors.YELLOW));
+                break;
+            case "WHITE":
+                triplet.add(new Tile(i, j, PossibleColors.WHITE));
+                break;
+            case "PINK":
+                triplet.add(new Tile(i, j, PossibleColors.PINK));
+                break;
+        }
+        List<Tile> tripletCopy = new ArrayList<>(triplet);
+        Collections.copy(tripletCopy, triplet);
+
+        boolean tripletAlreadyIn;
+
+
+        if (triplet.size() < size && i>0) {
+            Collections.copy(tripletCopy, triplet);
+
+            addTilesTotriplet(i - 1, j, tripletCopy, size, choosableTilesList);
+
+            tripletAlreadyIn = choosableTilesList.stream().anyMatch(list -> new HashSet<>(list).containsAll(tripletCopy));
+            if(!tripletAlreadyIn){
+                if (tripletCopy.size() == size) {
+                    choosableTilesList.add(tripletCopy);
+                }
+            }
+        }
+        if (triplet.size() < size && i<8) {
+            Collections.copy(tripletCopy, triplet);
+
+            addTilesTotriplet(i + 1, j, tripletCopy, size, choosableTilesList);
+            tripletAlreadyIn = choosableTilesList.stream().anyMatch(list -> new HashSet<>(list).containsAll(tripletCopy));
+            if(!tripletAlreadyIn){
+                if (tripletCopy.size() == size) {
+                    choosableTilesList.add(tripletCopy);
+                }
+            }
+        }
+        if (triplet.size() < size && j>0) {
+            Collections.copy(tripletCopy, triplet);
+
+            addTilesTotriplet(i, j - 1, tripletCopy, size, choosableTilesList);
+            tripletAlreadyIn = choosableTilesList.stream().anyMatch(list -> new HashSet<>(list).containsAll(tripletCopy));
+            if(!tripletAlreadyIn){
+                if (tripletCopy.size() == size) {
+                    choosableTilesList.add(tripletCopy);
+                }
+            }
+        }
+        if (triplet.size() < size && j<8) {
+            Collections.copy(tripletCopy, triplet);
+
+            addTilesTotriplet( i, j + 1, tripletCopy, size, choosableTilesList);
+            tripletAlreadyIn = choosableTilesList.stream().anyMatch(list -> new HashSet<>(list).containsAll(tripletCopy));
+            if(!tripletAlreadyIn){
+                if (tripletCopy.size() == size) {
+                    choosableTilesList.add(tripletCopy);
+                }
+            }
+        }
+    }*/
+
+
+    private void addTilesTotripletDD(int i, int j, List<Tile> triplet, int size) {
         int ok = 0;
 
         if (i < 0 || i > 8 || j < 0 || j > 8 || matrix[i][j].getColor().equals("DEFAULT") || matrix[i][j].getColor().equals("XTILE")) {
@@ -307,20 +451,421 @@ public abstract class Board {
                 triplet.add(new Tile(i, j, PossibleColors.PINK));
                 break;
         }
-        if (triplet.size() < size) {
-            addTilesTotriplet(i - 1, j, triplet, size);
-        }
+
         if (triplet.size() < size) {
 
-            addTilesTotriplet(i + 1, j, triplet, size);
+            addTilesTotripletDD(i + 1, j, triplet, size);
         }
+    }
+
+
+    private void addTilesTotripletRR(int i, int j, List<Tile> triplet, int size) {
+        int ok = 0;
+
+        if (i < 0 || i > 8 || j < 0 || j > 8 || matrix[i][j].getColor().equals("DEFAULT") || matrix[i][j].getColor().equals("XTILE")) {
+            return;
+        }
+        if(triplet.contains(matrix[i][j])){//se questa Tile fa già parte della lista Triplet non ha senso farci dei controlli
+            return;
+        }
+        if (i == 0 || j == 0 || i == 8 || j == 8) {
+            ok = 1;
+        } else if (i >= 1) {
+            if (matrix[i - 1][j].getColor().equals("DEFAULT") || matrix[i - 1][j].getColor().equals("XTILE")) {
+                ok = 1;
+            }
+        }
+        if (j >= 1) {
+            if (matrix[i][j - 1].getColor().equals("DEFAULT") || matrix[i][j - 1].getColor().equals("XTILE")) {
+                ok = 1;
+            }
+        }
+        if (i <= 7) {
+            if (matrix[i + 1][j].getColor().equals("DEFAULT") || matrix[i + 1][j].getColor().equals("XTILE")) {
+                ok = 1;
+            }
+        }
+        if (j <= 7) {
+            if (matrix[i][j + 1].getColor().equals("DEFAULT") || matrix[i][j + 1].getColor().equals("XTILE")) {
+                ok = 1;
+            }
+        }
+        if (ok == 0) {
+            return;
+        }
+        switch (matrix[i][j].getColor()) {
+            case "BLUE":
+                triplet.add(new Tile(i, j, PossibleColors.BLUE));
+                break;
+            case "GREEN":
+                triplet.add(new Tile(i, j, PossibleColors.GREEN));
+                break;
+            case "CYAN":
+                triplet.add(new Tile(i, j, PossibleColors.CYAN));
+                break;
+            case "YELLOW":
+                triplet.add(new Tile(i, j, PossibleColors.YELLOW));
+                break;
+            case "WHITE":
+                triplet.add(new Tile(i, j, PossibleColors.WHITE));
+                break;
+            case "PINK":
+                triplet.add(new Tile(i, j, PossibleColors.PINK));
+                break;
+        }
+
         if (triplet.size() < size) {
 
-            addTilesTotriplet(i, j - 1, triplet, size);
+            addTilesTotripletRR(i, j + 1, triplet, size);
         }
-        if (triplet.size() < size) {
+    }
 
-            addTilesTotriplet( i, j + 1, triplet, size);
+
+
+    private void addTilesTotripletRD(int i, int j, List<Tile> triplet, int size) {
+        int ok = 0;
+
+        if (i < 0 || i > 8 || j < 0 || j > 8 || matrix[i][j].getColor().equals("DEFAULT") || matrix[i][j].getColor().equals("XTILE")) {
+            return;
+        }
+        if(triplet.contains(matrix[i][j])){//se questa Tile fa già parte della lista Triplet non ha senso farci dei controlli
+            return;
+        }
+        if (i == 0 || j == 0 || i == 8 || j == 8) {
+            ok = 1;
+        } else if (i >= 1) {
+            if (matrix[i - 1][j].getColor().equals("DEFAULT") || matrix[i - 1][j].getColor().equals("XTILE")) {
+                ok = 1;
+            }
+        }
+        if (j >= 1) {
+            if (matrix[i][j - 1].getColor().equals("DEFAULT") || matrix[i][j - 1].getColor().equals("XTILE")) {
+                ok = 1;
+            }
+        }
+        if (i <= 7) {
+            if (matrix[i + 1][j].getColor().equals("DEFAULT") || matrix[i + 1][j].getColor().equals("XTILE")) {
+                ok = 1;
+            }
+        }
+        if (j <= 7) {
+            if (matrix[i][j + 1].getColor().equals("DEFAULT") || matrix[i][j + 1].getColor().equals("XTILE")) {
+                ok = 1;
+            }
+        }
+        if (ok == 0) {
+            return;
+        }
+        switch (matrix[i][j].getColor()) {
+            case "BLUE":
+                triplet.add(new Tile(i, j, PossibleColors.BLUE));
+                break;
+            case "GREEN":
+                triplet.add(new Tile(i, j, PossibleColors.GREEN));
+                break;
+            case "CYAN":
+                triplet.add(new Tile(i, j, PossibleColors.CYAN));
+                break;
+            case "YELLOW":
+                triplet.add(new Tile(i, j, PossibleColors.YELLOW));
+                break;
+            case "WHITE":
+                triplet.add(new Tile(i, j, PossibleColors.WHITE));
+                break;
+            case "PINK":
+                triplet.add(new Tile(i, j, PossibleColors.PINK));
+                break;
+        }
+
+        if (triplet.size() < size) {//ho messo la prima e vado R
+            j=j+1;
+
+
+            if (i < 0 || i > 8 || j < 0 || j > 8 || matrix[i][j].getColor().equals("DEFAULT") || matrix[i][j].getColor().equals("XTILE")) {
+                return;
+            }
+            if(triplet.contains(matrix[i][j])){//se questa Tile fa già parte della lista Triplet non ha senso farci dei controlli
+                return;
+            }
+            if (i == 0 || j == 0 || i == 8 || j == 8) {
+                ok = 1;
+            } else if (i >= 1) {
+                if (matrix[i - 1][j].getColor().equals("DEFAULT") || matrix[i - 1][j].getColor().equals("XTILE")) {
+                    ok = 1;
+                }
+            }
+            if (j >= 1) {
+                if (matrix[i][j - 1].getColor().equals("DEFAULT") || matrix[i][j - 1].getColor().equals("XTILE")) {
+                    ok = 1;
+                }
+            }
+            if (i <= 7) {
+                if (matrix[i + 1][j].getColor().equals("DEFAULT") || matrix[i + 1][j].getColor().equals("XTILE")) {
+                    ok = 1;
+                }
+            }
+            if (j <= 7) {
+                if (matrix[i][j + 1].getColor().equals("DEFAULT") || matrix[i][j + 1].getColor().equals("XTILE")) {
+                    ok = 1;
+                }
+            }
+            if (ok == 0) {
+                return;
+            }
+            switch (matrix[i][j].getColor()) {
+                case "BLUE":
+                    triplet.add(new Tile(i, j, PossibleColors.BLUE));
+                    break;
+                case "GREEN":
+                    triplet.add(new Tile(i, j, PossibleColors.GREEN));
+                    break;
+                case "CYAN":
+                    triplet.add(new Tile(i, j, PossibleColors.CYAN));
+                    break;
+                case "YELLOW":
+                    triplet.add(new Tile(i, j, PossibleColors.YELLOW));
+                    break;
+                case "WHITE":
+                    triplet.add(new Tile(i, j, PossibleColors.WHITE));
+                    break;
+                case "PINK":
+                    triplet.add(new Tile(i, j, PossibleColors.PINK));
+                    break;
+            }
+
+
+            if (triplet.size() < size) {//ho messo la seconda e vado D
+                i=i+1;
+
+                if (i < 0 || i > 8 || j < 0 || j > 8 || matrix[i][j].getColor().equals("DEFAULT") || matrix[i][j].getColor().equals("XTILE")) {
+                    return;
+                }
+                if(triplet.contains(matrix[i][j])){//se questa Tile fa già parte della lista Triplet non ha senso farci dei controlli
+                    return;
+                }
+                if (i == 0 || j == 0 || i == 8 || j == 8) {
+                    ok = 1;
+                } else if (i >= 1) {
+                    if (matrix[i - 1][j].getColor().equals("DEFAULT") || matrix[i - 1][j].getColor().equals("XTILE")) {
+                        ok = 1;
+                    }
+                }
+                if (j >= 1) {
+                    if (matrix[i][j - 1].getColor().equals("DEFAULT") || matrix[i][j - 1].getColor().equals("XTILE")) {
+                        ok = 1;
+                    }
+                }
+                if (i <= 7) {
+                    if (matrix[i + 1][j].getColor().equals("DEFAULT") || matrix[i + 1][j].getColor().equals("XTILE")) {
+                        ok = 1;
+                    }
+                }
+                if (j <= 7) {
+                    if (matrix[i][j + 1].getColor().equals("DEFAULT") || matrix[i][j + 1].getColor().equals("XTILE")) {
+                        ok = 1;
+                    }
+                }
+                if (ok == 0) {
+                    return;
+                }
+                switch (matrix[i][j].getColor()) {
+                    case "BLUE":
+                        triplet.add(new Tile(i, j, PossibleColors.BLUE));
+                        break;
+                    case "GREEN":
+                        triplet.add(new Tile(i, j, PossibleColors.GREEN));
+                        break;
+                    case "CYAN":
+                        triplet.add(new Tile(i, j, PossibleColors.CYAN));
+                        break;
+                    case "YELLOW":
+                        triplet.add(new Tile(i, j, PossibleColors.YELLOW));
+                        break;
+                    case "WHITE":
+                        triplet.add(new Tile(i, j, PossibleColors.WHITE));
+                        break;
+                    case "PINK":
+                        triplet.add(new Tile(i, j, PossibleColors.PINK));
+                        break;
+                }
+
+            }
+
+        }
+    }
+
+
+
+    private void addTilesTotripletDR(int i, int j, List<Tile> triplet, int size) {
+        int ok = 0;
+
+        if (i < 0 || i > 8 || j < 0 || j > 8 || matrix[i][j].getColor().equals("DEFAULT") || matrix[i][j].getColor().equals("XTILE")) {
+            return;
+        }
+        if(triplet.contains(matrix[i][j])){//se questa Tile fa già parte della lista Triplet non ha senso farci dei controlli
+            return;
+        }
+        if (i == 0 || j == 0 || i == 8 || j == 8) {
+            ok = 1;
+        } else if (i >= 1) {
+            if (matrix[i - 1][j].getColor().equals("DEFAULT") || matrix[i - 1][j].getColor().equals("XTILE")) {
+                ok = 1;
+            }
+        }
+        if (j >= 1) {
+            if (matrix[i][j - 1].getColor().equals("DEFAULT") || matrix[i][j - 1].getColor().equals("XTILE")) {
+                ok = 1;
+            }
+        }
+        if (i <= 7) {
+            if (matrix[i + 1][j].getColor().equals("DEFAULT") || matrix[i + 1][j].getColor().equals("XTILE")) {
+                ok = 1;
+            }
+        }
+        if (j <= 7) {
+            if (matrix[i][j + 1].getColor().equals("DEFAULT") || matrix[i][j + 1].getColor().equals("XTILE")) {
+                ok = 1;
+            }
+        }
+        if (ok == 0) {
+            return;
+        }
+        switch (matrix[i][j].getColor()) {
+            case "BLUE":
+                triplet.add(new Tile(i, j, PossibleColors.BLUE));
+                break;
+            case "GREEN":
+                triplet.add(new Tile(i, j, PossibleColors.GREEN));
+                break;
+            case "CYAN":
+                triplet.add(new Tile(i, j, PossibleColors.CYAN));
+                break;
+            case "YELLOW":
+                triplet.add(new Tile(i, j, PossibleColors.YELLOW));
+                break;
+            case "WHITE":
+                triplet.add(new Tile(i, j, PossibleColors.WHITE));
+                break;
+            case "PINK":
+                triplet.add(new Tile(i, j, PossibleColors.PINK));
+                break;
+        }
+
+        if (triplet.size() < size) {//ho messo la prima e vado D
+            i=i+1;
+
+
+
+            if (i < 0 || i > 8 || j < 0 || j > 8 || matrix[i][j].getColor().equals("DEFAULT") || matrix[i][j].getColor().equals("XTILE")) {
+                return;
+            }
+            if(triplet.contains(matrix[i][j])){//se questa Tile fa già parte della lista Triplet non ha senso farci dei controlli
+                return;
+            }
+            if (i == 0 || j == 0 || i == 8 || j == 8) {
+                ok = 1;
+            } else if (i >= 1) {
+                if (matrix[i - 1][j].getColor().equals("DEFAULT") || matrix[i - 1][j].getColor().equals("XTILE")) {
+                    ok = 1;
+                }
+            }
+            if (j >= 1) {
+                if (matrix[i][j - 1].getColor().equals("DEFAULT") || matrix[i][j - 1].getColor().equals("XTILE")) {
+                    ok = 1;
+                }
+            }
+            if (i <= 7) {
+                if (matrix[i + 1][j].getColor().equals("DEFAULT") || matrix[i + 1][j].getColor().equals("XTILE")) {
+                    ok = 1;
+                }
+            }
+            if (j <= 7) {
+                if (matrix[i][j + 1].getColor().equals("DEFAULT") || matrix[i][j + 1].getColor().equals("XTILE")) {
+                    ok = 1;
+                }
+            }
+            if (ok == 0) {
+                return;
+            }
+            switch (matrix[i][j].getColor()) {
+                case "BLUE":
+                    triplet.add(new Tile(i, j, PossibleColors.BLUE));
+                    break;
+                case "GREEN":
+                    triplet.add(new Tile(i, j, PossibleColors.GREEN));
+                    break;
+                case "CYAN":
+                    triplet.add(new Tile(i, j, PossibleColors.CYAN));
+                    break;
+                case "YELLOW":
+                    triplet.add(new Tile(i, j, PossibleColors.YELLOW));
+                    break;
+                case "WHITE":
+                    triplet.add(new Tile(i, j, PossibleColors.WHITE));
+                    break;
+                case "PINK":
+                    triplet.add(new Tile(i, j, PossibleColors.PINK));
+                    break;
+            }
+
+
+            if (triplet.size() < size) {//ho messo la seconda e vado R
+                j=j+1;
+
+                if (i < 0 || i > 8 || j < 0 || j > 8 || matrix[i][j].getColor().equals("DEFAULT") || matrix[i][j].getColor().equals("XTILE")) {
+                    return;
+                }
+                if(triplet.contains(matrix[i][j])){//se questa Tile fa già parte della lista Triplet non ha senso farci dei controlli
+                    return;
+                }
+                if (i == 0 || j == 0 || i == 8 || j == 8) {
+                    ok = 1;
+                } else if (i >= 1) {
+                    if (matrix[i - 1][j].getColor().equals("DEFAULT") || matrix[i - 1][j].getColor().equals("XTILE")) {
+                        ok = 1;
+                    }
+                }
+                if (j >= 1) {
+                    if (matrix[i][j - 1].getColor().equals("DEFAULT") || matrix[i][j - 1].getColor().equals("XTILE")) {
+                        ok = 1;
+                    }
+                }
+                if (i <= 7) {
+                    if (matrix[i + 1][j].getColor().equals("DEFAULT") || matrix[i + 1][j].getColor().equals("XTILE")) {
+                        ok = 1;
+                    }
+                }
+                if (j <= 7) {
+                    if (matrix[i][j + 1].getColor().equals("DEFAULT") || matrix[i][j + 1].getColor().equals("XTILE")) {
+                        ok = 1;
+                    }
+                }
+                if (ok == 0) {
+                    return;
+                }
+                switch (matrix[i][j].getColor()) {
+                    case "BLUE":
+                        triplet.add(new Tile(i, j, PossibleColors.BLUE));
+                        break;
+                    case "GREEN":
+                        triplet.add(new Tile(i, j, PossibleColors.GREEN));
+                        break;
+                    case "CYAN":
+                        triplet.add(new Tile(i, j, PossibleColors.CYAN));
+                        break;
+                    case "YELLOW":
+                        triplet.add(new Tile(i, j, PossibleColors.YELLOW));
+                        break;
+                    case "WHITE":
+                        triplet.add(new Tile(i, j, PossibleColors.WHITE));
+                        break;
+                    case "PINK":
+                        triplet.add(new Tile(i, j, PossibleColors.PINK));
+                        break;
+                }
+
+            }
+
         }
     }
 }

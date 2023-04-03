@@ -454,4 +454,46 @@ public class TestB4P {
 
     }
 
+    @Test
+    public  void defaultColumn(){
+        for(int i=0; i<9; i++){
+            matrix.matrix[i][3] = new Tile(PossibleColors.DEFAULT);
+        }
+        if(matrix.checkRefill()){
+            fail();
+        }
+        int r = matrix.findMaxAdjacent(3);
+        if(r!=3){
+            fail();
+        }
+        List<List<Tile>> a = matrix.choosableTiles(3);
+        System.out.println(a.size());
+        /*if(a.size()!=13){
+            fail();
+        }*/
+        for (List<Tile> inner : a) {
+            for (Tile t: inner){
+                System.out.print(t.getRow() +" "+ t.getColumn() +" " + " __ ");
+            }
+            System.out.println();
+        }
+    }
+
+
+
+    /*@Test
+    public void prova(){
+        int i=5;
+        int j=0;
+
+
+        List<Tile> a=  new ArrayList<>();
+        matrix.addTilesTotriplet(i, j, a, 3);
+
+        for (Tile t : a){
+            System.out.print(t.getRow() +" "+ t.getColumn() +" " + " __ ");
+        }
+    }*/
+
+
 }
