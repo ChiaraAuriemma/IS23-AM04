@@ -4,7 +4,7 @@
 
 - ### 10722613  chiara.auriemma@mail.polimi.it      Chiara Auriemma
 
-- ### 10727489  francesco.benelle@mail.polimi.it    Francesco Benelle   @Benels
+- ### 10727489  francesco.benelle@mail.polimi.it    Francesco Benelle   ([@Benels](https://github.com/Benels))
 
 - ### 10769576  giacomo2.ballabio@mail.polimi.it    Giacomo Ballabio
 
