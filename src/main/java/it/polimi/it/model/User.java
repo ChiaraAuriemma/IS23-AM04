@@ -9,14 +9,10 @@ import java.util.List;
 
 public class User {
     private Board board;
-
     private Shelfie shelf;
-
     private Game game;
-
     private int tilesNumber;
     private final String nickname;
-
     private final boolean inGame;
 
     public User(String nickname){
@@ -26,13 +22,28 @@ public class User {
         this.inGame = true;
     }
 
-    List<List<Tile>> choosableTiles(int tilesNum) throws WrongListException {
+    int maxValueOfTiles() throws IndexOutOfBoundsException{
+
+        int max = shelf.possibleTiles();
+
+        if(max < 1 || max > 3){
+            throw new IndexOutOfBoundsException("Il numero di tiles non è accettabile");
+        }
+
+        return board.findMaxAdjacent(max);
+    }
+    List<List<Tile>> choosableTiles(int tilesNum) throws WrongListException, IndexOutOfBoundsException {
+
+        if(tilesNum < 1 || tilesNum > 3){
+            throw new IndexOutOfBoundsException("Il numero di tiles non è accettabile");
+        }
 
         tilesNumber = tilesNum;
 
         List<List<Tile>> choosableList = board.choosableTiles(tilesNum);
+
         if(choosableList == null || choosableList.size() == 0){
-            throw new WrongListException("La lista di scelte possibili non è utilizzabile");
+            throw new WrongListException("L'elenco di scelte possibili non è utilizzabile");
         }
         return choosableList;
     }
@@ -40,7 +51,7 @@ public class User {
     boolean[] chooseSelectedTiles(List<Tile> chosen) throws InvalidTileException {
 
         for(Tile t : chosen){
-            if(t.getColor().equals("XTILE") || t.getColor().equals("DEFAULt")){
+            if(t.getColor().equals("XTILE") || t.getColor().equals("DEFAULT")){
                 throw new InvalidTileException("Non è possibile avere questo tipo di tile nella scelta");
             }
         }
@@ -54,7 +65,7 @@ public class User {
 
         if(column < 0 || column > 4){
 
-            throw new IndexOutOfBoundsException();
+            throw new IndexOutOfBoundsException("Il valore della colonna non esiste");
 
         }else {
             shelf.addTile(column, chosen);
@@ -71,26 +82,15 @@ public class User {
     }
     Shelfie createShelfie() {
 
-        this.board = this.game.getBoard();
+        //this.board = this.game.getBoard();
         return this.shelf = new Shelfie();
     }
 
-    int maxValueOfTiles() throws IndexOutOfBoundsException{
-
-        int max = shelf.possibleTiles();
-
-        if(max < 0 || max > 3){
-            throw new IndexOutOfBoundsException();
-        }
-
-        return board.findMaxAdjacent(max);
-    }
-
-    public Shelfie getShelfie(User user){
+    public Shelfie getShelfie(){
         return this.shelf;
     }
 
-    public Board getBoard(User user){
+    public Board getBoard(){
         return this.board;
     }
 

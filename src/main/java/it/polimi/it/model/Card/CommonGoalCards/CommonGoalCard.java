@@ -5,10 +5,9 @@ import it.polimi.it.model.Shelfie;
 public abstract class CommonGoalCard {
 
     protected int id;
-    private final String name;
 
-    public CommonGoalCard(){
-        this.name = "Common";
+    public CommonGoalCard(int id){
+        this.id = id;
     }
 
     public abstract Boolean checkGoal(Shelfie shelfie);

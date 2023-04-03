@@ -1,0 +1,46 @@
+[
+  {
+    "id" :"11",
+    "mustBeEqual1": ["0","5"],
+    "mustBeEqual2" : ["1", "4"],
+    "mustBeEqual3" : ["2","3"],
+    "mustBeEqual4" : ["3", "2"],
+    "mustBeEqual5" : ["4","1"],
+    "exception" : "1"
+  },
+  {
+    "id" :"11",
+    "mustBeEqual1" : ["0", "4"],
+    "mustBeEqual2" : ["1","3"],
+    "mustBeEqual3" : ["2", "2"],
+    "mustBeEqual4" : ["3", "1"],
+    "mustBeEqual5" : ["4","0"],
+    "exception" : "1"
+  },
+  {
+    "id" :"11",
+    "mustBeEqual1" : ["0", "0"],
+    "mustBeEqual2" : ["1","1"],
+    "mustBeEqual3" : ["2", "2"],
+    "mustBeEqual4" : ["3", "3"],
+    "mustBeEqual5" : ["4","4"],
+    "exception" : "1"
+  },
+  {
+    "id" :"11",
+    "mustBeEqual1" : ["0", "1"],
+    "mustBeEqual2" : ["1","2"],
+    "mustBeEqual3" : ["2", "3"],
+    "mustBeEqual4" : ["3", "4"],
+    "mustBeEqual5" : ["4","5"],
+    "exception" : "1"
+  },
+  {
+    "id" :"8",
+    "mustBeEqual1" : ["0", "0"],
+    "mustBeEqual2" : ["0","5"],
+    "mustBeEqual3" : ["4", "5"],
+    "mustBeEqual4" : ["4", "0"],
+    "exception" : "0"
+  }
+]

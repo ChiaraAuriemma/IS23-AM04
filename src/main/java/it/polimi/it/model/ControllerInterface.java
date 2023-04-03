@@ -1,4 +1,4 @@
-package it.polimi.it.model;
+/*package it.polimi.it.model;
 
 import it.polimi.it.model.Board.Board;
 import it.polimi.it.model.Tiles.Tile;
@@ -40,3 +40,4 @@ public class ControllerInterface {
     }
 
 }
+*/

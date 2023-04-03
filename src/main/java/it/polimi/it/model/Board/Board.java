@@ -4,7 +4,9 @@ import it.polimi.it.model.Tiles.Tile;
 import it.polimi.it.model.Tiles.TilesBag;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 public abstract class Board {
@@ -34,6 +36,15 @@ public abstract class Board {
         if (!checkRefill()) {
             return;
         }
+
+        for (int a=0; a<9; a++){
+            for (int b=0; b<9; b++){
+                if(!matrix[a][b].getColor().equals("DEFAULT") && !matrix[a][b].getColor().equals("XTILE")){
+                    bag.boardCleaner(matrix[a][b].getColor());
+                    matrix[a][b] = new Tile(PossibleColors.DEFAULT);
+                }
+            }
+        }
         int remainingTiles;
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
@@ -58,9 +69,12 @@ public abstract class Board {
             for (int j = 0; j < 9; j++) {
                 //Tile til = matrix[i][j];
                 if (!matrix[i][j].getColor().equals("DEFAULT") && !matrix[i][j].getColor().equals("XTILE")) {
+                    // eseguo i controlli solo se la tessera è colorata:
+
+
                     if (i < 8) {
                         if (!matrix[i + 1][j].getColor().equals("DEFAULT") && !matrix[i + 1][j].getColor().equals("XTILE")) {
-                            return false;
+                            return false;//dato che ho trovato un'altra tessera colorata a fianco di una tessera colorata, il refill non è necessario
                         }
                     }
                     if (i > 0) {
@@ -91,72 +105,24 @@ public abstract class Board {
      * @return the maximum number of Tiles that can be taken from the board, this number can't be higher than maxFromShelfie
      */
     public int findMaxAdjacent(int maxFromShelfie) {
-        int max = 0;
-        int count;
-        int middlecount;
-        int[][] visited = new int[9][9];
 
-        for (int a = 0; a < 9; a++) {
-            for (int b = 0; b < 9; b++) {
-                visited[a][b] = 0;
-            }
-        }
+        int max=0;
+        int tempSize=0;
 
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
-                count = 0;
-                if (!matrix[i][j].getColor().equals("DEFAULT") && !matrix[i][j].getColor().equals("DEFAULT")) {
-                    if (i == 0 || i == 8 || j == 0 || j == 8) {
-                        count = 1;
-                        visited[i][j] = 1;
-                    } else {
-                        middlecount = 0;
-                        if (i >= 1) {
-                            if (matrix[i - 1][j].getColor().equals("DEFAULT") || matrix[i - 1][j].getColor().equals("XTILE")) {
-                                middlecount++;
-                                visited[i - 1][j] = 1;
-                            }
-                        }
-                        if (j >= 1 && middlecount == 0) {
-                            if (matrix[i][j - 1].getColor().equals("DEFAULT") || matrix[i][j - 1].getColor().equals("XTILE")) {
-                                middlecount++;
-                                visited[i][j - 1] = 1;
-                            }
-                        }
-                        if (i <= 7 && middlecount == 0) {
-                            if (matrix[i + 1][j].getColor().equals("DEFAULT") || matrix[i + 1][j].getColor().equals("XTILE")) {
-                                middlecount++;
-                                visited[i + 1][j] = 1;
-                            }
-                        }
-                        if (j <= 7 && middlecount == 0) {
-                            if (matrix[i][j + 1].getColor().equals("DEFAULT") || matrix[i][j + 1].getColor().equals("XTILE")) {
-                                middlecount++;
-                                visited[i][j + 1] = 1;
-                            }
-                        }
-                        if (middlecount > 0) {
-                            count = 1;
-                            middlecount = 0;
-                        }
-                    }
+                if (!matrix[i][j].getColor().equals("DEFAULT") && !matrix[i][j].getColor().equals("XTILE")) {
 
-                    if (maxFromShelfie == 1) {
-                        return 1;
-                    }
-                    count = count + countAdjacent(i, j, visited);
+                    List<Tile> currentGroup = new ArrayList<>();
+                    groupComposer(i, j, currentGroup, maxFromShelfie);
+                    tempSize = currentGroup.size();
+                    currentGroup.clear();
 
-                    if (count >= 3) {
-                        return count;
-                    }
-                    if (count > max) {
-                        max = count;
-                    }
-                    if (max >= maxFromShelfie) {
+                    if(tempSize>=maxFromShelfie){
                         return maxFromShelfie;
                     }
-                    if (max >= 3) {
-                        return 3;
+                    if(max<tempSize){
+                        max= tempSize;
                     }
                 }
             }
@@ -164,420 +130,72 @@ public abstract class Board {
         return max;
     }
 
-    /**
-     * Starting from a given position of the matrix, counts how many tiles,
-     *      which are adjacent to the tile in the starting position can be taken in a single turn
-     * This method eventually calls countAdjacentSecondStage if needed
-     * @param i is the starting row
-     * @param j is the starting column
-     * @param visited is a matrix used to know if a given cell of the matrix has already been explored
-     * @return the number of take-able cells adjacent to the starting one
-     */
-    int countAdjacent(int i, int j, int[][] visited) {
-        int counter = 0;
-        int upOk = 0;
-        int downOk = 0;
-        int leftOk = 0;
-        int rightOk = 0;
-        int rowUp = i - 1;
-        int colLeft = j - 1;
-        int colRight = j + 1;
-        int rowDown = i - 1;
 
-        if (i > 0) {
-            if (visited[i - 1][j] == 0 && !matrix[i - 1][j].getColor().equals("DEFAULT") && !matrix[i - 1][j].getColor().equals("XTILE")) {
-                int middlecountUp = 0;
-                if (rowUp == 0 || rowUp == 8 || j == 0 || j == 8) {
-                    middlecountUp = 1;
-                    visited[i][rowUp] = 1;
-                } else {
-                    if (rowUp >= 1 && middlecountUp == 0) {
-                        if (matrix[rowUp - 1][j].getColor().equals("DEFAULT") || matrix[rowUp - 1][j].getColor().equals("XTILE")) {
-                            if (visited[rowUp - 1][j] == 0) {
-                                middlecountUp++;
-                                visited[rowUp - 1][j] = 1;
-                            }
-                        }
-                    }
-                    if (j >= 1 && middlecountUp == 0) {
-                        if (matrix[rowUp][j - 1].getColor().equals("DEFAULT") || matrix[rowUp][j - 1].getColor().equals("XTILE")) {
-                            if (visited[rowUp][j - 1] == 0) {
-                                middlecountUp++;
-                                visited[rowUp][j - 1] = 1;
-                            }
-                        }
-                    }
-                    if (rowUp <= 7 && middlecountUp == 0) {
-                        if (matrix[rowUp + 1][j].getColor().equals("DEFAULT") || matrix[rowUp + 1][j].getColor().equals("XTILE")) {
-                            if (visited[rowUp + 1][j] == 0) {
-                                middlecountUp++;
-                                visited[rowUp + 1][j] = 1;
-                            }
-                        }
-                    }
-                    if (j <= 7 && middlecountUp == 0) {
-                        if (matrix[rowUp][j + 1].getColor().equals("DEFAULT") || matrix[rowUp][j + 1].getColor().equals("XTILE")) {
-                            if (visited[rowUp][j + 1] == 0) {
-                                middlecountUp++;
-                                visited[rowUp][j + 1] = 1;
-                            }
-                        }
-                    }
-                    if (middlecountUp > 0) {
-                        counter++;
-                        upOk = 1;
-                    }
-                }
+    /**
+     * Builds a group of adjacent Tiles with the purpose of finding the size of the biggest take-able group
+     * @param i is the row of the starting Tile
+     * @param j is the column of the starting Tile
+     * @param currentGruop is the List in which a Tile is appended if is take-able
+     * @param maxFromShelfie is the maximum number of tiles that can be contained in the columns of the player's Shelfie
+     */
+    private void groupComposer(int i, int j, List<Tile> currentGruop, int maxFromShelfie) {
+        int ok = 0;
+
+        if (i < 0 || i > 8 || j < 0 || j > 8 || matrix[i][j].getColor().equals("DEFAULT") || matrix[i][j].getColor().equals("XTILE")) {
+            return;
+        }
+        if(currentGruop.contains(matrix[i][j])){
+            return;
+        }
+        if (i == 0 || j == 0 || i == 8 || j == 8) {
+            ok = 1;
+        } else if (i >= 1) {
+            if (matrix[i - 1][j].getColor().equals("DEFAULT") || matrix[i - 1][j].getColor().equals("XTILE")) {
+                ok = 1;
+            }
+        } else if (j >= 1) {
+            if (matrix[i][j - 1].getColor().equals("DEFAULT") || matrix[i][j - 1].getColor().equals("XTILE")) {
+                ok = 1;
+            }
+        } else if (i < 8) {
+            if (matrix[i + 1][j].getColor().equals("DEFAULT") || matrix[i + 1][j].getColor().equals("XTILE")) {
+                ok = 1;
+            }
+        } else if (j < 8 && ok == 0) {
+            if (matrix[i][j + 1].getColor().equals("DEFAULT") || matrix[i][j + 1].getColor().equals("XTILE")) {
+                ok = 1;
             }
         }
-        if (j > 0) {
-            if (visited[i][j - 1] == 0 && !matrix[i][j - 1].getColor().equals("DEFAULT") && !matrix[i][j - 1].getColor().equals("XTILE")) {
-                int middlecountLeft = 0;
-                if (i == 0 || i == 8 || colLeft == 0 || colLeft == 8) {
-                    middlecountLeft = 1;
-                    visited[i][colLeft] = 1;
-                } else {
-                    if (i >= 1 && middlecountLeft == 0) {
-                        if (matrix[i - 1][colLeft].getColor().equals("DEFAULT") || matrix[i - 1][colLeft].getColor().equals("XTILE")) {
-                            if (visited[i - 1][colLeft] == 0) {
-                                middlecountLeft++;
-                                visited[i - 1][colLeft] = 1;
-                            }
-                        }
-                    }
-                    if (colLeft >= 1 && middlecountLeft == 0) {
-                        if (matrix[i][colLeft - 1].getColor().equals("DEFAULT") || matrix[i][colLeft - 1].getColor().equals("XTILE")) {
-                            if (visited[i][colLeft - 1] == 0) {
-                                middlecountLeft++;
-                                visited[i][colLeft - 1] = 1;
-                            }
-                        }
-                    }
-                    if (i <= 7 && middlecountLeft == 0) {
-                        if (matrix[i + 1][colLeft].getColor().equals("DEFAULT") || matrix[i + 1][colLeft].getColor().equals("XTILE")) {
-                            if (visited[i + 1][colLeft] == 0) {
-                                middlecountLeft++;
-                                visited[i + 1][colLeft] = 1;
-                            }
-                        }
-                    }
-                    if (colLeft <= 7 && middlecountLeft == 0) {
-                        if (matrix[i][colLeft + 1].getColor().equals("DEFAULT") || matrix[i][colLeft + 1].getColor().equals("XTILE")) {
-                            if (visited[i][colLeft + 1] == 0) {
-                                middlecountLeft++;
-                                visited[i][colLeft + 1] = 1;
-                            }
-                        }
-                    }
-                    if (middlecountLeft > 0) {
-                        counter++;
-                        leftOk = 1;
-                    }
-                }
-            }
+        if (ok == 0) {
+            return;
         }
-        if (counter >= 2) {
-            return 2;
+        switch (matrix[i][j].getColor()) {
+            case "BLUE":
+                currentGruop.add(new Tile(i, j, PossibleColors.BLUE));
+                break;
+            case "GREEN":
+                currentGruop.add(new Tile(i, j, PossibleColors.GREEN));
+                break;
+            case "CYAN":
+                currentGruop.add(new Tile(i, j, PossibleColors.CYAN));
+                break;
+            case "YELLOW":
+                currentGruop.add(new Tile(i, j, PossibleColors.YELLOW));
+                break;
+            case "WHITE":
+                currentGruop.add(new Tile(i, j, PossibleColors.WHITE));
+                break;
+            case "PINK":
+                currentGruop.add(new Tile(i, j, PossibleColors.PINK));
+                break;
         }
-        if (j < 8) {
-            if (visited[i][j + 1] == 0 && !matrix[i][j + 1].getColor().equals("DEFAULT") && !matrix[i][j + 1].getColor().equals("XTILE")) {
-                int middlecountRight = 0;
-                if (i == 0 || i == 8 || colRight == 0 || colRight == 8) {
-                    middlecountRight = 1;
-                    visited[i][colRight] = 1;
-                } else {
-                    if (i >= 1 && middlecountRight == 0) {
-                        if (matrix[i - 1][colRight].getColor().equals("DEFAULT") || matrix[i - 1][colRight].getColor().equals("XTILE")) {
-                            if (visited[i - 1][colRight] == 0) {
-                                middlecountRight++;
-                                visited[i - 1][colRight] = 1;
-                            }
-                        }
-                    }
-                    if (colRight >= 1 && middlecountRight == 0) {
-                        if (matrix[i][colRight - 1].getColor().equals("DEFAULT") || matrix[i][colRight - 1].getColor().equals("XTILE")) {
-                            if (visited[i][colRight - 1] == 0) {
-                                middlecountRight++;
-                                visited[i][colRight - 1] = 1;
-                            }
-                        }
-                    }
-                    if (i <= 7 && middlecountRight == 0) {
-                        if (matrix[i + 1][colRight].getColor().equals("DEFAULT") || matrix[i + 1][colRight].getColor().equals("XTILE")) {
-                            if (visited[i + 1][colRight] == 0) {
-                                middlecountRight++;
-                                visited[i + 1][colRight] = 1;
-                            }
-                        }
-                    }
-                    if (colRight <= 7 && middlecountRight == 0) {
-                        if (matrix[i][colRight + 1].getColor().equals("DEFAULT") || matrix[i][colRight + 1].getColor().equals("XTILE")) {
-                            if (visited[i][colRight + 1] == 0) {
-                                middlecountRight++;
-                                visited[i][colRight + 1] = 1;
-                            }
-                        }
-                    }
-                    if (middlecountRight > 0) {
-                        counter++;
-                        rightOk = 1;
-                    }
-                }
-            }
+        if (currentGruop.size() < maxFromShelfie) {
+            groupComposer(i - 1, j, currentGruop, maxFromShelfie);
+            groupComposer(i + 1, j, currentGruop, maxFromShelfie);
+            groupComposer(i, j - 1, currentGruop, maxFromShelfie);
+            groupComposer( i, j + 1, currentGruop, maxFromShelfie);
         }
-        if (counter >= 2) {
-            return 2;
-        }
-        if (i < 8) {
-            if (visited[i + 1][j] == 0 && !matrix[i + 1][j].getColor().equals("DEFAULT") && !matrix[i + 1][j].getColor().equals("XTILE")) {
-                int middlecountDown = 0;
-                if (rowDown == 0 || rowDown == 8 || j == 0 || j == 8) {
-                    middlecountDown = 1;
-                    visited[i][rowDown] = 1;
-                } else {
-                    if (rowDown >= 1 && middlecountDown == 0) {
-                        if (matrix[rowDown - 1][j].getColor().equals("DEFAULT") || matrix[rowDown - 1][j].getColor().equals("XTILE")) {
-                            if (visited[rowDown - 1][j] == 0) {
-                                middlecountDown++;
-                                visited[rowDown - 1][j] = 1;
-                            }
-                        }
-                    }
-                    if (j >= 1 && middlecountDown == 0) {
-                        if (matrix[rowDown][j - 1].getColor().equals("DEFAULT") || matrix[rowDown][j - 1].getColor().equals("XTILE")) {
-                            if (visited[rowDown][j - 1] == 0) {
-                                middlecountDown++;
-                                visited[rowDown][j - 1] = 1;
-                            }
-                        }
-                    }
-                    if (rowDown <= 7 && middlecountDown == 0) {
-                        if (matrix[rowDown + 1][j].getColor().equals("DEFAULT") || matrix[rowDown + 1][j].getColor().equals("XTILE")) {
-                            if (visited[rowDown + 1][j] == 0) {
-                                middlecountDown++;
-                                visited[rowDown + 1][j] = 1;
-                            }
-                        }
-                    }
-                    if (j <= 7 && middlecountDown == 0) {
-                        if (matrix[rowDown][j + 1].getColor().equals("DEFAULT") || matrix[rowDown][j + 1].getColor().equals("XTILE")) {
-                            if (visited[rowDown][j + 1] == 0) {
-                                middlecountDown++;
-                                visited[rowDown][j + 1] = 1;
-                            }
-                        }
-                    }
-                    if (middlecountDown > 0) {
-                        counter++;
-                        downOk = 1;
-                    }
-                }
-            }
-        }
-        if (counter >= 2) {
-            return 2;
-        }
-        if (upOk == 1) {
-            counter = counter + countAdjacentSecondStage(rowUp, j, visited);
-        }
-        if (counter >= 2) {
-            return 2;
-        }
-        if (downOk == 1) {
-            counter = counter + countAdjacentSecondStage(rowDown, j, visited);
-        }
-        if (counter >= 2) {
-            return 2;
-        }
-        if (leftOk == 1) {
-            counter = counter + countAdjacentSecondStage(i, colLeft, visited);
-        }
-        if (counter >= 2) {
-            return 2;
-        }
-        if (rightOk == 1) {
-            counter = counter + countAdjacentSecondStage(i, colRight, visited);
-        }
-        if (counter >= 2) {
-            return 2;
-        }
-        return counter;
     }
-
-
-    /**
-     * Counts how many Tiles adjacent to the starting cell can be taken in a single turn
-     * This is a helper method that might only be called by countAdjacent
-     * @param i is the line of the starting cell
-     * @param j is the column of the starting cell
-     * @param visited is a matrix used to know if a given cell of the matrix has already been explored
-     * @return the number of take-able Tiles that are adjacent to the starting one
-     */
-    int countAdjacentSecondStage(int i, int j, int[][] visited) {
-        int rowUp = i - 1;
-        int colLeft = j - 1;
-        int colRight = j + 1;
-        int rowDown = i - 1;
-
-        if (i > 0) {
-            if (visited[i - 1][j] == 0 && !matrix[i - 1][j].getColor().equals("DEFAULT") && !matrix[i - 1][j].getColor().equals("XTILE")) {
-                if (rowUp == 0 || rowUp == 8 || j == 0 || j == 8) {
-                    visited[i][rowUp] = 1;
-                } else {
-                    if (rowUp >= 1) {
-                        if (matrix[rowUp - 1][j].getColor().equals("DEFAULT") || matrix[rowUp - 1][j].getColor().equals("XTILE")) {
-                            if (visited[rowUp - 1][j] == 0) {
-                                return 1;
-                            }
-                        }
-                    }
-                    if (j >= 1) {
-                        if (matrix[rowUp][j - 1].getColor().equals("DEFAULT") || matrix[rowUp][j - 1].getColor().equals("XTILE")) {
-                            if (visited[rowUp][j - 1] == 0) {
-                                return 1;
-                            }
-                        }
-                    }
-                    if (rowUp <= 7) {
-                        if (matrix[rowUp + 1][j].getColor().equals("DEFAULT") || matrix[rowUp + 1][j].getColor().equals("XTILE")) {
-                            if (visited[rowUp + 1][j] == 0) {
-                                return 1;
-                            }
-                        }
-                    }
-                    if (j <= 7) {
-                        if (matrix[rowUp][j + 1].getColor().equals("DEFAULT") || matrix[rowUp][j + 1].getColor().equals("XTILE")) {
-                            if (visited[rowUp][j + 1] == 0) {
-                                return 1;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        if (j > 0) {
-            if (visited[i][j - 1] == 0 && !matrix[i][j - 1].getColor().equals("DEFAULT") && !matrix[i][j - 1].getColor().equals("XTILE")) {
-                if (i == 0 || i == 8 || colLeft == 0 || colLeft == 8) {
-                    return 1;
-                } else {
-                    if (i >= 1) {
-                        if (matrix[i - 1][colLeft].getColor().equals("DEFAULT") || matrix[i - 1][colLeft].getColor().equals("XTILE")) {
-                            if (visited[i - 1][colLeft] == 0) {
-                                return 1;
-                            }
-                        }
-                    }
-                    if (colLeft >= 1) {
-                        if (matrix[i][colLeft - 1].getColor().equals("DEFAULT") || matrix[i][colLeft - 1].getColor().equals("XTILE")) {
-                            if (visited[i][colLeft - 1] == 0) {
-                                return 1;
-                            }
-                        }
-                    }
-                    if (i <= 7) {
-                        if (matrix[i + 1][colLeft].getColor().equals("DEFAULT") || matrix[i + 1][colLeft].getColor().equals("XTILE")) {
-                            if (visited[i + 1][colLeft] == 0) {
-                                return 1;
-                            }
-                        }
-                    }
-                    if (colLeft <= 7) {
-                        if (matrix[i][colLeft + 1].getColor().equals("DEFAULT") || matrix[i][colLeft + 1].getColor().equals("XTILE")) {
-                            if (visited[i][colLeft + 1] == 0) {
-                                return 1;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        if (j < 8) {
-            if (visited[i][j + 1] == 0 && !matrix[i][j + 1].getColor().equals("DEFAULT") && !matrix[i][j + 1].getColor().equals("XTILE")) {
-                if (i == 0 || i == 8 || colRight == 0 || colRight == 8) {
-                    return 1;
-                } else {
-                    if (i >= 1) {
-                        if (matrix[i - 1][colRight].getColor().equals("DEFAULT") || matrix[i - 1][colRight].getColor().equals("XTILE")) {
-                            if (visited[i - 1][colRight] == 0) {
-                                return 1;
-                            }
-                        }
-                    }
-                    if (colRight >= 1) {
-                        if (matrix[i][colRight - 1].getColor().equals("DEFAULT") || matrix[i][colRight - 1].getColor().equals("XTILE")) {
-                            if (visited[i][colRight - 1] == 0) {
-                                return 1;
-                            }
-                        }
-                    }
-                    if (i <= 7) {
-                        if (matrix[i + 1][colRight].getColor().equals("DEFAULT") || matrix[i + 1][colRight].getColor().equals("XTILE")) {
-                            if (visited[i + 1][colRight] == 0) {
-                                return 1;
-                            }
-                        }
-                    }
-                    if (colRight <= 7) {
-                        if (matrix[i][colRight + 1].getColor().equals("DEFAULT") || matrix[i][colRight + 1].getColor().equals("XTILE")) {
-                            if (visited[i][colRight + 1] == 0) {
-                                return 1;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        if (i < 8) {//Riga sotto
-            if (visited[i + 1][j] == 0 && !matrix[i + 1][j].getColor().equals("DEFAULT") && !matrix[i + 1][j].getColor().equals("XTILE")) {
-                if (rowDown == 0 || rowDown == 8 || j == 0 || j == 8) {
-                    return 1;
-                } else {
-                    if (rowDown >= 1) {
-                        if (matrix[rowDown - 1][j].getColor().equals("DEFAULT") || matrix[rowDown - 1][j].getColor().equals("XTILE")) {
-                            if (visited[rowDown - 1][j] == 0) {
-                                return 1;
-                            }
-                        }
-                    }
-                    if (j >= 1) {
-                        if (matrix[rowDown][j - 1].getColor().equals("DEFAULT") || matrix[rowDown][j - 1].getColor().equals("XTILE")) {
-                            if (visited[rowDown][j - 1] == 0) {
-                                return 1;
-                            }
-                        }
-                    }
-                    if (rowDown <= 7) {
-                        if (matrix[rowDown + 1][j].getColor().equals("DEFAULT") || matrix[rowDown + 1][j].getColor().equals("XTILE")) {
-                            if (visited[rowDown + 1][j] == 0) {
-                                return 1;
-                            }
-                        }
-                    }
-                    if (j <= 7) {
-                        if (matrix[rowDown][j + 1].getColor().equals("DEFAULT") || matrix[rowDown][j + 1].getColor().equals("XTILE")) {
-                            if (visited[rowDown][j + 1] == 0) {
-                                return 1;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        return 0;
-    }
-
-
-    /**
-     * Removes the tiles that the player chose to take from the board
-     * Given the coordinate (row and column of the Tiles in the board)
-     *      Rows and Columns are set to -1 if the player took less than 3 Tiles
-     * @param row1 is the row of the first tile
-     * @param row2 is the row of the second tile
-     * @param row3 is the row of the third tile
-     * @param col1 is the column of the first tile
-     * @param col2 is the column of the second tile
-     * @param col3 is the column of the third tile
-     */
 
 
     /**
@@ -586,13 +204,10 @@ public abstract class Board {
      * @param chosenTiles is a list of tiles in which are stored the Tiles chosen by the player
      */
     public void removeTiles(List<Tile> chosenTiles) {
-
-        int size = chosenTiles.size();
-
         for (Tile choosenTile : chosenTiles) {
             int row = choosenTile.getRow();
             int col = choosenTile.getColumn();
-            matrix[row][col] = new Tile(PossibleColors.DEFAULT);
+            matrix[row][col] = new Tile(row, col, PossibleColors.DEFAULT);
         }
     }
 
@@ -606,23 +221,20 @@ public abstract class Board {
      */
     public List<List<Tile>> choosableTiles(int size) {
         List<List<Tile>> choosableTilesList = new ArrayList<>();
-        int[][] visited = new int[9][9];
+        boolean tripletAlreadyIn;
+        Set<Tile> test = new HashSet<>();
 
-        for (int a = 0; a < 9; a++) {
-            for (int b = 0; b < 9; b++) {
-                visited[a][b] = 0;
-            }
-        }
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
-                if (!matrix[i][j].getColor().equals("DEFAULT") && !matrix[i][j].getColor().equals("XTILE") && visited[i][j] == 0) {
+                if (!matrix[i][j].getColor().equals("DEFAULT") && !matrix[i][j].getColor().equals("XTILE")) {
                     List<Tile> triplet = new ArrayList<>();
-                    addTilesTotriplet(visited, i, j, triplet, size);
+                    addTilesTotriplet(i, j, triplet, size);
 
-                    if (triplet.size() == 1 && size == 1) {
-                        choosableTilesList.add(triplet);
-                    } else if (triplet.size() == size) {
-                        choosableTilesList.add(triplet);
+                    tripletAlreadyIn = choosableTilesList.stream().anyMatch(list -> new HashSet<>(list).containsAll(triplet));
+                    if(!tripletAlreadyIn){
+                        if (triplet.size() == size) {
+                            choosableTilesList.add(triplet);
+                        }
                     }
                 }
             }
@@ -631,37 +243,43 @@ public abstract class Board {
     }
 
 
+
     /**
      * Helper method that can be called only by choosableTiles
      * Adds to the List of tiles 'triplet' the take-able tiles following the rules of the game
      * This method is recursive and calls itself on every direction departing from the starting cell, if the triplet isn't completed
-     * @param visited is a matrix used to know if a given cell had already been explored
      * @param i is the row of the starting Tile
      * @param j is the column of the starting Tile
      * @param triplet is the List in which a Tile is appended if is take-able
      * @param size is the maximum size of the List 'triplet', once is reached the List can't be expanded and the traversing of the board stops
      */
-    private void addTilesTotriplet(int[][] visited, int i, int j, List<Tile> triplet, int size) {
+    private void addTilesTotriplet(int i, int j, List<Tile> triplet, int size) {
         int ok = 0;
-        if (i < 0 || i > 8 || j < 0 || j > 8 || visited[i][j] == 1 || matrix[i][j].getColor().equals("DEFAULT") || matrix[i][j].getColor().equals("XTILE")) {
+
+        if (i < 0 || i > 8 || j < 0 || j > 8 || matrix[i][j].getColor().equals("DEFAULT") || matrix[i][j].getColor().equals("XTILE")) {
             return;
         }
-        visited[i][j] = 1;
+        if(triplet.contains(matrix[i][j])){//se questa Tile fa già parte della lista Triplet non ha senso farci dei controlli
+            return;
+        }
         if (i == 0 || j == 0 || i == 8 || j == 8) {
             ok = 1;
-        } else if (i > 1 && ok == 0) {
+        } else if (i >= 1) {
             if (matrix[i - 1][j].getColor().equals("DEFAULT") || matrix[i - 1][j].getColor().equals("XTILE")) {
                 ok = 1;
             }
-        } else if (j > 1 && ok == 0) {
+        }
+        if (j >= 1) {
             if (matrix[i][j - 1].getColor().equals("DEFAULT") || matrix[i][j - 1].getColor().equals("XTILE")) {
                 ok = 1;
             }
-        } else if (i < 8 && ok == 0) {
+        }
+        if (i <= 7) {
             if (matrix[i + 1][j].getColor().equals("DEFAULT") || matrix[i + 1][j].getColor().equals("XTILE")) {
                 ok = 1;
             }
-        } else if (j < 8 && ok == 0) {
+        }
+        if (j <= 7) {
             if (matrix[i][j + 1].getColor().equals("DEFAULT") || matrix[i][j + 1].getColor().equals("XTILE")) {
                 ok = 1;
             }
@@ -690,10 +308,19 @@ public abstract class Board {
                 break;
         }
         if (triplet.size() < size) {
-            addTilesTotriplet(visited, i - 1, j, triplet, size);
-            addTilesTotriplet(visited, i + 1, j, triplet, size);
-            addTilesTotriplet(visited, i, j - 1, triplet, size);
-            addTilesTotriplet(visited, i, j + 1, triplet, size);
+            addTilesTotriplet(i - 1, j, triplet, size);
+        }
+        if (triplet.size() < size) {
+
+            addTilesTotriplet(i + 1, j, triplet, size);
+        }
+        if (triplet.size() < size) {
+
+            addTilesTotriplet(i, j - 1, triplet, size);
+        }
+        if (triplet.size() < size) {
+
+            addTilesTotriplet( i, j + 1, triplet, size);
         }
     }
 }

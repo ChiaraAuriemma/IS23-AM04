@@ -8,11 +8,8 @@ import java.util.List;
 public class Shelfie{
 
     private int commonToken1;
-
     private int commonToken2;
-
     private boolean endToken1;
-
     private static Tile[][] shelf;
 
     public Shelfie(){

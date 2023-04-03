@@ -1,0 +1,11 @@
+it.polimi.it
+it.polimi.it.controller
+it.polimi.it.model
+it.polimi.it.model.Board
+it.polimi.it.model.Card.CommonGoalCards
+it.polimi.it.model.Card.PersonalGoalCards
+it.polimi.it.model.Exception
+it.polimi.it.model.Tiles
+it.polimi.it.network
+it.polimi.it.observer
+it.polimi.it.view

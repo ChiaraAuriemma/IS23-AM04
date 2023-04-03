@@ -26,4 +26,5 @@ public enum PossibleColors {
     public String getColor() {
         return color;
     }
-}
+}// si potrebbe usare tis.name(); che dovrebbe ritornare la stessa stringa col nome del colore
+    // così potrebbe non servire il parametro stringa!

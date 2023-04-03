@@ -1,5 +1,6 @@
 package it.polimi.it.model;
 
+import it.polimi.it.model.Exception.NotExistingUser;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -51,7 +52,7 @@ public class LobbyTest {
     }
 
     @Test
-    public void joinGameTest(){
+    public void joinGameTest() throws NotExistingUser {
 
         User user1 = lobby.createUser("Alby");
 
@@ -76,7 +77,7 @@ public class LobbyTest {
     }
 
     @Test
-    public void createGameTest(){
+    public void createGameTest() throws NotExistingUser {
 
         User user1 = lobby.createUser("Alby");
 
