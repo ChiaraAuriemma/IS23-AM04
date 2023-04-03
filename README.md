@@ -10,3 +10,16 @@
 
 - ### 10721275  alberto1.cavallotti@mail.polimi.it  Alberto Cavallotti
 
+| Functionality  |                       State                        |
+|:---------------|:--------------------------------------------------:|
+| UML            | 🟢 |
+| Momdel         | 🟢 |
+| Controller     | 🔴 |
+| Socket TCP     | 🔴 |
+| RMI            | 🔴 |
+| CLI            | 🔴 |
+| GUI            | 🔴 |
+| Multiple games | 🔴 |
+| Persistence    | 🔴 |
+| Chat           | 🔴 |
+| Disconnection  | 🔴 |
