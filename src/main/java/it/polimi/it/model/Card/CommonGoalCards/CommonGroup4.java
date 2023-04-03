@@ -2,18 +2,15 @@ package it.polimi.it.model.Card.CommonGoalCards;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import it.polimi.it.model.Shelfie;
 
 import java.io.FileReader;
-import java.util.List;
 
-public class CommonGoalCard11 extends CommonGoalCard{
+public class CommonGroup4 extends CommonGoalCard{
 
-    public CommonGoalCard11(int id){ //carte 8 e 11
+    public CommonGroup4(int id){ //carte 8 e 11
         super(id);
     }
 
@@ -21,7 +18,7 @@ public class CommonGoalCard11 extends CommonGoalCard{
         int i,j;
         Gson gson = new Gson();
         try {
-            JsonReader reader = new JsonReader(new FileReader("CommonGoalCard12.json"));
+            JsonReader reader = new JsonReader(new FileReader("CommonGroup7.json"));
             JsonArray jsonArray = gson.fromJson(reader, JsonArray.class);
             for(j=0; jsonArray.get(j).getAsJsonObject().get("type").getAsInt() != id ; j++);
             for(i=j;jsonArray.get(i).getAsJsonObject().get("type").getAsInt() == id;i++){

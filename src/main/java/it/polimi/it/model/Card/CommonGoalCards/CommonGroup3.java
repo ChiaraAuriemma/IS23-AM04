@@ -9,12 +9,11 @@ import it.polimi.it.model.Tiles.Tile;
 
 import java.io.FileReader;
 import java.util.ArrayList;
-import java.util.List;
 
-public class CommonGoalCard3 extends CommonGoalCard{
+public class CommonGroup3 extends CommonGoalCard{
 
     ArrayList<Tile> checked = new ArrayList<Tile>();
-    public CommonGoalCard3(int id){ //carte 3 e 4
+    public CommonGroup3(int id){ //carte 3 e 4
         super(id);
     }
 
@@ -40,7 +39,7 @@ public class CommonGoalCard3 extends CommonGoalCard{
         ArrayList<Tile> tmp = new  ArrayList<>();
         Gson gson = new Gson();
         try {
-            JsonReader reader = new JsonReader(new FileReader("CommonGoalCard3.json"));
+            JsonReader reader = new JsonReader(new FileReader("CommonGroup3.json"));
             JsonArray jsonArray = gson.fromJson(reader, JsonArray.class);
             for(i=0; jsonArray.get(i).getAsJsonObject().get("type").getAsInt() != id ; i++);
             JsonObject jsonObject= jsonArray.get(i).getAsJsonObject();
@@ -72,7 +71,7 @@ public class CommonGoalCard3 extends CommonGoalCard{
         int i,row, column;
         int count=0;
         try{
-            JsonReader reader = new JsonReader(new FileReader("CommonGoalCard3.json"));
+            JsonReader reader = new JsonReader(new FileReader("CommonGroup3.json"));
             JsonArray jsonArray = gson.fromJson(reader, JsonArray.class);
             for(i=0; jsonArray.get(i).getAsJsonObject().get("type").getAsInt() != id ; i++);
             JsonObject jsonObject= jsonArray.get(i).getAsJsonObject();
