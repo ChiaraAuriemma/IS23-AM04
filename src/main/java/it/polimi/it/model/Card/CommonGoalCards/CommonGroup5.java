@@ -5,11 +5,11 @@ import it.polimi.it.model.Shelfie;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CommonGoalCard9 extends CommonGoalCard{
+public class CommonGroup5 extends CommonGoalCard{
 
     private List<Integer> numColor;
 
-    public CommonGoalCard9(int id){
+    public CommonGroup5(int id){
         super(id);
         this.numColor = new ArrayList<Integer>(6);
         int i;

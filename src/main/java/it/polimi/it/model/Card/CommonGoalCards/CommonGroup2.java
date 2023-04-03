@@ -10,10 +10,10 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CommonGoalCard2 extends CommonGoalCard{
+public class CommonGroup2 extends CommonGoalCard{
 
     private List<String> colorToSave;
-    public CommonGoalCard2(int id){ //carte 2,6,5,7
+    public CommonGroup2(int id){ //carte 2,6,5,7
         super(id);
         this.colorToSave = new ArrayList<>();
     }
@@ -26,7 +26,7 @@ public class CommonGoalCard2 extends CommonGoalCard{
         int numRight = 0;
         String cell1, cell2;
         try{
-            JsonReader reader = new JsonReader(new FileReader("CommonGoalCard2.json"));
+            JsonReader reader = new JsonReader(new FileReader("CommonGroup2.json"));
             JsonArray jsonArray = gson.fromJson(reader, JsonArray.class);
             for(j=0; jsonArray.get(j).getAsJsonObject().get("id").getAsInt() != id ; j++);
             JsonObject jsonObject = jsonArray.get(j).getAsJsonObject();

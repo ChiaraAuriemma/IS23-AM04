@@ -5,9 +5,8 @@ import it.polimi.it.model.Tiles.Tile;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
-public class CommonGoalCard1 extends CommonGoalCard{
+public class CommonGroup1 extends CommonGoalCard{
 
     private List<Tile> pink;
     private List<Tile> cyan;
@@ -16,7 +15,7 @@ public class CommonGoalCard1 extends CommonGoalCard{
     private List<Tile> white;
     private List<Tile> green;
 
-    public CommonGoalCard1(int id){
+    public CommonGroup1(int id){
         super(id);
         this.pink = new ArrayList<Tile>(8);
         this.cyan = new ArrayList<Tile>(8);
