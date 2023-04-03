@@ -17,7 +17,7 @@ public class Game {
 
 
     private  List<Integer> order ;
-    private  Integer orderPointer;
+    private Integer orderPointer;
 
 
     private ArrayList<Integer> points;
@@ -39,6 +39,7 @@ public class Game {
         this.orderPointer = 0;
         this.endToken = -1;
         this.numplayers = numplayers;
+
         host.setGame(this);
         this.players = new ArrayList<>(numplayers);
         this.players.add(0,host); // controllo se è empty ???
@@ -84,11 +85,11 @@ public class Game {
 
         }
 
-        //mostro alla view
+        //view: mostro alla view
 
     }
 
-    private void randomplayers () {
+    public void randomPlayers () {
         this.orderPointer = 0;
         Random rdn = new Random();
 
@@ -121,11 +122,16 @@ public class Game {
         int maxTiles;
 
         if(this.endToken != -1 && this.orderPointer == 0){
-            //game finisce mostro a video la classifica finale
+
+            //points from adjacent tiles with same color
+            for(int i; i < this.numplayers; i++){
+                this.points.set(i, this.points.get(i) + this.players.get(i).checkAdjacentsPoints())
+            }
+            //view: game finisce mostro a video la classifica finale
         }else{
 
             maxTiles = players.get(nextplayer).maxValueOfTiles();
-            //gestisco l'avvio del turno (notifico alla view)
+            //view: gestisco l'avvio del turno (notifico alla view)
             //tipo con:
             //virtualView.play(player.get(nextplayer), maxTiles);
 
@@ -141,15 +147,15 @@ public class Game {
     void endGame (){
         if (orderPointer == 0){
             this.endToken = 3;
-            //aggiungo il punto di end
+            //points from endToken
             this.points.add(3, this.points.get(3) + 1);
         }else{
             this.endToken = orderPointer - 1;
-            //aggiungo il punto di end
+            //points from endToken
             this.points.set(orderPointer - 1, this.points.get(orderPointer - 1) + 1);
         }
-        //mostro alla view chi ha finito per primo
-        //mostro alla view anche che è stato messo il punto in più
+        //view: mostro alla view chi ha finito per primo
+        //view: mostro alla view anche che è stato messo il punto in più
 
         callNextplayers();
     }
@@ -158,67 +164,19 @@ public class Game {
 
         Random rnd = new Random();
 
-        int c1 = rnd.nextInt(12) + 1;
-        int c2 = rnd.nextInt(12) + 1;
-        while(c1 == c2){
+        CommonDeck deck = new CommonDeck();
+
+        int c1;
+        int c2;
+
+        do{
             c1 = rnd.nextInt(12) + 1;
             c2 = rnd.nextInt(12) + 1;
-        }
+        }while(c1 == c2);
 
-        //instance of common card 1
-        if(c1 == 1) {
-            card1 = new CommonGoalCard1();
-        }else if (c1 == 2){
-            card1 = new CommonGoalCard2();
-        }else if (c1 == 3){
-            card1 = new CommonGoalCard3();
-        }else if (c1 == 4){
-            card1 = new CommonGoalCard4();
-        }else if (c1 == 5){
-            card1 = new CommonGoalCard5();
-        }else if (c1 == 6){
-            card1 = new CommonGoalCard6();
-        }else if (c1 == 7){
-            card1 = new CommonGoalCard7();
-        }else if (c1 == 8){
-            card1 = new CommonGoalCard8();
-        }else if (c1 == 9){
-            card1 = new CommonGoalCard9();
-        }else if (c1 == 10){
-            card1 = new CommonGoalCard10();
-        }else if (c1 == 11){
-            card1 = new CommonGoalCard11();
-        }else if (c1 == 12){
-            card1 = new CommonGoalCard12();
-        }
-
-        //instance of common card 2
-        if(c2 == 1) {
-            card2 = new CommonGoalCard1();
-        }else if (c2 == 2){
-            card2 = new CommonGoalCard2();
-        }else if (c2 == 3){
-            card2 = new CommonGoalCard3();
-        }else if (c2 == 4){
-            card2 = new CommonGoalCard4();
-        }else if (c2 == 5){
-            card2 = new CommonGoalCard5();
-        }else if (c2 == 6){
-            card2 = new CommonGoalCard6();
-        }else if (c2 == 7){
-            card2 = new CommonGoalCard7();
-        }else if (c2 == 8){
-            card2 = new CommonGoalCard8();
-        }else if (c2 == 9){
-            card2 = new CommonGoalCard9();
-        }else if (c2 == 10){
-            card2 = new CommonGoalCard10();
-        }else if (c2 == 11){
-            card2 = new CommonGoalCard11();
-        }else if (c2 == 12){
-            card2 = new CommonGoalCard12();
-        }
-
+        deck.createCard(c1,c2);
+        this.card1 = deck.getCommonCard1();
+        this.card2 = deck.getCommonCard2();
     }
 
     //metodi in più
@@ -230,10 +188,10 @@ public class Game {
 
         joiner.setGame(this);
         this.players.add(joiner);
-        //mostro alla view
+        //view: mostro alla view
         if(this.players.size() == this.numplayers){
 
-            randomplayers();
+                randomPlayers();
             this.cards = new ArrayList<>();
             for(int i=0; i < this.numplayers; i++){
                 this.cards.add(i,drawPersonalCard());
@@ -242,8 +200,8 @@ public class Game {
             }
 
             drawCommonCrads();
-            //mostro alla view
-            //mostro alla view chi ha il sofà d'inizio
+            //view: mostro alla view
+            //view: mostro alla view chi ha il sofà d'inizio
             callNextplayers();
 
         }
@@ -315,9 +273,42 @@ public class Game {
         }
 
 
-        //punti per le caselle adiacenti ?? chiedo cosa ha fatto albertone
-        //mostro alla view
-    }
-    // IMPOARTE :     checkAdjacentsPoints() di player
 
+        //view: mostro alla view
+    }
+
+
+    //methods for testing----------------------------------------------------
+
+    public Integer getOrderPointer(){
+        return this.orderPointer;
+    }
+
+    public Integer getEndToken(){
+        return this.endToken;
+    }
+
+    public Integer getNumplayers(){
+        return this.numplayers;
+    }
+
+    public User getPlayer(int i){
+        return this.players.get(i);
+    }
+
+    public Integer getPoint(int i){
+        return this.points.get(i);
+    }
+
+    public Integer getCheckPersonalScore (int i){
+        return this.checkPersonalScore.get(i);
+    }
+
+    public Integer getCommonToken1(int i){
+        return this.commonToken1.get(i);
+    }
+
+    public Integer getCommonToken2(int i){
+        return  this.commonToken2.get(i);
+    }
 }
