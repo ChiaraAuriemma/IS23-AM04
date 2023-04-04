@@ -1,11 +1,12 @@
-[{
+[
+  {
   "pinkPos" : ["0","5"],
   "cyanPos" : ["2", "0"],
   "yellowPos" : ["1", "2"],
   "bluePos" : ["2", "5"],
   "whitePos" : ["3","3"],
   "greenPos" : ["4", "4"]
-},
+  },
   {
     "pinkPos" : ["1","4"],
     "cyanPos" : ["2", "1"],
