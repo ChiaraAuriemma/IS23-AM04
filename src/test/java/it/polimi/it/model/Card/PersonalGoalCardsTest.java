@@ -18,7 +18,6 @@ public class PersonalGoalCardsTest {
 
     private PersonalGoalCard personalGoalCard;
     private Shelfie shelfie;
-    private Tile[][] matrix;
     private TilesBag bag;
 
     @Before
@@ -45,8 +44,9 @@ public class PersonalGoalCardsTest {
     }
 
     @Test
-    public void checkScoreTest(){
+    public void checkScoreTest1(){
         int column, row;
+        Tile [][] matrix = new Tile[6][5];
         for(column=0; column<5; column++){
             for (row=0; row<6; row++){
                 matrix[row][column] = bag.randomTiles(row,column);
@@ -60,9 +60,9 @@ public class PersonalGoalCardsTest {
         matrix[3][3] = new Tile(3, 3,PossibleColors.WHITE);
         matrix[4][4] = new Tile(4, 4,PossibleColors.GREEN);
 
-        Shelfie.setShelf(matrix);
+        shelfie.setShelf(matrix);
 
-        if(personalGoalCard.checkScore(shelfie))
+        if(personalGoalCard.checkScore(shelfie) != 6)
             fail("Test fallito");
     }
 }

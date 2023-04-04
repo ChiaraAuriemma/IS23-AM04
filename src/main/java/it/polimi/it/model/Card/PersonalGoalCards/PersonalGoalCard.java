@@ -25,9 +25,9 @@ public class PersonalGoalCard {
     public PersonalGoalCard(int id){
         Gson gson = new Gson();
         try {
-            JsonReader reader = new JsonReader(new FileReader("PersonalGoalCards.json"));
+            JsonReader reader = new JsonReader(new FileReader("src/main/java/it/polimi/it/model/Card/PersonalGoalCards/PersonalGoalCards.json"));
             JsonArray jsonArray = gson.fromJson(reader, JsonArray.class);
-            JsonObject jsonObject = jsonArray.get(id).getAsJsonObject();
+            JsonObject jsonObject = jsonArray.get(id-1).getAsJsonObject();
             pinkPos = jsonObject.getAsJsonArray("pinkPos");
             cyanPos = jsonObject.getAsJsonArray("cyanPos");
             yellowPos = jsonObject.getAsJsonArray("yellowPos");
@@ -42,7 +42,7 @@ public class PersonalGoalCard {
             }
             reader.close();
         } catch (Exception e){
-            //
+            throw new RuntimeException(e);
         }
     }
 
