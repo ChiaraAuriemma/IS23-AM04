@@ -1,8 +1,8 @@
 package it.polimi.it.model;
 
 import it.polimi.it.model.Board.Board;
-import it.polimi.it.model.Exception.InvalidTileException;
-import it.polimi.it.model.Exception.WrongListException;
+import it.polimi.it.model.Exceptions.InvalidTileException;
+import it.polimi.it.model.Exceptions.WrongListException;
 import it.polimi.it.model.Tiles.Tile;
 
 import java.util.List;
@@ -22,7 +22,7 @@ public class User {
         this.inGame = true;
     }
 
-    int maxValueOfTiles() throws IndexOutOfBoundsException{
+    public int maxValueOfTiles() throws IndexOutOfBoundsException{
 
         int max = shelf.possibleTiles();
 
@@ -32,7 +32,7 @@ public class User {
 
         return board.findMaxAdjacent(max);
     }
-    List<List<Tile>> choosableTiles(int tilesNum) throws WrongListException, IndexOutOfBoundsException {
+    public List<List<Tile>> choosableTiles(int tilesNum) throws WrongListException, IndexOutOfBoundsException {
 
         if(tilesNum < 1 || tilesNum > 3){
             throw new IndexOutOfBoundsException("Il numero di tiles non è accettabile");
@@ -48,7 +48,7 @@ public class User {
         return choosableList;
     }
 
-    boolean[] chooseSelectedTiles(List<Tile> chosen) throws InvalidTileException {
+    public boolean[] chooseSelectedTiles(List<Tile> chosen) throws InvalidTileException {
 
         for(Tile t : chosen){
             if(t.getColor().equals("XTILE") || t.getColor().equals("DEFAULT")){
@@ -61,7 +61,7 @@ public class User {
         return shelf.chooseColumn(tilesNumber);
     }
 
-    void insertTile(int column, List<Tile> chosen) throws IndexOutOfBoundsException {
+    public void insertTile(int column, List<Tile> chosen) throws IndexOutOfBoundsException {
 
         if(column < 0 || column > 4){
 
@@ -82,7 +82,7 @@ public class User {
     }
     Shelfie createShelfie() {
 
-        //this.board = this.game.getBoard();
+        this.board = this.game.getBoard();
         return this.shelf = new Shelfie();
     }
 

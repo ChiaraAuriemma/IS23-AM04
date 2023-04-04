@@ -1,4 +1,4 @@
-package it.polimi.it.model.Exception;
+package it.polimi.it.model.Exceptions;
 
 public class InvalidTileException extends Exception {
     public InvalidTileException(String message) {
