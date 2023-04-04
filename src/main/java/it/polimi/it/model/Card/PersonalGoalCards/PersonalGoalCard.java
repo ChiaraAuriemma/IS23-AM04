@@ -46,6 +46,43 @@ public class PersonalGoalCard {
         }
     }
 
+    public int getPinkposColumn(){
+        return pinkPos.get(0).getAsInt();
+    }
+    public int getPinkposRow(){
+        return pinkPos.get(1).getAsInt();
+    }
+    public int getCyanposColumn(){
+        return cyanPos.get(0).getAsInt();
+    }
+    public int getCyanposRow(){
+        return cyanPos.get(1).getAsInt();
+    }
+    public int getYellowposColumn(){
+        return yellowPos.get(0).getAsInt();
+    }
+    public int getYellowposRow(){
+        return yellowPos.get(1).getAsInt();
+    }
+    public int getBlueposColumn(){
+        return bluePos.get(0).getAsInt();
+    }
+    public int getBlueposRow(){
+        return bluePos.get(1).getAsInt();
+    }
+    public int getWhiteposColumn(){
+        return whitePos.get(0).getAsInt();
+    }
+    public int getWhiteposRow(){
+        return whitePos.get(1).getAsInt();
+    }
+    public int getGreenposColumn(){
+        return greenPos.get(0).getAsInt();
+    }
+    public int getGreenposRow(){
+        return greenPos.get(1).getAsInt();
+    }
+
     public int checkScore(Shelfie shelfie) {
         if(checkColor.get(0) == 0 && shelfie.getCell(pinkPos.get(0).getAsInt(), pinkPos.get(1).getAsInt()).getColor().equals("PINK")){
             numCompletedTasks++;
