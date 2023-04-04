@@ -197,8 +197,6 @@ public abstract class Board {
      * @param size is the number of Tiles that the player wants to take from the board
      * @return a List that contains a List of Tiles
      */
-
-
     public List<List<Tile>> choosableTiles(int size) {
         List<List<Tile>> choosableTilesList = new ArrayList<>();
         boolean tripletAlreadyIn;
@@ -277,25 +275,17 @@ public abstract class Board {
         if (row == 0 || column == 0 || row == 8 || column == 8) {
             return true;
         } //else{
-        if (row >= 1) {
-            if (matrix[row - 1][column].getColor().equals("DEFAULT") || matrix[row - 1][column].getColor().equals("XTILE")) {
-                return true;
-            }
+        if (matrix[row - 1][column].getColor().equals("DEFAULT") || matrix[row - 1][column].getColor().equals("XTILE")) {
+            return true;
         }
-        if (column >= 1) {
-            if (matrix[row][column - 1].getColor().equals("DEFAULT") || matrix[row][column - 1].getColor().equals("XTILE")) {
-                return true;
-            }
+        if (matrix[row][column - 1].getColor().equals("DEFAULT") || matrix[row][column - 1].getColor().equals("XTILE")) {
+            return true;
         }
-        if (row <= 7) {
-            if (matrix[row + 1][column].getColor().equals("DEFAULT") || matrix[row + 1][column].getColor().equals("XTILE")) {
-                return true;
-            }
+        if (matrix[row + 1][column].getColor().equals("DEFAULT") || matrix[row + 1][column].getColor().equals("XTILE")) {
+            return true;
         }
-        if (column <= 7) {
-            if (matrix[row][column + 1].getColor().equals("DEFAULT") || matrix[row][column + 1].getColor().equals("XTILE")) {
-                return true;
-            }
+        if (matrix[row][column + 1].getColor().equals("DEFAULT") || matrix[row][column + 1].getColor().equals("XTILE")) {
+            return true;
         }
         //}
         return false;

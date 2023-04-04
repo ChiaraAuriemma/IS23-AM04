@@ -468,9 +468,9 @@ public class TestB4P {
         }
         List<List<Tile>> a = matrix.choosableTiles(3);
         System.out.println(a.size());
-        /*if(a.size()!=13){
+        if(a.size()!=24){
             fail();
-        }*/
+        }
         for (List<Tile> inner : a) {
             for (Tile t: inner){
                 System.out.print(t.getRow() +" "+ t.getColumn() +" " + " __ ");
@@ -478,22 +478,5 @@ public class TestB4P {
             System.out.println();
         }
     }
-
-
-
-    /*@Test
-    public void prova(){
-        int i=5;
-        int j=0;
-
-
-        List<Tile> a=  new ArrayList<>();
-        matrix.addTilesTotriplet(i, j, a, 3);
-
-        for (Tile t : a){
-            System.out.print(t.getRow() +" "+ t.getColumn() +" " + " __ ");
-        }
-    }*/
-
 
 }

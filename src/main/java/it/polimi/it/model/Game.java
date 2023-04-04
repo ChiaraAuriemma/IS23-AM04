@@ -124,8 +124,8 @@ public class Game {
         if(this.endToken != -1 && this.orderPointer == 0){
 
             //points from adjacent tiles with same color
-            for(int i; i < this.numplayers; i++){
-                this.points.set(i, this.points.get(i) + this.players.get(i).checkAdjacentsPoints())
+            for(int i=0; i < this.numplayers; i++){
+                this.points.set(i, this.points.get(i) + this.players.get(i).getShelfie().checkAdjacentsPoints());
             }
             //view: game finisce mostro a video la classifica finale
         }else{
@@ -247,7 +247,7 @@ public class Game {
         //i punti dell'endtoken sono dati dal metodo end game
 
         //points from common card 1
-        if(player.getCommonToken1() == 0 && card1.CheckGoal(shelfie) ){
+        if(player.getCommonToken1() == 0 && card1.checkGoal(shelfie) ){
 
             int i=0;
             while(this.commonToken1.get(i) == 0){
@@ -260,7 +260,7 @@ public class Game {
         }
 
         //points from common card 2
-        if(player.getCommonToken2() == 0 && card2.CheckGoal(shelfie) ){
+        if(player.getCommonToken2() == 0 && card2.checkGoal(shelfie) ){
 
             int i=0;
             while(this.commonToken2.get(i) == 0){
