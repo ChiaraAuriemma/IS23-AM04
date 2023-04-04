@@ -33,7 +33,6 @@ public abstract class Board {
         if (!checkRefill()) {
             return;
         }
-
         for (int a=0; a<9; a++){
             for (int b=0; b<9; b++){
                 if(!matrix[a][b].getColor().equals("DEFAULT") && !matrix[a][b].getColor().equals("XTILE")){
@@ -64,14 +63,10 @@ public abstract class Board {
     public Boolean checkRefill() {
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
-                //Tile til = matrix[i][j];
                 if (!matrix[i][j].getColor().equals("DEFAULT") && !matrix[i][j].getColor().equals("XTILE")) {
-                    // eseguo i controlli solo se la tessera è colorata:
-
-
                     if (i < 8) {
                         if (!matrix[i + 1][j].getColor().equals("DEFAULT") && !matrix[i + 1][j].getColor().equals("XTILE")) {
-                            return false;//dato che ho trovato un'altra tessera colorata a fianco di una tessera colorata, il refill non è necessario
+                            return false;
                         }
                     }
                     if (i > 0) {
@@ -132,46 +127,46 @@ public abstract class Board {
      * Builds a group of adjacent Tiles with the purpose of finding the size of the biggest take-able group
      * @param i is the row of the starting Tile
      * @param j is the column of the starting Tile
-     * @param currentGruop is the List in which a Tile is appended if is take-able
+     * @param currentGroup is the List in which a Tile is appended if is take-able
      * @param maxFromShelfie is the maximum number of tiles that can be contained in the columns of the player's Shelfie
      */
-    private void groupComposer(int i, int j, List<Tile> currentGruop, int maxFromShelfie) {
+    private void groupComposer(int i, int j, List<Tile> currentGroup, int maxFromShelfie) {
         int ok = 0;
 
         if (i < 0 || i > 8 || j < 0 || j > 8 || matrix[i][j].getColor().equals("DEFAULT") || matrix[i][j].getColor().equals("XTILE")) {
             return;
         }
-        if(currentGruop.contains(matrix[i][j])){
+        if(currentGroup.contains(matrix[i][j])){
             return;
         }
         if (i == 0 || j == 0 || i == 8 || j == 8) {
             ok = 1;
-        } else if (i >= 1) {
+        } else {
             if (matrix[i - 1][j].getColor().equals("DEFAULT") || matrix[i - 1][j].getColor().equals("XTILE")) {
                 ok = 1;
             }
-        } else if (j >= 1) {
             if (matrix[i][j - 1].getColor().equals("DEFAULT") || matrix[i][j - 1].getColor().equals("XTILE")) {
                 ok = 1;
             }
-        } else if (i < 8) {
             if (matrix[i + 1][j].getColor().equals("DEFAULT") || matrix[i + 1][j].getColor().equals("XTILE")) {
                 ok = 1;
             }
-        } else if (j < 8 && ok == 0) {
-            if (matrix[i][j + 1].getColor().equals("DEFAULT") || matrix[i][j + 1].getColor().equals("XTILE")) {
-                ok = 1;
+            if (ok == 0) {
+                if (matrix[i][j + 1].getColor().equals("DEFAULT") || matrix[i][j + 1].getColor().equals("XTILE")) {
+                    ok = 1;
+                }
             }
         }
+
         if (ok == 0) {
             return;
         }
-        addToTriplet(i, j, currentGruop);
-        if (currentGruop.size() < maxFromShelfie) {
-            groupComposer(i - 1, j, currentGruop, maxFromShelfie);
-            groupComposer(i + 1, j, currentGruop, maxFromShelfie);
-            groupComposer(i, j - 1, currentGruop, maxFromShelfie);
-            groupComposer( i, j + 1, currentGruop, maxFromShelfie);
+        addToTriplet(i, j, currentGroup);
+        if (currentGroup.size() < maxFromShelfie) {
+            groupComposer(i - 1, j, currentGroup, maxFromShelfie);
+            groupComposer(i + 1, j, currentGroup, maxFromShelfie);
+            groupComposer(i, j - 1, currentGroup, maxFromShelfie);
+            groupComposer( i, j + 1, currentGroup, maxFromShelfie);
         }
     }
 
@@ -207,6 +202,7 @@ public abstract class Board {
 
                     List<Tile> tripletDD = new ArrayList<>();
                     addTilesTotripletDD(i, j, tripletDD, size);
+
                     tripletAlreadyIn = choosableTilesList.stream().anyMatch(list -> new HashSet<>(list).containsAll(tripletDD));
                     if(!tripletAlreadyIn){
                         if (tripletDD.size() == size) {
@@ -216,6 +212,7 @@ public abstract class Board {
 
                     List<Tile> tripletRR = new ArrayList<>();
                     addTilesTotripletRR(i, j, tripletRR, size);
+
                     tripletAlreadyIn = choosableTilesList.stream().anyMatch(list -> new HashSet<>(list).containsAll(tripletRR));
                     if(!tripletAlreadyIn){
                         if (tripletRR.size() == size) {
@@ -225,6 +222,7 @@ public abstract class Board {
 
                     List<Tile> tripletDR = new ArrayList<>();
                     addTilesTotripletDR(i, j, tripletDR, size);
+
                     tripletAlreadyIn = choosableTilesList.stream().anyMatch(list -> new HashSet<>(list).containsAll(tripletDR));
                     if(!tripletAlreadyIn){
                         if (tripletDR.size() == size) {
@@ -234,6 +232,7 @@ public abstract class Board {
 
                     List<Tile> tripletRD = new ArrayList<>();
                     addTilesTotripletRD(i, j, tripletRD, size);
+
                     tripletAlreadyIn = choosableTilesList.stream().anyMatch(list -> new HashSet<>(list).containsAll(tripletRD));
                     if(!tripletAlreadyIn){
                         if (tripletRD.size() == size) {
@@ -243,6 +242,7 @@ public abstract class Board {
 
                     List<Tile> tripletLD = new ArrayList<>();
                     addTilesTotripletLD(i, j, tripletLD, size);
+
                     tripletAlreadyIn = choosableTilesList.stream().anyMatch(list -> new HashSet<>(list).containsAll(tripletLD));
                     if(!tripletAlreadyIn){
                         if (tripletLD.size() == size) {
@@ -252,6 +252,7 @@ public abstract class Board {
 
                     List<Tile> tripletDL = new ArrayList<>();
                     addTilesTotripletDL(i, j, tripletDL, size);
+
                     tripletAlreadyIn = choosableTilesList.stream().anyMatch(list -> new HashSet<>(list).containsAll(tripletDL));
                     if(!tripletAlreadyIn){
                         if (tripletDL.size() == size) {
@@ -264,12 +265,19 @@ public abstract class Board {
         return choosableTilesList;
     }
 
+    /**
+     * Checks if the Tile at the given row and column is take-able, if so, the tile is added to the list
+     * @param row is the row of the tile that has to be checked
+     * @param column is the column of the tile that has to be checked
+     * @param triplet is the current list, used to check if the current tile is already present in the list
+     * @return true if the tile has to be added to the list, false otherwise
+     */
     private boolean tileChecker(int row, int column, List<Tile> triplet){
 
         if (row < 0 || row > 8 || column < 0 || column > 8 || matrix[row][column].getColor().equals("DEFAULT") || matrix[row][column].getColor().equals("XTILE")) {
             return false;
         }
-        if(triplet.contains(matrix[row][column])){//se questa Tile fa già parte della lista Triplet non ha senso farci dei controlli
+        if(triplet.contains(matrix[row][column])){
             return false;
         }
         if (row == 0 || column == 0 || row == 8 || column == 8) {
@@ -291,15 +299,13 @@ public abstract class Board {
         return false;
     }
 
-    private void addTilesTotripletDD(int i, int j, List<Tile> triplet, int size) {
-        if(tileChecker(i, j, triplet) && triplet.size()<size){
-            addToTriplet(i, j, triplet);
-            if (triplet.size() < size) {
-                addTilesTotripletDD(i + 1, j, triplet, size);
-            }
-        }
-    }
 
+    /**
+     * Adds the tile of the board at the given row and column to the list
+     * @param i is the row of the tile that has to be added
+     * @param j is the column of the tile that has to be added
+     * @param triplet is the list in which the list has to be added
+     */
     private void addToTriplet(int i, int j, List<Tile> triplet) {
         switch (matrix[i][j].getColor()) {
             case "BLUE":
@@ -323,6 +329,17 @@ public abstract class Board {
         }
     }
 
+
+    private void addTilesTotripletDD(int i, int j, List<Tile> triplet, int size) {
+        if(tileChecker(i, j, triplet) && triplet.size()<size){
+            addToTriplet(i, j, triplet);
+            if (triplet.size() < size) {
+                addTilesTotripletDD(i + 1, j, triplet, size);
+            }
+        }
+    }
+
+
     private void addTilesTotripletRR(int i, int j, List<Tile> triplet, int size) {
         if(tileChecker(i, j, triplet) && triplet.size()<size){
             addToTriplet(i, j, triplet);
@@ -336,20 +353,16 @@ public abstract class Board {
     private void addTilesTotripletRD(int i, int j, List<Tile> triplet, int size) {
 
         if(tileChecker(i, j, triplet) && triplet.size()<size){
-
             addToTriplet(i, j, triplet);
 
-            if (triplet.size() < size) {//ho messo la prima e vado R
-
+            if (triplet.size() < size) {
                 j=j+1;
                 if(tileChecker(i, j, triplet) && triplet.size()<size){
                     addToTriplet(i, j, triplet);
 
-                    if (triplet.size() < size) {//ho messo la seconda e vado D
+                    if (triplet.size() < size) {
                         i=i+1;
-
                         if(tileChecker(i, j, triplet) && triplet.size()<size){
-
                             addToTriplet(i, j, triplet);
                         }
                     }
@@ -357,26 +370,21 @@ public abstract class Board {
             }
         }
     }
+
 
     private void addTilesTotripletDR(int i, int j, List<Tile> triplet, int size) {
 
         if(tileChecker(i, j, triplet) && triplet.size()<size){
-
             addToTriplet(i, j, triplet);
 
-            if (triplet.size() < size) {//ho messo la prima e vado R
-
+            if (triplet.size() < size) {
                 i=i+1;
-
-
                 if(tileChecker(i, j, triplet) && triplet.size()<size){
                     addToTriplet(i, j, triplet);
 
-                    if (triplet.size() < size) {//ho messo la seconda e vado D
+                    if (triplet.size() < size) {
                         j=j+1;
-
                         if(tileChecker(i, j, triplet) && triplet.size()<size){
-
                             addToTriplet(i, j, triplet);
                         }
                     }
@@ -384,26 +392,21 @@ public abstract class Board {
             }
         }
     }
+
 
     private void addTilesTotripletLD(int i, int j, List<Tile> triplet, int size) {
 
         if(tileChecker(i, j, triplet) && triplet.size()<size){
-
             addToTriplet(i, j, triplet);
 
-            if (triplet.size() < size) {//ho messo la prima e vado L
-
+            if (triplet.size() < size) {
                 i=i-1;
-
-
                 if(tileChecker(i, j, triplet) && triplet.size()<size){
                     addToTriplet(i, j, triplet);
 
-                    if (triplet.size() < size) {//ho messo la seconda e vado D
+                    if (triplet.size() < size) {
                         j=j+1;
-
                         if(tileChecker(i, j, triplet) && triplet.size()<size){
-
                             addToTriplet(i, j, triplet);
                         }
                     }
@@ -411,28 +414,21 @@ public abstract class Board {
             }
         }
     }
-
 
 
     private void addTilesTotripletDL(int i, int j, List<Tile> triplet, int size) {
 
         if(tileChecker(i, j, triplet) && triplet.size()<size){
-
             addToTriplet(i, j, triplet);
 
-            if (triplet.size() < size) {//ho messo la prima e vado D
-
+            if (triplet.size() < size) {
                 i=i+1;
-
-
                 if(tileChecker(i, j, triplet) && triplet.size()<size){
                     addToTriplet(i, j, triplet);
 
-                    if (triplet.size() < size) {//ho messo la seconda e vado L
+                    if (triplet.size() < size) {
                         j=j-1;
-
                         if(tileChecker(i, j, triplet) && triplet.size()<size){
-
                             addToTriplet(i, j, triplet);
                         }
                     }

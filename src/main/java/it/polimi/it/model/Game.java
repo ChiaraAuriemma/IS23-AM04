@@ -247,27 +247,27 @@ public class Game {
         //i punti dell'endtoken sono dati dal metodo end game
 
         //points from common card 1
-        if(player.getCommonToken1() == 0 && card1.checkGoal(shelfie) ){
+        if(player.getShelfie().getCommonToken1() == 0 && card1.checkGoal(shelfie) ){
 
-            int i=0;
+            i=0;
             while(this.commonToken1.get(i) == 0){
                 i++;
             }
 
-            player.setCommonToken1(this.commonToken1.get(i));
+            player.getShelfie().setCommonToken1(this.commonToken1.get(i));
             this.points.set(i, this.points.get(i) + this.commonToken1.get(i));
             this.commonToken1.set(i, 0);
         }
 
         //points from common card 2
-        if(player.getCommonToken2() == 0 && card2.checkGoal(shelfie) ){
+        if(player.getShelfie().getCommonToken2() == 0 && card2.checkGoal(shelfie) ){
 
-            int i=0;
+            i=0;
             while(this.commonToken2.get(i) == 0){
                 i++;
             }
 
-            player.setCommonToken2(this.commonToken2.get(i));
+            player.getShelfie().setCommonToken2(this.commonToken2.get(i));
             this.points.set(i, this.points.get(i) + this.commonToken2.get(i));
             this.commonToken2.set(i, 0);
         }
