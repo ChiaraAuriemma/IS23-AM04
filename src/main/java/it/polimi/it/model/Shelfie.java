@@ -133,7 +133,7 @@ public class Shelfie{
         return commonToken2;
     }
 
-    Tile[][] getShelf(){return shelf;}
+    public Tile[][] getShelf(){return shelf;}
 
     int checkAdjacentsPoints() {
 
@@ -190,6 +190,15 @@ public class Shelfie{
         }
 
         return count;
+    }
+
+
+    public void setShelf(Tile[][] matrix){
+        for (int i=0; i<6; i++){
+            for (int j=0; j<5; j++){
+                shelf[i][j] = new Tile(i, j, PossibleColors.valueOf(matrix[i][j].getColor()));
+            }
+        }
     }
 }
 

@@ -8,6 +8,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.List;
+
 import static org.junit.Assert.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -83,8 +85,47 @@ public class B2PTest {
     }
 
 
-    /*@Test
-    public void randomChecks(){
-        for()
-    }*/
+
+    @Test
+    public void count(){
+        int max = matrix.findMaxAdjacent(3);
+        assertEquals(3, max);
+
+        List<List<Tile>> a1 = matrix.choosableTiles(1);
+        System.out.println("Versione gruppi da 1");
+        for (List<Tile> inner : a1) {
+            for (Tile t: inner){
+                System.out.print(t.getRow() +" "+ t.getColumn() +" " + " __ ");
+            }
+            System.out.println();
+        }
+        if(a1.size()!=16){
+            fail("This doesn't have 1 adjacent take-able Tiles!");
+        }
+
+        List<List<Tile>> a2 = matrix.choosableTiles(2);
+        System.out.println("Versione gruppi da 2");
+        for (List<Tile> inner : a2) {
+            for (Tile t: inner){
+                System.out.print(t.getRow() +" "+ t.getColumn() +" " + " __ ");
+            }
+            System.out.println();
+        }
+        if(a2.size()!=8){
+            fail("This doesn't have 2 adjacent take-able Tiles!");
+        }
+
+        List<List<Tile>> a3 = matrix.choosableTiles(3);
+        System.out.println("Versione gruppi da 3");
+        System.out.println("Size lista gruppi da 3: " + a3.size());
+        for (List<Tile> inner : a3) {
+            for (Tile t: inner){
+                System.out.print(t.getRow() +" "+ t.getColumn() +" " + " __ ");
+            }
+            System.out.println();
+        }
+        if(a3.size()!=4){
+            fail("This doesn't have 3 adjacent take-able Tiles!");
+        }
+    }
 }
