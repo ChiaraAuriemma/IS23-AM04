@@ -423,6 +423,7 @@ public abstract class Board {
     }
 
 
+
     private void addTilesTotripletDL(int i, int j, List<Tile> triplet, int size) {
 
         if(tileChecker(i, j, triplet) && triplet.size()<size){
