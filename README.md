@@ -22,6 +22,6 @@
 | RMI            | 🔴 |
 | CLI            | 🔴 |
 | GUI            | 🔴 |
-| Multiple games | 🔴 |
+| Multiple games | 🟢 |
 | Chat           | 🔴 |
 | Disconnection  | 🔴 |
