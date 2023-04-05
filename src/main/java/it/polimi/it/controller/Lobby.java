@@ -1,7 +1,6 @@
 package it.polimi.it.controller;
 
 import it.polimi.it.controller.Exceptions.*;
-import it.polimi.it.model.Exceptions.IndexOutOfBoundException;
 import it.polimi.it.model.Exceptions.InvalidTileException;
 import it.polimi.it.model.Exceptions.WrongListException;
 import it.polimi.it.model.Game;
@@ -10,16 +9,16 @@ import it.polimi.it.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public class Lobby {
 
-    private static ArrayList<User> userList;
-    private static ArrayList<Game> gameList;
+    private ArrayList<User> userList;
+    private ArrayList<Game> gameList;
+    private ArrayList<GameController> gameControllerList;
 
-    private static int gameCounterID;
+    private int gameCounterID;
 
-    public static void main(String[] args) {
+    public Lobby(String[] args) {
         userList = new ArrayList<>();
         gameList = new ArrayList<>();
         gameCounterID = 0;
@@ -28,65 +27,68 @@ public class Lobby {
 
     public User createUser(String  nickname) throws EmptyNicknameException, ExistingNicknameException {
 
+        User user;
         if(nickname.isEmpty()){
             throw new EmptyNicknameException("Non puoi inserire un nickname vuoto");
         }else{
-            Optional<String> nicknameList = userList.stream()
-                    .map(user -> user.getNickname())
-                    .filter(name -> name.equals(nickname))
-                    .findFirst();
-
-            if(!nicknameList.isPresent()){
-                User user = new User(nickname);
+            if(userList.stream()
+                    .map(uuser -> uuser.getNickname())
+                    .noneMatch(name -> name.equals(nickname))
+            ){
+                user = new User(nickname);
                 userList.add(user);
             }else{
                 throw new ExistingNicknameException("Il nickname esiste già");
             }
         }
-
-        return userList.get(userList.size()-1);
+        //return (User) userList.stream().map(user -> user.getNickname()).filter(name -> name.equals(nickname));
+        //return userList.get(userList.size()-1);
+        return user;
     }
 
-    public static void createGame(User user, int playerNumber) throws IndexOutOfBoundsException, NotExistingUser {
+    public void createGame(User user, int playerNumber) throws IndexOutOfBoundsException, NotExistingUser {
 
         if(playerNumber < 1 || playerNumber > 4){
             throw new IndexOutOfBoundsException("Il numero di giocatori non è corretto");
         }
-
         if(userList.size()==0){
             throw new NotExistingUser("Non c'è nessun utente che può creare la partita");
         }
+        //pickUser(user); non stai facendo una pick, così togli tutto il riferimento che ti sei passato sul client
 
-        pickUser(user);
 
+        //fai il controllo: l'user che crea il game deve esistere ed essere nella lista, vedi metodo sotto
+        Game game = new Game(playerNumber, user, gameCounterID);
+        user.setInGame(true);
+        gameList.add(game);
+        GameController gC = new GameController(game, this);
+        gameControllerList.add(gC);
         gameCounterID++;
 
-        gameList.add(new Game(playerNumber, user, gameCounterID));
     }
 
-    public void joinGame(User user, int gameID) throws NotExistingUser, InvalidIDException {
+    public void joinGame(User user, int gameID) throws NotExistingUser, InvalidIDException, FullGameException, WrongListException, IllegalValueException, InvalidTileException {
 
-        if(userList.size()==0){
-            throw new NotExistingUser("Non c'è nessun utente che può unirsi alla partita");
-        }
-
-
-        if(gameList.stream().map(game -> game.getGameid()).anyMatch(ID -> ID == gameID)){
-
-            Optional<Game> g = gameList.stream()
-                    .filter(game -> game.getGameid()==gameID).findFirst();
-            g.ifPresent( el -> el.joinGame(user));
-
-            pickUser(user);
+        if(gameID<=gameCounterID && gameList.get(gameID).getGameid()==gameID){
+            if(gameList.get(gameID).getNumplayers()<4){
+                if (userList.contains(user) && !user.getInGame()){
+                    gameList.get(gameID).joinGame(user);
+                    user.setInGame(true);
+                    if (gameList.get(gameID).getNumplayers()==gameList.get(gameID).getCurrentPlayersNum()){
+                        //starto effettivamente il game
+                        gameControllerList.get(gameID).firstTurnStarter();
+                    }
+                }else{
+                    throw new NotExistingUser("This user does not exist");
+                }
+            }else{
+                throw new FullGameException("There are already too many players in this game!");
+            }
         }else{
-            throw new InvalidIDException("L'ID inserito non esiste");
+            throw new InvalidIDException("The given game ID does not exists");
         }
-
     }
 
-    private static void pickUser(User user){
-        userList.remove(user);
-    }
 
     ArrayList<User> getUserList(){
         return userList;
@@ -97,16 +99,25 @@ public class Lobby {
     }
 
     Game getGame(int ID) throws InvalidIDException {
-
         for(Game game : gameList){
             if(game.getGameid()==ID){
                 return game;
             }
         }
-
         throw new InvalidIDException("L'ID inserito non esiste");
     }
 
+
+
+    /**********************************
+     *  fine dei metodi che effettivamente centrano qualcosa con cosa sia una Lobby
+     *
+     *
+     *
+     *******************************/
+
+
+    /*
     List<List<Tile>> choosableTiles(int tilesNum, int gameID, int playerNumber) throws WrongPlayerException {
 
         try {
@@ -148,5 +159,13 @@ public class Lobby {
         }
     }
 
+*/
+    public void notifyEndGame(int gameID) throws InvalidIDException {
+
+        Game gameToBeDeleted = getGame(gameID);
+        gameControllerList  .remove(gameList.stream().filter(game->game.equals(gameToBeDeleted)));
+        gameList            .remove(gameToBeDeleted);
+
+    }
 
 }

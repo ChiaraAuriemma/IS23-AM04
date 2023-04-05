@@ -13,7 +13,7 @@ public class User {
     private Game game;
     private int tilesNumber;
     private final String nickname;
-    private final boolean inGame;
+    private boolean inGame = false;
 
     public User(String nickname){
 
@@ -25,13 +25,13 @@ public class User {
     public int maxValueOfTiles() throws IndexOutOfBoundsException{
 
         int max = shelf.possibleTiles();
-
         if(max < 1 || max > 3){
             throw new IndexOutOfBoundsException("Il numero di tiles non è accettabile");
         }
-
         return board.findMaxAdjacent(max);
     }
+
+
     public List<List<Tile>> choosableTiles(int tilesNum) throws WrongListException, IndexOutOfBoundsException {
 
         if(tilesNum < 1 || tilesNum > 3){
@@ -80,7 +80,7 @@ public class User {
         //vedere quando crasha
         return true;
     }
-    Shelfie createShelfie() {
+    public Shelfie createShelfie() {
 
         this.board = this.game.getBoard();
         return this.shelf = new Shelfie();
@@ -104,5 +104,13 @@ public class User {
 
     public Game getGame(){
         return this.game;
+    }
+
+    public boolean getInGame() {
+        return this.inGame;
+    }
+
+    public void setInGame(boolean state) {
+        inGame=state;
     }
 }
