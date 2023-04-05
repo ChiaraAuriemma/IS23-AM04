@@ -44,7 +44,7 @@ public class Game {
 
         host.setGame(this);
         this.players = new ArrayList<>(numplayers);
-        this.players.add(0,host); // controllo se è empty ???
+        this.players.add(host); // controllo se è empty ???
 
         //start all the player points to zero
         this.points = new ArrayList<>(Collections.nCopies(numplayers, 0));
@@ -103,17 +103,17 @@ public class Game {
             int position;
             do{
                 position = rdn.nextInt(i);
-            }while(checkplayers[position] == false);
+            }while(!checkplayers[position]);
 
             checkplayers[position] = true;
-            Integer pos = Integer.valueOf(position);
+            Integer pos = position;
             this.order.add(i,pos);
         }
 
         int j = 0;
-        while(checkplayers[j] == true) j++;
+        while(checkplayers[j]) j++;
 
-        Integer pos = Integer.valueOf(j);
+        Integer pos = j;
         this.order.add(0,pos);
 
     }
@@ -219,7 +219,7 @@ public class Game {
 
 
         do{
-            id = Integer.valueOf(rnd.nextInt(12) + 1);
+            id = rnd.nextInt(12) + 1;
             card  = new PersonalGoalCard(id);
         }while(!this.cards.contains(card));
 
