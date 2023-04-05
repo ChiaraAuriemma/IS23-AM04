@@ -72,7 +72,7 @@ public class Shelfie{
     }
 
 
-    boolean checkEnd(){
+    public boolean checkEnd(){
 
         int count = 0;
 

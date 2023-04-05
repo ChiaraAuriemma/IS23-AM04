@@ -61,13 +61,13 @@ public class Lobby {
         Game game = new Game(playerNumber, user, gameCounterID);
         user.setInGame(true);
         gameList.add(game);
-        GameController gC = new GameController(game);
+        GameController gC = new GameController(game, this);
         gameControllerList.add(gC);
         gameCounterID++;
 
     }
 
-    public void joinGame(User user, int gameID) throws NotExistingUser, InvalidIDException, FullGameException {
+    public void joinGame(User user, int gameID) throws NotExistingUser, InvalidIDException, FullGameException, WrongListException, IllegalValueException, InvalidTileException {
 
         if(gameID<=gameCounterID && gameList.get(gameID).getGameid()==gameID){
             if(gameList.get(gameID).getNumplayers()<4){
@@ -116,6 +116,8 @@ public class Lobby {
      *
      *******************************/
 
+
+    /*
     List<List<Tile>> choosableTiles(int tilesNum, int gameID, int playerNumber) throws WrongPlayerException {
 
         try {
@@ -157,5 +159,13 @@ public class Lobby {
         }
     }
 
+*/
+    public void notifyEndGame(int gameID) throws InvalidIDException {
+
+        Game gameToBeDeleted = getGame(gameID);
+        gameControllerList  .remove(gameList.stream().filter(game->game.equals(gameToBeDeleted)));
+        gameList            .remove(gameToBeDeleted);
+
+    }
 
 }

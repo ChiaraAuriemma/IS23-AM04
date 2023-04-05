@@ -107,6 +107,12 @@ public class Game {
         return tmpOrder;
     }
 
+
+    public boolean getEndTokenX(){
+        return endToken != -1 && endToken != 0;
+    }
+
+
     private void randomPlayers () {
         this.orderPointer = 0;
         Random rdn = new Random();
@@ -228,7 +234,7 @@ public class Game {
         //return card;
     }
 
-    private void pointCount(){
+    public void pointCount(){
         Integer i = this.order.get(orderPointer - 1);
         User player = this.players.get(i);
         PersonalGoalCard persCard = this.cards.get(i);
