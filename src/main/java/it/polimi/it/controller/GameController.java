@@ -176,7 +176,7 @@ public class GameController {
      * @throws InvalidTileException exception used when a wrong tile is selected
      */
     //oltre a scegliere la colonna dove metterle, ordina le Tile per come le vuole nella colonna
-    void getColumnFromView(int col, List<Tile> orderedTiles) throws IllegalValueException, WrongTileException, WrongListException, InvalidTileException {
+    void getColumnFromView(int col, List<Tile> orderedTiles) throws IllegalValueException, WrongTileException, WrongListException, InvalidTileException, InvalidIDException {
         if(col<0 || col>4){
             throw new IllegalValueException("Invalid column choice");
         }
