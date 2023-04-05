@@ -15,19 +15,14 @@ public class Shelfie{
     public Shelfie(){
 
         shelf = new Tile[6][5];
-
         for(int row=0; row<6; row++){
             for(int column=0; column<5; column++){
                 shelf[row][column] = new Tile(PossibleColors.DEFAULT);
             }
         }
-
         this.endToken1 = false;
-
         this.commonToken1 = 0;
-
         this.commonToken2 = 0;
-
     }
 
 
@@ -52,45 +47,34 @@ public class Shelfie{
                 checkColumn[column] = true;
             }
         }
-
         return checkColumn;
     }
 
     void addTile(int column, List<Tile> chosen){
 
         int numTiles = 0;
-
-        for(int row=0; row<6; row++)
-        {
+        for(int row=0; row<6; row++) {
             if(numTiles < chosen.size()) {
                 if (shelf[row][column].getColor().equals("DEFAULT")) {
                         shelf[row][column] = new Tile(row, column, PossibleColors.valueOf(chosen.get(numTiles).getColor()));
                         numTiles++;
-                    }
                 }
             }
+        }
     }
 
 
     public boolean checkEnd(){
-
-        int count = 0;
-
         for(int row=0; row<6; row++){
             for(int  column=0; column<5; column++){
                 if(shelf[row][column].getColor().equals("DEFAULT")){
-                    count ++;
+                    endToken1 = false;
+                    return false;
                 }
             }
         }
-        if(count == 0){
-            endToken1 = true;
-        }else {
-            endToken1 = false;
-        }
-
-        return endToken1;
-
+        endToken1 = true;
+        return true;
     }
 
     int possibleTiles(){
@@ -99,9 +83,7 @@ public class Shelfie{
         int count;
 
         for(int column=0; column<5; column++){
-
             count = 0;
-
             for(int row=0; row<6; row++){
                 if(shelf[row][column].getColor().equals("DEFAULT")){
                     count ++;
@@ -184,11 +166,9 @@ public class Shelfie{
                     !visited[nextRow][nextCol] && shelf[nextRow][nextCol].getColor().equals(color) &&
                     !shelf[nextRow][nextCol].getColor().equals("DEFAULT") &&
                     !shelf[nextRow][nextCol].getColor().equals("XTILE")) {
-
                 count += searchAdjacents(shelf, visited, directions, nextRow, nextCol, color);
             }
         }
-
         return count;
     }
 
