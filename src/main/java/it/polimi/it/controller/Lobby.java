@@ -4,11 +4,10 @@ import it.polimi.it.controller.Exceptions.*;
 import it.polimi.it.model.Exceptions.InvalidTileException;
 import it.polimi.it.model.Exceptions.WrongListException;
 import it.polimi.it.model.Game;
-import it.polimi.it.model.Tiles.Tile;
 import it.polimi.it.model.User;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Optional;
 
 public class Lobby {
 
@@ -18,9 +17,10 @@ public class Lobby {
 
     private int gameCounterID;
 
-    public Lobby(String[] args) {
+    public Lobby() {
         userList = new ArrayList<>();
         gameList = new ArrayList<>();
+        gameControllerList = new ArrayList<>();
         gameCounterID = 0;
 
     }
@@ -163,8 +163,15 @@ public class Lobby {
     public void notifyEndGame(int gameID) throws InvalidIDException {
 
         Game gameToBeDeleted = getGame(gameID);
-        gameControllerList  .remove(gameList.stream().filter(game->game.equals(gameToBeDeleted)));
-        gameList            .remove(gameToBeDeleted);
+        GameController gCToBeDeleted;
+        gCToBeDeleted = gameControllerList.stream().filter(gc -> gc.getGame().equals(gameToBeDeleted)).findFirst();
+
+       /* if (gameControllerList.contains(gCToBeDeleted)){
+            gameControllerList  .remove(gCToBeDeleted);
+        }*/
+        //gameControllerList  .removeif(gameControllerList.stream().filter(gc -> gc.getGame().equals(gameToBeDeleted)));
+        gameList            .remove(getGame(gameID));
+        gameControllerList  .remove(gCToBeDeleted);
 
     }
 

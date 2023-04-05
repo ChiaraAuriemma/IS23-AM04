@@ -35,7 +35,7 @@ public class User {
     public List<List<Tile>> choosableTiles(int tilesNum) throws WrongListException, IndexOutOfBoundsException {
 
         if(tilesNum < 1 || tilesNum > 3){
-            throw new IndexOutOfBoundsException("Il numero di tiles non è accettabile");
+            throw new IndexOutOfBoundsException("Wrong tiles number");
         }
 
         tilesNumber = tilesNum;
@@ -43,7 +43,7 @@ public class User {
         List<List<Tile>> choosableList = board.choosableTiles(tilesNum);
 
         if(choosableList == null || choosableList.size() == 0){
-            throw new WrongListException("L'elenco di scelte possibili non è utilizzabile");
+            throw new WrongListException("Error in the chosen tiles list");
         }
         return choosableList;
     }
@@ -52,7 +52,7 @@ public class User {
 
         for(Tile t : chosen){
             if(t.getColor().equals("XTILE") || t.getColor().equals("DEFAULT")){
-                throw new InvalidTileException("Non è possibile avere questo tipo di tile nella scelta");
+                throw new InvalidTileException("Tiles of this type can't be chosen");
             }
         }
 
@@ -65,7 +65,7 @@ public class User {
 
         if(column < 0 || column > 4){
 
-            throw new IndexOutOfBoundsException("Il valore della colonna non esiste");
+            throw new IndexOutOfBoundsException("The given column value does not exist");
 
         }else {
             shelf.addTile(column, chosen);
@@ -77,7 +77,7 @@ public class User {
 
     boolean checkInGame(User user) {
 
-        //vedere quando crasha
+        //vedere quando crasha troooppooo broooo
         return true;
     }
     public Shelfie createShelfie() {

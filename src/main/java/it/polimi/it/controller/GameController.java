@@ -155,4 +155,8 @@ public class GameController {
      * Faccio i controlli di massima
      * chiedo il numero di tile che vuole
      ***************************/
+
+    public Game getGame(){
+        return this.game;
+    }
 }
