@@ -68,6 +68,7 @@ public class Game {
 
         if(numplayers == 2){
             this.board = new B2P();
+            this.cards = new ArrayList<>(2);
 
         }else if(numplayers == 3){
             this.board = new B3P();
@@ -77,6 +78,9 @@ public class Game {
             this.commonToken2.set(1,6);
             this.commonToken2.set(3,0);
 
+
+            this.cards = new ArrayList<>(3);
+
         }else{
             this.board = new B4P();
 
@@ -85,13 +89,25 @@ public class Game {
             this.commonToken2.set(1,6);
             this.commonToken2.set(3,2);
 
+
+            this.cards = new ArrayList<>(4);
+
         }
 
         //view: mostro alla view
 
     }
 
-    public void randomPlayers () {
+    public List<User> getPlayerList() {
+        List<User> tmpOrder = new ArrayList<>(numplayers);
+        randomPlayers();
+        for (int i=0; i<order.size(); i++){
+            tmpOrder.add(players.get(order.get(i)));
+        }
+        return tmpOrder;
+    }
+
+    private void randomPlayers () {
         this.orderPointer = 0;
         Random rdn = new Random();
 
@@ -99,27 +115,23 @@ public class Game {
         checkplayers = new boolean[]{false, false, false, false};
 
         for(int i=this.numplayers - 1; i > 0; i--){
-
             int position;
-            do{
-                position = rdn.nextInt(i);
+            do{position = rdn.nextInt(i);
             }while(!checkplayers[position]);
 
             checkplayers[position] = true;
             Integer pos = position;
             this.order.add(i,pos);
         }
-
         int j = 0;
         while(checkplayers[j]) j++;
 
         Integer pos = j;
         this.order.add(0,pos);
-
     }
 
 
-    void callNextPlayers (){
+    public void callNextPlayers(){
         Integer nextplayer = this.order.get(orderPointer);
         int maxTiles;
 
@@ -136,7 +148,6 @@ public class Game {
             //view: gestisco l'avvio del turno (notifico alla view)
             //tipo con:
             //virtualView.play(player.get(nextplayer), maxTiles);
-
             if(orderPointer == 3){
                 orderPointer = 0;
             }else{
@@ -162,7 +173,7 @@ public class Game {
         callNextPlayers();
     }
 
-    private void drawCommonCrads(){
+    public void drawCommonCrads(){
 
         Random rnd = new Random();
 
@@ -181,7 +192,6 @@ public class Game {
         this.card2 = deck.getCommonCard2();
     }
 
-    //metodi in più
     Board getBoard(){
         return this.board;
     }
@@ -190,28 +200,19 @@ public class Game {
 
         joiner.setGame(this);
         this.players.add(joiner);
-        //view: mostro alla view
-        if(this.players.size() == this.numplayers){
-
-            randomPlayers();
-            this.cards = new ArrayList<>();
-            for(int i=0; i < this.numplayers; i++){
-                this.cards.add(i,drawPersonalCard());
-                //come passo a user la sua carta ???? parlo con bertossss
-                this.players.get(i).createShelfie();
-            }
-
-            drawCommonCrads();
-            //view: mostro alla view
-            //view: mostro alla view chi ha il sofà d'inizio
-            callNextPlayers();
-
-        }
-
-        return;
     }
 
-    private PersonalGoalCard drawPersonalCard (){
+    public int getCurrentPlayersNum(){
+        return this.players.size();
+    }
+
+
+    public List<Integer> getOrder() {
+        return order;
+    }
+
+
+    public void drawPersonalCard (){
 
         PersonalGoalCard card;
         Random rnd = new Random();
@@ -223,7 +224,8 @@ public class Game {
             card  = new PersonalGoalCard(id);
         }while(!this.cards.contains(card));
 
-        return card;
+        this.cards.add(card);
+        //return card;
     }
 
     private void pointCount(){
@@ -317,5 +319,6 @@ public class Game {
     public int getGameid(){
         return this.gameID;
     }
+
 
 }

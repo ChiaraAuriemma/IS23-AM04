@@ -14,6 +14,7 @@ public class Lobby {
 
     private ArrayList<User> userList;
     private ArrayList<Game> gameList;
+    private ArrayList<GameController> gameControllerList;
 
     private int gameCounterID;
 
@@ -50,12 +51,18 @@ public class Lobby {
         if(playerNumber < 1 || playerNumber > 4){
             throw new IndexOutOfBoundsException("Il numero di giocatori non è corretto");
         }
-
         if(userList.size()==0){
             throw new NotExistingUser("Non c'è nessun utente che può creare la partita");
         }
         //pickUser(user); non stai facendo una pick, così togli tutto il riferimento che ti sei passato sul client
-        gameList.add(new Game(playerNumber, user, gameCounterID));
+
+
+        //fai il controllo: l'user che crea il game deve esistere ed essere nella lista, vedi metodo sotto
+        Game game = new Game(playerNumber, user, gameCounterID);
+        user.setInGame(true);
+        gameList.add(game);
+        GameController gC = new GameController(game);
+        gameControllerList.add(gC);
         gameCounterID++;
 
     }
@@ -64,8 +71,17 @@ public class Lobby {
 
         if(gameID<=gameCounterID && gameList.get(gameID).getGameid()==gameID){
             if(gameList.get(gameID).getNumplayers()<4){
-                gameList.get(gameID).joinGame(user);//controllare che nessuno abbia scammato con l'user
-            }else {
+                if (userList.contains(user) && !user.getInGame()){
+                    gameList.get(gameID).joinGame(user);
+                    user.setInGame(true);
+                    if (gameList.get(gameID).getNumplayers()==gameList.get(gameID).getCurrentPlayersNum()){
+                        //starto effettivamente il game
+                        gameControllerList.get(gameID).firstTurnStarter();
+                    }
+                }else{
+                    throw new NotExistingUser("This user does not exist");
+                }
+            }else{
                 throw new FullGameException("There are already too many players in this game!");
             }
         }else{
