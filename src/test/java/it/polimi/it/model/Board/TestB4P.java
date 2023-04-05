@@ -19,7 +19,6 @@ public class TestB4P {
     private TilesBag bag;
     @Before
     public void B2P() {
-        //this.matrix = new B4P();
         this.bag= new TilesBag();
         this.matrix = new B4P();
     }
@@ -28,14 +27,6 @@ public class TestB4P {
     public void destroy() {
         matrix = null;
     }
-
-/*
-    @Test
-    public void shouldBeRefilling(){
-
-    }
-*/
-
 
     @Test
     public void emptyBoardRefill() {
@@ -235,21 +226,15 @@ public class TestB4P {
             fail("This board is empty, should be refilled!");
         }
 
-
-
-
-
         Tile g = new Tile(PossibleColors.GREEN);
         Tile p = new Tile(PossibleColors.PINK);
         Tile c = new Tile(PossibleColors.CYAN);
         Tile w = new Tile(PossibleColors.WHITE);
 
-
         matrix.matrix[3][2] = new Tile(3, 2, PossibleColors.GREEN);
         matrix.matrix[2][5] = new Tile(2, 5, PossibleColors.PINK);
         matrix.matrix[5][6] = new Tile(5, 6, PossibleColors.CYAN);
         matrix.matrix[6][3] = new Tile(6, 3, PossibleColors.WHITE);
-
 
         assertNotEquals(x.getColor(), matrix.matrix[3][2].getColor());
         assertNotEquals(d.getColor(), matrix.matrix[3][2].getColor());
@@ -309,10 +294,8 @@ public class TestB4P {
                     assertSame(i, matrix.matrix[i][j].getRow());
                     assertSame(j, matrix.matrix[i][j].getColumn());
                 }
-                //funziona
             }
         }
-
     }
 
     @Test
@@ -387,7 +370,6 @@ public class TestB4P {
             }
             System.out.println();
         }
-        //List<List<Tile>> a2 = matrix.choosableTiles(2);
         if(a2.size()!=8){
             fail("This doesn't have 2 adjacent take-able Tiles!");
         }
@@ -402,7 +384,6 @@ public class TestB4P {
             }
             System.out.println();
         }
-        //List<List<Tile>> a3 = matrix.choosableTiles(3);
         if(a3.size()!=4){
             fail("This doesn't have 3 adjacent take-able Tiles!");
         }

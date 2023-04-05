@@ -1,4 +1,4 @@
-package it.polimi.it.model.Exception;
+package it.polimi.it.controller.Exceptions;
 
 public class NotExistingUser extends Exception {
     public NotExistingUser( String message) {

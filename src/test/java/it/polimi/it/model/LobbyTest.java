@@ -1,6 +1,6 @@
 package it.polimi.it.model;
 
-import it.polimi.it.model.Exception.NotExistingUser;
+import it.polimi.it.controller.Exceptions.NotExistingUser;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

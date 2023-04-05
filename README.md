@@ -23,6 +23,5 @@
 | CLI            | 🔴 |
 | GUI            | 🔴 |
 | Multiple games | 🔴 |
-| Persistence    | 🔴 |
 | Chat           | 🔴 |
 | Disconnection  | 🔴 |
