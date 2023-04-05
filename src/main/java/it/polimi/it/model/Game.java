@@ -30,15 +30,17 @@ public class Game {
     private List<Integer> commonToken1;
     private List<Integer> commonToken2;
     private  Integer endToken;
+    private Integer gameID;
 
 
 
 
-    public Game(Integer numplayers, User host){
+    public Game(Integer numplayers, User host, int gameID){
         this.order = new ArrayList<Integer>(numplayers);
         this.orderPointer = 0;
         this.endToken = -1;
         this.numplayers = numplayers;
+        this.gameID = gameID;
 
         host.setGame(this);
         this.players = new ArrayList<>(numplayers);
@@ -184,7 +186,7 @@ public class Game {
         return this.board;
     }
 
-    void joinGame (User joiner ){
+    public void joinGame (User joiner ){
 
         joiner.setGame(this);
         this.players.add(joiner);
@@ -311,4 +313,9 @@ public class Game {
     public Integer getCommonToken2(int i){
         return  this.commonToken2.get(i);
     }
+
+    public int getGameid(){
+        return this.gameID;
+    }
+
 }
