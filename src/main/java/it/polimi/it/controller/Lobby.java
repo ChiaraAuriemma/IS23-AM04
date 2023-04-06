@@ -4,11 +4,10 @@ import it.polimi.it.controller.Exceptions.*;
 import it.polimi.it.model.Exceptions.InvalidTileException;
 import it.polimi.it.model.Exceptions.WrongListException;
 import it.polimi.it.model.Game;
-import it.polimi.it.model.Tiles.Tile;
 import it.polimi.it.model.User;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Optional;
 
 public class Lobby {
 
@@ -18,9 +17,10 @@ public class Lobby {
 
     private int gameCounterID;
 
-    public Lobby(String[] args) {
+    public Lobby() {
         userList = new ArrayList<>();
         gameList = new ArrayList<>();
+        gameControllerList = new ArrayList<>();
         gameCounterID = 0;
 
     }
@@ -29,16 +29,16 @@ public class Lobby {
 
         User user;
         if(nickname.isEmpty()){
-            throw new EmptyNicknameException("Non puoi inserire un nickname vuoto");
+            throw new EmptyNicknameException("You must insert a nickname...");
         }else{
             if(userList.stream()
-                    .map(uuser -> uuser.getNickname())
+                    .map(currentUser -> currentUser.getNickname())
                     .noneMatch(name -> name.equals(nickname))
             ){
                 user = new User(nickname);
                 userList.add(user);
             }else{
-                throw new ExistingNicknameException("Il nickname esiste già");
+                throw new ExistingNicknameException("This nickname already exists!");
             }
         }
         //return (User) userList.stream().map(user -> user.getNickname()).filter(name -> name.equals(nickname));
@@ -49,25 +49,24 @@ public class Lobby {
     public void createGame(User user, int playerNumber) throws IndexOutOfBoundsException, NotExistingUser {
 
         if(playerNumber < 1 || playerNumber > 4){
-            throw new IndexOutOfBoundsException("Il numero di giocatori non è corretto");
+            throw new IndexOutOfBoundsException("Wrong number of players");
         }
         if(userList.size()==0){
-            throw new NotExistingUser("Non c'è nessun utente che può creare la partita");
+            throw new NotExistingUser("There aren't any players that might start a game...");
         }
         //pickUser(user); non stai facendo una pick, così togli tutto il riferimento che ti sei passato sul client
-
 
         //fai il controllo: l'user che crea il game deve esistere ed essere nella lista, vedi metodo sotto
         Game game = new Game(playerNumber, user, gameCounterID);
         user.setInGame(true);
         gameList.add(game);
-        GameController gC = new GameController(game);
+        GameController gC = new GameController(game, this);
         gameControllerList.add(gC);
         gameCounterID++;
 
     }
 
-    public void joinGame(User user, int gameID) throws NotExistingUser, InvalidIDException, FullGameException {
+    public void joinGame(User user, int gameID) throws NotExistingUser, InvalidIDException, FullGameException, WrongListException, IllegalValueException, InvalidTileException {
 
         if(gameID<=gameCounterID && gameList.get(gameID).getGameid()==gameID){
             if(gameList.get(gameID).getNumplayers()<4){
@@ -104,58 +103,29 @@ public class Lobby {
                 return game;
             }
         }
-        throw new InvalidIDException("L'ID inserito non esiste");
+        throw new InvalidIDException("This ID does not exists");
     }
 
 
 
-    /**********************************
-     *  fine dei metodi che effettivamente centrano qualcosa con cosa sia una Lobby
-     *
-     *
-     *
-     *******************************/
-
-    List<List<Tile>> choosableTiles(int tilesNum, int gameID, int playerNumber) throws WrongPlayerException {
-
-        try {
-            if (playerNumber != getGame(gameID).getOrderPointer()){
-                throw new WrongPlayerException("Non è il tuo turno");
+    GameController getGameController(int gameID) throws InvalidIDException{
+        for (GameController gC: gameControllerList){
+            if (gC.getGame().getGameid()==gameID){
+                return gC;
             }
-        }catch (InvalidIDException e){
-            throw new RuntimeException(e);
         }
-
-        try{
-
-            int max = getGame(gameID).getPlayer(playerNumber).maxValueOfTiles();
-
-            if(max >= tilesNum && tilesNum >= 1){
-                return getGame(gameID).getPlayer(playerNumber).choosableTiles(tilesNum);
-            }else{
-                throw new IndexOutOfBoundsException("Il numero di tiles non è selezionabile");
-            }
-        }catch (InvalidIDException | WrongListException e) {
-            throw new RuntimeException(e);
-        }
+        throw new InvalidIDException("This ID does not exists");
     }
 
-    boolean[] chooseSelectedTiles(List<Tile> chosen, int gameID, int playerNumber) throws WrongPlayerException {
 
-        try {
-            if (playerNumber != getGame(gameID).getOrderPointer()){
-                throw new WrongPlayerException("Non è il tuo turno");
-            }
-        }catch (InvalidIDException e){
-            throw new RuntimeException(e);
-        }
 
-        try{
-            return getGame(gameID).getPlayer(playerNumber).chooseSelectedTiles(chosen);
-        } catch (InvalidIDException | InvalidTileException e) {
-            throw new RuntimeException(e);
-        }
+    public void notifyEndGame(int gameID) throws InvalidIDException {
+
+        Game            gameToBeDeleted = getGame(gameID);
+        GameController  gCToBeDeleted   = getGameController(gameID);
+
+        gameList            .remove(getGame(gameID));
+        gameControllerList  .remove(gCToBeDeleted);
     }
-
 
 }

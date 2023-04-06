@@ -17,11 +17,11 @@
 |:---------------|:--------------------------------------------------:|
 | UML            | 🟢 |
 | Model          | 🟢 |
-| Controller     | 🔴 |
+| Controller     | 🟢 |
 | Socket TCP     | 🔴 |
 | RMI            | 🔴 |
 | CLI            | 🔴 |
 | GUI            | 🔴 |
-| Multiple games | 🔴 |
+| Multiple games | 🟢 |
 | Chat           | 🔴 |
 | Disconnection  | 🔴 |
