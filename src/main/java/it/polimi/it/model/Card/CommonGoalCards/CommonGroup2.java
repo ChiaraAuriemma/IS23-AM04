@@ -12,14 +12,13 @@ import java.util.List;
 
 public class CommonGroup2 extends CommonGoalCard{
 
-    private List<String> colorToSave;
     public CommonGroup2(int id){ //carte 2,6,5,7
         super(id);
-        this.colorToSave = new ArrayList<>();
     }
 
     public Boolean checkGoal(Shelfie shelfie){
         Gson gson =  new Gson();
+        List<String> colorToSave;
         int j;
         int i;
         int stop;
@@ -34,6 +33,7 @@ public class CommonGroup2 extends CommonGoalCard{
 
             for(i=0; i<jsonObject.get("i").getAsInt() && numRight<jsonObject.get("numRight").getAsInt(); i++) {
                 stop = 0;
+                colorToSave = new ArrayList<>(6);
                 for(j=0; j<jsonObject.get("j").getAsInt() && stop == 0; j++){
                     if(jsonObject.get("direction").getAsString().equals("column")){
                         cell1 = shelfie.getCell(i,j).getColor();
@@ -42,16 +42,17 @@ public class CommonGroup2 extends CommonGoalCard{
                         cell1 = shelfie.getCell(j,i).getColor();
                         cell2 = shelfie.getCell(j+jsonObject.get("addToColumn").getAsInt(),i+jsonObject.get("addToRow").getAsInt()).getColor();
                     }
+
                     if(cell1.equals("DEFAULT"))
                         stop=1;
+                    if(!colorToSave.contains(cell1))
+                        colorToSave.add(cell1);
 
-                    if(jsonObject.get("type").getAsString().equals("mustBeDifferent")){
-                        if(cell1.equals(cell2)){
+                    if(jsonObject.get("type").getAsString().equals("mustBeDifferent")) {
+                        if (cell1.equals(cell2) || colorToSave.contains(cell2)) {
                             stop = 1;
-                        }
-                    }else{
-                        if(!colorToSave.contains(cell1))
-                            colorToSave.add(cell1);
+                        } else colorToSave.add(cell2);
+                    }else {
                         if(!colorToSave.contains(cell2))
                             colorToSave.add(cell2);
                         if(colorToSave.size() > jsonObject.get("maxDifferentColors").getAsInt())

@@ -21,7 +21,7 @@ public class CommonDeck {
             commonCard1 = new CommonGroup2(id1);
         }
         if(id2 == 2 || id2 == 5 || id2 == 6 || id2 == 7){
-            commonCard2 = new CommonGroup2(id1);
+            commonCard2 = new CommonGroup2(id2);
         }
         if(id1 == 3 || id1 == 4){
             commonCard1 = new CommonGroup3(id1);
