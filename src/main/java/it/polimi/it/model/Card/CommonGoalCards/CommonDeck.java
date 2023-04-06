@@ -6,7 +6,7 @@ public class CommonDeck {
     private CommonGoalCard commonCard2;
 
     /**
-     * createCards istantiates the two commonGoalCards that we need for the game.
+     * createCards instantiates the two commonGoalCards that we need for the game.
      * @param id1 is an identification code e says to the method what is the commonCard1 of the play.
      * @param id2 is the identification code of the commonCard2
      */
