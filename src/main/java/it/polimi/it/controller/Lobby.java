@@ -7,7 +7,9 @@ import it.polimi.it.model.Game;
 import it.polimi.it.model.User;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class Lobby {
 
@@ -32,8 +34,8 @@ public class Lobby {
             throw new EmptyNicknameException("You must insert a nickname...");
         }else{
             if(userList.stream()
-                    .map(currentUser -> currentUser.getNickname())
-                    .noneMatch(name -> name.equals(nickname))
+                        .map(currentUser -> currentUser.getNickname())
+                        .noneMatch(name -> name.equals(nickname))
             ){
                 user = new User(nickname);
                 userList.add(user);
@@ -60,22 +62,23 @@ public class Lobby {
         Game game = new Game(playerNumber, user, gameCounterID);
         user.setInGame(true);
         gameList.add(game);
-        GameController gC = new GameController(game, this);
-        gameControllerList.add(gC);
+        GameController gameContr = new GameController(game, this);
+        gameControllerList.add(gameContr);
         gameCounterID++;
 
     }
 
     public void joinGame(User user, int gameID) throws NotExistingUser, InvalidIDException, FullGameException, WrongListException, IllegalValueException, InvalidTileException {
 
-        if(gameID<=gameCounterID && gameList.get(gameID).getGameid()==gameID){
-            if(gameList.get(gameID).getNumplayers()<4){
+        List<Game> findGame = gameList.stream().filter(game -> game.getGameid() == gameID).collect(Collectors.toList());
+        if(gameID<=gameCounterID && !findGame.isEmpty()){
+            if(findGame.get(0).getCurrentPlayersNum()<findGame.get(0).getNumplayers()){
                 if (userList.contains(user) && !user.getInGame()){
-                    gameList.get(gameID).joinGame(user);
+                    findGame.get(0).joinGame(user);
                     user.setInGame(true);
-                    if (gameList.get(gameID).getNumplayers()==gameList.get(gameID).getCurrentPlayersNum()){
+                    if (findGame.get(0).getNumplayers()==findGame.get(0).getCurrentPlayersNum()){
                         //starto effettivamente il game
-                        gameControllerList.get(gameID).firstTurnStarter();
+                        gameControllerList.get(gameList.indexOf(findGame.get(0))).firstTurnStarter();
                     }
                 }else{
                     throw new NotExistingUser("This user does not exist");
@@ -109,9 +112,9 @@ public class Lobby {
 
 
     GameController getGameController(int gameID) throws InvalidIDException{
-        for (GameController gC: gameControllerList){
-            if (gC.getGame().getGameid()==gameID){
-                return gC;
+        for (GameController gameContr: gameControllerList){
+            if (gameContr.getGame().getGameid()==gameID){
+                return gameContr;
             }
         }
         throw new InvalidIDException("This ID does not exists");

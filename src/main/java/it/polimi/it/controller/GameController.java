@@ -18,53 +18,53 @@ public class GameController {
     /**
      * Is the total number of players in the game
      */
-    int numOfPlayers;
+    private int numOfPlayers;
 
     /**
      * Univocal ID for the current game
      */
-    int gameID;
+    private int gameID;
 
     /**
      * Index of the playerList, represents the player who is able
      * to make a move this turn
      */
-    int currentPlayer=0;
+    private int currentPlayer=0;
 
     /**
      * Flag to avoid continuing the game if somebody has already finished
      */
-    boolean endGame=false;
+    private boolean endGame=false;
 
     /**
      * List of the players, with a maximum size of 4
      * The players contained in the list are already ordered in the same way as they move during the game
      */
-    List<User> playerList;
+    private List<User> playerList;
 
 
     /**
      * Reference to the Lobby, used to destroy the game, when this ends
      */
-    Lobby lobby;
+    private Lobby lobby;
 
 
     /**
      * Reference to the Game
      */
-    Game game;
+    private Game game;
 
 
     /**
      * List of tiles chosen in the current turn by the current player
      */
-    List<Tile> currentTilesList;
+    private List<Tile> currentTilesList;
 
 
     /**
      * Max number of tiles take-able in a certain turn
      */
-    int maxTile;
+    private int maxTile;
 
 
     /**
@@ -145,7 +145,7 @@ public class GameController {
 
 
     /**
-     * Method to get the list o tiles the user has selected from the board,
+     * Method to get the list of tiles the user has selected from the board,
      * The method also sends to the view the list of 'empty-enough' columns in which the chosen
      *  tiles might be put in.
      * @param chosenList is the list of selected tiles
@@ -185,6 +185,7 @@ public class GameController {
              throw new WrongTileException("Different tiles from before");
         }
 
+        playerList.get(currentPlayer).insertTile(col, orderedTiles);
 
         game.pointCount();
 
@@ -245,5 +246,25 @@ public class GameController {
      */
     public Game getGame(){
         return this.game;
+    }
+
+    public int getCurrentPlayer() {
+        return currentPlayer;
+    }
+
+    public int getGameID() {
+        return gameID;
+    }
+
+    public int getMaxTile() {
+        return maxTile;
+    }
+
+    public int getNumOfPlayers() {
+        return numOfPlayers;
+    }
+
+    public Lobby getLobby() {
+        return lobby;
     }
 }
