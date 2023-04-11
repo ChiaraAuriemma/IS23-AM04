@@ -50,7 +50,7 @@ public class Shelfie{
         return checkColumn;
     }
 
-    void addTile(int column, List<Tile> chosen){
+    boolean addTile(int column, List<Tile> chosen){
 
         int numTiles = 0;
         for(int row=0; row<6; row++) {
@@ -61,6 +61,8 @@ public class Shelfie{
                 }
             }
         }
+
+        return checkEnd();
     }
 
 

@@ -92,7 +92,7 @@ public class Lobby {
     }
 
 
-    ArrayList<User> getUserList(){
+    public ArrayList<User> getUserList(){
         return userList;
     }
 
@@ -127,8 +127,8 @@ public class Lobby {
         Game            gameToBeDeleted = getGame(gameID);
         GameController  gCToBeDeleted   = getGameController(gameID);
 
-        gameList            .remove(getGame(gameID));
-        gameControllerList  .remove(gCToBeDeleted);
+        gameList.remove(getGame(gameID));
+        gameControllerList.remove(gCToBeDeleted);
     }
 
 }

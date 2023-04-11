@@ -61,17 +61,19 @@ public class User {
         return shelf.chooseColumn(tilesNumber);
     }
 
-    public void insertTile(int column, List<Tile> chosen) throws IndexOutOfBoundsException {
+    public boolean insertTile(int column, List<Tile> chosen) throws IndexOutOfBoundsException {
 
+        boolean isEnd;
         if(column < 0 || column > 4){
 
             throw new IndexOutOfBoundsException("The given column value does not exist");
 
         }else {
-            shelf.addTile(column, chosen);
+            isEnd = shelf.addTile(column, chosen);
         }
 
         board.refill();
+        return isEnd;
     }
 
 

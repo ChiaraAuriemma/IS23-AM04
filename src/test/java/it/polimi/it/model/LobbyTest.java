@@ -1,6 +1,10 @@
 package it.polimi.it.model;
 
+
+import it.polimi.it.controller.Exceptions.EmptyNicknameException;
+import it.polimi.it.controller.Exceptions.ExistingNicknameException;
 import it.polimi.it.controller.Exceptions.NotExistingUser;
+import it.polimi.it.controller.Lobby;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -26,7 +30,7 @@ public class LobbyTest {
     }
 
     @Test
-    public void createUserTest(){
+    public void createUserTest() throws EmptyNicknameException, ExistingNicknameException {
 
         user = lobby.createUser("Alby");
 
@@ -52,7 +56,7 @@ public class LobbyTest {
     }
 
     @Test
-    public void joinGameTest() throws NotExistingUser {
+    public void joinGameTest() throws NotExistingUser, EmptyNicknameException, ExistingNicknameException {
 
         User user1 = lobby.createUser("Alby");
 
@@ -77,7 +81,7 @@ public class LobbyTest {
     }
 
     @Test
-    public void createGameTest() throws NotExistingUser {
+    public void createGameTest() throws NotExistingUser, EmptyNicknameException, ExistingNicknameException {
 
         User user1 = lobby.createUser("Alby");
 
