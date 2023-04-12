@@ -18,7 +18,7 @@ public class CommonGroup4 extends CommonGoalCard{
         int i,j;
         Gson gson = new Gson();
         try {
-            JsonReader reader = new JsonReader(new FileReader("CommonGroup7.json"));
+            JsonReader reader = new JsonReader(new FileReader("CommonGroup4.json"));
             JsonArray jsonArray = gson.fromJson(reader, JsonArray.class);
             for(j=0; jsonArray.get(j).getAsJsonObject().get("type").getAsInt() != id ; j++);
             for(i=j;jsonArray.get(i).getAsJsonObject().get("type").getAsInt() == id;i++){

@@ -11,10 +11,10 @@ public class CommonDeck {
      * @param id2 is the identification code of the commonCard2
      */
     public void createCards(int id1, int id2){
-        if(id1 == 1){
+        if(id1 == 1 || id1 == 10){
             commonCard1 = new CommonGroup1(id1);
         }
-        if(id2 == 1){
+        if(id2 == 1 || id2 == 10){
             commonCard2 = new CommonGroup1(id2);
         }
         if(id1 == 2 || id1 == 5 || id1 == 6 || id1 == 7){
@@ -41,17 +41,11 @@ public class CommonDeck {
         if(id2 == 9){
             commonCard2 = new CommonGroup5(id2);
         }
-        if(id1 == 10){
+        if(id1 == 12){
             commonCard1 = new CommonGroup6(id1);
         }
-        if(id2 == 10){
-            commonCard2 = new CommonGroup6(id2);
-        }
-        if(id1 == 12){
-            commonCard1 = new CommonGroup7(id1);
-        }
         if(id2 == 12){
-            commonCard2 = new CommonGroup7(id2);
+            commonCard2 = new CommonGroup6(id2);
         }
     }
 

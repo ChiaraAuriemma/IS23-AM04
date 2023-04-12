@@ -22,13 +22,13 @@ public class PersonalGoalCardsTest {
 
     @Before
     public void card(){
-        this.personalGoalCard = new PersonalGoalCard(12);
+        this.personalGoalCard = new PersonalGoalCard(1);
         this.shelfie = new Shelfie();
         this.bag = new TilesBag();
     }
 
     @Test
-    public void personalCard1initialization(){
+    public void personalCard1initialization(){  //card 1
         assertEquals(personalGoalCard.getPinkposColumn(),0);
         assertEquals(personalGoalCard.getPinkposRow(),5);
         assertEquals(personalGoalCard.getCyanposColumn(),2);
@@ -43,7 +43,7 @@ public class PersonalGoalCardsTest {
         assertEquals(personalGoalCard.getGreenposRow(),4);
     }
     @Test
-    public void personalCard12initialization(){
+    public void personalCard12initialization(){ //card12
         assertEquals(personalGoalCard.getPinkposColumn(),1);
         assertEquals(personalGoalCard.getPinkposRow(),4);
         assertEquals(personalGoalCard.getCyanposColumn(),3);
@@ -59,7 +59,7 @@ public class PersonalGoalCardsTest {
     }
 
     @Test
-    public void checkScoreTest1(){
+    public void checkScoreTest1(){ //card1
         int column, row;
         Tile [][] matrix = new Tile[6][5];
         for(column=0; column<5; column++){
@@ -82,7 +82,7 @@ public class PersonalGoalCardsTest {
     }
 
     @Test
-    public void checkScoreTest2(){
+    public void checkScoreTest2(){ //card1
         int column, row;
         Tile [][] matrix = new Tile[6][5];
         for(column=0; column<5; column++){
@@ -105,7 +105,7 @@ public class PersonalGoalCardsTest {
     }
 
     @Test
-    public void checkScoreTest3(){
+    public void checkScoreTest3(){ //card1
         int column, row;
         Tile [][] matrix = new Tile[6][5];
         for(column=0; column<5; column++){
@@ -128,7 +128,7 @@ public class PersonalGoalCardsTest {
     }
 
     @Test
-    public void checkScoreTest4(){
+    public void checkScoreTest4(){ //card12
         int column, row;
         Tile [][] matrix = new Tile[6][5];
         for(column=0; column<5; column++){

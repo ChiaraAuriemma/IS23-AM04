@@ -33,7 +33,7 @@ public class CommonGroup2 extends CommonGoalCard{
 
             for(i=0; i<jsonObject.get("i").getAsInt() && numRight<jsonObject.get("numRight").getAsInt(); i++) {
                 stop = 0;
-                colorToSave = new ArrayList<>(6);
+                colorToSave = new ArrayList<>();
                 for(j=0; j<jsonObject.get("j").getAsInt() && stop == 0; j++){
                     if(jsonObject.get("direction").getAsString().equals("column")){
                         cell1 = shelfie.getCell(i,j).getColor();
