@@ -4,30 +4,40 @@ import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.*;
 
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class GameTest {
     Game game;
     Integer numplayers;
     User host;
 
-    @BeforeEach
+
+    //levo ????
+    /*@BeforeEach
+    @ParameterizedTest
     @ValueSource(ints = {2,3,4})
     void setUp(int n) {
-        this.host = new User("Piero");
+        this.host = new User("Giacomo");
         this.numplayers = new Integer(n);
-        this.game = new Game(numplayers,host);
-    }
+        this.game = new Game(numplayers,host,1);
+    }*/
 
 
     @DisplayName("testing constructor")
-    @Test
-    void testConstructor(){
+    @ParameterizedTest
+    @ValueSource(ints = {2,3,4})
+    void testConstructor(int n){
 
-        assertEquals(0,game.getOrderPointer());
+        this.host = new User("Giacomo");
+        this.numplayers = new Integer(n);
+        this.game = new Game(numplayers,host,1);
+
         assertEquals(-1,game.getEndToken());
         assertEquals(numplayers, game.getNumplayers());
+        assertEquals(1,game.getGameid());
 
         assertSame(game, host.getGame());
 
@@ -64,38 +74,89 @@ class GameTest {
             assertEquals(2,game.getCommonToken2(3));
         }
 
-    }
-
-
-    //toglo i nested
-    @Nested
-    @DisplayName("tesing initialization of points Arraylist")
-    class CreationPointsTest{
-        @ParameterizedTest
-        @ValueSource(ints = {0,1,2,3})
-        void points (int i){
-            assertEquals(0,game.getPoint(i));
-        }
-        @Nested
-        @DisplayName("testing inizialization of checkPersonalScore ArrayList")
-        class CreationCheckPerTest{
-            @ParameterizedTest
-            @ValueSource(ints = {0,1,2,3})
-            void  personalScore(int j){
-                assertEquals(0,game.getCheckPersonalScore(j));
-            }
-        }
-    }
-
-
-    @Nested
-    @DisplayName("testing callNextplayer methods")
-    class CallNextPlayer{
-        @Test
-        void callNextPlayerTest(){
-
+        //testing initialization of points and checkPersonalScore
+        for(int i=0; i < game.getNumplayers(); i++){
+            assertEquals(0, game.getPoint(i));
+            assertEquals(0, game.getCheckPersonalScore(i));
         }
 
     }
+
+
+    @Test
+    void testJoin(){
+        this.host = new User("Giacomo");
+        this.numplayers = 4;
+        this.game = new Game(numplayers,host,1);
+
+        User joiner1 = new User("Alberto");
+        User joiner2 = new User("Chiara");
+        User joiner3 = new User("Francesco");
+
+        game.joinGame(joiner1);
+        game.joinGame(joiner2);
+        game.joinGame(joiner3);
+
+
+        assertSame(joiner1 , game.getPlayer(1));
+        assertSame(joiner2 , game.getPlayer(2));
+        assertSame(joiner3 , game.getPlayer(3));
+    }
+
+
+    @Test
+    void testRandom(){
+        this.host = new User("Giacomo");
+        this.numplayers = 4;
+        this.game = new Game(numplayers,host,1);
+
+        User joiner1 = new User("Alberto");
+        User joiner2 = new User("Chiara");
+        User joiner3 = new User("Francesco");
+
+        game.joinGame(joiner1);
+        game.joinGame(joiner2);
+        game.joinGame(joiner3);
+
+        ArrayList<User> order = game.randomPlayers();
+
+        assertEquals(4, order.size());
+
+        assertTrue(order.contains(host));
+        assertTrue(order.contains(joiner1));
+        assertTrue(order.contains(joiner2));
+        assertTrue(order.contains(joiner3));
+    }
+
+    @Test //miglioro
+    void testCommonCards(){
+        this.host = new User("Giacomo");
+        this.numplayers = 4;
+        this.game = new Game(numplayers,host,1);
+
+        game.drawCommonCrads();
+
+        assertNotNull(game.getCommonCard1());
+        assertNotNull(game.getCommonCard2());
+    }
+
+    @ParameterizedTest //miglioro
+    @ValueSource(ints = {2,3,4})
+    void testPersonalCards(int n){
+        this.host = new User("Giacomo");
+        this.numplayers = new Integer(n);
+        this.game = new Game(numplayers,host,1);
+
+        for(int i=0; i < this.numplayers; i++){
+            game.drawPersonalCard();
+        }
+
+        for(int i=0; i < this.numplayers; i++){
+            assertNotNull(game.getPersonalCard(i));
+        }
+
+    }
+
+
 
 }

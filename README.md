@@ -18,10 +18,16 @@
 | UML            | 🟢 |
 | Model          | 🟢 |
 | Controller     | 🟢 |
-| Socket TCP     | 🔴 |
-| RMI            | 🔴 |
+| Socket TCP     | 🟡 |
+| RMI            | 🟡 |
 | CLI            | 🔴 |
 | GUI            | 🔴 |
 | Multiple games | 🟢 |
 | Chat           | 🔴 |
 | Disconnection  | 🔴 |
+
+
+# Legend: 
+- 🟢 Already implemented 
+- 🟡 Currently work in progress
+- 🔴  Currently not implemented

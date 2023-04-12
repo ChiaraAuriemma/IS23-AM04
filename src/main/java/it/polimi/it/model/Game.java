@@ -7,6 +7,7 @@ import it.polimi.it.model.Board.Board;
 import it.polimi.it.model.Card.CommonGoalCards.*;
 import it.polimi.it.model.Card.PersonalGoalCards.*;
 
+
 import java.util.*;
 
 public class Game {
@@ -14,10 +15,8 @@ public class Game {
     private List<User> players;
     private  Integer numplayers;
     private Board board;
+    private Integer gameID;
 
-
-    private  List<Integer> order ;
-    private Integer orderPointer;
 
 
     private ArrayList<Integer> points;
@@ -30,14 +29,13 @@ public class Game {
     private List<Integer> commonToken1;
     private List<Integer> commonToken2;
     private  Integer endToken;
-    private Integer gameID;
+
 
 
 
 
     public Game(Integer numplayers, User host, int gameID){
-        this.order = new ArrayList<Integer>(numplayers);
-        this.orderPointer = 0;
+
         this.endToken = -1;
         this.numplayers = numplayers;
         this.gameID = gameID;
@@ -50,7 +48,7 @@ public class Game {
         this.points = new ArrayList<>(Collections.nCopies(numplayers, 0));
         //start all the players score from personal cards to zero
         this.checkPersonalScore = new ArrayList<>(Collections.nCopies(numplayers,0));
-
+        this.cards = new ArrayList<>(numplayers);
 
         this.commonToken1 = new ArrayList<>(numplayers);
         this.commonToken2 = new ArrayList<>(numplayers);
@@ -68,7 +66,6 @@ public class Game {
 
         if(numplayers == 2){
             this.board = new B2P();
-            this.cards = new ArrayList<>(2);
 
         }else if(numplayers == 3){
             this.board = new B3P();
@@ -79,8 +76,6 @@ public class Game {
             this.commonToken2.set(3,0);
 
 
-            this.cards = new ArrayList<>(3);
-
         }else{
             this.board = new B4P();
 
@@ -90,93 +85,62 @@ public class Game {
             this.commonToken2.set(3,2);
 
 
-            this.cards = new ArrayList<>(4);
-
         }
 
         //view: mostro alla view
 
     }
 
-    public List<User> getPlayerList() {
-        List<User> tmpOrder = new ArrayList<>(numplayers);
-        randomPlayers();
-        for (int i=0; i<order.size(); i++){
-            tmpOrder.add(players.get(order.get(i)));
-        }
-        return tmpOrder;
-    }
-
-
-    public boolean getEndTokenX(){
-        return endToken != -1 && endToken != 0;
-    }
-
-
-    private void randomPlayers () {
-        this.orderPointer = 0;
+    public ArrayList<User> randomPlayers () {
+        ArrayList<User> order = new ArrayList<>(this.numplayers);
+        //this.orderPointer = 0;/// metto in controller
         Random rdn = new Random();
 
         boolean[] checkplayers;
         checkplayers = new boolean[]{false, false, false, false};
 
-        for(int i=this.numplayers - 1; i > 0; i--){
-            int position;
-            do{position = rdn.nextInt(i);
-            }while(!checkplayers[position]);
+        int position;
+        for(int i = 0; i < this.numplayers ; i++){
+
+            do{
+                position = rdn.nextInt(this.numplayers);
+            }while(checkplayers[position]);
 
             checkplayers[position] = true;
-            Integer pos = position;
-            this.order.add(i,pos);
+            order.add(i,this.players.get(position));
         }
-        int j = 0;
-        while(checkplayers[j]) j++;
 
-        Integer pos = j;
-        this.order.add(0,pos);
+        return order;
     }
 
 
-    public void callNextPlayers(){
-        Integer nextplayer = this.order.get(orderPointer);
-        int maxTiles;
+    public ArrayList<Integer> pointsFromAdjacent(){
 
-        if(this.endToken != -1 && this.orderPointer == 0){
-
-            //points from adjacent tiles with same color
-            for(int i=0; i < this.numplayers; i++){
-                this.points.set(i, this.points.get(i) + this.players.get(i).getShelfie().checkAdjacentsPoints());
-            }
-            //view: game finisce mostro a video la classifica finale
-        }else{
-
-            maxTiles = players.get(nextplayer).maxValueOfTiles();
-            //view: gestisco l'avvio del turno (notifico alla view)
-            //tipo con:
-            //virtualView.play(player.get(nextplayer), maxTiles);
-            if(orderPointer == 3){
-                orderPointer = 0;
-            }else{
-                orderPointer ++;
-            }
+        //points from adjacent tiles with same color
+        int tmp_point;
+        for(int i=0; i < this.numplayers; i++){
+            tmp_point = this.points.get(i);
+            this.points.set(i, tmp_point + this.players.get(i).getShelfie().checkAdjacentsPoints());
         }
 
+        return this.points;
     }
 
-    void endGame (){
-        if (orderPointer == 0){
-            this.endToken = 3;
-            //points from endToken
-            this.points.add(3, this.points.get(3) + 1);
-        }else{
-            this.endToken = orderPointer - 1;
-            //points from endToken
-            this.points.set(orderPointer - 1, this.points.get(orderPointer - 1) + 1);
+    public void endGame (User currentPlayer){
+
+        //points from endToken
+        int i;
+        int tmp_point;
+        if(this.endToken == -1){
+            i = this.players.indexOf(currentPlayer);
+            this.endToken = i;
+            tmp_point = this.points.get(i);
+            this.points.set(i, tmp_point + 1);
         }
+
         //view: mostro alla view chi ha finito per primo
         //view: mostro alla view anche che è stato messo il punto in più
 
-        callNextPlayers();
     }
 
     public void drawCommonCrads(){
@@ -198,60 +162,50 @@ public class Game {
         this.card2 = deck.getCommonCard2();
     }
 
-    Board getBoard(){
-        return this.board;
-    }
-
     public void joinGame (User joiner ){
 
         joiner.setGame(this);
         this.players.add(joiner);
     }
 
-    public int getCurrentPlayersNum(){
-        return this.players.size();
-    }
-
-
-    public List<Integer> getOrder() {
-        return order;
-    }
-
-
     public void drawPersonalCard (){
 
         PersonalGoalCard card;
         Random rnd = new Random();
-        Integer id;
+        int id;
 
 
         do{
             id = rnd.nextInt(12) + 1;
             card  = new PersonalGoalCard(id);
-        }while(!this.cards.contains(card));
+        }while(this.cards.contains(card));
 
         this.cards.add(card);
-        //return card;
     }
 
-    public void pointCount(){
-        Integer i = this.order.get(orderPointer - 1);
-        User player = this.players.get(i);
+    public void pointCount(User player){
+
+        int i = players.indexOf(player);
+        //User player = this.players.get(i);
         PersonalGoalCard persCard = this.cards.get(i);
 
         Shelfie shelfie = player.getShelfie();
 
         //points from personal cards
         Integer personalScore = persCard.checkScore(shelfie);
+        int tmp_point;
+        int tmp_score;
         while(this.checkPersonalScore.get(i) < personalScore){
-            this.checkPersonalScore.set(i,this.checkPersonalScore.get(i) + 1);//va in loop?
+            tmp_score = this.checkPersonalScore.get(i);
+            this.checkPersonalScore.set(i,tmp_score + 1);
 
+            tmp_point = this.points.get(i);
             if(this.checkPersonalScore.get(i) <= 2){
-                this.points.set(i, this.points.get(i) + 1);
+                this.points.set(i, tmp_point + 1);
             }else if(this.checkPersonalScore.get(i) >= 3 && this.checkPersonalScore.get(i) <= 4){
-                this.points.set(i, this.points.get(i) + 2);
+                this.points.set(i, tmp_point + 2);
             }else {
-                this.points.set(i, this.points.get(i) + 3);
+                this.points.set(i, tmp_point + 3);
             }
         }
         //i punti dell'endtoken sono dati dal metodo end game
@@ -265,7 +219,8 @@ public class Game {
             }
 
             player.getShelfie().setCommonToken1(this.commonToken1.get(i));
-            this.points.set(i, this.points.get(i) + this.commonToken1.get(i));
+            tmp_point = this.points.get(i);
+            this.points.set(i, tmp_point + this.commonToken1.get(i));
             this.commonToken1.set(i, 0);
         }
 
@@ -278,7 +233,8 @@ public class Game {
             }
 
             player.getShelfie().setCommonToken2(this.commonToken2.get(i));
-            this.points.set(i, this.points.get(i) + this.commonToken2.get(i));
+            tmp_point = this.points.get(i);
+            this.points.set(i, tmp_point + this.commonToken2.get(i));
             this.commonToken2.set(i, 0);
         }
 
@@ -289,9 +245,12 @@ public class Game {
 
 
     //methods for testing----------------------------------------------------
-
-    public Integer getOrderPointer(){
-        return this.orderPointer;
+    //getter
+    public Board getBoard(){
+        return this.board;
+    }
+    public int getCurrentPlayersNum(){
+        return this.players.size();
     }
 
     public Integer getEndToken(){
@@ -324,6 +283,18 @@ public class Game {
 
     public int getGameid(){
         return this.gameID;
+    }
+
+    public CommonGoalCard getCommonCard1(){
+        return this.card1;
+    }
+
+    public CommonGoalCard getCommonCard2(){
+        return this.card2;
+    }
+
+    public PersonalGoalCard getPersonalCard(int i){
+        return this.cards.get(i);
     }
 
 
