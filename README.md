@@ -27,4 +27,7 @@
 | Disconnection  | 🔴 |
 
 
-Legend: 🟢 Already implemented   ||   🔴  Currently not implemented
+Legend: 
+- 🟢 Already implemented 
+- 🔴  Currently not implemented
+- 🟡 Currently work in progress
