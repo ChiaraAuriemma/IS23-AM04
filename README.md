@@ -25,3 +25,6 @@
 | Multiple games | 🟢 |
 | Chat           | 🔴 |
 | Disconnection  | 🔴 |
+
+
+##Legend: 🟢 Already implemented   ||   🔴  Currently not implemented
