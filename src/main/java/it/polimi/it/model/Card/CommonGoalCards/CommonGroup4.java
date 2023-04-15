@@ -18,10 +18,10 @@ public class CommonGroup4 extends CommonGoalCard{
         int i,j;
         Gson gson = new Gson();
         try {
-            JsonReader reader = new JsonReader(new FileReader("CommonGroup4.json"));
+            JsonReader reader = new JsonReader(new FileReader("src/main/java/it/polimi/it/model/Card/CommonGoalCards/CommonGroup4.json"));
             JsonArray jsonArray = gson.fromJson(reader, JsonArray.class);
-            for(j=0; jsonArray.get(j).getAsJsonObject().get("type").getAsInt() != id ; j++);
-            for(i=j;jsonArray.get(i).getAsJsonObject().get("type").getAsInt() == id;i++){
+            for(j=0; jsonArray.get(j).getAsJsonObject().get("id").getAsInt() != id ; j++);
+            for(i=j;i<jsonArray.size() && jsonArray.get(i).getAsJsonObject().get("id").getAsInt() == id;i++){
                 JsonObject jsonObject = jsonArray.get(i).getAsJsonObject();
                 String cell1 = shelfie.getCell(jsonObject.get("mustBeEqual1").getAsJsonArray().get(0).getAsInt(),jsonObject.get("mustBeEqual1").getAsJsonArray().get(1).getAsInt()).getColor();
                 String cell2 = shelfie.getCell(jsonObject.get("mustBeEqual2").getAsJsonArray().get(0).getAsInt(),jsonObject.get("mustBeEqual2").getAsJsonArray().get(1).getAsInt()).getColor();
@@ -40,7 +40,7 @@ public class CommonGroup4 extends CommonGoalCard{
             return false;
 
         }catch (Exception e){
-            return false;
+            throw new RuntimeException(e);
         }
 
     }

@@ -25,31 +25,37 @@ public class CommonGroup5 extends CommonGoalCard{
                 if(shelfie.getCell(column,row).getColor().equals("PINK")){
                     tmp = numColor.get(0);
                     tmp++;
+                    numColor.remove(0);
                     numColor.add(0,tmp);
                 }
                 if(shelfie.getCell(column,row).getColor().equals("CYAN")){
                     tmp = numColor.get(1);
                     tmp++;
+                    numColor.remove(1);
                     numColor.add(1,tmp);
                 }
                 if(shelfie.getCell(column,row).getColor().equals("YELLOW")){
                     tmp = numColor.get(2);
                     tmp++;
+                    numColor.remove(2);
                     numColor.add(2,tmp);
                 }
                 if(shelfie.getCell(column,row).getColor().equals("BLUE")){
                     tmp = numColor.get(3);
                     tmp++;
+                    numColor.remove(3);
                     numColor.add(3,tmp);
                 }
                 if(shelfie.getCell(column,row).getColor().equals("WHITE")){
                     tmp = numColor.get(4);
                     tmp++;
+                    numColor.remove(4);
                     numColor.add(4,tmp);
                 }
                 if(shelfie.getCell(column,row).getColor().equals("GREEN")){
                     tmp = numColor.get(5);
                     tmp++;
+                    numColor.remove(5);
                     numColor.add(5,tmp);
                 }
                 for(i=0;i<6;i++){
