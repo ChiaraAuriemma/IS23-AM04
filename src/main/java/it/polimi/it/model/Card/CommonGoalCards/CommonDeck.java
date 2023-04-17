@@ -10,7 +10,7 @@ public class CommonDeck {
      * @param id1 is an identification code e says to the method what is the commonCard1 of the play.
      * @param id2 is the identification code of the commonCard2
      */
-    public void createCards(int id1, int id2){
+    void createCards(int id1, int id2){
         if(id1 == 1 || id1 == 10){
             commonCard1 = new CommonGroup1(id1);
         }

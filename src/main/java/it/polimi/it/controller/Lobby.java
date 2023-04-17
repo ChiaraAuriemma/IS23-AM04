@@ -27,11 +27,11 @@ public class Lobby {
 
     }
 
-    public User createUser(String  nickname) throws EmptyNicknameException, ExistingNicknameException {
+    public User createUser(String  nickname) {
 
         User user;
         if(nickname.isEmpty()){
-            throw new EmptyNicknameException("You must insert a nickname...");
+            System.out.println("You must insert a nickname..."); //mandare messaggio a view
         }else{
             if(userList.stream()
                         .map(currentUser -> currentUser.getNickname())
@@ -40,7 +40,7 @@ public class Lobby {
                 user = new User(nickname);
                 userList.add(user);
             }else{
-                throw new ExistingNicknameException("This nickname already exists!");
+                System.out.println("This nickname already exists!");//mandare messaggio a view
             }
         }
         //return (User) userList.stream().map(user -> user.getNickname()).filter(name -> name.equals(nickname));
@@ -48,13 +48,13 @@ public class Lobby {
         return user;
     }
 
-    public void createGame(User user, int playerNumber) throws IndexOutOfBoundsException, NotExistingUser {
+    public void createGame(User user, int playerNumber){
 
         if(playerNumber < 1 || playerNumber > 4){
-            throw new IndexOutOfBoundsException("Wrong number of players");
+            System.out.println("Wrong number of players"); //mandare messaggio a view
         }
         if(userList.size()==0){
-            throw new NotExistingUser("There aren't any players that might start a game...");
+            System.out.println("There aren't any players that might start a game..."); //mandare messaggio a view
         }
         //pickUser(user); non stai facendo una pick, così togli tutto il riferimento che ti sei passato sul client
 
@@ -68,7 +68,7 @@ public class Lobby {
 
     }
 
-    public void joinGame(User user, int gameID) throws NotExistingUser, InvalidIDException, FullGameException, WrongListException, IllegalValueException, InvalidTileException {
+    public void joinGame(User user, int gameID) throws InvalidIDException{
 
         List<Game> findGame = gameList.stream().filter(game -> game.getGameid() == gameID).collect(Collectors.toList());
         if(gameID<=gameCounterID && !findGame.isEmpty()){
@@ -81,10 +81,10 @@ public class Lobby {
                         gameControllerList.get(gameList.indexOf(findGame.get(0))).firstTurnStarter();
                     }
                 }else{
-                    throw new NotExistingUser("This user does not exist");
+                    System.out.println("This user does not exist"); //mandare messaggio a view
                 }
             }else{
-                throw new FullGameException("There are already too many players in this game!");
+              System.out.println("There are already too many players in this game!"); //mandare messaggio a view
             }
         }else{
             throw new InvalidIDException("The given game ID does not exists");

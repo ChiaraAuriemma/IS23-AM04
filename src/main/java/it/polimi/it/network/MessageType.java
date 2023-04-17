@@ -1,0 +1,16 @@
+package it.polimi.it.network;
+
+public enum MessageType {
+    CONNECTIONMESSAGE,
+    CREATEGAME,
+    JOINGAME,
+    PINGMESSAGE,
+    TILESNUMMESSAGE,
+    TAKEABLETILES,
+    SELECTEDTILES,
+    CHOOSECOLUMN,
+    CHOOSEORDER,
+    ENDGAME,
+    ERROR
+
+}

@@ -67,6 +67,7 @@ public class GameController {
      */
     private int maxTile;
 
+    private boolean[] possibleColumnArray;
 
     /**
      * Constructor method
@@ -90,7 +91,7 @@ public class GameController {
      * @throws InvalidTileException exception used when a wrong tile is selected
      * @throws InvalidIDException exception used when the game ID is wrong or non-existent
      */
-    void turnDealer() throws WrongListException, IllegalValueException, InvalidTileException, InvalidIDException {
+    void turnDealer() throws InvalidIDException {
 
         if(this.endGame && this.currentPlayer == 0){
 
@@ -116,11 +117,8 @@ public class GameController {
     /**
      * Method to get the maximum possible number of tiles that can be selected from the board
      * Calls the view to ask the payer about how many tiles the player wants to retrieve
-     * @throws WrongListException exception used when an illegal list of tiles is selected
-     * @throws IllegalValueException exception used when an illegal value is given in input
-     * @throws InvalidTileException exception used when a wrong tile is selected
      */
-    public void firstOperation() throws IllegalValueException, WrongListException, InvalidTileException {
+    public void firstOperation(){
 
         //faccio i controlli su qual è il massimo num di tile prendibili
         this.maxTile = playerList.get(currentPlayer).maxValueOfTiles();
@@ -135,15 +133,13 @@ public class GameController {
      * The method also sends to the view the list of lists of tiles that the user can choose
      *  in order to highlight them on the board.
      * @param chosenNumber is the input from the user
-     * @throws WrongListException exception used when an illegal list of tiles is selected
-     * @throws IllegalValueException exception used when an illegal value is given in input
      */
-    public void getFromViewNTiles(int chosenNumber) throws IllegalValueException, WrongListException {
-        if (chosenNumber <= 0 || chosenNumber > this.maxTile) {
-            throw new IllegalValueException("the number of tiles entered is incorrect");
-        }
-
+    public void getFromViewNTiles(int chosenNumber){
+        try{
         this.playerList.get(currentPlayer).choosableTiles(chosenNumber);
+        }catch (IndexOutOfBoundsException | WrongListException e){
+            //messsaggio alla view per far scegliere un altro valore
+        }
         //mandare alla view la lista di liste di tile che sono prendibili
         ///highlightView(playerList.get(currentPlayer).choosableTiles(chosenNumber));
     }
@@ -156,13 +152,18 @@ public class GameController {
      * @param chosenList is the list of selected tiles
      * @throws InvalidTileException exception used when a wrong tile is selected
      */
-    public void getTilesListFromView(List<Tile> chosenList) throws InvalidTileException {
+    public void getTilesListFromView(List<Tile> chosenList){
 
         for(Tile t: chosenList){
             currentTilesList.add(new Tile(t.getRow(), t.getColumn(), PossibleColors.valueOf(t.getColor())));
         }
         //dico ad user che tile sono state scelte
-        boolean[] possibleColumns = playerList.get(currentPlayer).chooseSelectedTiles(currentTilesList);
+        try {
+            boolean[] possibleColumns = playerList.get(currentPlayer).chooseSelectedTiles(currentTilesList);
+            possibleColumnArray = possibleColumns;
+        }catch (InvalidTileException e){
+            //messaggio a view per far scegliere altre tiles
+        }
 
 
         //passa alla view le possibleColumns, dato che sono state eliminate dalla board
@@ -175,22 +176,23 @@ public class GameController {
      *  The method also calls the view to display the new points acquired by the player
      * @param col is the column of the shelfie where to put the tiles in
      * @param orderedTiles is the list of chosen tiles, ordered as the player wants them to be in his shelfie
-     * @throws IllegalValueException exception used when an illegal value is given in input
-     * @throws WrongTileException exception used when the list of tiles is somehow changed from before
-     * @throws WrongListException exception used when an illegal list of tiles is selected
+
      * @throws InvalidTileException exception used when a wrong tile is selected
      */
     //oltre a scegliere la colonna dove metterle, ordina le Tile per come le vuole nella colonna
-    public void getColumnFromView(int col, List<Tile> orderedTiles) throws IllegalValueException, WrongTileException, WrongListException, InvalidTileException, InvalidIDException {
-        if(col<0 || col>4){
-            throw new IllegalValueException("Invalid column choice");
+    public void getColumnFromView(int col, List<Tile> orderedTiles) throws InvalidIDException {
+        if(possibleColumnArray[col] != true){
+           System.out.println("Invalid column choice"); //da far vedere a view
         }
 
         if (new HashSet<>(orderedTiles).containsAll(currentTilesList)){
-             throw new WrongTileException("Different tiles from before");
+             System.out.println("Different tiles from before"); //da far fare a view
         }
-
+        try{
         endGame = playerList.get(currentPlayer).insertTile(col, orderedTiles);
+        }catch (IndexOutOfBoundsException e){
+            //messaggio per la view
+        }
 
         game.pointCount(playerList.get(currentPlayer));
 
@@ -209,11 +211,8 @@ public class GameController {
     /**
      * Method used to initialize the parameters of the game, called before the firs turn of the game
      * Calls the view in order to display the initial board and the cards that have been extracted randomly
-     * @throws WrongListException exception used when an illegal list of tiles is selected
-     * @throws IllegalValueException exception used when an illegal value is given in input
-     * @throws InvalidTileException exception used when a wrong tile is selected
      */
-    public void firstTurnStarter() throws WrongListException, IllegalValueException, InvalidTileException {
+    public void firstTurnStarter(){
         //pesca le carte, dispone i giocatori
 
         //tolgo: playerList = game.getPlayerList();//sto salvando la lista di giocatori già ordinata come deve essere
