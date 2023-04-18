@@ -6,9 +6,13 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.Scanner;
 
 public class ClientTCPHandler implements Runnable{
     private Socket socket;
+
+    private PrintWriter out;
+    private Scanner in;
 
     public ClientTCPHandler(Socket socket){
         this.socket = socket;
@@ -16,24 +20,23 @@ public class ClientTCPHandler implements Runnable{
 
     @Override
     public void run() {
-        PrintWriter out;
+
         try {
-            out = new PrintWriter(socket.getOutputStream());  //ottiene stream di output per il client
+            in = new Scanner(socket.getInputStream());
+            out = new PrintWriter(socket.getOutputStream());
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        BufferedReader in;
-        try {
-            in = new BufferedReader(new InputStreamReader(socket.getInputStream())); //ottiene stream di input dal client
-            String userInput;
-            while ((userInput = in.readLine()) != null){
-                ///slide 20
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        String message;
 
+        while (true){
+            message = in.nextLine();
+
+
+            sendmessage(type, string)
+            switch (type){
+        }
 
     }
 }
