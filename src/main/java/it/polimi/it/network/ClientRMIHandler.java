@@ -7,10 +7,11 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
 
-public class ClientTCPHandler implements Runnable{
+public class ClientRMIHandler implements Runnable {
+
     private Socket socket;
 
-    public ClientTCPHandler(Socket socket){
+    public ClientRMIHandler(Socket socket){
         this.socket = socket;
     }
 
@@ -27,13 +28,11 @@ public class ClientTCPHandler implements Runnable{
         try {
             in = new BufferedReader(new InputStreamReader(socket.getInputStream())); //ottiene stream di input dal client
             String userInput;
-            while ((userInput = in.readLine()) != null){
+            while ((userInput = in.readLine()) != null) {
                 ///slide 20
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
     }
 }

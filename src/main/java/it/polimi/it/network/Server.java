@@ -7,34 +7,41 @@ import it.polimi.it.controller.Lobby;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class Server {
     private int port;
     private static Lobby lobby;
 
-    //private ServerTCP serverTCP;
     public static void main(String[] args) throws FileNotFoundException {
-        int portNumber;
-        ServerTCP serverTCP;
+        int portTCP, portRMI;
         Gson gson = new Gson();
         JsonReader jsonReader = new JsonReader( new FileReader("src/main/java/it/polimi/it/network/ServerConfig.json"));
         JsonObject jsonObject = gson.fromJson(jsonReader,JsonObject.class);
 
         lobby = new Lobby();
 
-        if(args.length > 0){
+        //----> prendiamo il numero della porta da terminale
+        if(args.length == 3){
             //fare check sulla porta che viene inserita
-            portNumber = Integer.parseInt(args[1]);
+            portTCP = Integer.parseInt(args[1]);
+            portRMI = Integer.parseInt(args[2]);
 
-        }else{
-            portNumber = jsonObject.get("port").getAsInt();
+        }else{ //----> qui prendiamo il numero della porta da file Json
+            portTCP = jsonObject.get("portTCP").getAsInt();
+            portRMI = jsonObject.get("portRMI").getAsInt();
         }
 
-        serverTCP = new ServerTCP(portNumber);///sistemooooooooooooooooooooooooooooooooo
+        ServerTCP serverTCP = new ServerTCP(portTCP);
+        serverTCP.startServer();
+
+        ServerRMI serverRMI = new ServerRMI(portRMI);
+        serverRMI.startServer();
+
     }
 
-    private static void createServerSocket(int portNumber){
-        this.port = portNumber;
-        serverTCP = new ServerTCP(portNumber);
-    }
 }
