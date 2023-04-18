@@ -5,6 +5,7 @@ import java.util.Optional;
 public enum MessageType {
     CONNECTIONMESSAGE("Starting connection"),
     CREATEGAME("Creation command"),
+    CREATEPLAYER(""),
     JOINGAME("join request"),
     PINGMESSAGE("Ping"),
     TILESNUMMESSAGE("Number of tiles"),
