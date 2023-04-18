@@ -19,6 +19,8 @@ public class Lobby {
 
     private int gameCounterID;
 
+    private User user;
+
     public Lobby() {
         userList = new ArrayList<>();
         gameList = new ArrayList<>();
@@ -29,7 +31,7 @@ public class Lobby {
 
     public User createUser(String  nickname) {
 
-        User user;
+       // User user;
         if(nickname.isEmpty()){
             System.out.println("You must insert a nickname..."); //mandare messaggio a view
         }else{

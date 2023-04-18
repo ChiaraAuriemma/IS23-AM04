@@ -1,5 +1,6 @@
 package it.polimi.it.network;
 
+import it.polimi.it.controller.Lobby;
 import jdk.internal.org.jline.utils.InputStreamReader;
 
 import java.io.BufferedReader;
@@ -14,8 +15,11 @@ public class ClientTCPHandler implements Runnable{
     private PrintWriter out;
     private Scanner in;
 
-    public ClientTCPHandler(Socket socket){
+    private Lobby lobby;
+
+    public ClientTCPHandler(Socket socket, Lobby lobby){
         this.socket = socket;
+        this.lobby = lobby;
     }
 
     @Override
@@ -33,9 +37,12 @@ public class ClientTCPHandler implements Runnable{
         while (true){
             message = in.nextLine();
 
+            Message m = new Message(MessageType.valueOf(message), "input");
 
-            sendmessage(type, string)
-            switch (type){
+            switch (m.getType()){
+                case CREATEPLAYER: lobby.createUser("Giovanni");
+                    //come passo il parametro ricevuto dal messaggio?
+            }
         }
 
     }

@@ -36,12 +36,17 @@ public class Server {
             portRMI = jsonObject.get("portRMI").getAsInt();
         }
 
-        ServerTCP serverTCP = new ServerTCP(portTCP);
+        ServerTCP serverTCP = new ServerTCP(portTCP, lobby);
         serverTCP.startServer();
 
-        ServerRMI serverRMI = new ServerRMI(portRMI);
+        ServerRMI serverRMI = new ServerRMI(portRMI, lobby);
         serverRMI.startServer();
 
     }
+
+    public Lobby getLobby(){
+        return lobby;
+    }
+
 
 }

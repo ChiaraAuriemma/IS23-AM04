@@ -1,5 +1,7 @@
 package it.polimi.it.network;
 
+import it.polimi.it.controller.Lobby;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -10,8 +12,11 @@ public class ServerTCP {
     private  int port;
 
     private ServerSocket serverSocket;
-    public ServerTCP(int portNumber){
+
+    private Lobby lobby;
+    public ServerTCP(int portNumber, Lobby lobby){
         this.port = portNumber;
+        this.lobby = lobby;
     }
 
     public void startServer(){
@@ -31,7 +36,7 @@ public class ServerTCP {
         while (true) {
             try {
                 Socket clientSocket = serverSocket.accept(); //aspetta che qualcuno si colleghi
-                executor.submit(new ClientTCPHandler(clientSocket)); //l'oggetto all'interno deve essere Runnable
+                executor.submit(new ClientTCPHandler(clientSocket, lobby)); //l'oggetto all'interno deve essere Runnable
             } catch(IOException e) {
                 e.printStackTrace();
                 break;

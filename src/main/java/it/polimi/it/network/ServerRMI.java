@@ -1,5 +1,7 @@
 package it.polimi.it.network;
 
+import it.polimi.it.controller.Lobby;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -9,10 +11,13 @@ import java.util.concurrent.Executors;
 public class ServerRMI {
 
     private int port;
+    private Lobby lobby;
+
 
     private ServerSocket serverSocket;
-    public ServerRMI(int portNumber){
+    public ServerRMI(int portNumber, Lobby lobby){
         this.port = portNumber;
+        this.lobby=lobby;
     }
 
     public void startServer(){
@@ -32,7 +37,7 @@ public class ServerRMI {
         while (true) {
             try {
                 Socket clientSocket = serverSocket.accept(); //aspetta che qualcuno si colleghi
-                executor.submit(new ClientRMIHandler(clientSocket)); //l'oggetto all'interno deve essere Runnable
+                executor.submit(new ClientRMIHandler(clientSocket, lobby)); //l'oggetto all'interno deve essere Runnable
             } catch(IOException e) {
                 e.printStackTrace();
                 break;
