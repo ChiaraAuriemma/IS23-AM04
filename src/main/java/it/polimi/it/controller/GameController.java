@@ -2,6 +2,7 @@ package it.polimi.it.controller;
 
 import it.polimi.it.controller.Exceptions.IllegalValueException;
 import it.polimi.it.controller.Exceptions.InvalidIDException;
+import it.polimi.it.controller.Exceptions.WrongPlayerException;
 import it.polimi.it.controller.Exceptions.WrongTileException;
 import it.polimi.it.model.Exceptions.InvalidTileException;
 import it.polimi.it.model.Exceptions.WrongListException;
@@ -134,14 +135,20 @@ public class GameController {
      *  in order to highlight them on the board.
      * @param chosenNumber is the input from the user
      */
-    public void getFromViewNTiles(int chosenNumber){
-        try{
-        this.playerList.get(currentPlayer).choosableTiles(chosenNumber);
-        }catch (IndexOutOfBoundsException | WrongListException e){
-            //messsaggio alla view per far scegliere un altro valore
+    public void getFromViewNTiles(User user,int chosenNumber) throws WrongPlayerException, WrongListException {
+        if(user.equals(playerList.get(currentPlayer))){
+            this.playerList.get(currentPlayer).choosableTiles(chosenNumber);
+
+            //messaggio alla view per far scegliere un altro valore
+
+
+            //mandare alla view la lista di liste di tile che sono prendibili
+            ///highlightView(playerList.get(currentPlayer).choosableTiles(chosenNumber));
+        }else{
+            throw new WrongPlayerException("It's not your turn");
         }
-        //mandare alla view la lista di liste di tile che sono prendibili
-        ///highlightView(playerList.get(currentPlayer).choosableTiles(chosenNumber));
+
+
     }
 
 
@@ -152,17 +159,20 @@ public class GameController {
      * @param chosenList is the list of selected tiles
      * @throws InvalidTileException exception used when a wrong tile is selected
      */
-    public void getTilesListFromView(List<Tile> chosenList){
-
-        for(Tile t: chosenList){
-            currentTilesList.add(new Tile(t.getRow(), t.getColumn(), PossibleColors.valueOf(t.getColor())));
-        }
-        //dico ad user che tile sono state scelte
-        try {
-            boolean[] possibleColumns = playerList.get(currentPlayer).chooseSelectedTiles(currentTilesList);
-            possibleColumnArray = possibleColumns;
-        }catch (InvalidTileException e){
-            //messaggio a view per far scegliere altre tiles
+    public void getTilesListFromView(User user,List<Tile> chosenList) throws WrongPlayerException {
+        if(user.equals(playerList.get(currentPlayer))) {
+            for (Tile t : chosenList) {
+                currentTilesList.add(new Tile(t.getRow(), t.getColumn(), PossibleColors.valueOf(t.getColor())));
+            }
+            //dico ad user che tile sono state scelte
+            try {
+                boolean[] possibleColumns = playerList.get(currentPlayer).chooseSelectedTiles(currentTilesList);
+                possibleColumnArray = possibleColumns;
+            } catch (InvalidTileException e) {
+                //messaggio a view per far scegliere altre tiles
+            }
+        }else {
+            throw new WrongPlayerException("It's not your turn");
         }
 
 
@@ -180,7 +190,7 @@ public class GameController {
      * @throws InvalidTileException exception used when a wrong tile is selected
      */
     //oltre a scegliere la colonna dove metterle, ordina le Tile per come le vuole nella colonna
-    public void getColumnFromView(int col, List<Tile> orderedTiles) throws InvalidIDException {
+    public void getColumnFromView(User user,int col, List<Tile> orderedTiles) throws InvalidIDException {
         if(possibleColumnArray[col] != true){
            System.out.println("Invalid column choice"); //da far vedere a view
         }

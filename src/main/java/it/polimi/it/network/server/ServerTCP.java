@@ -1,6 +1,7 @@
-package it.polimi.it.network;
+package it.polimi.it.network.server;
 
 import it.polimi.it.controller.Lobby;
+import it.polimi.it.network.server.ClientTCPHandler;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -8,22 +9,21 @@ import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class ServerRMI {
-
-    private int port;
-    private Lobby lobby;
-
+public class ServerTCP {
+    private  int port;
 
     private ServerSocket serverSocket;
-    public ServerRMI(int portNumber, Lobby lobby){
+
+    private Lobby lobby;
+    public ServerTCP(int portNumber, Lobby lobby){
         this.port = portNumber;
-        this.lobby=lobby;
+        this.lobby = lobby;
     }
 
     public void startServer(){
         ExecutorService executor = Executors.newCachedThreadPool();  //crea un pool di thread che si autogestiscono
 
-        System.out.println("Server RMI started");
+        System.out.println("Server TCP started");
 
         try {
             serverSocket = new ServerSocket(port);
@@ -31,13 +31,13 @@ public class ServerRMI {
             e.printStackTrace();
         }
 
-        System.out.println("Server RMI ready");
+        System.out.println("Server TCP ready");
 
 
         while (true) {
             try {
                 Socket clientSocket = serverSocket.accept(); //aspetta che qualcuno si colleghi
-                executor.submit(new ClientRMIHandler(clientSocket, lobby)); //l'oggetto all'interno deve essere Runnable
+                executor.submit(new ClientTCPHandler(clientSocket, lobby)); //l'oggetto all'interno deve essere Runnable
             } catch(IOException e) {
                 e.printStackTrace();
                 break;

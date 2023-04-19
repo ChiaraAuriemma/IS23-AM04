@@ -50,7 +50,7 @@ public class Lobby {
         return user;
     }
 
-    public void createGame(User user, int playerNumber){
+    public GameController createGame(User user, int playerNumber){
 
         if(playerNumber < 1 || playerNumber > 4){
             System.out.println("Wrong number of players"); //mandare messaggio a view
@@ -68,9 +68,10 @@ public class Lobby {
         gameControllerList.add(gameContr);
         gameCounterID++;
 
+        return gameContr;
     }
 
-    public void joinGame(User user, int gameID) throws InvalidIDException{
+    public GameController joinGame(User user, int gameID) throws InvalidIDException{
 
         List<Game> findGame = gameList.stream().filter(game -> game.getGameid() == gameID).collect(Collectors.toList());
         if(gameID<=gameCounterID && !findGame.isEmpty()){
@@ -82,15 +83,17 @@ public class Lobby {
                         //starto effettivamente il game
                         gameControllerList.get(gameList.indexOf(findGame.get(0))).firstTurnStarter();
                     }
+                    return gameControllerList.get(gameList.indexOf(findGame.get(0)));
                 }else{
-                    System.out.println("This user does not exist"); //mandare messaggio a view
+                    throw new InvalidIDException("This user does not exist");
                 }
             }else{
-              System.out.println("There are already too many players in this game!"); //mandare messaggio a view
+                throw new InvalidIDException("There are already too many players in this game!");
             }
         }else{
             throw new InvalidIDException("The given game ID does not exists");
         }
+
     }
 
 

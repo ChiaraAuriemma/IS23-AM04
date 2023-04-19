@@ -1,6 +1,8 @@
-package it.polimi.it.network;
+package it.polimi.it.network.server;
 
 import it.polimi.it.controller.Lobby;
+import it.polimi.it.network.Message;
+import it.polimi.it.network.MessageType;
 import jdk.internal.org.jline.utils.InputStreamReader;
 
 import java.io.BufferedReader;

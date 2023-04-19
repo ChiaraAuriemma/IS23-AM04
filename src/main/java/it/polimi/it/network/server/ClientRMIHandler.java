@@ -1,4 +1,4 @@
-package it.polimi.it.network;
+package it.polimi.it.network.server;
 
 import it.polimi.it.controller.Lobby;
 import jdk.internal.org.jline.utils.InputStreamReader;
