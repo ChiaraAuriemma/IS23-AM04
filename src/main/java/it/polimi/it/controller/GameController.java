@@ -10,6 +10,7 @@ import it.polimi.it.model.Game;
 import it.polimi.it.model.Tiles.PossibleColors;
 import it.polimi.it.model.Tiles.Tile;
 import it.polimi.it.model.User;
+import it.polimi.it.network.server.Server;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -135,7 +136,7 @@ public class GameController {
      *  in order to highlight them on the board.
      * @param chosenNumber is the input from the user
      */
-    public void getFromViewNTiles(User user,int chosenNumber) throws WrongPlayerException, WrongListException {
+    public void getFromViewNTiles(User user,int chosenNumber) throws WrongPlayerException, WrongListException,IndexOutOfBoundsException {
         if(user.equals(playerList.get(currentPlayer))){
             this.playerList.get(currentPlayer).choosableTiles(chosenNumber);
 
@@ -237,7 +238,6 @@ public class GameController {
         game.drawCommonCrads();
         //view: mostro alla view
         //view: mostro alla view chi ha il sofà d'inizio
-
 
         //ho ottenuto l'ordine dei giocatori, inizio i turni effettivi
         currentPlayer=0;

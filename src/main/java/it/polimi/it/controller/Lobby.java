@@ -5,6 +5,7 @@ import it.polimi.it.model.Exceptions.InvalidTileException;
 import it.polimi.it.model.Exceptions.WrongListException;
 import it.polimi.it.model.Game;
 import it.polimi.it.model.User;
+import it.polimi.it.network.server.Server;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +30,7 @@ public class Lobby {
 
     }
 
-    public User createUser(String  nickname) {
+    public User createUser(String  nickname) throws ExistingNicknameException {
 
        // User user;
         if(nickname.isEmpty()){
@@ -42,7 +43,7 @@ public class Lobby {
                 user = new User(nickname);
                 userList.add(user);
             }else{
-                System.out.println("This nickname already exists!");//mandare messaggio a view
+                throw  new ExistingNicknameException("This nickname already exists!");//mandare messaggio a view
             }
         }
         //return (User) userList.stream().map(user -> user.getNickname()).filter(name -> name.equals(nickname));
@@ -50,10 +51,10 @@ public class Lobby {
         return user;
     }
 
-    public GameController createGame(User user, int playerNumber){
+    public GameController createGame(User user, int playerNumber) throws WrongPlayerException {
 
         if(playerNumber < 1 || playerNumber > 4){
-            System.out.println("Wrong number of players"); //mandare messaggio a view
+            throw new WrongPlayerException("Wrong number of players"); //mandare messaggio a view
         }
         if(userList.size()==0){
             System.out.println("There aren't any players that might start a game..."); //mandare messaggio a view
@@ -71,7 +72,7 @@ public class Lobby {
         return gameContr;
     }
 
-    public GameController joinGame(User user, int gameID) throws InvalidIDException{
+    public GameController joinGame(User user, int gameID) throws InvalidIDException, WrongPlayerException {
 
         List<Game> findGame = gameList.stream().filter(game -> game.getGameid() == gameID).collect(Collectors.toList());
         if(gameID<=gameCounterID && !findGame.isEmpty()){
@@ -88,7 +89,7 @@ public class Lobby {
                     throw new InvalidIDException("This user does not exist");
                 }
             }else{
-                throw new InvalidIDException("There are already too many players in this game!");
+                throw new WrongPlayerException("There are already too many players in this game!");
             }
         }else{
             throw new InvalidIDException("The given game ID does not exists");

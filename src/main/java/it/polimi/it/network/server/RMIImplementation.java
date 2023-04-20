@@ -1,5 +1,6 @@
 package it.polimi.it.network.server;
 
+import it.polimi.it.controller.Exceptions.ExistingNicknameException;
 import it.polimi.it.controller.Exceptions.InvalidIDException;
 import it.polimi.it.controller.Exceptions.WrongPlayerException;
 import it.polimi.it.controller.GameController;
@@ -30,6 +31,7 @@ public class RMIImplementation extends UnicastRemoteObject implements ServerRMI 
         this.lobby = lobby;
         this.userGame = new HashMap<>();
         this.userClient = new HashMap<>();
+
     }
 
     public void startServer(int port) throws RemoteException, AlreadyBoundException {
@@ -40,24 +42,24 @@ public class RMIImplementation extends UnicastRemoteObject implements ServerRMI 
 
     }
 
-    public User login(ClientRMI cr ,String username) throws RemoteException{
+    public User login(ClientRMI cr ,String username) throws RemoteException, ExistingNicknameException {
         User user = lobby.createUser(username);
         userClient.put(user,cr);
         return user;
     }
 
-    public int createGame(User user,int playerNumber) throws RemoteException{
+    public int createGame(User user,int playerNumber) throws RemoteException, WrongPlayerException {
         GameController gc = lobby.createGame(user,playerNumber);
         userGame.put(user,gc);
         return gc.getGameID();
     }
 
-    public void joinGame(User user,int id) throws RemoteException, InvalidIDException {
+    public void joinGame(User user,int id) throws RemoteException, InvalidIDException, WrongPlayerException {
         GameController gc = lobby.joinGame(user,id);
         userGame.put(user, gc);
     }
 
-    public void tilesNumMessage(User user,int numTiles) throws RemoteException, WrongListException, WrongPlayerException {
+    public void tilesNumMessage(User user,int numTiles) throws RemoteException, WrongListException, WrongPlayerException, IndexOutOfBoundsException {
         GameController gc = userGame.get(user);
         gc.getFromViewNTiles(user,numTiles);
     }
@@ -72,5 +74,8 @@ public class RMIImplementation extends UnicastRemoteObject implements ServerRMI 
         gc.getColumnFromView(user,columnNumber,orderedTiles);
     }
 
+    //------------------------------------------------------------------------------------------------------------------
+
+    public void
 
 }

@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonReader;
 import it.polimi.it.controller.Lobby;
+import it.polimi.it.model.User;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -11,9 +12,11 @@ import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.util.HashMap;
 
 public class Server {
     private static Lobby lobby;
+    private HashMap<User,String > typeOfConnection;
 
     public static void main(String[] args) throws FileNotFoundException, RemoteException, AlreadyBoundException {
         int portTCP, portRMI;
@@ -44,6 +47,13 @@ public class Server {
 
     public Lobby getLobby(){
         return lobby;
+    }
+
+    public void gameInitialization(User user){
+        String type = typeOfConnection.get(user);
+        if(type.equals("RMI")){
+            RMIImplementation
+        }
     }
 
 

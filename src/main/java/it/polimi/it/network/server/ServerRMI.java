@@ -1,5 +1,6 @@
 package it.polimi.it.network.server;
 
+import it.polimi.it.controller.Exceptions.ExistingNicknameException;
 import it.polimi.it.controller.Exceptions.InvalidIDException;
 import it.polimi.it.controller.Exceptions.WrongPlayerException;
 import it.polimi.it.controller.Lobby;
@@ -19,13 +20,13 @@ import java.util.concurrent.Executors;
 
 public interface ServerRMI extends Remote {
 
-    User login(ClientRMI cr,String username) throws RemoteException;
+    User login(ClientRMI cr,String username) throws RemoteException, ExistingNicknameException;
 
-    int createGame(User user, int playerNumber) throws RemoteException;
+    int createGame(User user, int playerNumber) throws RemoteException, WrongPlayerException;
 
-    void joinGame(User user,int id) throws RemoteException, InvalidIDException;
+    void joinGame(User user,int id) throws RemoteException, InvalidIDException, WrongPlayerException;
 
-    void tilesNumMessage(User user,int numTiles) throws RemoteException, WrongListException, WrongPlayerException;
+    void tilesNumMessage(User user,int numTiles) throws RemoteException, WrongListException, WrongPlayerException,IndexOutOfBoundsException;
 
     void selectedTiles(User user,List<Tile> choosenTiles) throws RemoteException, WrongPlayerException;
 
