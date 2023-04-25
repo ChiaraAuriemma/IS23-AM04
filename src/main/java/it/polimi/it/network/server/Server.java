@@ -24,7 +24,6 @@ public class Server {
         JsonReader jsonReader = new JsonReader( new FileReader("src/main/java/it/polimi/it/network/ServerConfig.json"));
         JsonObject jsonObject = gson.fromJson(jsonReader,JsonObject.class);
 
-        lobby = new Lobby();
 
         //----> prendiamo il numero della porta da terminale
         if(args.length == 3){
@@ -43,6 +42,7 @@ public class Server {
         RMIImplementation serverRMI = new RMIImplementation(lobby);
         serverRMI.startServer(portRMI);
 
+        lobby = new Lobby(serverTCP, serverRMI);
     }
 
     public Lobby getLobby(){

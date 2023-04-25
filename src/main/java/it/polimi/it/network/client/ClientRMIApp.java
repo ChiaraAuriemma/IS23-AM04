@@ -9,6 +9,9 @@ import it.polimi.it.model.Tiles.Tile;
 import it.polimi.it.model.User;
 import it.polimi.it.network.server.ServerRMI;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -28,10 +31,33 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientRMI {
         this.ip = ip;
     }
 
-    public void startClient() throws RemoteException, NotBoundException {
-        registry = LocateRegistry.getRegistry(ip,port);
-        sr = (ServerRMI) registry.lookup("server_RMI");
+    public void startClient()  {
+        try {
+            registry = LocateRegistry.getRegistry(ip,port);
+        } catch (RemoteException e) {
+            System.out.println(e.getMessage());
+        }
+
+        try {
+            this.sr = (ServerRMI) registry.lookup("server_RMI");
+        } catch (RemoteException | NotBoundException e) {
+            System.out.println(e.getMessage());
+        }
+        //view : passo come parametro di start client un riferimento alla view che voglio usare
+
+        BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
+        String clientInput;
         //view : do la possibilità all'utente di inserire un nickname
+
+        try {
+            clientInput = stdIn.readLine();
+            login(clientInput);
+            //view: mostro la scelta tra creategame e joingame
+            // delego in base alla scelta che fa la view al metodo create o join
+            //appena mi arriva startgame dal server avvio la partita
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public void login(String userName) throws RemoteException {
@@ -88,6 +114,13 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientRMI {
         } catch (InvalidIDException e) {
             //view : il numero della colonna non è valido
         }
+    }
+
+    //----------------------------------------------------------------------------------------------------------
+    //metodi che chiama il server:
+
+    public void takeableTiles(List<List<Tile>> choosableTilesList){
+        //view : faccio vedere illuminate le tiles nella lista
     }
 
 }

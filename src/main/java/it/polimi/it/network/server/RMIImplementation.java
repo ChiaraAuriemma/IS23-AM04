@@ -24,13 +24,13 @@ public class RMIImplementation extends UnicastRemoteObject implements ServerRMI 
     private HashMap<User,GameController> userGame;
     private int port;
 
-    private HashMap<User, ClientRMI> userClient;
+    private HashMap<User, ClientRMI> userRMI;
 
     private Registry registry;
     public RMIImplementation(Lobby lobby) throws RemoteException{
         this.lobby = lobby;
         this.userGame = new HashMap<>();
-        this.userClient = new HashMap<>();
+        this.userRMI = new HashMap<>();
 
     }
 
@@ -38,13 +38,16 @@ public class RMIImplementation extends UnicastRemoteObject implements ServerRMI 
         this.port = port;
         registry = LocateRegistry.getRegistry(port);
         registry.bind("server_RMI", this);
-        //metto la lista dei client collegati per rispondere
 
+    }
+
+    public ClientRMI getUserRMI (User user){
+        return userRMI.get(user);
     }
 
     public User login(ClientRMI cr ,String username) throws RemoteException, ExistingNicknameException {
         User user = lobby.createUser(username);
-        userClient.put(user,cr);
+        userRMI.put(user,cr);
         return user;
     }
 
@@ -75,6 +78,7 @@ public class RMIImplementation extends UnicastRemoteObject implements ServerRMI 
     }
 
     //------------------------------------------------------------------------------------------------------------------
+    //response messages
 
     public void
 

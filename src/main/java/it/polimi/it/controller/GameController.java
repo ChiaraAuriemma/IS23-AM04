@@ -11,6 +11,7 @@ import it.polimi.it.model.Tiles.PossibleColors;
 import it.polimi.it.model.Tiles.Tile;
 import it.polimi.it.model.User;
 import it.polimi.it.network.server.Server;
+import it.polimi.it.network.server.VirtualView;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -58,6 +59,7 @@ public class GameController {
     private Game game;
 
 
+    private VirtualView virtualView;
     /**
      * List of tiles chosen in the current turn by the current player
      */
@@ -76,12 +78,13 @@ public class GameController {
      * @param game is the game which this controller references to
      * @param lobbyIn is the reference to the external lobby
      */
-    public GameController(Game game, Lobby lobbyIn){
+    public GameController(Game game, Lobby lobbyIn, VirtualView virtualView){
         this.endGame = false;
         this.game=game;
         numOfPlayers = game.getNumplayers();
         gameID = game.getGameid();
         lobby = lobbyIn;
+        this.virtualView = virtualView;
     }
 
     //suppongo che la partita sia già stata startata con 4 giocatori

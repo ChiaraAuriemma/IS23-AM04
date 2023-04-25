@@ -5,7 +5,10 @@ import it.polimi.it.model.Exceptions.InvalidTileException;
 import it.polimi.it.model.Exceptions.WrongListException;
 import it.polimi.it.model.Game;
 import it.polimi.it.model.User;
+import it.polimi.it.network.server.RMIImplementation;
 import it.polimi.it.network.server.Server;
+import it.polimi.it.network.server.ServerTCP;
+import it.polimi.it.network.server.VirtualView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,12 +25,16 @@ public class Lobby {
 
     private User user;
 
-    public Lobby() {
+    private ServerTCP serverTCP;
+    private RMIImplementation serverRMI;
+
+    public Lobby(ServerTCP serverTCP, RMIImplementation serverRMI) {
         userList = new ArrayList<>();
         gameList = new ArrayList<>();
         gameControllerList = new ArrayList<>();
         gameCounterID = 0;
-
+        this.serverTCP = serverTCP;
+        this.serverRMI = serverRMI;
     }
 
     public User createUser(String  nickname) throws ExistingNicknameException {
@@ -65,7 +72,8 @@ public class Lobby {
         Game game = new Game(playerNumber, user, gameCounterID);
         user.setInGame(true);
         gameList.add(game);
-        GameController gameContr = new GameController(game, this);
+        VirtualView virtualView = new VirtualView(game,serverTCP,serverRMI);
+        GameController gameContr = new GameController(game, this, virtualView);
         gameControllerList.add(gameContr);
         gameCounterID++;
 

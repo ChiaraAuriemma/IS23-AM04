@@ -24,7 +24,7 @@ public class Client {
 
         if(inputLine == "TCP"){
             ClientTCP clientTCP = new ClientTCP(jsonObject.get("portTCP").getAsInt(),jsonObject.get("ip").getAsString());
-            //clientTCP.start();
+            clientTCP.startClient();
         }else if(inputLine == "RMI"){
             ClientRMIApp clientRMIApp = new ClientRMIApp(jsonObject.get("portRMI").getAsInt(),jsonObject.get("ip").getAsString());
             clientRMIApp.startClient();
