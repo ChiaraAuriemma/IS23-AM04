@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+import it.polimi.it.controller.Exceptions.ExistingNicknameException;
 import it.polimi.it.controller.Exceptions.InvalidIDException;
 import it.polimi.it.controller.Exceptions.WrongPlayerException;
 import it.polimi.it.controller.GameController;
@@ -11,6 +12,7 @@ import it.polimi.it.controller.Lobby;
 import it.polimi.it.model.User;
 import it.polimi.it.network.message.Message;
 import it.polimi.it.network.message.MessageType;
+import it.polimi.it.network.message.errors.ExistingNicknameError;
 import it.polimi.it.network.message.request.*;
 import it.polimi.it.network.message.responses.CreateGameResponse;
 import it.polimi.it.network.message.responses.LoginResponse;
@@ -54,7 +56,9 @@ public class ClientTCPHandler implements Runnable{
 
         Message request;
         MessageType messType;
-        Gson gson = new Gson();
+
+        Message response;
+
 
 
 
@@ -72,15 +76,30 @@ public class ClientTCPHandler implements Runnable{
             switch(messType){
                 case CREATEPLAYER:
                     //LoginRequest loginRequest = (LoginRequest) request;
-                    LoginRequest loginRequest = gson.fromJson(jsonReader, LoginRequest.class);
-                    User newUser = lobby.createUser(loginRequest.getNickname());//per le eccezioni creo dei messaggi apposta
-                    serverTCP.setUserTCP(newUser,socket);
-                    this.user = newUser;
+                    LoginRequest loginRequest = (LoginRequest) request.getPayload();
 
-                    LoginResponse loginResponse = new LoginResponse(loginRequest.getType(), newUser);
-                    String loginResp = gson.toJson(loginResponse);
-                    jsonWriter.jsonValue(loginResp);
-                    jsonWriter.flush();
+                    try {
+                        user = lobby.createUser(loginRequest.getNickname());
+                    } catch (ExistingNicknameException e) {
+                        ExistingNicknameError existingNicknameError = new ExistingNicknameError(e.getMessage());
+                        try {
+                            out.writeObject(existingNicknameError);
+                            out.flush();
+                        } catch (IOException ex) {
+                            System.out.println(e.getMessage());
+                        }
+                    }
+                    serverTCP.setUserTCP(user,socket);
+                    LoginResponse loginResponse = new LoginResponse( user);
+
+                    response = new Message(MessageType.CREATEPLAYERRESPONSE, loginResponse);
+
+                    try {
+                        out.writeObject(response);
+                        out.flush();
+                    } catch (IOException e) {
+                        System.out.println(e.getMessage());
+                    }
 
                 case CREATEGAME:
                     CreateGameRequest createGameRequest = (CreateGameRequest) request;

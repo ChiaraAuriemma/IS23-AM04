@@ -1,15 +1,15 @@
 package it.polimi.it.network.message.responses;
 
 
-import it.polimi.it.network.message.Message;
-import it.polimi.it.network.message.MessageType;
 
-public class CreateGameResponse extends Message {
+
+import it.polimi.it.network.message.Payload;
+
+public class CreateGameResponse extends Payload {
 
     int gameId;
 
-    public CreateGameResponse(MessageType messageType, int gameId) {
-        super(messageType);
+    public CreateGameResponse(int gameId) {
         this.gameId = gameId;
     }
 

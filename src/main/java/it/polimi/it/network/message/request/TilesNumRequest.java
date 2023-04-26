@@ -1,15 +1,14 @@
 package it.polimi.it.network.message.request;
 
 
-import it.polimi.it.network.message.Message;
-import it.polimi.it.network.message.MessageType;
 
-public class TilesNumRequest extends Message {
+import it.polimi.it.network.message.Payload;
+
+public class TilesNumRequest extends Payload {
 
     int numTiles;
 
-    public TilesNumRequest(MessageType messageType, int numTiles) {
-        super(messageType);
+    public TilesNumRequest(int numTiles) {
         this.numTiles = numTiles;
     }
 

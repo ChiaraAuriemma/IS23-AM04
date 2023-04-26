@@ -1,16 +1,14 @@
 package it.polimi.it.network.message.request;
 
 import it.polimi.it.model.User;
-import it.polimi.it.network.message.Message;
-import it.polimi.it.network.message.MessageType;
+import it.polimi.it.network.message.Payload;
 
-public class JoinGameRequest extends Message {
+public class JoinGameRequest extends Payload {
 
     User user;
     int id;
 
-    public JoinGameRequest(MessageType messageType, User user, int id) {
-        super(messageType);
+    public JoinGameRequest(User user, int id) {
         this.user = user;
         this.id = id;
     }

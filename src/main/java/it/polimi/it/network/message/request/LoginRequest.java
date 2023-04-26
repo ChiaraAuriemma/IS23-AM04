@@ -1,15 +1,13 @@
 package it.polimi.it.network.message.request;
 
 
-import it.polimi.it.network.message.Message;
-import it.polimi.it.network.message.MessageType;
+import it.polimi.it.network.message.Payload;
 
-public class LoginRequest extends Message {
+public class LoginRequest extends Payload {
 
     String nickname;
 
-    public LoginRequest(MessageType messageType,String nickname) {
-        super(messageType);
+    public LoginRequest(String nickname) {
         this.nickname = nickname;
     }
 

@@ -1,18 +1,17 @@
 package it.polimi.it.network.message.request;
 
 import it.polimi.it.model.Tiles.Tile;
-import it.polimi.it.network.message.Message;
 import it.polimi.it.network.message.MessageType;
+import it.polimi.it.network.message.Payload;
 
 
 import java.util.List;
 
-public class SelectedTilesRequest extends Message {
+public class SelectedTilesRequest extends Payload {
 
     List<Tile> choosenTiles;
 
     public SelectedTilesRequest(MessageType messageType, List<Tile> choosenTiles) {
-        super(messageType);
         this.choosenTiles = choosenTiles;
     }
 

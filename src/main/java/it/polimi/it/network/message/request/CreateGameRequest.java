@@ -1,17 +1,15 @@
 package it.polimi.it.network.message.request;
 
 import it.polimi.it.model.User;
-import it.polimi.it.network.message.Message;
-import it.polimi.it.network.message.MessageType;
+import it.polimi.it.network.message.Payload;
 
-public class CreateGameRequest extends Message {
+public class CreateGameRequest extends Payload {
 
     User user;
     int playerNumber;
 
 
-    public CreateGameRequest(MessageType messageType, User user, int playerNumber) {
-        super(messageType);
+    public CreateGameRequest(User user, int playerNumber) {
         this.user = user;
         this.playerNumber = playerNumber;
     }

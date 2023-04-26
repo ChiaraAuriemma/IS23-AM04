@@ -1,16 +1,14 @@
 package it.polimi.it.network.message.responses;
 
 import it.polimi.it.model.User;
-import it.polimi.it.network.message.Message;
-import it.polimi.it.network.message.MessageType;
+import it.polimi.it.network.message.Payload;
 
 
-public class LoginResponse extends Message {
+public class LoginResponse extends Payload {
 
     User user;
 
-    public LoginResponse(MessageType messageType, User user) {
-        super(messageType);
+    public LoginResponse(User user) {
         this.user = user;
     }
 

@@ -40,7 +40,7 @@ public class Lobby {
     public User createUser(String  nickname) throws ExistingNicknameException {
 
        // User user;
-        if(nickname.isEmpty()){
+        if(nickname.isEmpty() || nickname.length() ==0){
             System.out.println("You must insert a nickname..."); //mandare messaggio a view
         }else{
             if(userList.stream()
