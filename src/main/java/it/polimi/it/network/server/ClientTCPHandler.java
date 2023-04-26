@@ -26,8 +26,8 @@ public class ClientTCPHandler implements Runnable{
 
     private User user;
 
-    private PrintWriter out;
-    private Scanner in;
+    private ObjectOutputStream out;
+    private ObjectInputStream in;
 
     private Lobby lobby;
 
@@ -40,84 +40,78 @@ public class ClientTCPHandler implements Runnable{
     @Override
     public void run() {
 
-       /* try {
-            in = new Scanner(socket.getInputStream();
+       try {
+            in = new ObjectInputStream(socket.getInputStream());
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         try{
-            out = new PrintWriter(socket.getOutputStream());
+            out = new ObjectOutputStream(socket.getOutputStream());
         } catch (IOException e) {
             e.printStackTrace();
-        }*/
+        }
 
         Message request;
         MessageType messType;
         Gson gson = new Gson();
 
-        try {
-            InputStream inputStream = socket.getInputStream();
-            OutputStream outputStream = socket.getOutputStream();
+
+
+
+
+        while(true) {//CAMBIAMO : se è ancora connesso rimani nel while
 
             try {
-                JsonReader jsonReader = new JsonReader(new InputStreamReader(inputStream, "UTF-8"));
-                JsonWriter jsonWriter = new JsonWriter(new OutputStreamWriter(outputStream, "UTF-8"));
-
-                while (jsonReader.hasNext()) {
-
-                    request = gson.fromJson(jsonReader, Message.class);
-                    messType = request.getType();
-
-                    switch(messType){
-                        case CREATEPLAYER:
-                            LoginRequest loginRequest = (LoginRequest) request;
-                            User newUser = lobby.createUser(loginRequest.getNickname());//per le eccezioni creo dei messaggi apposta
-                            serverTCP.setUserTCP(newUser,socket);
-                            this.user = newUser;
-
-                            LoginResponse loginResponse = new LoginResponse(loginRequest.getType(), newUser);
-                            String loginResp = gson.toJson(loginResponse);
-                            jsonWriter.jsonValue(loginResp);
-                            jsonWriter.flush();
-
-                        case CREATEGAME:
-                            CreateGameRequest createGameRequest = (CreateGameRequest) request;
-                            this.gameController = lobby.createGame(createGameRequest.getUser(), createGameRequest.getPlayerNumber());
-                            //creo la virtualview e gli passo lo user come tcp
-                            //risolvo l'errore alla riga sotto (tolgo enum ???)
-                            CreateGameResponse createGameResponse = new CreateGameResponse(createGameRequest.getType(),gameController.getGameID());
-                            String createResp = gson.toJson(createGameResponse);
-                            jsonWriter.jsonValue(createResp);
-                            jsonWriter.flush();
-
-                        case JOINGAME:
-                            JoinGameRequest joinGameRequest = (JoinGameRequest) request;
-                            this.gameController = lobby.joinGame(joinGameRequest.getUser(),joinGameRequest.getId());
-                            //ottengo il riferimento alla view(dal Gamecontroller) e gli passo lo user come tcp
-
-                        case TILESNUMMESSAGE:
-                            TilesNumRequest tilesNumRequest = (TilesNumRequest) request;
-                            this.gameController.getFromViewNTiles(this.user,tilesNumRequest.getNumTiles());
-
-                        case SELECTEDTILES:
-                            SelectedTilesRequest selectedTilesRequest = (SelectedTilesRequest) request;
-                            this.gameController.getTilesListFromView(this.user, selectedTilesRequest.getChoosenTiles());
-
-                        case CHOOSECOLUMN:
-                            ChooseColumnRequest chooseColumnRequest = (ChooseColumnRequest) request;
-                            this.gameController.getColumnFromView(this.user, chooseColumnRequest.getColumnNumber(), chooseColumnRequest.getOrderedTiles());
-
-                    }
-                }
-
-            } catch (IOException e) {
-                e.printStackTrace();
+                request = (Message) in.readObject();
+            } catch (IOException | ClassNotFoundException e) {
+                throw new RuntimeException(e);
             }
+            messType = request.getType();
 
-        } catch (IOException e) {
-            e.printStackTrace();
+            switch(messType){
+                case CREATEPLAYER:
+                    //LoginRequest loginRequest = (LoginRequest) request;
+                    LoginRequest loginRequest = gson.fromJson(jsonReader, LoginRequest.class);
+                    User newUser = lobby.createUser(loginRequest.getNickname());//per le eccezioni creo dei messaggi apposta
+                    serverTCP.setUserTCP(newUser,socket);
+                    this.user = newUser;
+
+                    LoginResponse loginResponse = new LoginResponse(loginRequest.getType(), newUser);
+                    String loginResp = gson.toJson(loginResponse);
+                    jsonWriter.jsonValue(loginResp);
+                    jsonWriter.flush();
+
+                case CREATEGAME:
+                    CreateGameRequest createGameRequest = (CreateGameRequest) request;
+                    this.gameController = lobby.createGame(createGameRequest.getUser(), createGameRequest.getPlayerNumber());
+                    //creo la virtualview e gli passo lo user come tcp
+                    //risolvo l'errore alla riga sotto (tolgo enum ???)
+                    CreateGameResponse createGameResponse = new CreateGameResponse(createGameRequest.getType(),gameController.getGameID());
+                    String createResp = gson.toJson(createGameResponse);
+                    jsonWriter.jsonValue(createResp);
+                    jsonWriter.flush();
+
+                case JOINGAME:
+                    JoinGameRequest joinGameRequest = (JoinGameRequest) request;
+                    this.gameController = lobby.joinGame(joinGameRequest.getUser(),joinGameRequest.getId());
+                    //ottengo il riferimento alla view(dal Gamecontroller) e gli passo lo user come tcp
+
+                case TILESNUMMESSAGE:
+                    TilesNumRequest tilesNumRequest = (TilesNumRequest) request;
+                    this.gameController.getFromViewNTiles(this.user,tilesNumRequest.getNumTiles());
+
+                case SELECTEDTILES:
+                    SelectedTilesRequest selectedTilesRequest = (SelectedTilesRequest) request;
+                    this.gameController.getTilesListFromView(this.user, selectedTilesRequest.getChoosenTiles());
+
+                case CHOOSECOLUMN:
+                    ChooseColumnRequest chooseColumnRequest = (ChooseColumnRequest) request;
+                    this.gameController.getColumnFromView(this.user, chooseColumnRequest.getColumnNumber(), chooseColumnRequest.getOrderedTiles());
+
+            }
         }
+
 
 
 
