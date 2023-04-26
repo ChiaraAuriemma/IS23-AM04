@@ -3,17 +3,15 @@ package it.polimi.it.controller;
 import it.polimi.it.controller.Exceptions.IllegalValueException;
 import it.polimi.it.controller.Exceptions.InvalidIDException;
 import it.polimi.it.controller.Exceptions.WrongPlayerException;
-import it.polimi.it.controller.Exceptions.WrongTileException;
+import it.polimi.it.controller.Exceptions.WrongTurnException;
 import it.polimi.it.model.Exceptions.InvalidTileException;
 import it.polimi.it.model.Exceptions.WrongListException;
 import it.polimi.it.model.Game;
 import it.polimi.it.model.Tiles.PossibleColors;
 import it.polimi.it.model.Tiles.Tile;
 import it.polimi.it.model.User;
-import it.polimi.it.network.server.Server;
 import it.polimi.it.network.server.VirtualView;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
@@ -139,7 +137,7 @@ public class GameController {
      *  in order to highlight them on the board.
      * @param chosenNumber is the input from the user
      */
-    public void getFromViewNTiles(User user,int chosenNumber) throws WrongPlayerException, WrongListException,IndexOutOfBoundsException {
+    public void getFromViewNTiles(User user,int chosenNumber) throws WrongTurnException, WrongListException,IndexOutOfBoundsException {
         if(user.equals(playerList.get(currentPlayer))){
             this.playerList.get(currentPlayer).choosableTiles(chosenNumber);
 
@@ -149,7 +147,7 @@ public class GameController {
             //mandare alla view la lista di liste di tile che sono prendibili
             ///highlightView(playerList.get(currentPlayer).choosableTiles(chosenNumber));
         }else{
-            throw new WrongPlayerException("It's not your turn");
+            throw new WrongTurnException("It's not your turn");
         }
 
 

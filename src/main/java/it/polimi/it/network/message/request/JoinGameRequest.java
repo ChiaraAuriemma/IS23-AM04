@@ -17,7 +17,7 @@ public class JoinGameRequest extends Payload {
         return user;
     }
 
-    public int getId() {
+    public int getID() {
         return id;
     }
 }
