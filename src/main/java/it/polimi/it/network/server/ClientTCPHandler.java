@@ -208,7 +208,6 @@ public class ClientTCPHandler implements Runnable{
             }
         };
         timer.schedule(timerTask, 1000, 20000);
-
                     /*
                     public void schedule(TimerTask task, long delay, long period)
                         task - task to be scheduled.
