@@ -57,7 +57,6 @@ public class GameController {
     private Game game;
 
 
-    private VirtualView virtualView;
     /**
      * List of tiles chosen in the current turn by the current player
      */
@@ -76,13 +75,12 @@ public class GameController {
      * @param game is the game which this controller references to
      * @param lobbyIn is the reference to the external lobby
      */
-    public GameController(Game game, Lobby lobbyIn, VirtualView virtualView){
+    public GameController(Game game, Lobby lobbyIn){
         this.endGame = false;
         this.game=game;
         numOfPlayers = game.getNumplayers();
         gameID = game.getGameid();
         lobby = lobbyIn;
-        this.virtualView = virtualView;
     }
 
     //suppongo che la partita sia già stata startata con 4 giocatori
