@@ -3,6 +3,7 @@ package it.polimi.it.network.server;
 import it.polimi.it.controller.Exceptions.ExistingNicknameException;
 import it.polimi.it.controller.Exceptions.InvalidIDException;
 import it.polimi.it.controller.Exceptions.WrongPlayerException;
+import it.polimi.it.controller.Exceptions.WrongTurnException;
 import it.polimi.it.controller.Lobby;
 import it.polimi.it.model.Exceptions.WrongListException;
 import it.polimi.it.model.Tiles.Tile;
@@ -26,7 +27,7 @@ public interface ServerRMI extends Remote {
 
     void joinGame(User user,int id) throws RemoteException, InvalidIDException, WrongPlayerException;
 
-    void tilesNumMessage(User user,int numTiles) throws RemoteException, WrongListException, WrongPlayerException,IndexOutOfBoundsException;
+    void tilesNumMessage(User user,int numTiles) throws RemoteException, WrongListException, WrongPlayerException, IndexOutOfBoundsException, WrongTurnException;
 
     void selectedTiles(User user,List<Tile> choosenTiles) throws RemoteException, WrongPlayerException;
 

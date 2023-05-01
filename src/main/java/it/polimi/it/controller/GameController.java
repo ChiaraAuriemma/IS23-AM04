@@ -96,7 +96,7 @@ public class GameController {
 
         if(this.endGame && this.currentPlayer == 0){
 
-            List<Integer> points = game.pointsFromAdjacent();
+            game.pointsFromAdjacent();
 
             //manda alla view i punteggi finali (passo points)
             lobby.notifyEndGame(gameID);

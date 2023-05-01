@@ -3,6 +3,7 @@ package it.polimi.it.network.server;
 import it.polimi.it.controller.Exceptions.ExistingNicknameException;
 import it.polimi.it.controller.Exceptions.InvalidIDException;
 import it.polimi.it.controller.Exceptions.WrongPlayerException;
+import it.polimi.it.controller.Exceptions.WrongTurnException;
 import it.polimi.it.controller.GameController;
 import it.polimi.it.controller.Lobby;
 import it.polimi.it.model.Exceptions.WrongListException;
@@ -62,7 +63,7 @@ public class RMIImplementation extends UnicastRemoteObject implements ServerRMI 
         userGame.put(user, gc);
     }
 
-    public void tilesNumMessage(User user,int numTiles) throws RemoteException, WrongListException, WrongPlayerException, IndexOutOfBoundsException {
+    public void tilesNumMessage(User user,int numTiles) throws RemoteException, WrongListException, IndexOutOfBoundsException, WrongTurnException {
         GameController gc = userGame.get(user);
         gc.getFromViewNTiles(user,numTiles);
     }
@@ -77,9 +78,6 @@ public class RMIImplementation extends UnicastRemoteObject implements ServerRMI 
         gc.getColumnFromView(user,columnNumber,orderedTiles);
     }
 
-    //------------------------------------------------------------------------------------------------------------------
-    //response messages
 
-    public void
 
 }

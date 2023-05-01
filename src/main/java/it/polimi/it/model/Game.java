@@ -120,7 +120,7 @@ public class Game {
     }
 
 
-    public ArrayList<Integer> pointsFromAdjacent(){
+    public void pointsFromAdjacent(){
 
         //points from adjacent tiles with same color
         int tmp_point;
@@ -129,7 +129,7 @@ public class Game {
             this.points.set(i, tmp_point + this.players.get(i).getShelfie().checkAdjacentsPoints());
         }
 
-        return this.points;
+        virtualView.finalPoints(this.players,this.points);
     }
 
     public void endGame (User currentPlayer){
@@ -142,10 +142,9 @@ public class Game {
             this.endToken = i;
             tmp_point = this.points.get(i);
             this.points.set(i, tmp_point + 1);
-        }
 
-        //view: mostro alla view chi ha finito per primo
-        //view: mostro alla view anche che è stato messo il punto in più
+            virtualView.endTokenTaken(this.players.get(i));
+        }
 
     }
 
@@ -251,8 +250,6 @@ public class Game {
         }
 
 
-
-        //view: mostro alla view
     }
 
 
