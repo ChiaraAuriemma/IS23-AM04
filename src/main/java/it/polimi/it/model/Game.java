@@ -6,6 +6,7 @@ import it.polimi.it.model.Board.B4P;
 import it.polimi.it.model.Board.Board;
 import it.polimi.it.model.Card.CommonGoalCards.*;
 import it.polimi.it.model.Card.PersonalGoalCards.*;
+import it.polimi.it.network.server.VirtualView;
 
 
 import java.util.*;
@@ -31,19 +32,21 @@ public class Game {
     private  Integer endToken;
 
 
+    private VirtualView virtualView;
 
 
-
-    public Game(Integer numplayers, User host, int gameID){
+    public Game(Integer numplayers, User host, int gameID, VirtualView virtualView){
 
         this.endToken = -1;
         this.numplayers = numplayers;
         this.gameID = gameID;
+        this.virtualView = virtualView;
+        this.virtualView.setGame(this);
 
         host.setGame(this);
         this.players = new ArrayList<>(numplayers);
         this.players.add(host); // controllo se è empty ???
-
+        this.virtualView.setUser(host);
         //start all the player points to zero
         this.points = new ArrayList<>(Collections.nCopies(numplayers, 0));
         //start all the players score from personal cards to zero
@@ -93,7 +96,7 @@ public class Game {
 
     public ArrayList<User> randomPlayers () {
         ArrayList<User> order = new ArrayList<>(this.numplayers);
-        //this.orderPointer = 0;/// metto in controller
+
         Random rdn = new Random();
 
         boolean[] checkplayers;
@@ -110,11 +113,14 @@ public class Game {
             order.add(i,this.players.get(position));
         }
 
+        //mando alla view un po' di cose da inizializzare
+        virtualView.startOrder(order);
+        virtualView.initialMatrix(board.getMatrix());
         return order;
     }
 
 
-    public ArrayList<Integer> pointsFromAdjacent(){
+    public void pointsFromAdjacent(){
 
         //points from adjacent tiles with same color
         int tmp_point;
@@ -123,7 +129,7 @@ public class Game {
             this.points.set(i, tmp_point + this.players.get(i).getShelfie().checkAdjacentsPoints());
         }
 
-        return this.points;
+        virtualView.finalPoints(this.players,this.points);
     }
 
     public void endGame (User currentPlayer){
@@ -136,10 +142,9 @@ public class Game {
             this.endToken = i;
             tmp_point = this.points.get(i);
             this.points.set(i, tmp_point + 1);
-        }
 
-        //view: mostro alla view chi ha finito per primo
-        //view: mostro alla view anche che è stato messo il punto in più
+            virtualView.endTokenTaken(this.players.get(i));
+        }
 
     }
 
@@ -160,12 +165,15 @@ public class Game {
         deck.createCards(c1,c2);
         this.card1 = deck.getCommonCard1();
         this.card2 = deck.getCommonCard2();
+
+        virtualView.drawnCommonCards(card1,card2,commonToken1,commonToken2);
     }
 
     public void joinGame (User joiner ){
 
         joiner.setGame(this);
         this.players.add(joiner);
+        this.virtualView.setUser(joiner);
     }
 
     public void drawPersonalCard (){
@@ -181,6 +189,9 @@ public class Game {
         }while(this.cards.contains(card));
 
         this.cards.add(card);
+
+        User user = players.get(cards.size() - 1);
+        virtualView.drawnPersonalCard(user,card);
     }
 
     public void pointCount(User player){
@@ -239,13 +250,14 @@ public class Game {
         }
 
 
-
-        //view: mostro alla view
     }
 
 
     //methods for testing----------------------------------------------------
     //getter
+    public VirtualView getVirtualView(){
+        return this.virtualView;
+    }
     public Board getBoard(){
         return this.board;
     }

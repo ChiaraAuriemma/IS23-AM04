@@ -180,6 +180,14 @@ public class ClientTCPHandler implements Runnable{
                         throw new RuntimeException(e);//da modificare con l'invio di messaggi
                     }
 
+                case CHOOSEORDER:
+                    ChooseOrderRequest chooseOrderRequest = (ChooseOrderRequest) request.getPayload();
+                    try {
+                        this.gameController.getColumnFromView(this.user, chooseOrderRequest.getColumn(), chooseOrderRequest.getChosen());
+                    } catch (InvalidIDException e) {
+                        throw new RuntimeException(e);
+                    }
+
                 case PONG://risposta del ping del timer
 
 
@@ -208,7 +216,6 @@ public class ClientTCPHandler implements Runnable{
             }
         };
         timer.schedule(timerTask, 1000, 20000);
-
                     /*
                     public void schedule(TimerTask task, long delay, long period)
                         task - task to be scheduled.

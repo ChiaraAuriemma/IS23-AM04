@@ -32,7 +32,9 @@ public class User implements Serializable {
         if(max < 1 || max > 3){
             throw new IndexOutOfBoundsException("Il numero di tiles non è accettabile");
         }
-        return board.findMaxAdjacent(max);
+        max = board.findMaxAdjacent(max);
+        game.getVirtualView().startTurn(this,max);
+        return max;
     }
 
 
@@ -49,6 +51,8 @@ public class User implements Serializable {
         if(choosableList == null || choosableList.size() == 0){
             throw new WrongListException("Error in the chosen tiles list");
         }
+
+        game.getVirtualView().takeableTiles(this,choosableList);
         return choosableList;
     }
 
@@ -60,9 +64,14 @@ public class User implements Serializable {
             }
         }
 
-        board.removeTiles(chosen);
+        //ho spostato questo metodo in insertTile per più ragioni:
+        //- più comodo in caso di disconnessione (la shelfie e la board si aggiornano dopo l'ultima operazione)
+        //- più comodo per inviare gli aggiornamenti su board e shelfie a tutti i giocatori a fine turno
+        //board.removeTiles(chosen);
 
-        return shelf.chooseColumn(tilesNumber);
+        boolean [] columns = shelf.chooseColumn(tilesNumber);
+        game.getVirtualView().possibleColumns(this,columns);
+        return columns;
     }
 
     public boolean insertTile(int column, List<Tile> chosen) throws IndexOutOfBoundsException {
@@ -73,10 +82,14 @@ public class User implements Serializable {
             throw new IndexOutOfBoundsException("The given column value does not exist");
 
         }else {
+
             isEnd = shelf.addTile(column, chosen);
+            game.getVirtualView().shelfieUpdate(this,column,chosen);
         }
 
+        board.removeTiles(chosen);
         board.refill();
+        game.getVirtualView().boardUpdate(board.getMatrix());
         return isEnd;
     }
 

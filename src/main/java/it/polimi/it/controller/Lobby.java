@@ -69,11 +69,11 @@ public class Lobby {
         //pickUser(user); non stai facendo una pick, così togli tutto il riferimento che ti sei passato sul client
 
         //fai il controllo: l'user che crea il game deve esistere ed essere nella lista, vedi metodo sotto
-        Game game = new Game(playerNumber, user, gameCounterID);
+        VirtualView virtualView = new VirtualView(serverTCP,serverRMI);
+        Game game = new Game(playerNumber, user, gameCounterID,virtualView);
         user.setInGame(true);
         gameList.add(game);
-        VirtualView virtualView = new VirtualView(game,serverTCP,serverRMI);
-        GameController gameContr = new GameController(game, this, virtualView);
+        GameController gameContr = new GameController(game, this);
         gameControllerList.add(gameContr);
         gameCounterID++;
 

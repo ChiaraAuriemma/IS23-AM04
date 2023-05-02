@@ -24,6 +24,9 @@ public abstract class Board {
 
     }
 
+    public Tile[][] getMatrix() {
+        return matrix;
+    }
 
     /**
      * Checks if a refill of the board is needed calling method checkRefill
