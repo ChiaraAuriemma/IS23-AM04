@@ -92,7 +92,7 @@ public class ClientTCPHandler implements Runnable{
                             System.out.println(e.getMessage());
                         }
 
-                    } catch (ExistingNicknameException e) {
+                    } catch (ExistingNicknameException e) {// sistemo non va mandato il paylod ma il messaggio d'errore con dentro il payload
                         ExistingNicknameError existingNicknameError = new ExistingNicknameError(e.getMessage());
                         try {
                             out.writeObject(existingNicknameError);
@@ -178,14 +178,6 @@ public class ClientTCPHandler implements Runnable{
                         this.gameController.getColumnFromView(this.user, chooseColumnRequest.getColumnNumber(), chooseColumnRequest.getOrderedTiles());
                     } catch (InvalidIDException e) {//deh se non va bene devi hiederla di nuovo
                         throw new RuntimeException(e);//da modificare con l'invio di messaggi
-                    }
-
-                case CHOOSEORDER:
-                    ChooseOrderRequest chooseOrderRequest = (ChooseOrderRequest) request.getPayload();
-                    try {
-                        this.gameController.getColumnFromView(this.user, chooseOrderRequest.getColumn(), chooseOrderRequest.getChosen());
-                    } catch (InvalidIDException e) {
-                        throw new RuntimeException(e);
                     }
 
                 case PONG://risposta del ping del timer
