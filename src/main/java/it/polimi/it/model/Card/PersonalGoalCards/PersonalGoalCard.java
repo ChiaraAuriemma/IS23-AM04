@@ -21,7 +21,10 @@ public class PersonalGoalCard {
     JsonArray whitePos;
     JsonArray greenPos;
 
-
+    /**
+     * constructor for the PersonalCards
+     * @param id is the identification code of the card we need to instantiate
+     */
     public PersonalGoalCard(int id){
         Gson gson = new Gson();
         try {
@@ -46,43 +49,107 @@ public class PersonalGoalCard {
         }
     }
 
+    /**
+     * getter method
+     * @return the column of the pink tile of the goal
+     */
     public int getPinkposColumn(){
         return pinkPos.get(0).getAsInt();
     }
+
+    /**
+     * getter method
+     * @return the row of the pink tile of the goal
+     */
     public int getPinkposRow(){
         return pinkPos.get(1).getAsInt();
     }
+
+    /**
+     * getter method
+     * @return the column of the cyan tile of the goal
+     */
     public int getCyanposColumn(){
         return cyanPos.get(0).getAsInt();
     }
+
+    /**
+     * getter method
+     * @return the row of the cyan tile of the goal
+     */
     public int getCyanposRow(){
         return cyanPos.get(1).getAsInt();
     }
+
+    /**
+     * getter method
+     * @return the column of the yellow tile of the goal
+     */
     public int getYellowposColumn(){
         return yellowPos.get(0).getAsInt();
     }
+
+    /**
+     * getter method
+     * @return the row of the yellow tile of the goal
+     */
     public int getYellowposRow(){
         return yellowPos.get(1).getAsInt();
     }
+
+    /**
+     * getter method
+     * @return the column of the blue tile of the goal
+     */
     public int getBlueposColumn(){
         return bluePos.get(0).getAsInt();
     }
+
+    /**
+     * getter method
+     * @return the row of the blue tile of the goal
+     */
     public int getBlueposRow(){
         return bluePos.get(1).getAsInt();
     }
+
+    /**
+     * getter method
+     * @return the column of the white tile of the goal
+     */
     public int getWhiteposColumn(){
         return whitePos.get(0).getAsInt();
     }
+
+    /**
+     * getter method
+     * @return the row of the white tile of the goal
+     */
     public int getWhiteposRow(){
         return whitePos.get(1).getAsInt();
     }
+
+    /**
+     * getter method
+     * @return the column of the green tile of the goal
+     */
     public int getGreenposColumn(){
         return greenPos.get(0).getAsInt();
     }
+
+    /**
+     * getter method
+     * @return the row of the green tile of the goal
+     */
     public int getGreenposRow(){
         return greenPos.get(1).getAsInt();
     }
 
+    /**
+     * Method that check the goal of the PersonalGoalCard
+     * @param shelfie is the shelfie that we need to check
+     * @return the number of the color of the goal achieved by the player
+     */
     public int checkScore(Shelfie shelfie) {
         if(checkColor.get(0) == 0 && shelfie.getCell(pinkPos.get(0).getAsInt(), pinkPos.get(1).getAsInt()).getColor().equals("PINK")){
             numCompletedTasks++;

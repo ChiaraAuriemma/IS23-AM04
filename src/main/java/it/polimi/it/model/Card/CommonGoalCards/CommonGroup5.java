@@ -9,6 +9,10 @@ public class CommonGroup5 extends CommonGoalCard{
 
     private List<Integer> numColor;
 
+    /**
+     * constructor of the CommonGroup5.
+     * @param id is the identification code of the CommonGoalCard, in this group the option for the id is 9
+     */
     public CommonGroup5(int id){
         super(id);
         this.numColor = new ArrayList<Integer>(6);
@@ -18,6 +22,11 @@ public class CommonGroup5 extends CommonGoalCard{
         }
     }
 
+    /**
+     * Method that check the goal of the CommonGoalCard
+     * @param shelfie is the shelfie that we need to check
+     * @return true or false
+     */
     public Boolean checkGoal(Shelfie shelfie){
         int i,column,row,tmp;
         for(column=0;column<5;column++){

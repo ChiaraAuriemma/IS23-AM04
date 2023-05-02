@@ -10,10 +10,19 @@ import java.io.FileReader;
 
 public class CommonGroup6 extends CommonGoalCard{
 
+    /**
+     * constructor of the CommonGroup6.
+     * @param id is the identification code of the CommonGoalCard, in this group the option for the id is 12
+     */
     public CommonGroup6(int id){ //solo carta 12
         super(id);
     }
 
+    /**
+     * Method that check the goal of the CommonGoalCard
+     * @param shelfie is the shelfie that we need to check
+     * @return true or false
+     */
     public Boolean checkGoal(Shelfie shelfie){
         int i;
         Gson gson = new Gson();

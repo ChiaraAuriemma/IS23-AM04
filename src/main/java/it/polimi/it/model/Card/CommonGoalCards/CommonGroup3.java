@@ -13,10 +13,22 @@ import java.util.ArrayList;
 public class CommonGroup3 extends CommonGoalCard{
 
     ArrayList<Tile> checked = new ArrayList<>();
+
+    /**
+     * constructor of the CommonGroup3.
+     * @param id is the identification code of the CommonGoalCard, in this group the option for the ids are 3,4
+     */
     public CommonGroup3(int id){ //carte 3 e 4
         super(id);
     }
 
+    /**
+     * method that find the adjacent tiles of a given tile
+     * @param shelfie is the shelfie we need to check
+     * @param x is the column of the tile
+     * @param y is the row of the tile
+     * @return the adjacent tiles
+     */
     private ArrayList<Tile> adjacent(Shelfie shelfie, int x, int y) {
         ArrayList<Tile> adjacent = new ArrayList<>();
         if (x > 0) {
@@ -34,6 +46,15 @@ public class CommonGroup3 extends CommonGoalCard{
         return adjacent;
     }
 
+    /**
+     * the method that find only the adjacent tiles that are usefully for the common goal
+     * @param shelfie that we need to check
+     * @param x is the colum of the tile
+     * @param y row of the tile
+     * @param toVisit arrayList of tile not already checked
+     * @param jsonObject contains information for the check
+     * @return list of tiles
+     */
     private  ArrayList<Tile> recursiveAdjacent(Shelfie shelfie, int x, int y, ArrayList<Tile> toVisit, JsonObject jsonObject) {
         int i;
         ArrayList<Tile> tmp = new  ArrayList<>();
@@ -69,6 +90,11 @@ public class CommonGroup3 extends CommonGoalCard{
         }
     }
 
+    /**
+     * Method that check the goal of the CommonGoalCard
+     * @param shelfie is the shelfie that we need to check
+     * @return true or false
+     */
     public Boolean checkGoal(Shelfie shelfie){
         Gson gson = new Gson();
         ArrayList<Tile> tmp;
