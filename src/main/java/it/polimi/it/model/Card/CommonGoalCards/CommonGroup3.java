@@ -101,7 +101,7 @@ public class CommonGroup3 extends CommonGoalCard{
         int i,row, column;
         int count=0;
         try{
-            JsonReader reader = new JsonReader(new FileReader("src/main/java/it/polimi/it/model/Card/CommonGoalCards/CommonGroup3.json"));
+            JsonReader reader = new JsonReader(new FileReader("CommonGroup3.json"));
             JsonArray jsonArray = gson.fromJson(reader, JsonArray.class);
             for(i=0; jsonArray.get(i).getAsJsonObject().get("type").getAsInt() != id ; i++);
             JsonObject jsonObject= jsonArray.get(i).getAsJsonObject();
