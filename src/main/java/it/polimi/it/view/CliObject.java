@@ -1,6 +1,6 @@
 package it.polimi.it.view;
 
-public enum CliObjectType {
+public enum CliObject{
 
     //metto le tile con i colori
 
@@ -8,7 +8,7 @@ public enum CliObjectType {
 
     private String object;
 
-    CliObjectType(String object){
+    CliObject(String object){
         this.object = object;
     }
 
