@@ -20,4 +20,12 @@ public abstract class CommonGoalCard {
      * @return true or false
      */
     public abstract Boolean checkGoal(Shelfie shelfie);
+    
+    
+    /**
+    *Getter method for the id of the card
+    */
+    public int getID(){
+        return id;
+    }
 }
