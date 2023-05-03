@@ -9,11 +9,9 @@ import it.polimi.it.controller.GameController;
 import it.polimi.it.controller.Lobby;
 import it.polimi.it.model.Exceptions.WrongListException;
 import it.polimi.it.model.User;
+import it.polimi.it.network.message.ErrorMessage;
 import it.polimi.it.network.message.Message;
 import it.polimi.it.network.message.MessageType;
-import it.polimi.it.network.message.errors.ExistingNicknameError;
-import it.polimi.it.network.message.errors.InvalidIDError;
-import it.polimi.it.network.message.errors.WrongPlayerError;
 import it.polimi.it.network.message.others.PingMessage;
 import it.polimi.it.network.message.request.*;
 import it.polimi.it.network.message.responses.CreateGameResponse;
@@ -28,15 +26,16 @@ public class ClientTCPHandler implements Runnable{
     private Socket socket;
     private ServerTCP serverTCP;
     private GameController gameController;
-
+    private Lobby lobby;
     private User user;
 
     private ObjectOutputStream out;
     private ObjectInputStream in;
 
-    private Lobby lobby;
+
     private Timer timer;
     private Message ping;
+
 
     public ClientTCPHandler(Socket socket, Lobby lobby, ServerTCP serverTCP){
         this.socket = socket;
@@ -78,107 +77,99 @@ public class ClientTCPHandler implements Runnable{
             switch(messType){
                 case CREATEPLAYER:
                     LoginRequest loginRequest = (LoginRequest) request.getPayload();
-
-                    try {
-                        user = lobby.createUser(loginRequest.getNickname());
-                        serverTCP.setUserTCP(user,socket);
-                        LoginResponse loginResponse = new LoginResponse(user);
-                        response = new Message(MessageType.CREATEPLAYERRESPONSE, loginResponse);
-
+                    synchronized (lobby){
                         try {
-                            out.writeObject(response);
-                            out.flush();
-                        } catch (IOException e) {
-                            System.out.println(e.getMessage());
-                        }
+                            user = lobby.createUser(loginRequest.getNickname());
+                            serverTCP.setUserTCP(user,socket);
+                            LoginResponse loginResponse = new LoginResponse(user);
+                            response = new Message(MessageType.CREATEPLAYERRESPONSE, loginResponse);
 
-                    } catch (ExistingNicknameException e) {// sistemo non va mandato il paylod ma il messaggio d'errore con dentro il payload
-                        ExistingNicknameError existingNicknameError = new ExistingNicknameError(e.getMessage());
-                        try {
-                            out.writeObject(existingNicknameError);
-                            out.flush();
-                        } catch (IOException ex) {
-                            System.out.println(e.getMessage());
+                        } catch (ExistingNicknameException e) {
+                            ErrorMessage errorMessage = new ErrorMessage(e.getMessage());
+                            response = new Message(MessageType.ERROR, errorMessage);
+
                         }
                     }
+
+                    send(response);
 
                 case CREATEGAME:
 
                     CreateGameRequest createGameRequest = (CreateGameRequest) request.getPayload();
-
-                    try {
-                        this.gameController = lobby.createGame(createGameRequest.getUser(), createGameRequest.getPlayerNumber());
-                        CreateGameResponse createGameResponse = new CreateGameResponse(gameController.getGameID());
-                        response = new Message(MessageType.CREATEGAMERESPONSE, createGameResponse);
+                    synchronized (lobby){
                         try {
-                            out.writeObject(response);
-                            out.flush();
-                        } catch (IOException e) {
-                            System.out.println(e.getMessage());
-                        }
+                            this.gameController = lobby.createGame(createGameRequest.getUser(), createGameRequest.getPlayerNumber());
+                            CreateGameResponse createGameResponse = new CreateGameResponse(gameController.getGameID());
+                            response = new Message(MessageType.CREATEGAMERESPONSE, createGameResponse);
 
-                    } catch (WrongPlayerException e) {//se il numero di giocatori è sbagliato -> mando messaggio di errore e rifaccio
-                        WrongPlayerError wrongPlayerError = new WrongPlayerError(e.getMessage());
-                        try{
-                            out.writeObject(wrongPlayerError);
-                            out.flush();
-                        } catch (IOException ex) {
-                            System.out.println(e.getMessage());
+                        } catch (WrongPlayerException e) {
+                            ErrorMessage errorMessage = new ErrorMessage(e.getMessage());
+                            response = new Message(MessageType.ERROR, errorMessage);
+
                         }
                     }
+
+                    send(response);
 
                 case JOINGAME:
                     JoinGameRequest joinGameRequest = (JoinGameRequest) request.getPayload();
                     //ottengo il riferimento alla view(dal Gamecontroller) e gli passo lo user come tcp
 
-                    try {
-                        this.gameController = lobby.joinGame(joinGameRequest.getUser(), joinGameRequest.getID());
+                    synchronized (lobby){
+                        try {
+                            this.gameController = lobby.joinGame(joinGameRequest.getUser(), joinGameRequest.getID());
+                        } catch (InvalidIDException | WrongPlayerException e) {
 
-                    } catch (InvalidIDException e) {//se il numero di giocatori è sbagliato -> mando messaggio di errore e rifaccio
-                        InvalidIDError invalidIDErrorError = new InvalidIDError(e.getMessage());
-                        try{
-                            out.writeObject(invalidIDErrorError);
-                            out.flush();
-                        } catch (IOException ex) {
-                            System.out.println(e.getMessage());
-                        }
+                            ErrorMessage errorMessage = new ErrorMessage(e.getMessage());
+                            response = new Message(MessageType.ERROR, errorMessage);
 
-                    } catch (WrongPlayerException e) {
-                        WrongPlayerError wrongPlayerError = new WrongPlayerError(e.getMessage());
-                        try{
-                            out.writeObject(wrongPlayerError);
-                            out.flush();
-                        } catch (IOException ex) {
-                            System.out.println(e.getMessage());
+                            send(response);
                         }
                     }
+
 
                 case TILESNUMMESSAGE:
                     TilesNumRequest tilesNumRequest = (TilesNumRequest) request.getPayload();
 
-                    try{
-                        this.gameController.getFromViewNTiles(this.user,tilesNumRequest.getNumTiles());
-                    } catch (WrongListException e) {
-                        throw new RuntimeException(e);//da modificare con l'invio di messaggi
-                    } catch (WrongTurnException e) {
-                        throw new RuntimeException(e);//da modificare con l'invio di messaggi
+                    synchronized (gameController){
+                        try {
+                            this.gameController.getFromViewNTiles(this.user,tilesNumRequest.getNumTiles());
+                        } catch (WrongTurnException | WrongListException e) {
+
+                            ErrorMessage errorMessage = new ErrorMessage(e.getMessage());
+                            response = new Message(MessageType.ERROR, errorMessage);
+                            send(response);
+                        }
                     }
+
 
                 case SELECTEDTILES:
                     SelectedTilesRequest selectedTilesRequest = (SelectedTilesRequest) request.getPayload();
-                    try {
-                        this.gameController.getTilesListFromView(this.user, selectedTilesRequest.getChoosenTiles());
-                    } catch (WrongPlayerException e) {//deh se non vanno bene devi hiederle di nuovo
-                        throw new RuntimeException(e);//da modificare con l'invio di messaggi
+
+                    synchronized (gameController){
+                        try {
+                            this.gameController.getTilesListFromView(this.user, selectedTilesRequest.getChoosenTiles());
+                        } catch (WrongPlayerException e) {
+                            ErrorMessage errorMessage = new ErrorMessage(e.getMessage());
+                            response = new Message(MessageType.ERROR, errorMessage);
+                            send(response);
+                        }
                     }
+
 
                 case CHOOSECOLUMN:
                     ChooseColumnRequest chooseColumnRequest = (ChooseColumnRequest) request.getPayload();
-                    try {
-                        this.gameController.getColumnFromView(this.user, chooseColumnRequest.getColumnNumber(), chooseColumnRequest.getOrderedTiles());
-                    } catch (InvalidIDException e) {//deh se non va bene devi hiederla di nuovo
-                        throw new RuntimeException(e);//da modificare con l'invio di messaggi
+
+                    synchronized (gameController){
+                        try {
+                            this.gameController.getColumnFromView(this.user, chooseColumnRequest.getColumnNumber(), chooseColumnRequest.getOrderedTiles());
+                        } catch (InvalidIDException e) {
+                            ErrorMessage errorMessage = new ErrorMessage(e.getMessage());
+                            response = new Message(MessageType.ERROR, errorMessage);
+                            send(response);
+                        }
                     }
+
 
                 case PONG://risposta del ping del timer
 
@@ -215,4 +206,19 @@ public class ClientTCPHandler implements Runnable{
                         period - time in milliseconds between successive task executions.   200000->20 secondi
                      */
     }
+
+
+    public void send(Message message){
+
+        synchronized (out){
+            try {
+                out.writeObject(message);
+                out.flush();
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+
+    }
+
 }
