@@ -12,10 +12,19 @@ import java.util.List;
 
 public class CommonGroup2 extends CommonGoalCard{
 
+    /**
+     * constructor of the CommonGroup2.
+     * @param id is the identification code of the CommonGoalCard, in this group the option for the ids are 2,5,6,7
+     */
     public CommonGroup2(int id){ //carte 2,6,5,7
         super(id);
     }
 
+    /**
+     * Method that check the goal of the CommonGoalCard
+     * @param shelfie is the shelfie that we need to check
+     * @return true or false
+     */
     public Boolean checkGoal(Shelfie shelfie){
         Gson gson =  new Gson();
         List<String> colorToSave;
@@ -25,7 +34,7 @@ public class CommonGroup2 extends CommonGoalCard{
         int numRight = 0;
         String cell1, cell2;
         try{
-            JsonReader reader = new JsonReader(new FileReader("src/main/java/it/polimi/it/model/Card/CommonGoalCards/CommonGroup2.json"));
+            JsonReader reader = new JsonReader(new FileReader("CommonGroup2.json"));
             JsonArray jsonArray = gson.fromJson(reader, JsonArray.class);
             for(j=0; jsonArray.get(j).getAsJsonObject().get("id").getAsInt() != id ; j++);
             JsonObject jsonObject = jsonArray.get(j).getAsJsonObject();

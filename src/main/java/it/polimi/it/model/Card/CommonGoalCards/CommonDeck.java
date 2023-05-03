@@ -7,7 +7,7 @@ public class CommonDeck {
 
     /**
      * createCards instantiates the two commonGoalCards that we need for the game.
-     * @param id1 is an identification code e says to the method what is the commonCard1 of the play.
+     * @param id1 is an identification code e says to the method what is the commonCard1 of the game.
      * @param id2 is the identification code of the commonCard2
      */
     public void createCards(int id1, int id2){
@@ -49,10 +49,18 @@ public class CommonDeck {
         }
     }
 
+    /**
+     * Getter method for the first CommonGoalCard of the game
+     * @return CommonGoalCard1
+     */
     public CommonGoalCard getCommonCard1(){
         return commonCard1;
     }
 
+    /**
+     * Getter method for the second CommonGoalCard of the game
+     * @return CommonGoalCard2
+     */
     public CommonGoalCard getCommonCard2(){
         return commonCard2;
     }

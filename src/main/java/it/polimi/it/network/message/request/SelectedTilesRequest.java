@@ -11,7 +11,7 @@ public class SelectedTilesRequest extends Payload {
 
     List<Tile> choosenTiles;
 
-    public SelectedTilesRequest(MessageType messageType, List<Tile> choosenTiles) {
+    public SelectedTilesRequest( List<Tile> choosenTiles) {
         this.choosenTiles = choosenTiles;
     }
 

@@ -20,6 +20,10 @@ public class CommonGroup1 extends CommonGoalCard{
     private List<Tile> white;
     private List<Tile> green;
 
+    /**
+     * constructor of the CommonGroup1. We use the ArrayLists to save the tiles that are useful to reach the goal
+     * @param id is the identification code of the CommonGoalCard, in this group the option for the ids are 1 and 10
+     */
     public CommonGroup1(int id){
         super(id);
         this.pink = new ArrayList<Tile>(8);
@@ -30,12 +34,17 @@ public class CommonGroup1 extends CommonGoalCard{
         this.green = new ArrayList<Tile>(8);
     }
 
+    /**
+     * Method that check the goal of the CommonGoalCard
+     * @param shelfie is the shelfie that we need to check
+     * @return true or false
+     */
     public Boolean checkGoal(Shelfie shelfie){
         int column,row,i;
         Gson gson = new Gson();
 
         try{
-            JsonReader reader = new JsonReader(new FileReader("src/main/java/it/polimi/it/model/Card/CommonGoalCards/CommonGroup1.json"));
+            JsonReader reader = new JsonReader(new FileReader("CommonGroup1.json"));
             JsonArray jsonArray = gson.fromJson(reader, JsonArray.class);
             for(i=0; jsonArray.get(i).getAsJsonObject().get("id").getAsInt() != id ; i++);
             JsonObject jsonObject= jsonArray.get(i).getAsJsonObject();
