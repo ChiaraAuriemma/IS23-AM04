@@ -1,6 +1,5 @@
 package it.polimi.it.view;
 
-import it.polimi.it.controller.Lobby;
 import it.polimi.it.model.Tiles.Tile;
 
 import java.util.Scanner;
@@ -9,8 +8,42 @@ import static java.lang.System.out;
 
 
 
-public class cli {
+public class Cli {
     private Scanner scanner;
+    //public static final String ANSI_RESET = "\u001B[0m";
+
+    public static final String CYAN_BACKGROUND = "\u001B[46m";
+    public static final String BLUE_BACKGROUND = "\u001B[44m";
+    public static final String PINK_BACKGROUND = "\u001B[45m";
+    public static final String WHITE_BACKGROUND = "\u001B[47m";
+    public static final String YELLOW_BACKGROUND = "\u001B[43m";
+    public static final String GREEN_BACKGROUND = "\u001B[42m";
+   // public static final String CYAN_BACKGROUND = "\u001B[46m";
+
+
+/*
+    BLACK	\u001B[30m	BLACK_BACKGROUND	\u001B[40m
+    RED	\u001B[31m	RED_BACKGROUND	\u001B[41m
+    GREEN	\u001B[32m	GREEN_BACKGROUND	\u001B[42m
+    YELLOW	\u001B[33m	YELLOW_BACKGROUND	\u001B[43m
+    BLUE	\u001B[34m	BLUE_BACKGROUND	\u001B[44m
+    PURPLE	\u001B[35m	PURPLE_BACKGROUND	\u001B[45m
+    CYAN	\u001B[36m	CYAN_BACKGROUND	\u001B[46m
+    WHITE	\u001B[37m	WHITE_BACKGROUND	\u001B[47m
+
+    BLACK	\u001B[30m	BLACK_BACKGROUND	\u001B[40m
+    RED	\u001B[31m	RED_BACKGROUND	\u001B[41m
+    GREEN	\u001B[32m	GREEN_BACKGROUND	\u001B[42m
+    YELLOW	\u001B[33m	YELLOW_BACKGROUND	\u001B[43m
+    BLUE	\u001B[34m	BLUE_BACKGROUND	\u001B[44m
+    PURPLE	\u001B[35m	PURPLE_BACKGROUND	\u001B[45m
+    CYAN	\u001B[36m	CYAN_BACKGROUND	\u001B[46m
+    WHITE	\u001B[37m	WHITE_BACKGROUND	\u001B[47m
+
+    */
+
+
+
 
     public void Title() {
         String title =  "▒█▀▄▀█ █░░█ 　 ▒█▀▀▀█ █░░█ █▀▀ █░░ █▀▀ ░▀░ █▀▀ \n" +
@@ -134,14 +167,14 @@ public class cli {
                     out.print(j-1);
                 } else{
                     switch (matrix[i-1][j-1].getColor()){
-                        case "GREEN": out.print("G");
-                        case "BLUE": out.print("B");
-                        case "PINK": out.print("P");
-                        case "YELLOW": out.print("Y");
-                        case "CYAN": out.print("C");
-                        case "WHITE": out.print("W");
+                        case "GREEN": out.print(GREEN_BACKGROUND);
+                        case "BLUE": out.print(BLUE_BACKGROUND);
+                        case "PINK": out.print(PINK_BACKGROUND);
+                        case "YELLOW": out.print(YELLOW_BACKGROUND);
+                        case "CYAN": out.print(CYAN_BACKGROUND);
+                        case "WHITE": out.print(WHITE_BACKGROUND);
                         case "XTILE": out.print(" ");
-                        case "DEFALT": out.print(" ");
+                        case "DEFAULT": out.print(" ");
                     }
                 }
             }
