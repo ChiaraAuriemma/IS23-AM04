@@ -13,6 +13,7 @@ import java.util.HashMap;
 public class View {
     private HashMap<User, Tile[][]> playersShelfies = new HashMap<>();
     private HashMap<User, Integer> playersPoints = new HashMap<>();
+    private HashMap<User, String> playersNicknames = new HashMap<>();
     private Tile[][] playersPersonalCard;
     private ArrayList<User> order;
     private Tile[][] board = new Tile[9][9];
@@ -22,6 +23,10 @@ public class View {
 
     public void setPlayersShelfiesView(User player, Tile[][] shelfie){
         playersShelfies.put(player, shelfie);
+    }
+
+    public void setPlayersNicknamesView(User player){
+        playersNicknames.put(player, player.getNickname());
     }
 
     public void setPlayersPointsView(User player, int points){
