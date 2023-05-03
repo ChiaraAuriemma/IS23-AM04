@@ -2,6 +2,7 @@ package it.polimi.it.network.client;
 
 import it.polimi.it.model.Tiles.Tile;
 import it.polimi.it.model.User;
+import it.polimi.it.network.message.ErrorMessage;
 import it.polimi.it.network.message.Message;
 import it.polimi.it.network.message.MessageType;
 import it.polimi.it.network.message.request.*;
@@ -126,6 +127,10 @@ public class ClientTCP {
                 case FINALPOINTS:
                     FinalPointsMessage finalPointsMessage = (FinalPointsMessage) response.getPayload();
                     //view : passo la lista degli utenti e la lista dei loro punteggi
+
+                case ERROR:
+                    ErrorMessage errorMessage = (ErrorMessage) response.getPayload();
+                    // il messaggio d'errore contiene la stringa error implementare la gestione dei vari errori
             }
         }
     }

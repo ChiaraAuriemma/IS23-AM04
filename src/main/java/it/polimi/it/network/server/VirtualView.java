@@ -64,12 +64,7 @@ public class VirtualView {
 
                 StartOrderMessage startOrderMessage = new StartOrderMessage(order);
                 Message message = new Message(MessageType.STARTORDERPLAYER, startOrderMessage);
-                try {
-                    userTCP.get(user).writeObject(message);
-                    userTCP.get(user).flush();
-                } catch (IOException e) {
-                    System.out.println(e.getMessage());
-                }
+                sendTCPMessage(userTCP.get(user), message);
 
             }else if(typeOfConnection.get(game.getPlayer(i)).equals("RMI")){
                 //sviluppo in RMI
@@ -87,12 +82,7 @@ public class VirtualView {
 
                 InitialMatrixMessage initialMatrixMessage = new InitialMatrixMessage(matrix);
                 Message message = new Message(MessageType.INITIALMATRIX, initialMatrixMessage);
-                try {
-                    userTCP.get(user).writeObject(message);
-                    userTCP.get(user).flush();
-                } catch (IOException e) {
-                    System.out.println(e.getMessage());
-                }
+                sendTCPMessage(userTCP.get(user), message);
 
             } else if (typeOfConnection.get(game.getPlayer(i)).equals("RMI")) {
                 //sviluppo in RMI
@@ -108,12 +98,7 @@ public class VirtualView {
 
                 DrawnCommonCardsMessage drawnCommonCardsMessage = new DrawnCommonCardsMessage(card1,card2,commonToken1,commonToken2);
                 Message message = new Message(MessageType.DRAWNCOMMONCARDS, drawnCommonCardsMessage);
-                try {
-                    userTCP.get(user).writeObject(message);
-                    userTCP.get(user).flush();
-                } catch (IOException e) {
-                    System.out.println(e.getMessage());
-                }
+                sendTCPMessage(userTCP.get(user), message);
 
             } else if (typeOfConnection.get(user).equals("RMI")) {
                 //sviluppo in RMI
@@ -127,12 +112,7 @@ public class VirtualView {
 
             DrawnPersonalCardMessage drawnPersonalCardMessage = new DrawnPersonalCardMessage(card);
             Message message = new Message(MessageType.DRAWNPERSONALCARD,drawnPersonalCardMessage);
-            try {
-                userTCP.get(user).writeObject(message);
-                userTCP.get(user).flush();
-            } catch (IOException e) {
-                System.out.println(e.getMessage());
-            }
+            sendTCPMessage(userTCP.get(user), message);
 
         } else if (typeOfConnection.get(user).equals("RMI")) {
             //sviluppo in RMI
@@ -147,12 +127,7 @@ public class VirtualView {
 
             StartTurnMessage startTurnMessage = new StartTurnMessage(maxValueofTiles);
             Message message = new Message(MessageType.STARTTURN,startTurnMessage);
-            try {
-                userTCP.get(user).writeObject(message);
-                userTCP.get(user).flush();
-            } catch (IOException e) {
-                System.out.println(e.getMessage());
-            }
+            sendTCPMessage(userTCP.get(user), message);
 
         } else if (typeOfConnection.get(user).equals("RMI")) {
             //sviluppo in RMI
@@ -163,12 +138,7 @@ public class VirtualView {
 
                 TakeableTilesResponse takeableTilesResponse = new TakeableTilesResponse(choosableTilesList);
                 Message response = new Message(MessageType.TAKEABLETILES , takeableTilesResponse);
-                try {
-                    userTCP.get(user).writeObject(response);
-                    userTCP.get(user).flush();
-                } catch (IOException e) {
-                    System.out.println(e.getMessage());
-                }
+                sendTCPMessage(userTCP.get(user), response);
 
 
         }else if(typeOfConnection.get(user).equals("RMI")){
@@ -184,12 +154,7 @@ public class VirtualView {
 
             PossibleColumnsResponse possibleColumnsResponse = new PossibleColumnsResponse(choosableColumns);
             Message response = new Message(MessageType.POSSIBLECOLUMNS , possibleColumnsResponse);
-            try {
-                userTCP.get(user).writeObject(response);
-                userTCP.get(user).flush();
-            } catch (IOException e) {
-                System.out.println(e.getMessage());
-            }
+            sendTCPMessage(userTCP.get(user), response);
 
 
         }else if(typeOfConnection.get(user).equals("RMI")){
@@ -205,12 +170,7 @@ public class VirtualView {
 
                 ShelfieUpdateMessage shelfieUpdateMessage = new ShelfieUpdateMessage(user, column, chosen);
                 Message message = new Message(MessageType.SHELFIEUPDATE, shelfieUpdateMessage);
-                try {
-                    userTCP.get(receiver).writeObject(message);
-                    userTCP.get(receiver).flush();
-                } catch (IOException e) {
-                    System.out.println(e.getMessage());
-                }
+                sendTCPMessage(userTCP.get(receiver), message);
 
             } else if (typeOfConnection.get(receiver).equals("RMI")) {
                 //sviluppo in RMI
@@ -226,12 +186,7 @@ public class VirtualView {
 
                 BoardUpdateMessage boardUpdateMessage = new BoardUpdateMessage(matrix);
                 Message message = new Message(MessageType.BOARDUPDATE, boardUpdateMessage);
-                try {
-                    userTCP.get(receiver).writeObject(message);
-                    userTCP.get(receiver).flush();
-                } catch (IOException e) {
-                    System.out.println(e.getMessage());
-                }
+                sendTCPMessage(userTCP.get(receiver), message);
 
             } else if (typeOfConnection.get(receiver).equals("RMI")) {
                 //sviluppo in RMI
@@ -247,13 +202,7 @@ public class VirtualView {
 
                 PointsUpdateMessage pointsUpdateMessage = new PointsUpdateMessage(user,point,commonToken1,commonToken2);
                 Message message = new Message(MessageType.POINTSUPDATE, pointsUpdateMessage);
-                try {
-                    userTCP.get(receiver).writeObject(message);
-                    userTCP.get(receiver).flush();
-
-                } catch (IOException e) {
-                    System.out.println(e.getMessage());
-                }
+                sendTCPMessage(userTCP.get(receiver), message);
 
             } else if (typeOfConnection.get(receiver).equals("RMI")) {
                 //sviluppo in RMI
@@ -269,13 +218,7 @@ public class VirtualView {
 
                 EndTokenTakenMessage endTokenTakenMessage = new EndTokenTakenMessage(user);
                 Message message = new Message(MessageType.ENDTOKEN, endTokenTakenMessage);
-                try {
-                    userTCP.get(receiver).writeObject(message);
-                    userTCP.get(receiver).flush();
-
-                } catch (IOException e) {
-                    System.out.println(e.getMessage());
-                }
+                sendTCPMessage(userTCP.get(receiver), message);
 
             } else if (typeOfConnection.get(receiver).equals("RMI")) {
                 //sviluppo in RMI
@@ -292,17 +235,24 @@ public class VirtualView {
 
                 FinalPointsMessage finalPointsMessage = new FinalPointsMessage(users,points);
                 Message message = new Message(MessageType.FINALPOINTS, finalPointsMessage);
-                try {
-                    userTCP.get(receiver).writeObject(message);
-                    userTCP.get(receiver).flush();
-
-                } catch (IOException e) {
-                    System.out.println(e.getMessage());
-                }
+                sendTCPMessage(userTCP.get(receiver), message);
 
             } else if (typeOfConnection.get(receiver).equals("RMI")) {
                 //sviluppo in RMI
             }
         }
+    }
+
+    public void sendTCPMessage(ObjectOutputStream out, Message message){
+
+        synchronized (out){
+            try {
+                out.writeObject(message);
+                out.flush();
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+
     }
 }
