@@ -1,12 +1,10 @@
 package it.polimi.it.model.Tiles;
 
-import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
 
 public class Tile implements Serializable {
 
-    @Serial
     private static final long serialVersionUID = 479529136617934717L;
     /**
      * The color of the tile, taken from the Enumeration PossibleColors

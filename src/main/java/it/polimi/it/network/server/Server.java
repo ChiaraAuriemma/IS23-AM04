@@ -52,7 +52,7 @@ public class Server {
     public void gameInitialization(User user){
         String type = typeOfConnection.get(user);
         if(type.equals("RMI")){
-            RMIImplementation
+           // RMIImplementation
         }
     }
 

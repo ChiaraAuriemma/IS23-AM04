@@ -16,15 +16,15 @@ public class View {
     private HashMap<User, String> playersNicknames = new HashMap<>();
     private Tile[][] playersPersonalCard;
     private ArrayList<User> order;
-    private Tile[][] board = new Tile[9][9];
+    private String[][] board = new String[9][9];
     //private Tile[][] highlightedBoard = new Tile[9][9];
     private String common1;
     private String common1SecondPart;
     private String common2;
     private String common2SecondPart;
 
-    private final String firstLine = "╔═══════════════════════════════════════════════════════════════╗";//1
-    private final String blankLine = "║                                                               ║"; //2, 3, 5, 20, 54
+    public final String firstLine = "╔═══════════════════════════════════════════════════════════════╗";//1
+    private final String blankLine = "║                                                                ║"; //2, 3, 5, 20, 54
     private final String lastLine =  "╚═══════════════════════════════════════════════════════════════╝";//55
     private final String border = "║";
     private final String chatBoxUp =    "┌────────────────────────────────┐";
@@ -32,11 +32,17 @@ public class View {
     private final String blankChatLine= "│                                │";
     private final String chatBoxDown =  "└────────────────────────────────┘";
 
-    private final String noPlayer = "           ";
+    private final String noPlayer = "            ";
+    private static final String colorReset = "\u001B[0m";
+
     private String namesLine;//line 4
     private String pointsLine;//Line 21
     private int numPlayers;
     private ArrayList<String> names;
+
+    public View(){
+        return;
+    }
 
     public void setPaddedNames(){
         for (User user : order) {
@@ -112,8 +118,20 @@ public class View {
     public void setBoardView(Tile[][] matrix){
         for (int i=0; i<9; i++){
             for (int j=0; j<9; j++){
-                board[i][j] = new Tile(PossibleColors.valueOf(matrix[i][j].getColor()));
+                board[i][j] = colorPicker(matrix[i][j].getColor());
             }
+        }
+    }
+
+    private String colorPicker(String color) {
+        switch (color){
+            case "CYAN":return"\u001B[46m  ";
+            case "BLUE":return"\u001B[44m  ";
+            case "GREEN":return"\u001B[42m  ";
+            case "PINK":return"\u001B[45m  ";
+            case "YELLOW":return"\u001B[43m  ";
+            case "WHITE":return"\u001B[47m  ";
+            default:return"\u001B[49m  ";
         }
     }
 
@@ -129,35 +147,62 @@ public class View {
     }
 
     public String commonDescription(int id) {
-        return switch (id) { // stringhe lunghe 48 caselle
-            case 1 ->  "Two groups each containing 4 tiles of the same ";
-            case 2 ->  "Two columns each formed by 6  different types  ";
-            case 3 ->  "Four groups each containing at least 4 tiles of";
-            case 4 ->  "Six groups each containing at least 2 tiles of ";
-            case 5 ->  "Three columns each formed by 6 tiles of        ";
-            case 6 ->  "Two lines each formed by 5 different types     ";
-            case 7 ->  "Four lines each formed by 5 tiles of maximum   ";
-            case 8 ->  "Four tiles of the same type in the four corners";
-            case 9 ->  "Eight tiles of the same type. There’s no       ";
-            case 10 -> "Five tiles of the same type forming an X.      ";
-            case 11 -> "Five tiles of the same type forming a diagonal.";
-            case 12 -> "Five columns of increasing or decreasing       ";
-            default -> null;
-        };
+        // stringhe lunghe 48 caselle
+        switch (id) {
+            case 1:
+                return "Two groups each containing 4 tiles of the same ";
+            case 2:
+                return "Two columns each formed by 6  different types  ";
+            case 3:
+                return "Four groups each containing at least 4 tiles of";
+            case 4:
+                return "Six groups each containing at least 2 tiles of ";
+            case 5:
+                return "Three columns each formed by 6 tiles of        ";
+            case 6:
+                return "Two lines each formed by 5 different types     ";
+            case 7:
+                return "Four lines each formed by 5 tiles of maximum   ";
+            case 8:
+                return "Four tiles of the same type in the four corners";
+            case 9:
+                return "Eight tiles of the same type. There’s no       ";
+            case 10:
+                return "Five tiles of the same type forming an X.      ";
+            case 11:
+                return "Five tiles of the same type forming a diagonal.";
+            case 12:
+                return "Five columns of increasing or decreasing       ";
+            default:
+                return null;
+        }
     }
     public String commonDescriptionSecondPart(int id) {
-        return switch (id) {
-            case 1 ->      "type in a 2x2 square.                          ";
-            case 2, 6 ->   "of tiles.                                      ";
-            case 3, 4 ->   "the same type that may differ for each group.  ";
-            case 5 ->      "maximum three different types.                 ";
-            case 7 ->      "three different types.                         ";
-            case 8 ->      "of the bookshelf.                              ";
-            case 9 ->      "restriction about the position of these tiles. ";
-            case 10, 11 -> "                                               ";
-            case 12 ->     "height from the left to the right.             ";
-            default -> null;
-        };
+        switch (id) {
+            case 1:
+                return "type in a 2x2 square.                          ";
+            case 2:
+            case 6:
+                return "of tiles.                                      ";
+            case 3:
+            case 4:
+                return "the same type that may differ for each group.  ";
+            case 5:
+                return "maximum three different types.                 ";
+            case 7:
+                return "three different types.                         ";
+            case 8:
+                return "of the bookshelf.                              ";
+            case 9:
+                return "restriction about the position of these tiles. ";
+            case 10:
+            case 11:
+                return "                                               ";
+            case 12:
+                return "height from the left to the right.             ";
+            default:
+                return null;
+        }
     }
 }
 

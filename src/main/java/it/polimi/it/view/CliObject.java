@@ -1,4 +1,4 @@
-package it.polimi.it.view;
+/*package it.polimi.it.view;
 
 public enum CliObject{
 
@@ -16,3 +16,4 @@ public enum CliObject{
         return this.object;
     }
 }
+*/

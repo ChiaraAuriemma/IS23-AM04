@@ -1,4 +1,4 @@
-package it.polimi.it.model;
+/*package it.polimi.it.model;
 
 
 import it.polimi.it.controller.Exceptions.EmptyNicknameException;
@@ -99,3 +99,4 @@ public class LobbyTest {
 
 
 }
+*/

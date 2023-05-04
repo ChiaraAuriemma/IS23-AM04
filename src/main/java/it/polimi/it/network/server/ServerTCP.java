@@ -46,7 +46,7 @@ public class ServerTCP {
                 e.printStackTrace();
             }
         }
-        executor.shutdown();
+        //executor.shutdown();  TOLTO PER MOTIVI DI TEST
     }
 
     public Socket getUserTCP(User user) throws NotTcpUserException {

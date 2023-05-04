@@ -1,9 +1,6 @@
 package it.polimi.it.network.client;
 
-import it.polimi.it.controller.Exceptions.ExistingNicknameException;
-import it.polimi.it.controller.Exceptions.IllegalValueException;
-import it.polimi.it.controller.Exceptions.InvalidIDException;
-import it.polimi.it.controller.Exceptions.WrongPlayerException;
+import it.polimi.it.controller.Exceptions.*;
 import it.polimi.it.model.Exceptions.WrongListException;
 import it.polimi.it.model.Tiles.Tile;
 import it.polimi.it.model.User;
@@ -97,6 +94,8 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientRMI {
             //view : non è il turno di questo giocatore
         }catch (WrongListException e){
             //view : il numero di tiles non è valido in base agli spazi rimasti liberi
+        } catch (WrongTurnException e) {
+           // throw new RuntimeException(e);
         }
     }
 

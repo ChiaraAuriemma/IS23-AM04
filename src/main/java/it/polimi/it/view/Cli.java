@@ -163,15 +163,15 @@ asciiart.club
         out.println(message);
         int response = readInt();
 
-        while(/*controlla se l'ID esiste*/){
+       // while(/*controlla se l'ID esiste*/){
             //nel messaggio che mando per controllare l'id, se è valido joino!
-            )
+         //   ){
 
             String messageRetry = "You can't join this Game! Retry with another ID... ";
             out.println(messageRetry);
             response = readInt();
-        }
-        return;
+       // }
+
     }
 
     public void Create() {

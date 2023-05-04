@@ -5,12 +5,10 @@ import it.polimi.it.model.Exceptions.InvalidTileException;
 import it.polimi.it.model.Exceptions.WrongListException;
 import it.polimi.it.model.Tiles.Tile;
 
-import java.io.Serial;
 import java.io.Serializable;
 import java.util.List;
 
 public class User implements Serializable {
-    @Serial
     private static final long serialVersionUID = 8107849055941758371L;
     private Board board;
     private Shelfie shelf;
