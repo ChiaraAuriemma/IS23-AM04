@@ -10,6 +10,9 @@ import it.polimi.it.model.User;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
+
+import static java.lang.System.out;
 
 public class View {
     private HashMap<User, Tile[][]> playersShelfies = new HashMap<>();
@@ -40,7 +43,8 @@ public class View {
     private String pointsLine;//Line 21
     private int numPlayers;
     private ArrayList<String> names;
-
+    private List<List<Tile>> choosableTilesList;
+    
 
     public View(){
         return;
@@ -277,18 +281,81 @@ public class View {
                 return null;
         }
     }
+    
+    public void takeableTiles(List<List<Tile>> choosableTilesList) {
+        this.choosableTilesList = choosableTilesList;
+    }
 
+    public void askNickname() {
+        out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+        Title();
+        out.println("\n");
+        out.println("Welcome to My Shelfie!");
+        out.println("\n\n\n");
+        out.println("Please submit your nickname! ");
+        
+    }
+
+
+    public void Title() {
+        String title =  "     ▒█▀▄▀█ █▒ █ 　 ▒█▀▀▀█ █░ █ █▀▀ █▒░ █▀▀ ░▀░ █▀▀\n" +
+                        "     ▒█▒█░█ █▄▄█ 　 ░▀▀▀▄▄ █▀▀█ █▀▀ █▒░ █▀▀ ▀█▀ █▀▀\n" +
+                        "     ▒█░░░█ ▄▄▄█ 　 ▒█▄▄▄█ ▀░ ▀ ▀▀▀ ▀▀▀ ▀░  ▀▀▀ ▀▀▀\n";
+        out.println(title);
+    }
+
+    public void askNicknameAgain() {
+        out.println("This nickname is already taken, try with another one! ");
+    }
+
+    public void joinOrCreate(String clientInput) {
+        out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+        Title();
+        out.println("\n");
+        out.println("Welcome to My Shelfie, " + clientInput + "!");
+        out.println("\n\n\n");
+        out.println("Do you want to join or create a new Game? ");
+    }
+
+    public void askNumPlayerAgain() {
+
+        out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+        Title();
+
+        out.println("\n\n\n");
+        out.println("Retry! You must insert a number between 2 and 4... ");
+    }
+
+    public void askIDAgain() {
+        out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+        Title();
+
+        out.println("\n\n\n");
+        out.println("Retry! You must insert a valid GameID... ");
+    }
+
+    public void askCreate() {
+        out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+        Title();
+
+        out.println("\n\n\n");
+        out.println("Insert a number between 2 and 4 to choose how many players can play... ");
+    }
+
+    public void askJoin() {
+        out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+        Title();
+
+        out.println("\n\n\n");
+        out.println("Insert the ID of the Game you'd like to play... ");
+    }
+
+
+
+    public void askNumTilesAgain() {
+    }
+
+    public void askColumnAgain() {
+    }
 
 }
-
-
-/*
-* calcs:
-*
-* Shelfie: 5col X 6righe -> 10 x 12
-*   + grid -> 12 x 14
-*   riga shelfie: 1 + 4 + 12 + 16 + 12 + 16 + 12 + 16 + 12 + 4 + 1
-*
-* Common: 48 chars
-*   riga common -> 1 + 2 + 48 + 4 + 48 + 2 + 1 = 106
-* */

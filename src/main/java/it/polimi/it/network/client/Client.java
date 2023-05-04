@@ -22,10 +22,10 @@ public class Client {
         JsonReader jsonReader = new JsonReader( new FileReader("src/main/java/it/polimi/it/network/ServerConfig.json"));
         JsonObject jsonObject = gson.fromJson(jsonReader,JsonObject.class);
 
-        if(inputLine == "TCP"){
+        if(inputLine.equals("TCP")){
             ClientTCP clientTCP = new ClientTCP(jsonObject.get("portTCP").getAsInt(),jsonObject.get("ip").getAsString());
             clientTCP.startClient();
-        }else if(inputLine == "RMI"){
+        }else if(inputLine.equals("RMI") ){
             ClientRMIApp clientRMIApp = new ClientRMIApp(jsonObject.get("portRMI").getAsInt(),jsonObject.get("ip").getAsString());
             clientRMIApp.startClient();
         }

@@ -61,7 +61,7 @@ public class VirtualView {
     }
 
     //metodi di inizio partita
-    public void startOrder(ArrayList<User> order){
+    public void startOrder(ArrayList<User> order){//->da mandare a tutti
         for (int i=0; i < game.getNumplayers(); i++){
             User user = game.getPlayer(i);
 
@@ -72,14 +72,17 @@ public class VirtualView {
                 sendTCPMessage(userTCP.get(user), message);
 
             }else if(typeOfConnection.get(game.getPlayer(i)).equals("RMI")){
-                setStartOrder(order);
+
+                //////////////////////
+                ClientRMI clientRMI = userRMI.get(user);
+                clientRMI.setStartOrder(order);
             }
 
         }
     }
 
     //mando la matrice iniziale e la lista dei token
-    public void initialMatrix(Tile[][] matrix){
+    public void initialMatrix(Tile[][] matrix){//da mandare a tutti
         for (int i=0; i < game.getNumplayers(); i++) {
             User user = game.getPlayer(i);
 
@@ -91,7 +94,9 @@ public class VirtualView {
 
             } else if (typeOfConnection.get(game.getPlayer(i)).equals("RMI")) {
                 //sviluppo in RMI
-                setNewBoard(matrix);
+
+                ClientRMI clientRMI = userRMI.get(user);
+                clientRMI.setNewBoard(matrix);
             }
         }
     }
@@ -108,7 +113,9 @@ public class VirtualView {
 
             } else if (typeOfConnection.get(user).equals("RMI")) {
                 //sviluppo in RMI
-                setNewCommon(card1, card2);
+
+                ClientRMI clientRMI = userRMI.get(user);
+                clientRMI.setNewCommon(card1, card2);
             }
         }
     }
@@ -123,6 +130,9 @@ public class VirtualView {
 
         } else if (typeOfConnection.get(user).equals("RMI")) {
             //sviluppo in RMI
+
+            ClientRMI clientRMI = userRMI.get(user);
+            clientRMI.setNewPersonal(card);
         }
     }
 
@@ -140,6 +150,8 @@ public class VirtualView {
             //sviluppo in RMI
         }
     }
+
+
     public void takeableTiles(User user, List<List<Tile>> choosableTilesList){
         if(typeOfConnection.get(user).equals("TCP")){
 
@@ -182,7 +194,9 @@ public class VirtualView {
 
             } else if (typeOfConnection.get(receiver).equals("RMI")) {
                 //sviluppo in RMI
-                ClientRMIApp.setNewShelfie(receiver,receiver.getShelfie());
+
+                ClientRMI clientRMI = userRMI.get(user);
+                clientRMI.setNewShelfie(receiver,receiver.getShelfie());
             }
         }
     }
@@ -199,7 +213,9 @@ public class VirtualView {
 
             } else if (typeOfConnection.get(receiver).equals("RMI")) {
                 //sviluppo in RMI
-                setNewBoard(matrix);
+
+                ClientRMI clientRMI = userRMI.get(receiver);
+                clientRMI.setNewBoard(matrix);
             }
         }
     }
@@ -216,7 +232,9 @@ public class VirtualView {
 
             } else if (typeOfConnection.get(receiver).equals("RMI")) {
                 //sviluppo in RMI
-                setNewPoints(user,points);
+
+                ClientRMI clientRMI = userRMI.get(user);
+                clientRMI.setNewPoints(user,points);
             }
         }
     }

@@ -3,6 +3,7 @@ package it.polimi.it.network.client;
 import it.polimi.it.controller.Exceptions.*;
 import it.polimi.it.model.Board.Board;
 import it.polimi.it.model.Card.CommonGoalCards.CommonGoalCard;
+import it.polimi.it.model.Card.PersonalGoalCards.PersonalGoalCard;
 import it.polimi.it.model.Exceptions.WrongListException;
 import it.polimi.it.model.Shelfie;
 import it.polimi.it.model.Tiles.Tile;
@@ -20,15 +21,20 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class ClientRMIApp extends UnicastRemoteObject implements ClientRMI {
     private int port;
     private String ip;
     private Registry registry;
     private ServerRMI sr;
+    private boolean nickOK = false;
 
     private User user;
     private View view;
+    private Scanner scanner;
+
+
     public ClientRMIApp(int port, String ip) throws RemoteException {
         this.port = port;
         this.ip = ip;
@@ -50,18 +56,69 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientRMI {
         //view : passo come parametro di start client un riferimento alla view che voglio usare
 
         BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
-        String clientInput;
+        String clientInput = " ";
         //view : do la possibilità all'utente di inserire un nickname
         view.askNickname();
 
+
         try {
-            clientInput = stdIn.readLine();
-            login(clientInput);
+            while (!nickOK){
+                clientInput = stdIn.readLine();
+                login(clientInput);
+            }
             //view: mostro la scelta tra creategame e joingame
-            view.joinOrCreate();
+            joinOrCreate(clientInput);
             // delego in base alla scelta che fa la view al metodo create o join
             //appena mi arriva startgame dal server avvio la partita
         } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void joinOrCreate(String clientInput) throws IOException {
+        BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
+        String response = " ";
+
+        view.joinOrCreate(clientInput);
+
+        while (!response.equals("create") && !response.equals("join") && !response.equals("Create")  &&
+                !response.equals("CREATE") && !response.equals("JOIN") && !response.equals("Join")){
+
+            try {
+                response = stdIn.readLine();
+
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        if(response.equals("create") || response.equals("Create")  || response.equals("CREATE") ){
+            askJoinGame();
+        } else{
+            askCreateGame();
+        }
+
+    }
+
+    private void askCreateGame() throws IOException {
+        view.askCreate();
+        this.scanner = new Scanner(System.in);
+        int response;
+        try{
+            response = scanner.nextInt();
+            createGame(response);
+        }catch (IOException e){
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private void askJoinGame() {
+        view.askJoin();
+        this.scanner = new Scanner(System.in);
+        int response;
+        try{
+            response = scanner.nextInt();
+            joinGame(response);
+        }catch (IOException e){
             System.out.println(e.getMessage());
         }
     }
@@ -77,27 +134,6 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientRMI {
 
     }
 
-    public void setNewShelfie(User user, Shelfie shelfie){
-        view.setPlayersShelfiesView(user, shelfie.getShelf());
-    }
-
-    public void setNewBoard(Board matrix){
-        view.setBoardView(matrix.getMatrix());
-    }
-
-    public void setNewPoints(User user, int points){
-        view.setPlayersPointsView(user, points);
-    }
-
-
-    public void setStartOrder(ArrayList<User> order){
-        view.setOrderView(order);
-    }
-
-    public void setNewCommon(CommonGoalCard card1, CommonGoalCard card2){
-        view.setCommon1View(card1);
-        view.setCommon2View(card2);
-    }
 
     public void createGame(int playerNumber) throws RemoteException {
         try{
@@ -105,18 +141,32 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientRMI {
         } catch (WrongPlayerException e) {
             //view : notifico alla view che il numero di giocatori inseriti non è corretto
             view.askNumPlayerAgain();
+            this.scanner = new Scanner(System.in);
+            int response;
+            try {
+                response = scanner.nextInt();
+                createGame(response);
+            } catch (IOException f) {
+                System.out.println(f.getMessage());
+            }
+
         }
     }
 
     public void joinGame(int gameID) throws RemoteException {
         try{
             sr.joinGame(user,gameID);
-        }catch (InvalidIDException e) {
-            //view : notifico alla view che l'id non è corretto
+        }catch (InvalidIDException | WrongPlayerException e) {
+
             view.askIDAgain();
-        }catch (WrongPlayerException e){
-            //view : notifico alla view che ci sono già troppi player
-            view.askIDAgain();
+            this.scanner = new Scanner(System.in);
+            int response;
+            try {
+                response = scanner.nextInt();
+                joinGame(response);
+            } catch (IOException f) {
+                System.out.println(f.getMessage());
+            }
         }
     }
 
@@ -155,12 +205,41 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientRMI {
         }
     }
 
+
+
+    public void setNewShelfie(User user, Shelfie shelfie){
+        view.setPlayersShelfiesView(user, shelfie.getShelf());
+    }
+
+    public void setNewBoard(Tile[][] matrix){
+        view.setBoardView(matrix);
+    }
+
+    public void setNewPoints(User user, Integer points){
+        view.setPlayersPointsView(user, points);
+    }
+
+
+    public void setStartOrder(ArrayList<User> order){
+        view.setOrderView(order);
+    }
+
+    public void setNewCommon(CommonGoalCard card1, CommonGoalCard card2){
+        view.setCommon1View(card1);
+        view.setCommon2View(card2);
+    }
+
+
+    public void setNewPersonal(PersonalGoalCard card){
+        view.setPlayersPersonalCardView(card);
+    }
+
     //----------------------------------------------------------------------------------------------------------
     //metodi che chiama il server:
 
     public void takeableTiles(List<List<Tile>> choosableTilesList){
         //view : faccio vedere illuminate le tiles nella lista
-        view.takeableTiles();
+        view.takeableTiles(choosableTilesList);
     }
 
 }
