@@ -22,7 +22,7 @@ public class PersonalGoalCardsTest {
 
     @Before
     public void card(){
-        this.personalGoalCard = new PersonalGoalCard(1);
+        this.personalGoalCard = new PersonalGoalCard(12);
         this.shelfie = new Shelfie();
         this.bag = new TilesBag();
     }

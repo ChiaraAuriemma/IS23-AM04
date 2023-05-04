@@ -28,7 +28,7 @@ public class PersonalGoalCard {
     public PersonalGoalCard(int id){
         Gson gson = new Gson();
         try {
-            JsonReader reader = new JsonReader(new FileReader("PersonalGoalCards.json"));
+            JsonReader reader = new JsonReader(new FileReader("src/main/resources/PersonalGoalCards.json"));
             JsonArray jsonArray = gson.fromJson(reader, JsonArray.class);
             JsonObject jsonObject = jsonArray.get(id-1).getAsJsonObject();
             pinkPos = jsonObject.getAsJsonArray("pinkPos");

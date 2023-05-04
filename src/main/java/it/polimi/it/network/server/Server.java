@@ -21,7 +21,7 @@ public class Server {
     public static void main(String[] args) throws FileNotFoundException, RemoteException, AlreadyBoundException {
         int portTCP, portRMI;
         Gson gson = new Gson();
-        JsonReader jsonReader = new JsonReader( new FileReader("ServerConfig.json"));
+        JsonReader jsonReader = new JsonReader( new FileReader("src/main/resources/ServerConfig.json"));
         JsonObject jsonObject = gson.fromJson(jsonReader,JsonObject.class);
 
 

@@ -34,7 +34,7 @@ public class CommonGroup2 extends CommonGoalCard{
         int numRight = 0;
         String cell1, cell2;
         try{
-            JsonReader reader = new JsonReader(new FileReader("CommonGroup2.json"));
+            JsonReader reader = new JsonReader(new FileReader("src/main/resources/CommonGroup2.json"));
             JsonArray jsonArray = gson.fromJson(reader, JsonArray.class);
             for(j=0; jsonArray.get(j).getAsJsonObject().get("id").getAsInt() != id ; j++);
             JsonObject jsonObject = jsonArray.get(j).getAsJsonObject();
