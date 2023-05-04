@@ -2,6 +2,7 @@ package it.polimi.it.view;
 
 import it.polimi.it.model.Card.CommonGoalCards.CommonGoalCard;
 import it.polimi.it.model.Card.PersonalGoalCards.PersonalGoalCard;
+import it.polimi.it.model.Shelfie;
 import it.polimi.it.model.Tiles.PossibleColors;
 import it.polimi.it.model.Tiles.Tile;
 import it.polimi.it.model.User;
@@ -23,9 +24,9 @@ public class View {
     private String common2;
     private String common2SecondPart;
 
-    public final String firstLine = "╔═══════════════════════════════════════════════════════════════╗";//1
-    private final String blankLine = "║                                                                ║"; //2, 3, 5, 20, 54
-    private final String lastLine =  "╚═══════════════════════════════════════════════════════════════╝";//55
+    public final String firstLine = "╔════════════════════════════════════════════════════════════════╗";//1
+    private final String blankLine= "║                                                                ║"; //2, 3, 5, 20, 54
+    private final String lastLine = "╚════════════════════════════════════════════════════════════════╝";//55
     private final String border = "║";
     private final String chatBoxUp =    "┌────────────────────────────────┐";
     private final String chatBorder=    "│";
@@ -40,16 +41,31 @@ public class View {
     private int numPlayers;
     private ArrayList<String> names;
 
+
     public View(){
         return;
     }
 
+
+    //METODI PER ORDINE E NICKNAME
+    public void setOrderView(ArrayList<User> order){
+        Collections.copy(this.order, order);
+        for (User user : order) {
+            setPlayersNicknamesView(user);
+        }
+        setPaddedNames();
+        pointInitializer();
+        shelfieInitializer();
+    }
+
+    public void setPlayersNicknamesView(User player){
+        playersNicknames.put(player, player.getNickname());
+    }
     public void setPaddedNames(){
         for (User user : order) {
             names.add(nickPadder(user.getNickname()));
         }
     }
-
     public String nickPadder(String nick){
         while(nick.length()<12){
             nick = nick.concat(" ");
@@ -57,6 +73,134 @@ public class View {
         return nick;
     }
 
+
+
+
+    ////METODI PER I PUNTI
+    private void pointInitializer() {
+        for (User user : order) {
+            playersPoints.put(user, "00");
+        }
+    }
+    public void setPlayersPointsView(User player, int points){
+        String pointString = pTS(points);
+        playersPoints.put(player, pointString);
+    }
+    private String pTS(int points) {
+        String pointString = Integer.toString(points);
+        if(pointString.length()==1){
+            pointString = " " + pointString;
+        }
+        return pointString;
+    }
+
+
+
+
+    //METODI PER LE SHELFIE
+    private void shelfieInitializer() {
+        for (User user : order) {
+            playersShelfies.put(user, new Shelfie().getShelf());
+        }
+    }
+    public void setPlayersShelfiesView(User player, Tile[][] shelfie){
+        playersShelfies.put(player, shelfie);
+    }
+
+
+
+
+
+
+    //METODI PERSONAL CARDS
+    public void setPlayersPersonalCardView(PersonalGoalCard card){
+        playersPersonalCard = new Tile[6][5];
+        for(int row=0; row<6; row++){
+            for(int column=0; column<5; column++){
+                playersPersonalCard[row][column] = new Tile(row, column, PossibleColors.DEFAULT);
+            }
+        }
+        playersPersonalCard[card.getCyanposRow()][card.getCyanposColumn()] = new Tile(PossibleColors.CYAN);
+        playersPersonalCard[card.getBlueposRow()][card.getBlueposColumn()] = new Tile(PossibleColors.BLUE);
+        playersPersonalCard[card.getPinkposRow()][card.getPinkposColumn()] = new Tile(PossibleColors.PINK);
+        playersPersonalCard[card.getYellowposRow()][card.getYellowposColumn()] = new Tile(PossibleColors.YELLOW);
+        playersPersonalCard[card.getGreenposRow()][card.getGreenposColumn()] = new Tile(PossibleColors.GREEN);
+        playersPersonalCard[card.getWhiteposRow()][card.getWhiteposColumn()] = new Tile(PossibleColors.WHITE);
+    }
+
+
+
+
+    //METODI COMMON CARDS
+    public void setCommon1View(CommonGoalCard card1){
+        int id1 = card1.getID();
+        common1 = commonDescription(id1);
+        common1SecondPart = commonDescriptionSecondPart(id1);
+    }
+    public void setCommon2View(CommonGoalCard card2){
+        int id2 = card2.getID();
+        common2 = commonDescription(id2);
+        common2SecondPart = commonDescriptionSecondPart(id2);
+    }
+
+
+
+
+    //MEDTODI BOARD
+    public void setBoardView(Tile[][] matrix){
+        for (int i=0; i<9; i++){
+            for (int j=0; j<9; j++){
+                board[i][j] = colorPicker(matrix[i][j].getColor());
+            }
+        }
+    }
+
+
+
+
+    //UTILS
+    private String colorPicker(String color) {
+        switch (color){
+            case "CYAN":return"\u001B[46m  ";
+            case "BLUE":return"\u001B[44m  ";
+            case "GREEN":return"\u001B[42m  ";
+            case "PINK":return"\u001B[45m  ";
+            case "YELLOW":return"\u001B[43m  ";
+            case "WHITE":return"\u001B[47m  ";
+            default:return"\u001B[49m  ";
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    //METODI CHE GESTISCONO CIO' CHE POI VIENE STAMPATO
     public void setNamesLine(){
         //Line 4
         switch (numPlayers){
@@ -74,77 +218,6 @@ public class View {
         }
     }
 
-
-    public void setPlayersShelfiesView(User player, Tile[][] shelfie){
-        playersShelfies.put(player, shelfie);
-    }
-
-    public void setPlayersNicknamesView(User player){
-        playersNicknames.put(player, player.getNickname());
-    }
-
-    public void setPlayersPointsView(User player, int points){
-        String pointString = pTS(points);
-        playersPoints.put(player, pointString);
-    }
-
-    private String pTS(int points) {
-        String pointString = Integer.toString(points);
-        if(pointString.length()==1){
-            pointString = " " + pointString;
-        }
-        return pointString;
-    }
-
-    public void SetOrderView(ArrayList<User> order){
-        Collections.copy(this.order, order);
-    }
-
-    public void setPlayersPersonalCardView(PersonalGoalCard card){
-        playersPersonalCard = new Tile[6][5];
-        for(int row=0; row<6; row++){
-            for(int column=0; column<5; column++){
-                playersPersonalCard[row][column] = new Tile(row, column, PossibleColors.DEFAULT);
-            }
-        }
-        playersPersonalCard[card.getCyanposRow()][card.getCyanposColumn()] = new Tile(PossibleColors.CYAN);
-        playersPersonalCard[card.getBlueposRow()][card.getBlueposColumn()] = new Tile(PossibleColors.BLUE);
-        playersPersonalCard[card.getPinkposRow()][card.getPinkposColumn()] = new Tile(PossibleColors.PINK);
-        playersPersonalCard[card.getYellowposRow()][card.getYellowposColumn()] = new Tile(PossibleColors.YELLOW);
-        playersPersonalCard[card.getGreenposRow()][card.getGreenposColumn()] = new Tile(PossibleColors.GREEN);
-        playersPersonalCard[card.getWhiteposRow()][card.getWhiteposColumn()] = new Tile(PossibleColors.WHITE);
-    }
-
-    public void setBoardView(Tile[][] matrix){
-        for (int i=0; i<9; i++){
-            for (int j=0; j<9; j++){
-                board[i][j] = colorPicker(matrix[i][j].getColor());
-            }
-        }
-    }
-
-    private String colorPicker(String color) {
-        switch (color){
-            case "CYAN":return"\u001B[46m  ";
-            case "BLUE":return"\u001B[44m  ";
-            case "GREEN":return"\u001B[42m  ";
-            case "PINK":return"\u001B[45m  ";
-            case "YELLOW":return"\u001B[43m  ";
-            case "WHITE":return"\u001B[47m  ";
-            default:return"\u001B[49m  ";
-        }
-    }
-
-    public void setCommon1View(CommonGoalCard card1){
-        int id1 = card1.getID();
-        common1 = commonDescription(id1);
-        common1SecondPart = commonDescriptionSecondPart(id1);
-    }
-    public void setCommon2View(CommonGoalCard card2){
-        int id2 = card2.getID();
-        common2 = commonDescription(id2);
-        common2SecondPart = commonDescriptionSecondPart(id2);
-    }
 
     public String commonDescription(int id) {
         // stringhe lunghe 48 caselle
@@ -204,6 +277,8 @@ public class View {
                 return null;
         }
     }
+
+
 }
 
 

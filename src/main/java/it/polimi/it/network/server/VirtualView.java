@@ -6,6 +6,7 @@ import it.polimi.it.model.Game;
 import it.polimi.it.model.Tiles.Tile;
 import it.polimi.it.model.User;
 import it.polimi.it.network.client.ClientRMI;
+import it.polimi.it.network.client.ClientRMIApp;
 import it.polimi.it.network.message.Message;
 import it.polimi.it.network.message.MessageType;
 import it.polimi.it.network.message.responses.*;
@@ -40,6 +41,10 @@ public class VirtualView {
     public void setGame(Game game){
         this.game = game;
     }
+
+
+
+    //
     public void setUser(User user){
         try {
             Socket socket = serverTCP.getUserTCP(user);
@@ -67,7 +72,7 @@ public class VirtualView {
                 sendTCPMessage(userTCP.get(user), message);
 
             }else if(typeOfConnection.get(game.getPlayer(i)).equals("RMI")){
-                //sviluppo in RMI
+                setStartOrder(order);
             }
 
         }
@@ -86,6 +91,7 @@ public class VirtualView {
 
             } else if (typeOfConnection.get(game.getPlayer(i)).equals("RMI")) {
                 //sviluppo in RMI
+                setNewBoard(matrix);
             }
         }
     }
@@ -102,6 +108,7 @@ public class VirtualView {
 
             } else if (typeOfConnection.get(user).equals("RMI")) {
                 //sviluppo in RMI
+                setNewCommon(card1, card2);
             }
         }
     }
@@ -175,7 +182,7 @@ public class VirtualView {
 
             } else if (typeOfConnection.get(receiver).equals("RMI")) {
                 //sviluppo in RMI
-                setNewShelfie(receiver,receiver.getShelfie());
+                ClientRMIApp.setNewShelfie(receiver,receiver.getShelfie());
             }
         }
     }

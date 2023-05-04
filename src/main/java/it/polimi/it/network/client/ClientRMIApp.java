@@ -2,6 +2,7 @@ package it.polimi.it.network.client;
 
 import it.polimi.it.controller.Exceptions.*;
 import it.polimi.it.model.Board.Board;
+import it.polimi.it.model.Card.CommonGoalCards.CommonGoalCard;
 import it.polimi.it.model.Exceptions.WrongListException;
 import it.polimi.it.model.Shelfie;
 import it.polimi.it.model.Tiles.Tile;
@@ -17,6 +18,7 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ClientRMIApp extends UnicastRemoteObject implements ClientRMI {
@@ -76,15 +78,25 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientRMI {
     }
 
     public void setNewShelfie(User user, Shelfie shelfie){
-        view.updateShelfie(user, shelfie);
+        view.setPlayersShelfiesView(user, shelfie.getShelf());
     }
 
     public void setNewBoard(Board matrix){
-        view.updateBoard(matrix);
+        view.setBoardView(matrix.getMatrix());
     }
 
     public void setNewPoints(User user, int points){
-        view.pointsList(user, points);
+        view.setPlayersPointsView(user, points);
+    }
+
+
+    public void setStartOrder(ArrayList<User> order){
+        view.setOrderView(order);
+    }
+
+    public void setNewCommon(CommonGoalCard card1, CommonGoalCard card2){
+        view.setCommon1View(card1);
+        view.setCommon2View(card2);
     }
 
     public void createGame(int playerNumber) throws RemoteException {
