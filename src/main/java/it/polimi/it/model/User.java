@@ -15,7 +15,7 @@ public class User implements Serializable {
     private Game game;
     private int tilesNumber;
     private final String nickname;
-    private boolean inGame = false;
+    private boolean inGame;
 
     public User(String nickname){
 
@@ -89,13 +89,6 @@ public class User implements Serializable {
         board.refill();
         game.getVirtualView().boardUpdate(board.getMatrix());
         return isEnd;
-    }
-
-
-    boolean checkInGame(User user) {
-
-        //vedere quando crasha troooppooo broooo
-        return true;
     }
     public Shelfie createShelfie() {
 

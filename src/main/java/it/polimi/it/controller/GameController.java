@@ -277,4 +277,8 @@ public class GameController {
     public Lobby getLobby() {
         return lobby;
     }
+
+    public List<User> getPlayerList() {
+        return playerList;
+    }
 }

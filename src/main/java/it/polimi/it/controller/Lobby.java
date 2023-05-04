@@ -40,7 +40,7 @@ public class Lobby {
     public User createUser(String  nickname) throws ExistingNicknameException {
 
        // User user;
-        if(nickname.isEmpty() || nickname.length() ==0){
+        if(nickname == null || nickname.length() ==0){
             System.out.println("You must insert a nickname..."); //mandare messaggio a view
         }else{
             if(userList.stream()
@@ -50,6 +50,19 @@ public class Lobby {
                 user = new User(nickname);
                 userList.add(user);
             }else{
+                Optional<User> user = userList.stream()
+                        .filter(name -> name.getNickname().equals(nickname))
+                        .findFirst();
+                if(!user.get().getInGame()){
+                    Optional<Integer> disconnectedGameID = gameControllerList.stream()
+                            .filter(gc -> gc.getPlayerList().stream()
+                                    .anyMatch(u -> u.getNickname().equals(nickname)))
+                            .map(GameController::getGameID)
+                            .findFirst();
+
+                    user.get().setInGame(true);
+
+                }
                 throw  new ExistingNicknameException("This nickname already exists!");//mandare messaggio a view
             }
         }
@@ -60,7 +73,7 @@ public class Lobby {
 
     public GameController createGame(User user, int playerNumber) throws WrongPlayerException {
 
-        if(playerNumber < 1 || playerNumber > 4){
+        if(playerNumber < 2 || playerNumber > 4){
             throw new WrongPlayerException("Wrong number of players"); //mandare messaggio a view
         }
         if(userList.size()==0){
