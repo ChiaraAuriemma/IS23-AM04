@@ -171,9 +171,11 @@ public class VirtualView {
                 ShelfieUpdateMessage shelfieUpdateMessage = new ShelfieUpdateMessage(user, column, chosen);
                 Message message = new Message(MessageType.SHELFIEUPDATE, shelfieUpdateMessage);
                 sendTCPMessage(userTCP.get(receiver), message);
+                // perchè non aggiorno la shelfie direttamente qui??
 
             } else if (typeOfConnection.get(receiver).equals("RMI")) {
                 //sviluppo in RMI
+                setNewShelfie(receiver,receiver.getShelfie());
             }
         }
     }
@@ -190,22 +192,24 @@ public class VirtualView {
 
             } else if (typeOfConnection.get(receiver).equals("RMI")) {
                 //sviluppo in RMI
+                setNewBoard(matrix);
             }
         }
     }
 
-    public void pointsUpdate(User user, Integer point, List<Integer> commonToken1, List<Integer> commonToken2){
+    public void pointsUpdate(User user, Integer points, List<Integer> commonToken1, List<Integer> commonToken2){
         for (int i=0; i < game.getNumplayers(); i++) {
             User  receiver = game.getPlayer(i);
 
             if (typeOfConnection.get(receiver).equals("TCP")) {
 
-                PointsUpdateMessage pointsUpdateMessage = new PointsUpdateMessage(user,point,commonToken1,commonToken2);
+                PointsUpdateMessage pointsUpdateMessage = new PointsUpdateMessage(user,points,commonToken1,commonToken2);
                 Message message = new Message(MessageType.POINTSUPDATE, pointsUpdateMessage);
                 sendTCPMessage(userTCP.get(receiver), message);
 
             } else if (typeOfConnection.get(receiver).equals("RMI")) {
                 //sviluppo in RMI
+                setNewPoints(user,points);
             }
         }
     }
@@ -255,4 +259,5 @@ public class VirtualView {
         }
 
     }
+
 }
