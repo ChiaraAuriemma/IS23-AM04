@@ -12,7 +12,7 @@ import java.util.HashMap;
 
 public class View {
     private HashMap<User, Tile[][]> playersShelfies = new HashMap<>();
-    private HashMap<User, Integer> playersPoints = new HashMap<>();
+    private HashMap<User, String> playersPoints = new HashMap<>();
     private HashMap<User, String> playersNicknames = new HashMap<>();
     private Tile[][] playersPersonalCard;
     private ArrayList<User> order;
@@ -23,6 +23,52 @@ public class View {
     private String common2;
     private String common2SecondPart;
 
+    private final String firstLine = "╔═══════════════════════════════════════════════════════════════╗";//1
+    private final String blankLine = "║                                                               ║"; //2, 3, 5, 20, 54
+    private final String lastLine =  "╚═══════════════════════════════════════════════════════════════╝";//55
+    private final String border = "║";
+    private final String chatBoxUp =    "┌────────────────────────────────┐";
+    private final String chatBorder=    "│";
+    private final String blankChatLine= "│                                │";
+    private final String chatBoxDown =  "└────────────────────────────────┘";
+
+    private final String noPlayer = "           ";
+    private String namesLine;//line 4
+    private String pointsLine;//Line 21
+    private int numPlayers;
+    private ArrayList<String> names;
+
+    public void setPaddedNames(){
+        for (User user : order) {
+            names.add(nickPadder(user.getNickname()));
+        }
+    }
+
+    public String nickPadder(String nick){
+        while(nick.length()<12){
+            nick = nick.concat(" ");
+        }
+        return nick;
+    }
+
+    public void setNamesLine(){
+        //Line 4
+        switch (numPlayers){
+            case 2: namesLine = border + "   " + names.get(0) + "   " + names.get(1) + "   " + noPlayer + "   " + noPlayer + "    " + border;
+            case 3: namesLine = border + "   " + names.get(0) + "   " + names.get(1) + "   " + names.get(2) + "   " + noPlayer + "    "+ border;
+            case 4: namesLine = border + "   " + names.get(0) + "   " + names.get(1) + "   " + names.get(2) + "   " + names.get(3) + "    "+ border;
+        }
+    }
+
+    public void setPointsLine(){
+        switch (numPlayers){
+            case 2:pointsLine = border + "    " + "Points: " + playersPoints.get(order.get(0)) + "     " + "Points: " + playersPoints.get(order.get(1)) + "     " + "          " + "     " + "          " + "      " + border;
+            case 3:pointsLine = border + "    " + "Points: " + playersPoints.get(order.get(0)) + "     " + "Points: " + playersPoints.get(order.get(1)) + "     " + "Points: " + playersPoints.get(order.get(2)) + "     " + "          " + "      " + border;
+            case 4: pointsLine = border + "    " + "Points: " + playersPoints.get(order.get(0)) + "     " + "Points: " + playersPoints.get(order.get(1)) + "     " + "Points: " + playersPoints.get(order.get(2)) + "     " + "Points: " + playersPoints.get(order.get(3)) + "      " + border;
+        }
+    }
+
+
     public void setPlayersShelfiesView(User player, Tile[][] shelfie){
         playersShelfies.put(player, shelfie);
     }
@@ -32,7 +78,16 @@ public class View {
     }
 
     public void setPlayersPointsView(User player, int points){
-        playersPoints.put(player, points);
+        String pointString = pTS(points);
+        playersPoints.put(player, pointString);
+    }
+
+    private String pTS(int points) {
+        String pointString = Integer.toString(points);
+        if(pointString.length()==1){
+            pointString = " " + pointString;
+        }
+        return pointString;
     }
 
     public void SetOrderView(ArrayList<User> order){
@@ -105,3 +160,15 @@ public class View {
         };
     }
 }
+
+
+/*
+* calcs:
+*
+* Shelfie: 5col X 6righe -> 10 x 12
+*   + grid -> 12 x 14
+*   riga shelfie: 1 + 4 + 12 + 16 + 12 + 16 + 12 + 16 + 12 + 4 + 1
+*
+* Common: 48 chars
+*   riga common -> 1 + 2 + 48 + 4 + 48 + 2 + 1 = 106
+* */
