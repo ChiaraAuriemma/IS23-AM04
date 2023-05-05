@@ -42,6 +42,11 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientRMI {
         this.view = new View();
     }
 
+
+    /**
+     * First method used by the client, communicates with the view in order to let him choose his nickname,
+     * then communicates it to the serverRMI to create an actual User instance.
+     */
     public void startClient()  {
         try {
             registry = LocateRegistry.getRegistry(ip,port);
@@ -61,7 +66,6 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientRMI {
         //view : do la possibilità all'utente di inserire un nickname
         view.askNickname();
 
-
         try {
             while (!nickOK){
                 clientInput = stdIn.readLine();
@@ -76,6 +80,12 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientRMI {
         }
     }
 
+
+    /**
+     * Method used to ask the client whether he wants to create a new game or join an already existing one
+     * @param clientInput is the string containing the user's nickname
+     * @throws IOException thrown if there are any input errors
+     */
     public void joinOrCreate(String clientInput) throws IOException {
         BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
         String response = " ";
@@ -100,6 +110,12 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientRMI {
 
     }
 
+
+
+    /**
+     * Method called by joinOrCreate if the user chose Create: proceeds to ask the number of people that may participate
+     * @throws IOException thrown if there are any input errors
+     */
     private void askCreateGame() throws IOException {
         view.askCreate();
         this.scanner = new Scanner(System.in);
@@ -112,6 +128,11 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientRMI {
         }
     }
 
+
+    /**
+     * Method called by joinOrCreate if the user chose Join: proceeds to ask the gameID
+     * @throws IOException thrown if there are any input errors
+     */
     private void askJoinGame() {
         view.askJoin();
         this.scanner = new Scanner(System.in);
@@ -124,6 +145,12 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientRMI {
         }
     }
 
+
+    /**
+     * Method called by startClient, sends the server the chosen username
+      * @param userName .
+     * @throws RemoteException .
+     */
     public void login(String userName) throws RemoteException {
         try{
             user = sr.login(this,userName);
@@ -135,7 +162,11 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientRMI {
 
     }
 
-
+    /**
+     * Communicates the server the number of people that the user wants in his new game
+     * @param playerNumber .
+     * @throws RemoteException .
+     */
     public void createGame(int playerNumber) throws RemoteException {
         try{
             sr.createGame(user,playerNumber);
@@ -154,6 +185,12 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientRMI {
         }
     }
 
+
+    /**
+     *Method that communicates to the server the ID of the game that the user wants to join
+     * @param gameID .
+     * @throws RemoteException .
+     */
     public void joinGame(int gameID) throws RemoteException {
         try{
             sr.joinGame(user,gameID);
@@ -170,6 +207,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientRMI {
             }
         }
     }
+
 
     public void tilesNumMessage(int numOfTiles) throws RemoteException {
         try {   //comunico al server il numero scelto
