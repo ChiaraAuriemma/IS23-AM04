@@ -45,15 +45,15 @@ public class Lobby {
         }else{
             if(userList.stream()
                         .map(currentUser -> currentUser.getNickname())
-                        .noneMatch(name -> name.equals(nickname))
-            ){
+                        .noneMatch(name -> name.equals(nickname)))
+            {
                 user = new User(nickname);
                 userList.add(user);
             }else{
                 Optional<User> user = userList.stream()
                         .filter(name -> name.getNickname().equals(nickname))
                         .findFirst();
-                if(!user.get().getInGame()){
+                if(!user.get().getInGame()) {
                     Optional<Integer> disconnectedGameID = gameControllerList.stream()
                             .filter(gc -> gc.getPlayerList().stream()
                                     .anyMatch(u -> u.getNickname().equals(nickname)))
@@ -61,9 +61,10 @@ public class Lobby {
                             .findFirst();
 
                     user.get().setInGame(true);
-
+                }else{
+                    throw  new ExistingNicknameException("This nickname already exists!");//mandare messaggio a view
                 }
-                throw  new ExistingNicknameException("This nickname already exists!");//mandare messaggio a view
+
             }
         }
         //return (User) userList.stream().map(user -> user.getNickname()).filter(name -> name.equals(nickname));
