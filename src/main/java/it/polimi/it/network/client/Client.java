@@ -22,6 +22,10 @@ public class Client {
         JsonReader jsonReader = new JsonReader( new FileReader("src/main/java/it/polimi/it/network/ServerConfig.json"));
         JsonObject jsonObject = gson.fromJson(jsonReader,JsonObject.class);
 
+        ClientInputReader cliR = new ClientInputReader();
+        Thread thread = new Thread(cliR);
+        thread.start();
+
         if(inputLine.equals("TCP")){
             ClientTCP clientTCP = new ClientTCP(jsonObject.get("portTCP").getAsInt(),jsonObject.get("ip").getAsString());
             clientTCP.startClient();
