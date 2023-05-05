@@ -50,6 +50,17 @@ public class View {
         return;
     }
 
+    public String getTileColor(int row, int col){
+        for (List<Tile> l: choosableTilesList){
+            for (Tile t: l){
+                if (t.getRow()==row && t.getColumn()==col){
+                    return t.getColor();
+                }
+            }
+        }
+        return "DEFAUULT";
+    }
+
 
     //METODI PER ORDINE E NICKNAME
     public void setOrderView(ArrayList<User> order){

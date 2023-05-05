@@ -42,6 +42,9 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientRMI {
         this.view = new View();
     }
 
+    public View getView(){
+        return view;
+    }
 
     /**
      * First method used by the client, communicates with the view in order to let him choose his nickname,

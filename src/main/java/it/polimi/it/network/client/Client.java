@@ -22,16 +22,25 @@ public class Client {
         JsonReader jsonReader = new JsonReader( new FileReader("src/main/java/it/polimi/it/network/ServerConfig.json"));
         JsonObject jsonObject = gson.fromJson(jsonReader,JsonObject.class);
 
-        ClientInputReader cliR = new ClientInputReader();
-        Thread thread = new Thread(cliR);
-        thread.start();
+        ClientTCP clientTCP=null;
+        ClientRMIApp clientRMIApp=null;
 
-        if(inputLine.equals("TCP")){
-            ClientTCP clientTCP = new ClientTCP(jsonObject.get("portTCP").getAsInt(),jsonObject.get("ip").getAsString());
+        if(inputLine.equalsIgnoreCase("TCP")){
+              clientTCP = new ClientTCP(jsonObject.get("portTCP").getAsInt(),jsonObject.get("ip").getAsString());
             clientTCP.startClient();
-        }else if(inputLine.equals("RMI") ){
-            ClientRMIApp clientRMIApp = new ClientRMIApp(jsonObject.get("portRMI").getAsInt(),jsonObject.get("ip").getAsString());
+        }else if(inputLine.equalsIgnoreCase("RMI") ){
+             clientRMIApp = new ClientRMIApp(jsonObject.get("portRMI").getAsInt(),jsonObject.get("ip").getAsString());
             clientRMIApp.startClient();
         }
+
+        ClientInputReader cliR = new ClientInputReader();
+        cliR.setConnectionType(inputLine.toLowerCase());
+        if(inputLine.equalsIgnoreCase("TCP") && clientTCP!=null){
+            cliR.setTCP(clientTCP);
+        } else if (inputLine.equalsIgnoreCase("RMI") && clientRMIApp!=null) {
+            cliR.setRMI(clientRMIApp);
+        }
+        Thread thread = new Thread(cliR);
+        thread.start();
     }
 }

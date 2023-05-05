@@ -7,6 +7,7 @@ import it.polimi.it.network.message.Message;
 import it.polimi.it.network.message.MessageType;
 import it.polimi.it.network.message.request.*;
 import it.polimi.it.network.message.responses.*;
+import it.polimi.it.view.View;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -19,6 +20,8 @@ public class ClientTCP {
 
     private int port;
     private String ip;
+    private View view;
+
 
     private User user;
     private ObjectInputStream in;
@@ -27,7 +30,13 @@ public class ClientTCP {
     public ClientTCP(int port, String ip){
         this.port = port;
         this.ip = ip;
+        this.view=new View();
     }
+
+    public View getView(){
+        return view;
+    }
+
 
     public void startClient(){
         try{

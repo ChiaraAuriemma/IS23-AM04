@@ -12,6 +12,7 @@ import it.polimi.it.model.Tiles.Tile;
 import it.polimi.it.model.User;
 import it.polimi.it.network.server.VirtualView;
 
+import java.rmi.RemoteException;
 import java.util.HashSet;
 import java.util.List;
 
@@ -135,7 +136,7 @@ public class GameController {
      *  in order to highlight them on the board.
      * @param chosenNumber is the input from the user
      */
-    public void getFromViewNTiles(User user,int chosenNumber) throws WrongTurnException, WrongListException,IndexOutOfBoundsException {
+    public void getFromViewNTiles(User user,int chosenNumber) throws WrongTurnException, WrongListException, IndexOutOfBoundsException, RemoteException {
         if(user.equals(playerList.get(currentPlayer))){
             this.playerList.get(currentPlayer).choosableTiles(chosenNumber);
 
@@ -168,7 +169,7 @@ public class GameController {
             try {
                 boolean[] possibleColumns = playerList.get(currentPlayer).chooseSelectedTiles(currentTilesList);
                 possibleColumnArray = possibleColumns;
-            } catch (InvalidTileException e) {
+            } catch (InvalidTileException | RemoteException e) {
                 //messaggio a view per far scegliere altre tiles
             }
         }else {
