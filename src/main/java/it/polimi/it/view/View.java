@@ -352,10 +352,31 @@ public class View {
 
 
 
+
+
+
+
+    public void NotifyTurnStart(int maxValueofTiles, String username) {//stampa tipo Bro è il tuo turno, chiedi di scegilere quante tile vuole; in input ho il max numero che posso prendere
+        out.print("Hey " + username + " it's your turn!\nChoose how many Tiles you want to take from the LivingRoom... ");
+    }
     public void askNumTilesAgain() {
+        out.print("Are you dumb!? Please retry... ");
+
     }
 
     public void askColumnAgain() {
     }
 
+    public void askTileRow(int i) {//chiedi la riga della i+1-esima tile da prendere dalla board
+    }
+
+    public void askTileCOl(int i) {//chiedi la colonna della i+1-esima tile da prendere dalla board
+    }
+
+    public void askColumn() {
+    }
+
+    public void askOrder(String s) {
+        out.println(s);
+    }
 }

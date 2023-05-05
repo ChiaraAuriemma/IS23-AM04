@@ -1,11 +1,11 @@
 package it.polimi.it.network.client;
 
 import it.polimi.it.controller.Exceptions.*;
-import it.polimi.it.model.Board.Board;
 import it.polimi.it.model.Card.CommonGoalCards.CommonGoalCard;
 import it.polimi.it.model.Card.PersonalGoalCards.PersonalGoalCard;
 import it.polimi.it.model.Exceptions.WrongListException;
 import it.polimi.it.model.Shelfie;
+import it.polimi.it.model.Tiles.PossibleColors;
 import it.polimi.it.model.Tiles.Tile;
 import it.polimi.it.model.User;
 import it.polimi.it.network.server.ServerRMI;
@@ -33,6 +33,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientRMI {
     private User user;
     private View view;
     private Scanner scanner;
+    private List<Tile> lastChosen = new ArrayList<>();
 
 
     public ClientRMIApp(int port, String ip) throws RemoteException {
@@ -171,7 +172,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientRMI {
     }
 
     public void tilesNumMessage(int numOfTiles) throws RemoteException {
-        try {
+        try {   //comunico al server il numero scelto
             sr.tilesNumMessage(user,numOfTiles);
         }catch (IndexOutOfBoundsException e) {
             //view : notifico alla view che il numero di tiles indicato non è valido
@@ -187,12 +188,60 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientRMI {
     }
 
     public void selectedTiles(List<Tile>choosenTiles) throws RemoteException {
+
+
+        //mando le tiles a RMIImplementation
         try{
            sr.selectedTiles(user,choosenTiles);
         } catch (WrongPlayerException e) {
             //view : notifico che l'user non è quello giusto
         //}catch (WrongListException){
             //manca eccezione nel caso in cui abbia scelto un set di tile invalido
+        }
+    }
+
+    public void tilesSelector(List<List<Tile>> choosable, int num) throws RemoteException {
+        List<Tile> chosen = new ArrayList<>();
+        boolean found = false;
+
+        for(int i=0; i<num; i++){
+            view.askTileRow(i);
+                //leggi la riga
+
+            this.scanner = new Scanner(System.in);
+            int row=0;
+            row = scanner.nextInt();
+
+
+            view.askTileCOl(i);
+                //leggi la colonna
+            int col= scanner.nextInt();
+
+            //controlli
+
+
+
+            Tile thisOne = null;
+            found=false;
+            for (List<Tile> list: choosable){
+                for(Tile t : list){
+                    if(t.getRow()==row && t.getColumn()==col){
+                        thisOne=new Tile(row, col, PossibleColors.valueOf(t.getColor()));
+                        found=true;
+                    }
+                }
+            }
+            if(!found){
+                //devo ripetere la scelta
+            }else{
+                chosen.add(thisOne);
+            }
+
+
+            //una volta che ho la lista delle chosen completa la devo inviare al sever:
+            selectedTiles(chosen);
+            lastChosen=chosen;
+
         }
     }
 
@@ -220,6 +269,101 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientRMI {
     }
 
 
+    public void notifyTurnStart(int maxValueofTiles) {
+        view.NotifyTurnStart(maxValueofTiles, user.getNickname());
+
+
+        //chiedo quante tile vuole-> prendo in input la risposta
+        this.scanner = new Scanner(System.in);
+        int response = 0;
+        try {
+            response = scanner.nextInt();
+            while(response <=0 || response > maxValueofTiles){
+                view.askNumTilesAgain();
+                response = scanner.nextInt();
+            }
+            //joinGame(response);
+            tilesNumMessage(response);
+
+        } catch (IOException f) {
+            System.out.println(f.getMessage());
+        }
+    }
+
+    @Override
+    public void askColumn(boolean[] choosableColumns) throws RemoteException {
+        view.askColumn();
+        this.scanner = new Scanner(System.in);
+        int col = 0;
+        try {
+            col = scanner.nextInt();
+
+            while(col <=0 || col > 5 || choosableColumns[col]){
+                view.askColumnAgain();
+                col = scanner.nextInt();
+            }
+            tilesNumMessage(col);
+
+        } catch (IOException f) {
+            System.out.println(f.getMessage());
+        }
+
+        List<Tile> ordered= new ArrayList<>();
+        this.scanner = new Scanner(System.in);
+
+        if(lastChosen.size()==1){
+            ordered = lastChosen;
+        }else if(lastChosen.size()==2){
+            view.askOrder("Do you want to insert first the tile at " + lastChosen.get(0).getRow() + "-" + lastChosen.get(0).getRow() + "? Type 1 to do so... ");
+            int risp=0;
+            risp = scanner.nextInt();
+            switch (risp){
+                case 1: ordered.add(lastChosen.get(1));
+                        ordered.add(lastChosen.get(2));break;
+                default:ordered.add(lastChosen.get(2));
+                        ordered.add(lastChosen.get(1));break;
+
+            }
+        }else {
+
+            int risp1 = 0;
+            while (risp1 != 1 || risp1 != 2 || risp1 != 3) {
+                view.askOrder("Which tile do you want to insert first: " + lastChosen.get(0).getRow() + "-" + lastChosen.get(0).getColumn() + " or "
+                        + lastChosen.get(1).getRow() + "-" + lastChosen.get(1).getColumn() + " or " + lastChosen.get(2).getRow() + "-" + lastChosen.get(2).getColumn() + "? Type 1, 2 or 3... ");
+                risp1 = scanner.nextInt();
+            }
+
+            int risp2=0;
+            while (risp2 != 1 || risp2 != 2 || risp2 != 3 || risp2==risp1) {
+                view.askOrder("Which tile do you want to insert second: " + lastChosen.get(0).getRow() + "-" + lastChosen.get(0).getColumn() + " or "
+                        + lastChosen.get(1).getRow() + "-" + lastChosen.get(1).getColumn() + " or " + lastChosen.get(2).getRow() + "-" + lastChosen.get(2).getColumn() + "? Type 1, 2 or 3... ");
+                risp2 = scanner.nextInt();
+            }
+            int risp3=0;
+
+            if(risp1==1 && risp2==2){
+                risp3=3;
+            } else if(risp1==1 && risp2==3){
+                risp3=2;
+            }else if(risp1==2 && risp2==3){
+                risp3=1;
+            }else if(risp1==2 && risp2==1){
+                risp3=3;
+            }else if(risp1==3 && risp2==1){
+                risp3=2;
+            }else if(risp1==3 && risp2==2){
+                risp3=1;
+            }
+            ordered.add(lastChosen.get(risp1));
+            ordered.add(lastChosen.get(risp2));
+            ordered.add(lastChosen.get(risp3));
+        }
+
+        chooseColumn(col, ordered);
+
+    }
+
+
     public void setStartOrder(ArrayList<User> order){
         view.setOrderView(order);
     }
@@ -237,9 +381,10 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientRMI {
     //----------------------------------------------------------------------------------------------------------
     //metodi che chiama il server:
 
-    public void takeableTiles(List<List<Tile>> choosableTilesList){
+    public void takeableTiles(List<List<Tile>> choosableTilesList, int num) throws RemoteException {
         //view : faccio vedere illuminate le tiles nella lista
         view.takeableTiles(choosableTilesList);
+        tilesSelector(choosableTilesList, num);
     }
 
 }

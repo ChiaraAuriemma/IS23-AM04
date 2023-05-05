@@ -18,7 +18,7 @@ public interface ClientRMI extends Remote {
     public void startClient() throws IOException, NotBoundException;
     public void login(String userName) throws RemoteException;
 
-    public void takeableTiles(List<List<Tile>> choosableTilesList);
+    public void takeableTiles(List<List<Tile>> choosableTilesList, int num) throws RemoteException;
 
     public void setStartOrder(ArrayList<User> order);
 
@@ -32,5 +32,9 @@ public interface ClientRMI extends Remote {
 
     public void setNewPoints(User user, Integer points);
 
+
+    public void notifyTurnStart(int maxValueofTiles);
+
+    void askColumn(boolean[] choosableColumns) throws RemoteException;
 
 }

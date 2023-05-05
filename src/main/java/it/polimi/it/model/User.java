@@ -6,6 +6,7 @@ import it.polimi.it.model.Exceptions.WrongListException;
 import it.polimi.it.model.Tiles.Tile;
 
 import java.io.Serializable;
+import java.rmi.RemoteException;
 import java.util.List;
 
 public class User implements Serializable {
@@ -36,7 +37,7 @@ public class User implements Serializable {
     }
 
 
-    public List<List<Tile>> choosableTiles(int tilesNum) throws WrongListException, IndexOutOfBoundsException {
+    public List<List<Tile>> choosableTiles(int tilesNum) throws WrongListException, IndexOutOfBoundsException, RemoteException {
 
         if(tilesNum < 1 || tilesNum > 3){
             throw new IndexOutOfBoundsException("Wrong tiles number");
@@ -50,11 +51,11 @@ public class User implements Serializable {
             throw new WrongListException("Error in the chosen tiles list");
         }
 
-        game.getVirtualView().takeableTiles(this,choosableList);
+        game.getVirtualView().takeableTiles(this,choosableList, tilesNum);
         return choosableList;
     }
 
-    public boolean[] chooseSelectedTiles(List<Tile> chosen) throws InvalidTileException {
+    public boolean[] chooseSelectedTiles(List<Tile> chosen) throws InvalidTileException, RemoteException {
 
         for(Tile t : chosen){
             if(t.getColor().equals("XTILE") || t.getColor().equals("DEFAULT")){

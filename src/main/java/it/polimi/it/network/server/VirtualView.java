@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 
 import java.net.Socket;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -136,9 +137,12 @@ public class VirtualView {
         }
     }
 
+
+
     //during the turn
     //starting turn
     public void startTurn(User user,int maxValueofTiles){
+
 
         if (typeOfConnection.get(user).equals("TCP")) {
 
@@ -148,11 +152,19 @@ public class VirtualView {
 
         } else if (typeOfConnection.get(user).equals("RMI")) {
             //sviluppo in RMI
+            ClientRMI clientRMI = userRMI.get(user);
+            clientRMI.notifyTurnStart(maxValueofTiles);
         }
+
+        //starto il turno mandando il massimo numero di tile da server a client
+        //lui risponde col numero che vuoel -> Arriva a gameController
     }
 
 
-    public void takeableTiles(User user, List<List<Tile>> choosableTilesList){
+
+    //chiamato da user, serve a mandare le takeable tiles fino alla view
+    // chi prende la risposta?.......
+    public void takeableTiles(User user, List<List<Tile>> choosableTilesList, int num) throws RemoteException {
         if(typeOfConnection.get(user).equals("TCP")){
 
                 TakeableTilesResponse takeableTilesResponse = new TakeableTilesResponse(choosableTilesList);
@@ -162,12 +174,15 @@ public class VirtualView {
 
         }else if(typeOfConnection.get(user).equals("RMI")){
             ClientRMI clientRMI = userRMI.get(user);
-            clientRMI.takeableTiles(choosableTilesList);
+            clientRMI.takeableTiles(choosableTilesList, num);
         }
     }
 
 
-    public void possibleColumns(User user, boolean[] choosableColumns){
+
+    //ricevo lista di colonne possibili, le comunico al client
+    //client sceglierà una di queste colonne e la manda a RMIImplementation
+    public void possibleColumns(User user, boolean[] choosableColumns) throws RemoteException {
 
         if(typeOfConnection.get(user).equals("TCP")){
 
@@ -178,6 +193,10 @@ public class VirtualView {
 
         }else if(typeOfConnection.get(user).equals("RMI")){
             //sviluppo in RMI
+
+            ClientRMI clientRMI = userRMI.get(user);
+            clientRMI.askColumn(choosableColumns);
+
         }
     }
 
