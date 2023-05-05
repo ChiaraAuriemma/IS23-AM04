@@ -5,12 +5,20 @@ import it.polimi.it.model.Tiles.Tile;
 
 import java.util.List;
 
+/**
+ *Matrix that represent the BookShelf in the game
+*/
+
 public class Shelfie{
 
     private int commonToken1;
     private int commonToken2;
     private boolean endToken1;
     private static Tile[][] shelf;
+
+    /**
+     * Constructor method that instances a 6x5 matrix with a DEFAULT type tile in each position and instances the other parameters
+     */
 
     public Shelfie(){
 
@@ -30,7 +38,11 @@ public class Shelfie{
         return shelf[row][column];
     }
 
-
+    /**
+     * Method that check which column could be chosen to insert the tiles
+     * @param count is the number of tiles chosen by the player
+     * @return a boolean array where "true" means that there is enough DEAFULT tiles in that column to insert the chosen tiles
+     */
     boolean[] chooseColumn(int count){
 
         boolean[] checkColumn = {false, false, false, false, false};
@@ -49,6 +61,13 @@ public class Shelfie{
         }
         return checkColumn;
     }
+
+    /**
+     * Method that add the chosen tiles in the chosen column
+     * @param column is the column chosen by the player to add the tiles
+     * @param chosen is the list of tiles to add
+     * @return
+     */
 
     boolean addTile(int column, List<Tile> chosen){
 
@@ -79,6 +98,10 @@ public class Shelfie{
         return true;
     }
 
+    /**
+     * Method that checks the maximum number of tiles that could be chosen by a player using the number of DEFAULT tiles in each column
+     * @return the maximum value of tiles that can be chosen
+     */
     int possibleTiles(){
 
         int total = 0;
@@ -119,6 +142,10 @@ public class Shelfie{
 
     public Tile[][] getShelf(){return shelf;}
 
+    /**
+     * Method that checks how many groups of adjacents and same type tiles there are in the BookShelf, it also counts how many point for each group
+     * @return total of points based on the sum of the different groups
+     */
     int checkAdjacentsPoints() {
 
         int total = 0;
@@ -155,6 +182,16 @@ public class Shelfie{
         return total;
     }
 
+    /**
+     * Method used by checkAdjacentsPoints() method to do a recursive count of adjacents tiles
+     * @param shelf is the matrix that represent the BookShelf
+     * @param visited is a 2 dimensional array used to check which tiles is already counted in the total
+     * @param directions is a vector used to do the next recursive step
+     * @param row is the row index of the tile
+     * @param col is the column index of the tile
+     * @param color is the type of the tile
+     * @return the count of the adjacents tiles of the same type
+     */
     private int searchAdjacents (Tile[][] shelf, boolean[][] visited, int[][] directions, int row, int col, String color) {
 
         visited[row][col] = true;
