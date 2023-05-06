@@ -19,6 +19,7 @@ public class ClientInputReader implements Runnable{
     private ClientRMIApp clientRMIApp;
     private View view;
 
+
     @Override
     public void run() {
         running = true;
@@ -186,7 +187,7 @@ public class ClientInputReader implements Runnable{
 
                     switch (connectionType){
                         case "tcp": //invio messaggio TCP
-                            clientTCP;
+                            ;
                             break;
                         case "rmi": //chiamata metodi RMI
                             ;break;
@@ -205,6 +206,9 @@ public class ClientInputReader implements Runnable{
                             ;break;
                     }
                     ;break;
+
+
+                case "help":view.printCommands();break;
 
 
                 default : System.out.println("Error! No valid message type detected!");

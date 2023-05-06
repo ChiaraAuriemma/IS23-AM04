@@ -390,4 +390,17 @@ public class View {
     public void askOrder(String s) {
         out.println(s);
     }
+
+    public void printCommands() {
+        out.println("┌────────────────────┐\n" +
+                "│List of commands:   │\n" +
+                "│ login>>            │\n" +
+                "│ create_game>>      │\n" +
+                "│ join_game>>        │\n" +
+                "│ num_tiles>>        │\n" +
+                "│ take_tiles>>       │\n" +
+                "│ choose_column>>    │\n" +
+                "│ help>>             │\n" +
+                "└────────────────────┘");
+    }
 }

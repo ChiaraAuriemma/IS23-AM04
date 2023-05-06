@@ -35,6 +35,4 @@ public interface ClientRMI extends Remote {
 
     public void notifyTurnStart(int maxValueofTiles);
 
-    void askColumn(boolean[] choosableColumns) throws RemoteException;
-
 }
