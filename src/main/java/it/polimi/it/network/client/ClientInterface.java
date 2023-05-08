@@ -13,7 +13,7 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 
-public interface ClientRMI extends Remote {
+public interface ClientInterface extends Remote {
     //qui devo mettere solo i metodi visibili dal server (quindi tolgo startclient e login)
     public void startClient() throws IOException, NotBoundException;
     public void login(String userName) throws RemoteException;
