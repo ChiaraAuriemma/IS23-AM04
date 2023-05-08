@@ -4,18 +4,16 @@ import it.polimi.it.model.Tiles.Tile;
 import it.polimi.it.model.User;
 import it.polimi.it.network.message.Payload;
 
-import java.util.List;
-
 public class ShelfieUpdateMessage extends Payload {
 
     private User user;
     private int column;
-    private List<Tile> chosen;
+    private Tile[][] newShelfie;
 
-    public ShelfieUpdateMessage(User user, int column, List<Tile> chosen){
+    public ShelfieUpdateMessage(User user, Tile[][] newShelfie){
         this.user = user;
-        this.column = column;
-        this.chosen = chosen;
+        this.newShelfie=newShelfie;
+
     }
 
     public User getUser() {
@@ -26,7 +24,7 @@ public class ShelfieUpdateMessage extends Payload {
         return column;
     }
 
-    public List<Tile> getChosen() {
-        return chosen;
+    public Tile[][] getShelfie() {
+        return newShelfie;
     }
 }

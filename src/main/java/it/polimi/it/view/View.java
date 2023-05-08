@@ -44,12 +44,22 @@ public class View {
     private int numPlayers;
     private ArrayList<String> names;
     private List<List<Tile>> choosableTilesList;
-    
+    private int gameID;
+    private User endToken;
+
 
     public View(){
         return;
     }
 
+    /**
+     * Given
+     * @param row row
+     *            and
+     * @param col column
+     *            of a tile in th board
+     * @return the color of that tile
+     */
     public String getTileColor(int row, int col){
         for (List<Tile> l: choosableTilesList){
             for (Tile t: l){
@@ -58,11 +68,16 @@ public class View {
                 }
             }
         }
-        return "DEFAUULT";
+        return "DEFAULT";
     }
 
 
     //METODI PER ORDINE E NICKNAME
+
+    /**
+     * Setter method for the player's turn order
+     * @param order is the ordered arrayList of the users in the game
+     */
     public void setOrderView(ArrayList<User> order){
         Collections.copy(this.order, order);
         for (User user : order) {
@@ -73,14 +88,29 @@ public class View {
         shelfieInitializer();
     }
 
+    /**
+     * Setter method for the players' nicknames
+     * @param player is a user instance
+     */
     public void setPlayersNicknamesView(User player){
         playersNicknames.put(player, player.getNickname());
     }
+
+    /**
+     * Setter method for the nicknames in their padded version (fixed 12 chars length)
+     */
     public void setPaddedNames(){
         for (User user : order) {
             names.add(nickPadder(user.getNickname()));
         }
     }
+
+
+    /**
+     * Helper mehod that given a
+     * @param nick nickname string
+     * @return the nickname string padded to a fixed length of 12 chars
+     */
     public String nickPadder(String nick){
         while(nick.length()<12){
             nick = nick.concat(" ");
@@ -92,15 +122,31 @@ public class View {
 
 
     ////METODI PER I PUNTI
+
+    /**
+     * Initializes, for every user a string "00" which represents the initial points of every player
+     */
     private void pointInitializer() {
         for (User user : order) {
             playersPoints.put(user, "00");
         }
     }
+
+    /**
+     * Setter method, used when a player's points amount changed
+     * @param player is the user
+     * @param points is the new value of the user's points
+     */
     public void setPlayersPointsView(User player, int points){
         String pointString = pTS(points);
         playersPoints.put(player, pointString);
     }
+
+    /**
+     * Helper method that given a
+     * @param points integre
+     * @return the corresponding points string, with a fixed length of 2
+     */
     private String pTS(int points) {
         String pointString = Integer.toString(points);
         if(pointString.length()==1){
@@ -113,11 +159,21 @@ public class View {
 
 
     //METODI PER LE SHELFIE
+
+    /**
+     * Initializes a new shelf for every user, to be put in the user-shelf hasmap
+     */
     private void shelfieInitializer() {
         for (User user : order) {
             playersShelfies.put(user, new Shelfie().getShelf());
         }
     }
+
+    /**
+     * Setter method for the user-shelf hashmap
+     * @param player is the current user
+     * @param shelfie is the new shelfie, used to update the previous shelfie value
+     */
     public void setPlayersShelfiesView(User player, Tile[][] shelfie){
         playersShelfies.put(player, shelfie);
     }
@@ -128,6 +184,11 @@ public class View {
 
 
     //METODI PERSONAL CARDS
+
+    /**
+     * Setter Method
+     * @param card given the personal card, sets the example Shelf to get it visualized on screen
+     */
     public void setPlayersPersonalCardView(PersonalGoalCard card){
         playersPersonalCard = new Tile[6][5];
         for(int row=0; row<6; row++){
@@ -147,11 +208,21 @@ public class View {
 
 
     //METODI COMMON CARDS
+
+    /**
+     * Setter method
+     * @param card1 given the card, chooses the output messages
+     */
     public void setCommon1View(CommonGoalCard card1){
         int id1 = card1.getID();
         common1 = commonDescription(id1);
         common1SecondPart = commonDescriptionSecondPart(id1);
     }
+
+    /**
+     * Setter method
+     * @param card2 given the card, chooses the output messages
+     */
     public void setCommon2View(CommonGoalCard card2){
         int id2 = card2.getID();
         common2 = commonDescription(id2);
@@ -378,29 +449,32 @@ public class View {
     public void askColumnAgain() {
     }
 
-    public void askTileRow(int i) {//chiedi la riga della i+1-esima tile da prendere dalla board
+    public void printCommands() {
+        out.println("┌────────────────────┐\n" +
+                    "│List of commands:   │\n" +
+                    "│ login>>            │\n" +
+                    "│ create_game>>      │\n" +
+                    "│ join_game>>        │\n" +
+                    "│ num_tiles>>        │\n" +
+                    "│ take_tiles>>       │\n" +
+                    "│ choose_column>>    │\n" +
+                    "│ help>>             │\n" +
+                    "└────────────────────┘");
     }
 
-    public void askTileCOl(int i) {//chiedi la colonna della i+1-esima tile da prendere dalla board
+    public void setGameID(int gameId) {
+        this.gameID=gameId;
+    }
+
+    public void setEndToken(User user) {
+        this.endToken = user;
     }
 
     public void askColumn() {
+        out.println("Please choose in which column you want to put the tiles that you took... ");
     }
 
-    public void askOrder(String s) {
-        out.println(s);
-    }
-
-    public void printCommands() {
-        out.println("┌────────────────────┐\n" +
-                "│List of commands:   │\n" +
-                "│ login>>            │\n" +
-                "│ create_game>>      │\n" +
-                "│ join_game>>        │\n" +
-                "│ num_tiles>>        │\n" +
-                "│ take_tiles>>       │\n" +
-                "│ choose_column>>    │\n" +
-                "│ help>>             │\n" +
-                "└────────────────────┘");
+    public void printError(String error) {
+        out.println(error);
     }
 }

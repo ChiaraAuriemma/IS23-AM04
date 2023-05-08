@@ -1,33 +1,48 @@
 package it.polimi.it.network.client;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.gson.stream.JsonReader;
 import it.polimi.it.model.Tiles.PossibleColors;
 import it.polimi.it.model.Tiles.Tile;
 import it.polimi.it.view.View;
 
-import java.io.*;
-import java.rmi.NotBoundException;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
 public class ClientInputReader implements Runnable{
+
     private volatile boolean running;
+
+    /**
+     * "RMI" or "TCP" string, used to know how to choose between the TCP-message or the RMI-method
+     */
     private String connectionType;
+
+    /**
+     * Instance of the TCP client
+     */
+    private ClientTCP clientTCP;
+
+    /**
+     * Instance of the RMI client
+     */
+    private ClientRMIApp clientRMIApp;
+
+    /**
+     * Instance of the View class
+     */
     private View view;
 
-    private ClientInterface client;
 
-
+    /**
+     * Method to constantly read the input given by the user, sends the input line to the command parser
+     */
     @Override
     public void run() {
         running = true;
-
-
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         while (running) {
             try {
@@ -48,6 +63,12 @@ public class ClientInputReader implements Runnable{
         }
     }
 
+
+    /**
+     * Method used to parse the input given by the user, recognizing a certain pattern
+     * @param input is the String read by the buffer
+     * @throws RemoteException .
+     */
     public void commandParser(String input) throws RemoteException {
         String regex = "(\\w+)>>";
         Pattern pattern = Pattern.compile(regex);
@@ -61,8 +82,16 @@ public class ClientInputReader implements Runnable{
             switch (command) {
                 case "login": //initial nickname setting
                     String nickname = input.substring(matcher.end());
+
                     //metodo che manda il messaggio login
-                            client.createPlayer(nickname);
+                    switch (connectionType){
+                        case "tcp": //invio messaggio TCP
+                            clientTCP.createPlayer(nickname);
+                            break;
+                        case "rmi": //chiamata metodi RMI
+                            clientRMIApp.login(nickname);
+                            break;
+                    }
                     ;break;
 
                 case "create_game":// create_game>>4
@@ -211,20 +240,30 @@ public class ClientInputReader implements Runnable{
         }
     }
 
-    public void setConnectionType(String connectionType) throws IOException, NotBoundException {
+    /**
+     * Setter method
+     * @param connectionType is a String, either "RMI" or "TCP", used to know which type of message
+     *                       has to be sent
+     */
+    public void setConnectionType(String connectionType){
         this.connectionType = connectionType;
-
-        Gson gson = new Gson();
-        JsonReader jsonReader = new JsonReader( new FileReader("src/main/java/it/polimi/it/network/ServerConfig.json"));
-        JsonObject jsonObject = gson.fromJson(jsonReader,JsonObject.class);
-
-        if(connectionType.equals("TCP")){
-            this.client = new ClientTCP2(jsonObject.get("portTCP").getAsInt(),jsonObject.get("ip").getAsString());
-            client.startClient();
-        }else{
-            this.client = new ClientRMIApp(jsonObject.get("portRMI").getAsInt(),jsonObject.get("ip").getAsString());
-            client.startClient();
-        }
     }
 
+
+    /**
+     * Setter Method
+     * @param clientTCP is the reference to the TCP Client class
+     */
+    public void setTCP(ClientTCP clientTCP) {
+        this.clientTCP=clientTCP;
+    }
+
+
+    /**
+     * Setter Method
+     * @param clientRMIApp is the reference to the RMI Client class
+     */
+    public void setRMI(ClientRMIApp clientRMIApp) {
+        this.clientRMIApp=clientRMIApp;
+    }
 }
