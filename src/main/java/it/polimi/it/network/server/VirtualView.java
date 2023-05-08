@@ -214,7 +214,7 @@ public class VirtualView {
                 //sviluppo in RMI
 
                 ClientInterface clientRMI = userRMI.get(user);
-                clientRMI.setNewShelfie(receiver,receiver.getShelfie());
+                clientRMI.setNewShelfie(receiver,receiver.getShelfie().getShelf());
             }
         }
     }

@@ -72,52 +72,53 @@ public class ClientTCP implements ClientInterface {
 
     @Override
     public void takeableTiles(List<List<Tile>> choosableTilesList, int num) throws RemoteException {
-
+        view.takeableTiles(choosableTilesList);
     }
 
     @Override
     public void setStartOrder(ArrayList<User> order) {
-
+        view.setOrderView(order);
     }
 
     @Override
     public void setNewBoard(Tile[][] matrix) {
-
+        view.setBoardView(matrix);
     }
 
     @Override
     public void setNewCommon(CommonGoalCard card1, CommonGoalCard card2) {
-
+        view.setCommon1View(card1);
+        view.setCommon2View(card2);
     }
 
     @Override
     public void setNewPersonal(PersonalGoalCard card) {
-
+        view.setPlayersPersonalCardView(card);
     }
 
     @Override
-    public void setNewShelfie(User receiver, Shelfie shelfie) {
-
+    public void setNewShelfie(User receiver, Tile[][] shelfie) {
+        view.setPlayersShelfiesView(receiver, shelfie);
     }
 
     @Override
     public void setNewPoints(User user, Integer points) {
-
+        view.setPlayersPointsView(user, points);
     }
 
     @Override
     public void notifyTurnStart(int maxValueofTiles) {
-
+        view.NotifyTurnStart(maxValueofTiles, user.getNickname());
     }
 
     @Override
     public void askColumn(boolean[] choosableColumns) {
-
+        view.setPossibleColumns(choosableColumns);
     }
 
 
     //IMPORTANTE : gestisco anche l'arrivo di messaggi d'errore da parte del server
-    public void run(){
+    public void run() throws RemoteException {
         Message response;
         MessageType messType;
 
@@ -136,43 +137,52 @@ public class ClientTCP implements ClientInterface {
                     //view : faccio passare la view alla schermata di selezione join o create game
                     //view : passo alla view lo user
 
+                    view.joinOrCreate(user.getNickname());
+
                 case CREATEGAMERESPONSE:
                     CreateGameResponse createGameResponse = (CreateGameResponse) response.getPayload();
                     //view : passo alla view il game id
+                    view.setGameID(createGameResponse.getGameId());
 
                 case STARTORDERPLAYER:
                     StartOrderMessage startOrderMessage = (StartOrderMessage) response.getPayload();
                     //view : passo l'ordine dei giocatori in modo che può disporli
+                    setStartOrder(startOrderMessage.getOrder());
 
                 case INITIALMATRIX:
                     InitialMatrixMessage initialMatrixMessage = (InitialMatrixMessage) response.getPayload();
                     //view : passo la matrice in modo da visualizzare la board
+                    setNewBoard(initialMatrixMessage.getMatrix());
 
                 case DRAWNCOMMONCARDS:
                     DrawnCommonCardsMessage drawnCommonCardsMessage = (DrawnCommonCardsMessage) response.getPayload();
                     //view : passo le common cards e la lista dei token delle common cards
+                    setNewCommon(drawnCommonCardsMessage.getCard1() , drawnCommonCardsMessage.getCard2());
+
 
                 case DRAWNPERSONALCARD:
                     DrawnPersonalCardMessage drawnPersonalCardMessage = (DrawnPersonalCardMessage) response.getPayload();
                     //view : passo la personal card del giocatore
+                    setNewPersonal(drawnPersonalCardMessage.getCard());
 
                 case STARTTURN:
                     StartTurnMessage startTurnMessage = (StartTurnMessage) response.getPayload();
                     //view : passo il maxNumOfTiles sceglibili
+                    notifyTurnStart(startTurnMessage.getMaxValueofTiles());
 
                 case TAKEABLETILES:
                     TakeableTilesResponse takeableTilesResponse = (TakeableTilesResponse) response.getPayload();
-                    view.takeableTiles(takeableTilesResponse.getChoosableTilesList());
+                    takeableTiles(takeableTilesResponse.getChoosableTilesList(), takeableTilesResponse.getChoosableTilesList().get(0).size());
                     //view : passo choosableTilesList per "illuminare" sulla board le tiles prendibili
 
                 case POSSIBLECOLUMNS:
                     PossibleColumnsResponse possibleColumnsResponse = (PossibleColumnsResponse) response.getPayload();
-                    view.setPossibleColumns(possibleColumnsResponse.getChoosableColumns());
+                    askColumn(possibleColumnsResponse.getChoosableColumns());
                     //view : passo il booleano con true e false sulle varie colonne della shelfie
 
                 case SHELFIEUPDATE:
                     ShelfieUpdateMessage shelfieUpdateMessage = (ShelfieUpdateMessage) response.getPayload();
-                    view.setPlayersShelfiesView(shelfieUpdateMessage.getUser(), shelfieUpdateMessage.getShelfie());
+                    setNewShelfie(shelfieUpdateMessage.getUser(), shelfieUpdateMessage.getShelfie());
                     //view : passo lo user,la colonna e la lista ordinata di tiles scelte per aggiornare la shelfie dello user corrispondente
 
                 case BOARDUPDATE:
@@ -182,7 +192,7 @@ public class ClientTCP implements ClientInterface {
 
                 case POINTSUPDATE:
                     PointsUpdateMessage pointsUpdateMessage = (PointsUpdateMessage) response.getPayload();
-                    view.setPlayersPointsView(pointsUpdateMessage.getUser(), pointsUpdateMessage.getPoint());
+                    setNewPoints(pointsUpdateMessage.getUser(), pointsUpdateMessage.getPoint());
                     //view : passo lo user,il nuovo punteggio e se questo ha preso qualche common token
 
                 case ENDTOKEN:
@@ -192,7 +202,7 @@ public class ClientTCP implements ClientInterface {
 
                 case FINALPOINTS:
                     FinalPointsMessage finalPointsMessage = (FinalPointsMessage) response.getPayload();
-                    view.setFinalPoints(finalPointsMessage.getUsers(),finalPointsMessage.getPoints());
+                    setFinalPoints(finalPointsMessage.getUsers(),finalPointsMessage.getPoints());
 
                     //view : passo la lista degli utenti e la lista dei loro punteggi
 

@@ -29,7 +29,7 @@ public interface ClientInterface extends Remote {
 
     public void setNewPersonal(PersonalGoalCard card);
 
-    public void setNewShelfie(User receiver, Shelfie shelfie);
+    public void setNewShelfie(User receiver, Tile[][] shelfie);
 
     public void setNewPoints(User user, Integer points);
 

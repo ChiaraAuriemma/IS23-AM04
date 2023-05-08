@@ -160,6 +160,8 @@ public class View {
     }
 
 
+
+
     //METODI PER LE SHELFIE
 
     /**
@@ -370,8 +372,8 @@ public class View {
 
     public void Title() {
         String title = "     ▒█▀▄▀█ █▒ █ 　 ▒█▀▀▀█ █░ █ █▀▀ █▒░ █▀▀ ░▀░ █▀▀\n" +
-                "     ▒█▒█░█ █▄▄█ 　 ░▀▀▀▄▄ █▀▀█ █▀▀ █▒░ █▀▀ ▀█▀ █▀▀\n" +
-                "     ▒█░░░█ ▄▄▄█ 　 ▒█▄▄▄█ ▀░ ▀ ▀▀▀ ▀▀▀ ▀░  ▀▀▀ ▀▀▀\n";
+                       "     ▒█▒█░█ █▄▄█ 　 ░▀▀▀▄▄ █▀▀█ █▀▀ █▒░ █▀▀ ▀█▀ █▀▀\n" +
+                       "     ▒█░░░█ ▄▄▄█ 　 ▒█▄▄▄█ ▀░ ▀ ▀▀▀ ▀▀▀ ▀░  ▀▀▀ ▀▀▀\n";
         out.println(title);
     }
 
@@ -464,10 +466,22 @@ public class View {
     }
 
     public void setFinalPoints(List<User> users, ArrayList<Integer> points) {
-        suca
+        for (User u: users){
+            setPlayersPointsView(u, points.get(users.indexOf(u)));
+        }
     }
 
     public void setPossibleColumns(boolean[] choosableColumns) {
-        merda
+        askColumn();
+        out.print("You can choose between the columns numbered as: ");
+        int i=0;
+        for (boolean b: choosableColumns){
+            if (b){
+                out.print(i);
+                out.print(" ");
+            }
+            i++;
+        }
+        out.print("\n");
     }
 }
