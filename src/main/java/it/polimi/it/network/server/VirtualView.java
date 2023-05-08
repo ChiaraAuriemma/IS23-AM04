@@ -156,7 +156,7 @@ public class VirtualView {
         }
 
         //starto il turno mandando il massimo numero di tile da server a client
-        //lui risponde col numero che vuoel -> Arriva a gameController
+        //lui risponde col numero che vuole -> Arriva a gameController
     }
 
 
@@ -199,7 +199,7 @@ public class VirtualView {
         }
     }
 
-    public void shelfieUpdate(User user, int column, List<Tile> chosen){
+    public void shelfieUpdate(User user){
         for (int i=0; i < game.getNumplayers(); i++) {
             User  receiver = game.getPlayer(i);
 
@@ -269,6 +269,9 @@ public class VirtualView {
 
             } else if (typeOfConnection.get(receiver).equals("RMI")) {
                 //sviluppo in RMI
+
+                ClientInterface clientRMI = userRMI.get(user);
+                clientRMI.setEndToken(user);
             }
         }
     }
@@ -286,6 +289,8 @@ public class VirtualView {
 
             } else if (typeOfConnection.get(receiver).equals("RMI")) {
                 //sviluppo in RMI
+                ClientInterface clientRMI = userRMI.get(users);
+                clientRMI.setFinalPoints(users, points);
             }
         }
     }

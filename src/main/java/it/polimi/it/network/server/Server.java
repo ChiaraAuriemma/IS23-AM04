@@ -16,7 +16,7 @@ import java.util.HashMap;
 
 public class Server {
     private static Lobby lobby;
-    private HashMap<User,String > typeOfConnection;
+    private HashMap<User,String > typeOfConnection = new HashMap<>();
 
     public static void main(String[] args) throws FileNotFoundException, RemoteException, AlreadyBoundException {
         int portTCP, portRMI;
@@ -49,12 +49,14 @@ public class Server {
         return lobby;
     }
 
-    public void gameInitialization(User user){
+   /* public void gameInitialization(User user){
         String type = typeOfConnection.get(user);
         if(type.equals("RMI")){
            // RMIImplementation
         }
     }
 
+
+    */
 
 }

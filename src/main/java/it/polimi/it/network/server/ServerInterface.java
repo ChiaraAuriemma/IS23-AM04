@@ -17,7 +17,7 @@ public interface ServerInterface extends Remote {
 
     void joinGame(User user,int id) throws RemoteException, InvalidIDException, WrongPlayerException, IllegalValueException;
 
-    void tilesNumMessage(User user,int numTiles) throws RemoteException, WrongListException, WrongPlayerException, IndexOutOfBoundsException, WrongTurnException, WrongListException, IllegalValueException;
+    void tilesNumMessage(User user,int numTiles) throws RemoteException, WrongPlayerException, WrongTurnException, WrongListException, IllegalValueException;
 
     void selectedTiles(User user,List<Tile> choosenTiles) throws RemoteException, WrongPlayerException;
 

@@ -35,17 +35,21 @@ public interface ClientInterface extends Remote {
 
     public void notifyTurnStart(int maxValueofTiles);
 
-    void askColumn(boolean[] choosableColumns);
+    public void askColumn(boolean[] choosableColumns);
 
     public void createGame(int playerNumber) throws RemoteException;
 
-    void joinGame(int gameId) throws RemoteException;
+    public void joinGame(int gameId) throws RemoteException;
 
-    void tilesNumMessage(int numOfTiles) throws RemoteException;
+    public void tilesNumMessage(int numOfTiles) throws RemoteException;
 
-    View getView();
+    public View getView();
 
-    void selectedTiles(List<Tile> choices) throws RemoteException;
+    public void selectedTiles(List<Tile> choices) throws RemoteException;
 
-    void chooseColumn(int column) throws RemoteException;
+    public void chooseColumn(int column) throws RemoteException;
+
+    void setEndToken(User user);
+
+    void setFinalPoints(List<User> users, ArrayList<Integer> points);
 }

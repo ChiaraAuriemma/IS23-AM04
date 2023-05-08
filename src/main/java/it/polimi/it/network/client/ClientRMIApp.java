@@ -8,10 +8,6 @@ import it.polimi.it.model.Tiles.Tile;
 import it.polimi.it.model.User;
 import it.polimi.it.network.server.ServerInterface;
 import it.polimi.it.view.View;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -161,6 +157,15 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
         }
 }
 
+    @Override
+    public void setEndToken(User user) {
+        view.setEndToken(user);
+    }
+
+    @Override
+    public void setFinalPoints(List<User> users, ArrayList<Integer> points) {
+        view.setFinalPoints(users, points);
+    }
 
 
     public void setNewShelfie(User user, Shelfie shelfie){

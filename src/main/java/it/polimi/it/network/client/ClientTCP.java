@@ -162,34 +162,43 @@ public class ClientTCP implements ClientInterface {
 
                 case TAKEABLETILES:
                     TakeableTilesResponse takeableTilesResponse = (TakeableTilesResponse) response.getPayload();
+                    view.takeableTiles(takeableTilesResponse.getChoosableTilesList());
                     //view : passo choosableTilesList per "illuminare" sulla board le tiles prendibili
 
                 case POSSIBLECOLUMNS:
                     PossibleColumnsResponse possibleColumnsResponse = (PossibleColumnsResponse) response.getPayload();
+                    view.setPossibleColumns(possibleColumnsResponse.getChoosableColumns());
                     //view : passo il booleano con true e false sulle varie colonne della shelfie
 
                 case SHELFIEUPDATE:
                     ShelfieUpdateMessage shelfieUpdateMessage = (ShelfieUpdateMessage) response.getPayload();
+                    view.setPlayersShelfiesView(shelfieUpdateMessage.getUser(), shelfieUpdateMessage.getShelfie());
                     //view : passo lo user,la colonna e la lista ordinata di tiles scelte per aggiornare la shelfie dello user corrispondente
 
                 case BOARDUPDATE:
                     BoardUpdateMessage boardUpdateMessage = (BoardUpdateMessage) response.getPayload();
+                    view.setBoardView(boardUpdateMessage.getMatrix());
                     //view : passo la nuova matrice in modo da visualizzare la board aggiornata
 
                 case POINTSUPDATE:
                     PointsUpdateMessage pointsUpdateMessage = (PointsUpdateMessage) response.getPayload();
+                    view.setPlayersPointsView(pointsUpdateMessage.getUser(), pointsUpdateMessage.getPoint());
                     //view : passo lo user,il nuovo punteggio e se questo ha preso qualche common token
 
                 case ENDTOKEN:
                     EndTokenTakenMessage endTokenTakenMessage = (EndTokenTakenMessage) response.getPayload();
+                    setEndToken(endTokenTakenMessage.getUser());
                     //view : passo lo user che ha preso l'endToken
 
                 case FINALPOINTS:
                     FinalPointsMessage finalPointsMessage = (FinalPointsMessage) response.getPayload();
+                    view.setFinalPoints(finalPointsMessage.getUsers(),finalPointsMessage.getPoints());
+
                     //view : passo la lista degli utenti e la lista dei loro punteggi
 
                 case ERROR:
                     ErrorMessage errorMessage = (ErrorMessage) response.getPayload();
+                    view.printError(errorMessage.getError());
                     // il messaggio d'errore contiene la stringa error implementare la gestione dei vari errori
             }
         }
@@ -264,5 +273,15 @@ public class ClientTCP implements ClientInterface {
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    @Override
+    public void setEndToken(User user) {
+        view.setEndToken(user);
+    }
+
+    @Override
+    public void setFinalPoints(List<User> users, ArrayList<Integer> points) {
+        view.setFinalPoints(users, points);
     }
 }
