@@ -16,7 +16,7 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.HashMap;
 import java.util.List;
 
-public class RMIImplementation extends UnicastRemoteObject implements ServerRMI {
+public class RMIImplementation extends UnicastRemoteObject implements ServerInterface {
 
     private Lobby lobby;
     private HashMap<User,GameController> userGame;

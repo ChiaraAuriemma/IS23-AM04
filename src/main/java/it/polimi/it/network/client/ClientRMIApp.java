@@ -6,7 +6,7 @@ import it.polimi.it.model.Card.PersonalGoalCards.PersonalGoalCard;
 import it.polimi.it.model.Shelfie;
 import it.polimi.it.model.Tiles.Tile;
 import it.polimi.it.model.User;
-import it.polimi.it.network.server.ServerRMI;
+import it.polimi.it.network.server.ServerInterface;
 import it.polimi.it.view.View;
 
 import java.io.BufferedReader;
@@ -25,7 +25,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
     private int port;
     private String ip;
     private Registry registry;
-    private ServerRMI sr;
+    private ServerInterface sr;
     private boolean nickOK = false;
 
     private User user;
@@ -56,7 +56,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
         }
 
         try {
-            this.sr = (ServerRMI) registry.lookup("server_RMI");
+            this.sr = (ServerInterface) registry.lookup("server_RMI");
         } catch (RemoteException | NotBoundException e) {
             System.out.println(e.getMessage());
         }
@@ -115,7 +115,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
     public void joinGame(int gameID) throws RemoteException {
         try{
             sr.joinGame(user,gameID);
-        }catch (InvalidIDException | WrongPlayerException e) {
+        }catch (InvalidIDException | WrongPlayerException | IllegalValueException e) {
             view.askIDAgain();
         }
     }
@@ -183,12 +183,6 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
     public void askColumn(boolean[] choosableColumns) {
         view.askColumn();
     }
-
-    @Override
-    public void createGame() {
-
-    }
-
 
     public void setStartOrder(ArrayList<User> order){
         view.setOrderView(order);
