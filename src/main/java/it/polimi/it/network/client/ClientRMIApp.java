@@ -63,11 +63,9 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientRMI {
         }
         //view : passo come parametro di start client un riferimento alla view che voglio usare
 
-        BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
-        String clientInput = " ";
+
         //view : do la possibilità all'utente di inserire un nickname
         view.askNickname();
-
 
             //view: mostro la scelta tra creategame e joingame
             // delego in base alla scelta che fa la view al metodo create o join
@@ -105,15 +103,6 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientRMI {
         } catch (WrongPlayerException e) {
             //view : notifico alla view che il numero di giocatori inseriti non è corretto
             view.askNumPlayerAgain();
-            this.scanner = new Scanner(System.in);
-            int response;
-            try {
-                response = scanner.nextInt();
-                createGame(response);
-            } catch (IOException f) {
-                System.out.println(f.getMessage());
-            }
-
         }
     }
 
@@ -127,16 +116,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientRMI {
         try{
             sr.joinGame(user,gameID);
         }catch (InvalidIDException | WrongPlayerException e) {
-
             view.askIDAgain();
-            this.scanner = new Scanner(System.in);
-            int response;
-            try {
-                response = scanner.nextInt();
-                joinGame(response);
-            } catch (IOException f) {
-                System.out.println(f.getMessage());
-            }
         }
     }
 
@@ -196,6 +176,10 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientRMI {
 
     public void notifyTurnStart(int maxValueofTiles) {
         view.NotifyTurnStart(maxValueofTiles, user.getNickname());
+    }
+
+    public void askColumn(boolean[] choosableColumns) {
+        view.askColumn();
     }
 
 

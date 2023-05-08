@@ -32,7 +32,7 @@ public interface ClientRMI extends Remote {
 
     public void setNewPoints(User user, Integer points);
 
-
     public void notifyTurnStart(int maxValueofTiles);
 
+    void askColumn(boolean[] choosableColumns);
 }

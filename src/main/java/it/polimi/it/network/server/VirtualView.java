@@ -206,7 +206,7 @@ public class VirtualView {
 
             if (typeOfConnection.get(receiver).equals("TCP")) {
 
-                ShelfieUpdateMessage shelfieUpdateMessage = new ShelfieUpdateMessage(user, column, chosen);
+                ShelfieUpdateMessage shelfieUpdateMessage = new ShelfieUpdateMessage(user, user.getShelfie().getShelf());
                 Message message = new Message(MessageType.SHELFIEUPDATE, shelfieUpdateMessage);
                 sendTCPMessage(userTCP.get(receiver), message);
                 // perchè non aggiorno la shelfie direttamente qui??

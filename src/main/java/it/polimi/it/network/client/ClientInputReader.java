@@ -13,18 +13,36 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ClientInputReader implements Runnable{
+
     private volatile boolean running;
+
+    /**
+     * "RMI" or "TCP" string, used to know how to choose between the TCP-message or the RMI-method
+     */
     private String connectionType;
+
+    /**
+     * Instance of the TCP client
+     */
     private ClientTCP clientTCP;
+
+    /**
+     * Instance of the RMI client
+     */
     private ClientRMIApp clientRMIApp;
+
+    /**
+     * Instance of the View class
+     */
     private View view;
 
 
+    /**
+     * Method to constantly read the input given by the user, sends the input line to the command parser
+     */
     @Override
     public void run() {
         running = true;
-
-
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         while (running) {
             try {
@@ -45,6 +63,12 @@ public class ClientInputReader implements Runnable{
         }
     }
 
+
+    /**
+     * Method used to parse the input given by the user, recognizing a certain pattern
+     * @param input is the String read by the buffer
+     * @throws RemoteException .
+     */
     public void commandParser(String input) throws RemoteException {
         String regex = "(\\w+)>>";
         Pattern pattern = Pattern.compile(regex);
@@ -216,14 +240,29 @@ public class ClientInputReader implements Runnable{
         }
     }
 
+    /**
+     * Setter method
+     * @param connectionType is a String, either "RMI" or "TCP", used to know which type of message
+     *                       has to be sent
+     */
     public void setConnectionType(String connectionType){
         this.connectionType = connectionType;
     }
 
+
+    /**
+     * Setter Method
+     * @param clientTCP is the reference to the TCP Client class
+     */
     public void setTCP(ClientTCP clientTCP) {
         this.clientTCP=clientTCP;
     }
 
+
+    /**
+     * Setter Method
+     * @param clientRMIApp is the reference to the RMI Client class
+     */
     public void setRMI(ClientRMIApp clientRMIApp) {
         this.clientRMIApp=clientRMIApp;
     }
