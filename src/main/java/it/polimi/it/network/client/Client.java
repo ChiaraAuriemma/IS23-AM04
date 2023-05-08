@@ -6,13 +6,14 @@ import com.google.gson.stream.JsonReader;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.Scanner;
 
 public class Client {
 
-    public static void main(String[] args) throws FileNotFoundException, RemoteException, NotBoundException {
+    public static void main(String[] args) throws IOException, NotBoundException {
 
         System.out.println("Choose a connection type");
 
@@ -25,21 +26,9 @@ public class Client {
         ClientTCP clientTCP=null;
         ClientRMIApp clientRMIApp=null;
 
-        if(inputLine.equalsIgnoreCase("TCP")){
-              clientTCP = new ClientTCP(jsonObject.get("portTCP").getAsInt(),jsonObject.get("ip").getAsString());
-            clientTCP.startClient();
-        }else if(inputLine.equalsIgnoreCase("RMI") ){
-             clientRMIApp = new ClientRMIApp(jsonObject.get("portRMI").getAsInt(),jsonObject.get("ip").getAsString());
-            clientRMIApp.startClient();
-        }
 
         ClientInputReader cliR = new ClientInputReader();
         cliR.setConnectionType(inputLine.toLowerCase());
-        if(inputLine.equalsIgnoreCase("TCP") && clientTCP!=null){
-            cliR.setTCP(clientTCP);
-        } else if (inputLine.equalsIgnoreCase("RMI") && clientRMIApp!=null) {
-            cliR.setRMI(clientRMIApp);
-        }
         Thread thread = new Thread(cliR);
         thread.start();
     }

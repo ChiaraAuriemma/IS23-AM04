@@ -1,23 +1,26 @@
 package it.polimi.it.network.client;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.stream.JsonReader;
 import it.polimi.it.model.Tiles.PossibleColors;
 import it.polimi.it.model.Tiles.Tile;
 import it.polimi.it.view.View;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+
 public class ClientInputReader implements Runnable{
     private volatile boolean running;
     private String connectionType;
-    private ClientTCP clientTCP;
-    private ClientRMIApp clientRMIApp;
     private View view;
+
+    private ClientInterface client;
 
 
     @Override
@@ -58,16 +61,8 @@ public class ClientInputReader implements Runnable{
             switch (command) {
                 case "login": //initial nickname setting
                     String nickname = input.substring(matcher.end());
-
                     //metodo che manda il messaggio login
-                    switch (connectionType){
-                        case "tcp": //invio messaggio TCP
-                            clientTCP.createPlayer(nickname);
-                            break;
-                        case "rmi": //chiamata metodi RMI
-                            clientRMIApp.login(nickname);
-                            break;
-                    }
+                            client.createPlayer(nickname);
                     ;break;
 
                 case "create_game":// create_game>>4
@@ -216,15 +211,20 @@ public class ClientInputReader implements Runnable{
         }
     }
 
-    public void setConnectionType(String connectionType){
+    public void setConnectionType(String connectionType) throws IOException, NotBoundException {
         this.connectionType = connectionType;
+
+        Gson gson = new Gson();
+        JsonReader jsonReader = new JsonReader( new FileReader("src/main/java/it/polimi/it/network/ServerConfig.json"));
+        JsonObject jsonObject = gson.fromJson(jsonReader,JsonObject.class);
+
+        if(connectionType.equals("TCP")){
+            this.client = new ClientTCP2(jsonObject.get("portTCP").getAsInt(),jsonObject.get("ip").getAsString());
+            client.startClient();
+        }else{
+            this.client = new ClientRMIApp(jsonObject.get("portRMI").getAsInt(),jsonObject.get("ip").getAsString());
+            client.startClient();
+        }
     }
 
-    public void setTCP(ClientTCP clientTCP) {
-        this.clientTCP=clientTCP;
-    }
-
-    public void setRMI(ClientRMIApp clientRMIApp) {
-        this.clientRMIApp=clientRMIApp;
-    }
 }

@@ -1,16 +1,10 @@
 package it.polimi.it.controller;
 
-import it.polimi.it.controller.Exceptions.IllegalValueException;
-import it.polimi.it.controller.Exceptions.InvalidIDException;
-import it.polimi.it.controller.Exceptions.WrongPlayerException;
-import it.polimi.it.controller.Exceptions.WrongTurnException;
-import it.polimi.it.model.Exceptions.InvalidTileException;
-import it.polimi.it.model.Exceptions.WrongListException;
+import it.polimi.it.Exceptions.*;
 import it.polimi.it.model.Game;
 import it.polimi.it.model.Tiles.PossibleColors;
 import it.polimi.it.model.Tiles.Tile;
 import it.polimi.it.model.User;
-import it.polimi.it.network.server.VirtualView;
 
 import java.rmi.RemoteException;
 import java.util.HashSet;
@@ -88,12 +82,10 @@ public class GameController {
 
     /**
      * Method used to control which player needs to move in the current turn
-     * @throws WrongListException exception used when an illegal list of tiles is selected
      * @throws IllegalValueException exception used when an illegal value is given in input
-     * @throws InvalidTileException exception used when a wrong tile is selected
      * @throws InvalidIDException exception used when the game ID is wrong or non-existent
      */
-    void turnDealer() throws InvalidIDException {
+    void turnDealer() throws InvalidIDException, IllegalValueException {
 
         if(this.endGame && this.currentPlayer == 0){
 
@@ -120,7 +112,7 @@ public class GameController {
      * Method to get the maximum possible number of tiles that can be selected from the board
      * Calls the view to ask the payer about how many tiles the player wants to retrieve
      */
-    public void firstOperation(){
+    public void firstOperation() throws IllegalValueException {
 
         //faccio i controlli su qual è il massimo num di tile prendibili
         this.maxTile = playerList.get(currentPlayer).maxValueOfTiles();
@@ -136,7 +128,7 @@ public class GameController {
      *  in order to highlight them on the board.
      * @param chosenNumber is the input from the user
      */
-    public void getFromViewNTiles(User user,int chosenNumber) throws WrongTurnException, WrongListException, IndexOutOfBoundsException, RemoteException {
+    public void getFromViewNTiles(User user,int chosenNumber) throws WrongTurnException, WrongListException, RemoteException, IllegalValueException {
         if(user.equals(playerList.get(currentPlayer))){
             this.playerList.get(currentPlayer).choosableTiles(chosenNumber);
 
@@ -158,7 +150,7 @@ public class GameController {
      * The method also sends to the view the list of 'empty-enough' columns in which the chosen
      *  tiles might be put in.
      * @param chosenList is the list of selected tiles
-     * @throws InvalidTileException exception used when a wrong tile is selected
+     * @throws WrongTileException exception used when a wrong tile is selected
      */
     public void getTilesListFromView(User user,List<Tile> chosenList) throws WrongPlayerException {
         if(user.equals(playerList.get(currentPlayer))) {
@@ -169,7 +161,7 @@ public class GameController {
             try {
                 boolean[] possibleColumns = playerList.get(currentPlayer).chooseSelectedTiles(currentTilesList);
                 possibleColumnArray = possibleColumns;
-            } catch (InvalidTileException | RemoteException e) {
+            } catch (RemoteException | WrongTileException e) {
                 //messaggio a view per far scegliere altre tiles
             }
         }else {
@@ -188,22 +180,19 @@ public class GameController {
      * @param col is the column of the shelfie where to put the tiles in
      * @param orderedTiles is the list of chosen tiles, ordered as the player wants them to be in his shelfie
 
-     * @throws InvalidTileException exception used when a wrong tile is selected
+     * @throws WrongTileException exception used when a wrong tile is selected
      */
     //oltre a scegliere la colonna dove metterle, ordina le Tile per come le vuole nella colonna
-    public void getColumnFromView(User user,int col, List<Tile> orderedTiles) throws InvalidIDException {
-        if(possibleColumnArray[col] != true){
+    public void getColumnFromView(User user,int col, List<Tile> orderedTiles) throws IllegalValueException, InvalidIDException {
+        if(!possibleColumnArray[col]){
            System.out.println("Invalid column choice"); //da far vedere a view
         }
 
         if (new HashSet<>(orderedTiles).containsAll(currentTilesList)){
              System.out.println("Different tiles from before"); //da far fare a view
         }
-        try{
         endGame = playerList.get(currentPlayer).insertTile(col, orderedTiles);
-        }catch (IndexOutOfBoundsException e){
             //messaggio per la view
-        }
 
         game.pointCount(playerList.get(currentPlayer));
 
@@ -223,7 +212,7 @@ public class GameController {
      * Method used to initialize the parameters of the game, called before the firs turn of the game
      * Calls the view in order to display the initial board and the cards that have been extracted randomly
      */
-    public void firstTurnStarter(){
+    public void firstTurnStarter() throws IllegalValueException {
         //pesca le carte, dispone i giocatori
 
         //tolgo: playerList = game.getPlayerList();//sto salvando la lista di giocatori già ordinata come deve essere

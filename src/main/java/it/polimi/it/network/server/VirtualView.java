@@ -5,8 +5,7 @@ import it.polimi.it.model.Card.PersonalGoalCards.PersonalGoalCard;
 import it.polimi.it.model.Game;
 import it.polimi.it.model.Tiles.Tile;
 import it.polimi.it.model.User;
-import it.polimi.it.network.client.ClientRMI;
-import it.polimi.it.network.client.ClientRMIApp;
+import it.polimi.it.network.client.ClientInterface;
 import it.polimi.it.network.message.Message;
 import it.polimi.it.network.message.MessageType;
 import it.polimi.it.network.message.responses.*;
@@ -31,7 +30,7 @@ public class VirtualView {
     private HashMap<User, ObjectOutputStream> userTCP;
     private RMIImplementation serverRMI;
 
-    private HashMap<User, ClientRMI> userRMI;
+    private HashMap<User, ClientInterface> userRMI;
 
     public VirtualView( ServerTCP serverTCP ,RMIImplementation serverRMI){
         typeOfConnection = new HashMap<>();
@@ -75,7 +74,7 @@ public class VirtualView {
             }else if(typeOfConnection.get(game.getPlayer(i)).equals("RMI")){
 
                 //////////////////////
-                ClientRMI clientRMI = userRMI.get(user);
+                ClientInterface clientRMI = userRMI.get(user);
                 clientRMI.setStartOrder(order);
             }
 
@@ -96,7 +95,7 @@ public class VirtualView {
             } else if (typeOfConnection.get(game.getPlayer(i)).equals("RMI")) {
                 //sviluppo in RMI
 
-                ClientRMI clientRMI = userRMI.get(user);
+                ClientInterface clientRMI = userRMI.get(user);
                 clientRMI.setNewBoard(matrix);
             }
         }
@@ -115,7 +114,7 @@ public class VirtualView {
             } else if (typeOfConnection.get(user).equals("RMI")) {
                 //sviluppo in RMI
 
-                ClientRMI clientRMI = userRMI.get(user);
+                ClientInterface clientRMI = userRMI.get(user);
                 clientRMI.setNewCommon(card1, card2);
             }
         }
@@ -132,7 +131,7 @@ public class VirtualView {
         } else if (typeOfConnection.get(user).equals("RMI")) {
             //sviluppo in RMI
 
-            ClientRMI clientRMI = userRMI.get(user);
+            ClientInterface clientRMI = userRMI.get(user);
             clientRMI.setNewPersonal(card);
         }
     }
@@ -152,7 +151,7 @@ public class VirtualView {
 
         } else if (typeOfConnection.get(user).equals("RMI")) {
             //sviluppo in RMI
-            ClientRMI clientRMI = userRMI.get(user);
+            ClientInterface clientRMI = userRMI.get(user);
             clientRMI.notifyTurnStart(maxValueofTiles);
         }
 
@@ -173,7 +172,7 @@ public class VirtualView {
 
 
         }else if(typeOfConnection.get(user).equals("RMI")){
-            ClientRMI clientRMI = userRMI.get(user);
+            ClientInterface clientRMI = userRMI.get(user);
             clientRMI.takeableTiles(choosableTilesList, num);
         }
     }
@@ -194,8 +193,8 @@ public class VirtualView {
         }else if(typeOfConnection.get(user).equals("RMI")){
             //sviluppo in RMI
 
-            ClientRMI clientRMI = userRMI.get(user);
-            clientRMI.askColumn(choosableColumns);
+            ClientInterface clientRMI = userRMI.get(user);
+            clientRMI.(choosableColumns);
 
         }
     }
@@ -214,7 +213,7 @@ public class VirtualView {
             } else if (typeOfConnection.get(receiver).equals("RMI")) {
                 //sviluppo in RMI
 
-                ClientRMI clientRMI = userRMI.get(user);
+                ClientInterface clientRMI = userRMI.get(user);
                 clientRMI.setNewShelfie(receiver,receiver.getShelfie());
             }
         }
@@ -233,7 +232,7 @@ public class VirtualView {
             } else if (typeOfConnection.get(receiver).equals("RMI")) {
                 //sviluppo in RMI
 
-                ClientRMI clientRMI = userRMI.get(receiver);
+                ClientInterface clientRMI = userRMI.get(receiver);
                 clientRMI.setNewBoard(matrix);
             }
         }
@@ -252,7 +251,7 @@ public class VirtualView {
             } else if (typeOfConnection.get(receiver).equals("RMI")) {
                 //sviluppo in RMI
 
-                ClientRMI clientRMI = userRMI.get(user);
+                ClientInterface clientRMI = userRMI.get(user);
                 clientRMI.setNewPoints(user,points);
             }
         }

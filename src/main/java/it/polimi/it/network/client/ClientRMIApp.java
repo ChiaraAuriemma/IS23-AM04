@@ -1,9 +1,12 @@
 package it.polimi.it.network.client;
 
-import it.polimi.it.controller.Exceptions.*;
+import it.polimi.it.Exceptions.ExistingNicknameException;
+import it.polimi.it.Exceptions.InvalidIDException;
+import it.polimi.it.Exceptions.WrongPlayerException;
+import it.polimi.it.Exceptions.WrongTurnException;
+import it.polimi.it.Exceptions.*;
 import it.polimi.it.model.Card.CommonGoalCards.CommonGoalCard;
 import it.polimi.it.model.Card.PersonalGoalCards.PersonalGoalCard;
-import it.polimi.it.model.Exceptions.WrongListException;
 import it.polimi.it.model.Shelfie;
 import it.polimi.it.model.Tiles.Tile;
 import it.polimi.it.model.User;
@@ -22,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class ClientRMIApp extends UnicastRemoteObject implements ClientRMI {
+public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface {
     private int port;
     private String ip;
     private Registry registry;
@@ -41,7 +44,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientRMI {
         this.view = new View();
     }
 
-    public View getView(){
+    public View getView() {
         return view;
     }
 
@@ -49,9 +52,9 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientRMI {
      * First method used by the client, communicates with the view in order to let him choose his nickname,
      * then communicates it to the serverRMI to create an actual User instance.
      */
-    public void startClient()  {
+    public void startClient() {
         try {
-            registry = LocateRegistry.getRegistry(ip,port);
+            registry = LocateRegistry.getRegistry(ip, port);
         } catch (RemoteException e) {
             System.out.println(e.getMessage());
         }
@@ -69,25 +72,24 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientRMI {
         view.askNickname();
 
 
-            //view: mostro la scelta tra creategame e joingame
-            // delego in base alla scelta che fa la view al metodo create o join
-            //appena mi arriva startgame dal server avvio la partita
+        //view: mostro la scelta tra creategame e joingame
+        // delego in base alla scelta che fa la view al metodo create o join
+        //appena mi arriva startgame dal server avvio la partita
 
     }
 
 
-
-
     /**
      * Method called by startClient, sends the server the chosen username
-      * @param userName .
+     *
+     * @param userName .
      * @throws RemoteException .
      */
     public void login(String userName) throws RemoteException {
-        try{
-            user = sr.login(this,userName);
+        try {
+            user = sr.login(this, userName);
             //view : passo alla schermata con create e join game
-        }catch (ExistingNicknameException e) {
+        } catch (ExistingNicknameException e) {
             //view : notifico la view che deve riproporre l'inserimento del nickname con l'errore in rosso
             view.askNicknameAgain();
         }
@@ -96,12 +98,13 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientRMI {
 
     /**
      * Communicates the server the number of people that the user wants in his new game
+     *
      * @param playerNumber .
      * @throws RemoteException .
      */
     public void createGame(int playerNumber) throws RemoteException {
-        try{
-            sr.createGame(user,playerNumber);
+        try {
+            sr.createGame(user, playerNumber);
         } catch (WrongPlayerException e) {
             //view : notifico alla view che il numero di giocatori inseriti non è corretto
             view.askNumPlayerAgain();
@@ -119,14 +122,15 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientRMI {
 
 
     /**
-     *Method that communicates to the server the ID of the game that the user wants to join
+     * Method that communicates to the server the ID of the game that the user wants to join
+     *
      * @param gameID .
      * @throws RemoteException .
      */
     public void joinGame(int gameID) throws RemoteException {
-        try{
-            sr.joinGame(user,gameID);
-        }catch (InvalidIDException | WrongPlayerException e) {
+        try {
+            sr.joinGame(user, gameID);
+        } catch (InvalidIDException | WrongPlayerException e) {
 
             view.askIDAgain();
             this.scanner = new Scanner(System.in);
@@ -140,56 +144,65 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientRMI {
         }
     }
 
+    public void takeableTiles(List<List<Tile>> choosableTilesList, int num) throws RemoteException {
+        //view : faccio vedere illuminate le tiles nella lista
+        view.takeableTiles(choosableTilesList);
+    }
+
 
     public void tilesNumMessage(int numOfTiles) throws RemoteException {
         try {   //comunico al server il numero scelto
-            sr.tilesNumMessage(user,numOfTiles);
-        }catch (IndexOutOfBoundsException e) {
+            sr.tilesNumMessage(user, numOfTiles);
+        } catch (IllegalValueException e) {
             //view : notifico alla view che il numero di tiles indicato non è valido
             view.askNumTilesAgain();
-        }catch (WrongPlayerException e) {
+        } catch (WrongPlayerException e) {
             //view : non è il turno di questo giocatore
-        }catch (WrongListException e){
+        } catch (WrongListException e) {
             //view : il numero di tiles non è valido in base agli spazi rimasti liberi
             view.askNumTilesAgain();
         } catch (WrongTurnException e) {
-           // throw new RuntimeException(e);
+            // throw new RuntimeException(e);
             System.out.println("This is not your turn!");
         }
     }
 
-    public void selectedTiles(List<Tile>choosenTiles) throws RemoteException {
+    @Override
+    public void createPlayer(String nickname) {
+
+    }
+
+    public void selectedTiles(List<Tile> choosenTiles) throws RemoteException {
         //mando le tiles a RMIImplementation
-        try{
-           sr.selectedTiles(user,choosenTiles);
+        try {
+            sr.selectedTiles(user, choosenTiles);
         } catch (WrongPlayerException e) {
             //view : notifico che l'user non è quello giusto
-        //}catch (WrongListException){
+            //}catch (WrongListException){
             //manca eccezione nel caso in cui abbia scelto un set di tile invalido
         }
     }
 
 
-    public void chooseColumn (int numOfColum, List<Tile> orderedTiles) throws RemoteException {
+    public void chooseColumn(int numOfColum, List<Tile> orderedTiles) throws RemoteException {
         try {
-            sr.chooseColumn(user,numOfColum,orderedTiles);
-        } catch (InvalidIDException e) {
+            sr.chooseColumn(user, numOfColum, orderedTiles);
+        } catch (InvalidIDException | IllegalValueException e) {
             //view : il numero della colonna non è valido
             view.askColumnAgain();
         }
     }
 
 
-
-    public void setNewShelfie(User user, Shelfie shelfie){
+    public void setNewShelfie(User user, Shelfie shelfie) {
         view.setPlayersShelfiesView(user, shelfie.getShelf());
     }
 
-    public void setNewBoard(Tile[][] matrix){
+    public void setNewBoard(Tile[][] matrix) {
         view.setBoardView(matrix);
     }
 
-    public void setNewPoints(User user, Integer points){
+    public void setNewPoints(User user, Integer points) {
         view.setPlayersPointsView(user, points);
     }
 
@@ -199,26 +212,20 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientRMI {
     }
 
 
-    public void setStartOrder(ArrayList<User> order){
+    public void setStartOrder(ArrayList<User> order) {
         view.setOrderView(order);
     }
 
-    public void setNewCommon(CommonGoalCard card1, CommonGoalCard card2){
+    public void setNewCommon(CommonGoalCard card1, CommonGoalCard card2) {
         view.setCommon1View(card1);
         view.setCommon2View(card2);
     }
 
 
-    public void setNewPersonal(PersonalGoalCard card){
+    public void setNewPersonal(PersonalGoalCard card) {
         view.setPlayersPersonalCardView(card);
     }
 
     //----------------------------------------------------------------------------------------------------------
     //metodi che chiama il server:
-
-    public void takeableTiles(List<List<Tile>> choosableTilesList, int num) throws RemoteException {
-        //view : faccio vedere illuminate le tiles nella lista
-        view.takeableTiles(choosableTilesList);
-    }
-
 }

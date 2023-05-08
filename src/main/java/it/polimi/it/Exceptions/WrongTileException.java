@@ -1,4 +1,4 @@
-package it.polimi.it.controller.Exceptions;
+package it.polimi.it.Exceptions;
 
 public class WrongTileException extends Exception {
     public  WrongTileException(String message) {

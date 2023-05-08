@@ -1,15 +1,12 @@
 package it.polimi.it.network.server;
 
-import it.polimi.it.controller.Exceptions.ExistingNicknameException;
-import it.polimi.it.controller.Exceptions.InvalidIDException;
-import it.polimi.it.controller.Exceptions.WrongPlayerException;
-import it.polimi.it.controller.Exceptions.WrongTurnException;
+import it.polimi.it.Exceptions.*;
 import it.polimi.it.controller.GameController;
 import it.polimi.it.controller.Lobby;
-import it.polimi.it.model.Exceptions.WrongListException;
+import it.polimi.it.Exceptions.WrongListException;
 import it.polimi.it.model.Tiles.Tile;
 import it.polimi.it.model.User;
-import it.polimi.it.network.client.ClientRMI;
+import it.polimi.it.network.client.ClientInterface;
 
 import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;
@@ -25,7 +22,7 @@ public class RMIImplementation extends UnicastRemoteObject implements ServerRMI 
     private HashMap<User,GameController> userGame;
     private int port;
 
-    private HashMap<User, ClientRMI> userRMI;
+    private HashMap<User, ClientInterface> userRMI;
 
     private Registry registry;
     public RMIImplementation(Lobby lobby) throws RemoteException{
@@ -42,11 +39,11 @@ public class RMIImplementation extends UnicastRemoteObject implements ServerRMI 
 
     }
 
-    public ClientRMI getUserRMI (User user){
+    public ClientInterface getUserRMI (User user){
         return userRMI.get(user);
     }
 
-    public User login(ClientRMI cr ,String username) throws RemoteException, ExistingNicknameException {
+    public User login(ClientInterface cr , String username) throws RemoteException, ExistingNicknameException {
         User user = lobby.createUser(username);
         userRMI.put(user,cr);
         return user;
@@ -63,7 +60,7 @@ public class RMIImplementation extends UnicastRemoteObject implements ServerRMI 
         userGame.put(user, gc);
     }
 
-    public void tilesNumMessage(User user,int numTiles) throws RemoteException, WrongListException, IndexOutOfBoundsException, WrongTurnException {
+    public void tilesNumMessage(User user,int numTiles) throws RemoteException, WrongListException, IndexOutOfBoundsException, WrongTurnException, WrongListException, IllegalValueException {
         GameController gc = userGame.get(user);
         gc.getFromViewNTiles(user,numTiles);
             //numTiles è il valore scelto dall'utente (v. javadoc GameController)
@@ -74,7 +71,7 @@ public class RMIImplementation extends UnicastRemoteObject implements ServerRMI 
         gc.getTilesListFromView(user,choosenTiles);
     }
 
-    public void chooseColumn (User user,int columnNumber, List<Tile> orderedTiles) throws RemoteException, InvalidIDException {
+    public void chooseColumn (User user,int columnNumber, List<Tile> orderedTiles) throws RemoteException, InvalidIDException, IllegalValueException {
         GameController gc = userGame.get(user);
         gc.getColumnFromView(user,columnNumber,orderedTiles);
     }

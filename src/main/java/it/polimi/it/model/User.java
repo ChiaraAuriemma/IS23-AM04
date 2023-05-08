@@ -1,8 +1,9 @@
 package it.polimi.it.model;
 
 import it.polimi.it.model.Board.Board;
-import it.polimi.it.model.Exceptions.InvalidTileException;
-import it.polimi.it.model.Exceptions.WrongListException;
+import it.polimi.it.Exceptions.IllegalValueException;
+import it.polimi.it.Exceptions.WrongTileException;
+import it.polimi.it.Exceptions.WrongListException;
 import it.polimi.it.model.Tiles.Tile;
 
 import java.io.Serializable;
@@ -25,11 +26,11 @@ public class User implements Serializable {
         this.inGame = true;
     }
 
-    public int maxValueOfTiles() throws IndexOutOfBoundsException{
+    public int maxValueOfTiles() throws IllegalValueException {
 
         int max = shelf.possibleTiles();
         if(max < 1 || max > 3){
-            throw new IndexOutOfBoundsException("Il numero di tiles non è accettabile");
+            throw new IllegalValueException("Il numero di tiles non è accettabile");
         }
         max = board.findMaxAdjacent(max);
         game.getVirtualView().startTurn(this,max);
@@ -37,10 +38,10 @@ public class User implements Serializable {
     }
 
 
-    public List<List<Tile>> choosableTiles(int tilesNum) throws WrongListException, IndexOutOfBoundsException, RemoteException {
+    public List<List<Tile>> choosableTiles(int tilesNum) throws WrongListException, IllegalValueException, RemoteException {
 
         if(tilesNum < 1 || tilesNum > 3){
-            throw new IndexOutOfBoundsException("Wrong tiles number");
+            throw new IllegalValueException("Wrong tiles number");
         }
 
         tilesNumber = tilesNum;
@@ -55,11 +56,11 @@ public class User implements Serializable {
         return choosableList;
     }
 
-    public boolean[] chooseSelectedTiles(List<Tile> chosen) throws InvalidTileException, RemoteException {
+    public boolean[] chooseSelectedTiles(List<Tile> chosen) throws WrongTileException, RemoteException {
 
         for(Tile t : chosen){
             if(t.getColor().equals("XTILE") || t.getColor().equals("DEFAULT")){
-                throw new InvalidTileException("Tiles of this type can't be chosen");
+                throw new WrongTileException("Tiles of this type can't be chosen");
             }
         }
 
@@ -73,12 +74,12 @@ public class User implements Serializable {
         return columns;
     }
 
-    public boolean insertTile(int column, List<Tile> chosen) throws IndexOutOfBoundsException {
+    public boolean insertTile(int column, List<Tile> chosen) throws IllegalValueException {
 
         boolean isEnd;
         if(column < 0 || column > 4){
 
-            throw new IndexOutOfBoundsException("The given column value does not exist");
+            throw new IllegalValueException("The given column value does not exist");
 
         }else {
 

@@ -1,10 +1,10 @@
 package it.polimi.it.network.server;
 
 
-import it.polimi.it.controller.Exceptions.ExistingNicknameException;
-import it.polimi.it.controller.Exceptions.InvalidIDException;
-import it.polimi.it.controller.Exceptions.WrongPlayerException;
-import it.polimi.it.controller.Exceptions.WrongTurnException;
+import it.polimi.it.Exceptions.ExistingNicknameException;
+import it.polimi.it.Exceptions.InvalidIDException;
+import it.polimi.it.Exceptions.WrongPlayerException;
+import it.polimi.it.Exceptions.WrongTurnException;
 import it.polimi.it.controller.GameController;
 import it.polimi.it.controller.Lobby;
 import it.polimi.it.model.Exceptions.WrongListException;
@@ -19,6 +19,7 @@ import it.polimi.it.network.message.responses.LoginResponse;
 
 import java.io.*;
 import java.net.Socket;
+import java.rmi.RemoteException;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -134,7 +135,7 @@ public class ClientTCPHandler implements Runnable{
                     synchronized (gameController){
                         try {
                             this.gameController.getFromViewNTiles(this.user,tilesNumRequest.getNumTiles());
-                        } catch (WrongTurnException | WrongListException e) {
+                        } catch (WrongTurnException | WrongListException | RemoteException e) {
 
                             ErrorMessage errorMessage = new ErrorMessage(e.getMessage());
                             response = new Message(MessageType.ERROR, errorMessage);

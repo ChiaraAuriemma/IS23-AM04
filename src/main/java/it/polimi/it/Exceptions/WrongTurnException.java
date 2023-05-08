@@ -1,4 +1,4 @@
-package it.polimi.it.controller.Exceptions;
+package it.polimi.it.Exceptions;
 
 public class WrongTurnException extends Exception {
     public  WrongTurnException(String message) {

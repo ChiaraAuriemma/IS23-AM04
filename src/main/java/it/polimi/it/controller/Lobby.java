@@ -1,12 +1,9 @@
 package it.polimi.it.controller;
 
-import it.polimi.it.controller.Exceptions.*;
-import it.polimi.it.model.Exceptions.InvalidTileException;
-import it.polimi.it.model.Exceptions.WrongListException;
+import it.polimi.it.Exceptions.*;
 import it.polimi.it.model.Game;
 import it.polimi.it.model.User;
 import it.polimi.it.network.server.RMIImplementation;
-import it.polimi.it.network.server.Server;
 import it.polimi.it.network.server.ServerTCP;
 import it.polimi.it.network.server.VirtualView;
 
@@ -94,7 +91,7 @@ public class Lobby {
         return gameContr;
     }
 
-    public GameController joinGame(User user, int gameID) throws InvalidIDException, WrongPlayerException {
+    public GameController joinGame(User user, int gameID) throws InvalidIDException, WrongPlayerException, IllegalValueException {
 
         List<Game> findGame = gameList.stream().filter(game -> game.getGameid() == gameID).collect(Collectors.toList());
         if(gameID<=gameCounterID && !findGame.isEmpty()){

@@ -1,4 +1,4 @@
-package it.polimi.it.controller.Exceptions;
+package it.polimi.it.Exceptions;
 
 public class EmptyNicknameException extends Exception {
     public EmptyNicknameException(String message) {
