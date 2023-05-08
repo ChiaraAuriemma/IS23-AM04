@@ -194,7 +194,7 @@ public class VirtualView {
             //sviluppo in RMI
 
             ClientInterface clientRMI = userRMI.get(user);
-            clientRMI.(choosableColumns);
+            clientRMI.askColumn(choosableColumns);
 
         }
     }

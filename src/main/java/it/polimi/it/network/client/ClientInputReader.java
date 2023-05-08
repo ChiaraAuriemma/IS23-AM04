@@ -1,12 +1,14 @@
 package it.polimi.it.network.client;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.stream.JsonReader;
 import it.polimi.it.model.Tiles.PossibleColors;
 import it.polimi.it.model.Tiles.Tile;
 import it.polimi.it.view.View;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
@@ -21,16 +23,7 @@ public class ClientInputReader implements Runnable{
      */
     private String connectionType;
 
-    /**
-     * Instance of the TCP client
-     */
-    private ClientTCP clientTCP;
-
-    /**
-     * Instance of the RMI client
-     */
-    private ClientRMIApp clientRMIApp;
-
+   private ClientInterface client;
     /**
      * Instance of the View class
      */
@@ -84,42 +77,20 @@ public class ClientInputReader implements Runnable{
                     String nickname = input.substring(matcher.end());
 
                     //metodo che manda il messaggio login
-                    switch (connectionType){
-                        case "tcp": //invio messaggio TCP
-                            clientTCP.createPlayer(nickname);
-                            break;
-                        case "rmi": //chiamata metodi RMI
-                            clientRMIApp.login(nickname);
-                            break;
-                    }
-                    ;break;
+                    client.login(nickname);
+                    break;
 
                 case "create_game":// create_game>>4
                     int numPlayers = Integer.parseInt(input.substring(matcher.end()));
 
-
-                    switch (connectionType){
-                        case "tcp": //invio messaggio TCP
-                            clientTCP.createGame(numPlayers);
-                            break;
-                        case "rmi": //chiamata metodi RMI
-                            clientRMIApp.createGame(numPlayers);
-                            break;
-                    }
-                    ;break;
+                    client.createGame(numPlayers);
+                    break;
 
                 case "join_game": //join_game>>gameID
                     int gameID = Integer.parseInt(input.substring(matcher.end()));
 
-                    switch (connectionType){
-                        case "tcp": //invio messaggio TCP
-                            clientTCP.joinGame(gameID);
-                            break;
-                        case "rmi": //chiamata metodi RMI
-                            clientRMIApp.joinGame(gameID);
-                            break;
-                    }
-                    ;break;
+                   client.joinGame(gameID);
+                   break;
 
                 case "chat": //chat>>Write here your message...
                     String chatMessage = input.substring(matcher.end());
@@ -151,29 +122,15 @@ public class ClientInputReader implements Runnable{
                     int numTiles = Integer.parseInt(input.substring(matcher.end()));
 
 
-                    switch (connectionType){
-                        case "tcp": //invio messaggio TCP
-                            clientTCP.tilesNum(numTiles);
-                            break;
-                        case "rmi": //chiamata metodi RMI
-                            clientRMIApp.tilesNumMessage(numTiles);
-                            break;
-                    }
-                    ;break;
+                   client.tilesNumMessage(numTiles);
+                   break;
 
                 case "take_tiles": // tiles; format TBD (0,2);(1,3);(4,7)
                     String chosenTiles = input.substring(matcher.end());
 
                     // tiles; format TBD (0,2);(1,3);(4,7) -> lunghezza <6-> 1 tile; <12->2tiles; else->3tiles
 
-                    switch (connectionType){
-                        case "tcp":
-                            view=clientTCP.getView();
-                            break;
-                        case "rmi":
-                            view=clientRMIApp.getView();
-                            break;
-                    }
+                    client.getView();
                     ArrayList<Tile> chosenTilesList=new ArrayList<>();
                     char[] chosen = chosenTiles.toCharArray();
                     int row=Character.getNumericValue(chosen[1]);
@@ -195,41 +152,15 @@ public class ClientInputReader implements Runnable{
                         }
                     }
 
-                    switch (connectionType){
-                        case "tcp": //invio messaggio TCP
-                            clientTCP.selectedTiles(chosenTilesList);
-                            break;
-                        case "rmi": //chiamata metodi RMI
-                            clientRMIApp.selectedTiles(chosenTilesList);
-                            break;
-                    }
-                    ;break;
+                    client.selectedTiles(chosenTilesList);
+                break;
 
                 case "choose_column": //choose_column>>number of the column; TBD:le colonne partono da 0 o da 1????
                     int column = Integer.parseInt(input.substring(matcher.end()));
 
 
-                    switch (connectionType){
-                        case "tcp": //invio messaggio TCP
-                            ;
-                            break;
-                        case "rmi": //chiamata metodi RMI
-                            ;break;
-                    }
-                    ;break;
-
-                case "order": //reorders the tiles; TBD il formato: tipo 1-3-2 per riordinare le tiles prima->terza->seconda nella lista
-                    String order = input.substring(matcher.end());
-
-
-
-                    switch (connectionType){
-                        case "tcp": //invio messaggio TCP
-                            ;break;
-                        case "rmi": //chiamata metodi RMI
-                            ;break;
-                    }
-                    ;break;
+                    client.chooseColumn(column);
+                    break;
 
 
                 case "help":view.printCommands();break;
@@ -245,25 +176,18 @@ public class ClientInputReader implements Runnable{
      * @param connectionType is a String, either "RMI" or "TCP", used to know which type of message
      *                       has to be sent
      */
-    public void setConnectionType(String connectionType){
+    public void setConnectionType(String connectionType) throws IOException, NotBoundException {
         this.connectionType = connectionType;
+        Gson gson = new Gson();
+        JsonReader jsonReader = new JsonReader( new FileReader("src/main/resources/ServerConfig.json"));
+        JsonObject jsonObject = gson.fromJson(jsonReader,JsonObject.class);
+        if (connectionType.equals("TCP")){
+            client = new ClientTCP(jsonObject.get("portTCP").getAsInt(),jsonObject.get("ip").getAsString());
+            client.startClient();
+        }if(connectionType.equals("RMI")){
+            client = new ClientRMIApp(jsonObject.get("portRMI").getAsInt(),jsonObject.get("ip").getAsString());
+            client.startClient();
+        }
     }
 
-
-    /**
-     * Setter Method
-     * @param clientTCP is the reference to the TCP Client class
-     */
-    public void setTCP(ClientTCP clientTCP) {
-        this.clientTCP=clientTCP;
-    }
-
-
-    /**
-     * Setter Method
-     * @param clientRMIApp is the reference to the RMI Client class
-     */
-    public void setRMI(ClientRMIApp clientRMIApp) {
-        this.clientRMIApp=clientRMIApp;
-    }
 }

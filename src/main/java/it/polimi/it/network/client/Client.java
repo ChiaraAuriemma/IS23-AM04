@@ -15,20 +15,16 @@ public class Client {
 
     public static void main(String[] args) throws IOException, NotBoundException {
 
-        System.out.println("Choose a connection type");
-
         Scanner stdin = new Scanner(System.in);
-        String inputLine = stdin.nextLine();
-        Gson gson = new Gson();
-        JsonReader jsonReader = new JsonReader( new FileReader("src/main/java/it/polimi/it/network/ServerConfig.json"));
-        JsonObject jsonObject = gson.fromJson(jsonReader,JsonObject.class);
+        String inputLine = " ";
 
-        ClientTCP clientTCP=null;
-        ClientRMIApp clientRMIApp=null;
-
+        while(!inputLine.equalsIgnoreCase("RMI") && !inputLine.equalsIgnoreCase("TCP")){
+            System.out.println("Choose a connection type");
+            inputLine = stdin.nextLine();
+        }
 
         ClientInputReader cliR = new ClientInputReader();
-        cliR.setConnectionType(inputLine.toLowerCase());
+        cliR.setConnectionType(inputLine.toUpperCase());
         Thread thread = new Thread(cliR);
         thread.start();
     }

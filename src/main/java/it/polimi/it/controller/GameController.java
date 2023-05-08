@@ -178,20 +178,16 @@ public class GameController {
      *  in which order he wants the tiles to be.
      *  The method also calls the view to display the new points acquired by the player
      * @param col is the column of the shelfie where to put the tiles in
-     * @param orderedTiles is the list of chosen tiles, ordered as the player wants them to be in his shelfie
 
      * @throws WrongTileException exception used when a wrong tile is selected
      */
     //oltre a scegliere la colonna dove metterle, ordina le Tile per come le vuole nella colonna
-    public void getColumnFromView(User user,int col, List<Tile> orderedTiles) throws IllegalValueException, InvalidIDException {
+    public void getColumnFromView(User user,int col) throws IllegalValueException, InvalidIDException {
         if(!possibleColumnArray[col]){
            System.out.println("Invalid column choice"); //da far vedere a view
         }
 
-        if (new HashSet<>(orderedTiles).containsAll(currentTilesList)){
-             System.out.println("Different tiles from before"); //da far fare a view
-        }
-        endGame = playerList.get(currentPlayer).insertTile(col, orderedTiles);
+        endGame = playerList.get(currentPlayer).insertTile(col, currentTilesList);
             //messaggio per la view
 
         game.pointCount(playerList.get(currentPlayer));

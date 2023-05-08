@@ -10,7 +10,7 @@ public class ChooseColumnRequest extends Payload {
     int columnNumber;
     List<Tile> orderedTiles;
 
-    public ChooseColumnRequest(int columnNumber, List<Tile> orderedTiles) {
+    public ChooseColumnRequest(int columnNumber) {
         this.columnNumber = columnNumber;
         this.orderedTiles = orderedTiles;
     }

@@ -55,7 +55,7 @@ public class RMIImplementation extends UnicastRemoteObject implements ServerRMI 
         return gc.getGameID();
     }
 
-    public void joinGame(User user,int id) throws RemoteException, InvalidIDException, WrongPlayerException {
+    public void joinGame(User user,int id) throws RemoteException, InvalidIDException, WrongPlayerException, IllegalValueException {
         GameController gc = lobby.joinGame(user,id);
         userGame.put(user, gc);
     }
@@ -71,9 +71,9 @@ public class RMIImplementation extends UnicastRemoteObject implements ServerRMI 
         gc.getTilesListFromView(user,choosenTiles);
     }
 
-    public void chooseColumn (User user,int columnNumber, List<Tile> orderedTiles) throws RemoteException, InvalidIDException, IllegalValueException {
+    public void chooseColumn (User user,int columnNumber) throws RemoteException, InvalidIDException, IllegalValueException {
         GameController gc = userGame.get(user);
-        gc.getColumnFromView(user,columnNumber,orderedTiles);
+        gc.getColumnFromView(user,columnNumber);
     }
 
 

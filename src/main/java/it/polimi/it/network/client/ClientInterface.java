@@ -5,6 +5,7 @@ import it.polimi.it.model.Card.PersonalGoalCards.PersonalGoalCard;
 import it.polimi.it.model.Shelfie;
 import it.polimi.it.model.Tiles.Tile;
 import it.polimi.it.model.User;
+import it.polimi.it.view.View;
 
 import java.io.IOException;
 import java.rmi.NotBoundException;
@@ -13,7 +14,7 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 
-public interface ClientRMI extends Remote {
+public interface ClientInterface extends Remote {
     //qui devo mettere solo i metodi visibili dal server (quindi tolgo startclient e login)
     public void startClient() throws IOException, NotBoundException;
     public void login(String userName) throws RemoteException;
@@ -35,4 +36,16 @@ public interface ClientRMI extends Remote {
     public void notifyTurnStart(int maxValueofTiles);
 
     void askColumn(boolean[] choosableColumns);
+
+    public void createGame(int playerNumber) throws RemoteException;
+
+    void joinGame(int gameId) throws RemoteException;
+
+    void tilesNumMessage(int numOfTiles) throws RemoteException;
+
+    View getView();
+
+    void selectedTiles(List<Tile> choices) throws RemoteException;
+
+    void chooseColumn(int column) throws RemoteException;
 }

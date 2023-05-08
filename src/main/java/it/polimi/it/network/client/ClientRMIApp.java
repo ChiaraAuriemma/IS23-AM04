@@ -1,9 +1,8 @@
 package it.polimi.it.network.client;
 
-import it.polimi.it.controller.Exceptions.*;
+import it.polimi.it.Exceptions.*;
 import it.polimi.it.model.Card.CommonGoalCards.CommonGoalCard;
 import it.polimi.it.model.Card.PersonalGoalCards.PersonalGoalCard;
-import it.polimi.it.model.Exceptions.WrongListException;
 import it.polimi.it.model.Shelfie;
 import it.polimi.it.model.Tiles.Tile;
 import it.polimi.it.model.User;
@@ -22,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class ClientRMIApp extends UnicastRemoteObject implements ClientRMI {
+public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface {
     private int port;
     private String ip;
     private Registry registry;
@@ -97,6 +96,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientRMI {
      * @param playerNumber .
      * @throws RemoteException .
      */
+    @Override
     public void createGame(int playerNumber) throws RemoteException {
         try{
             sr.createGame(user,playerNumber);
@@ -120,11 +120,11 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientRMI {
         }
     }
 
-
+@Override
     public void tilesNumMessage(int numOfTiles) throws RemoteException {
         try {   //comunico al server il numero scelto
             sr.tilesNumMessage(user,numOfTiles);
-        }catch (IndexOutOfBoundsException e) {
+        }catch (IllegalValueException e) {
             //view : notifico alla view che il numero di tiles indicato non è valido
             view.askNumTilesAgain();
         }catch (WrongPlayerException e) {
@@ -137,7 +137,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientRMI {
             System.out.println("This is not your turn!");
         }
     }
-
+@Override
     public void selectedTiles(List<Tile>choosenTiles) throws RemoteException {
         //mando le tiles a RMIImplementation
         try{
@@ -149,15 +149,17 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientRMI {
         }
     }
 
-
-    public void chooseColumn (int numOfColum, List<Tile> orderedTiles) throws RemoteException {
+@Override
+    public void chooseColumn (int numOfColum) throws RemoteException {
         try {
-            sr.chooseColumn(user,numOfColum,orderedTiles);
+            sr.chooseColumn(user,numOfColum);
         } catch (InvalidIDException e) {
             //view : il numero della colonna non è valido
             view.askColumnAgain();
+        } catch (IllegalValueException e) {
+            System.out.println("ERROR!");
         }
-    }
+}
 
 
 
@@ -180,6 +182,11 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientRMI {
 
     public void askColumn(boolean[] choosableColumns) {
         view.askColumn();
+    }
+
+    @Override
+    public void createGame() {
+
     }
 
 

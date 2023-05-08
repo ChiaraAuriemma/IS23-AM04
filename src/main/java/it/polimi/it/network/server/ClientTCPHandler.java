@@ -1,13 +1,9 @@
 package it.polimi.it.network.server;
 
 
-import it.polimi.it.Exceptions.ExistingNicknameException;
-import it.polimi.it.Exceptions.InvalidIDException;
-import it.polimi.it.Exceptions.WrongPlayerException;
-import it.polimi.it.Exceptions.WrongTurnException;
+import it.polimi.it.Exceptions.*;
 import it.polimi.it.controller.GameController;
 import it.polimi.it.controller.Lobby;
-import it.polimi.it.model.Exceptions.WrongListException;
 import it.polimi.it.model.User;
 import it.polimi.it.network.message.ErrorMessage;
 import it.polimi.it.network.message.Message;
@@ -119,7 +115,7 @@ public class ClientTCPHandler implements Runnable{
                     synchronized (lobby){
                         try {
                             this.gameController = lobby.joinGame(joinGameRequest.getUser(), joinGameRequest.getID());
-                        } catch (InvalidIDException | WrongPlayerException e) {
+                        } catch (InvalidIDException | WrongPlayerException | IllegalValueException e) {
 
                             ErrorMessage errorMessage = new ErrorMessage(e.getMessage());
                             response = new Message(MessageType.ERROR, errorMessage);
@@ -135,7 +131,7 @@ public class ClientTCPHandler implements Runnable{
                     synchronized (gameController){
                         try {
                             this.gameController.getFromViewNTiles(this.user,tilesNumRequest.getNumTiles());
-                        } catch (WrongTurnException | WrongListException | RemoteException e) {
+                        } catch (WrongTurnException | WrongListException | RemoteException | IllegalValueException e) {
 
                             ErrorMessage errorMessage = new ErrorMessage(e.getMessage());
                             response = new Message(MessageType.ERROR, errorMessage);
@@ -163,11 +159,13 @@ public class ClientTCPHandler implements Runnable{
 
                     synchronized (gameController){
                         try {
-                            this.gameController.getColumnFromView(this.user, chooseColumnRequest.getColumnNumber(), chooseColumnRequest.getOrderedTiles());
+                            this.gameController.getColumnFromView(this.user, chooseColumnRequest.getColumnNumber());
                         } catch (InvalidIDException e) {
                             ErrorMessage errorMessage = new ErrorMessage(e.getMessage());
                             response = new Message(MessageType.ERROR, errorMessage);
                             send(response);
+                        } catch (IllegalValueException e) {
+                            System.out.println("ERRORE");
                         }
                     }
 
