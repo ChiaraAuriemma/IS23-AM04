@@ -20,7 +20,7 @@
 | Controller     | 🟢 |
 | Socket TCP     | 🟡 |
 | RMI            | 🟡 |
-| CLI            | 🔴 |
+| TUI            | 🔴 |
 | GUI            | 🔴 |
 | Multiple games | 🟢 |
 | Chat           | 🔴 |
