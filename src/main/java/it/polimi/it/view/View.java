@@ -2,6 +2,7 @@ package it.polimi.it.view;
 
 import it.polimi.it.model.Card.CommonGoalCards.CommonGoalCard;
 import it.polimi.it.model.Card.PersonalGoalCards.PersonalGoalCard;
+import it.polimi.it.model.Game;
 import it.polimi.it.model.Shelfie;
 import it.polimi.it.model.Tiles.PossibleColors;
 import it.polimi.it.model.Tiles.Tile;
@@ -483,5 +484,19 @@ public class View {
             i++;
         }
         out.print("\n");
+    }
+
+    public void recover(Game game, int gameID, User user) {
+        game.getNumplayers();
+        setBoardView(game.getBoard().getMatrix());
+        game.getCommonCard1();
+        game.getCommonCard2();
+        this.order = game.playersOrder();
+        int index = order.indexOf(user);
+        game.getPersonalCard(index);
+
+        for(User u: order){
+            setPlayersShelfiesView(u, u.getShelfie().getShelf());
+        }
     }
 }

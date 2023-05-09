@@ -2,12 +2,13 @@ package it.polimi.it.network.client;
 
 import it.polimi.it.model.Card.CommonGoalCards.CommonGoalCard;
 import it.polimi.it.model.Card.PersonalGoalCards.PersonalGoalCard;
-import it.polimi.it.model.Shelfie;
+import it.polimi.it.model.Game;
 import it.polimi.it.model.Tiles.Tile;
 import it.polimi.it.model.User;
 import it.polimi.it.network.message.ErrorMessage;
 import it.polimi.it.network.message.Message;
 import it.polimi.it.network.message.MessageType;
+import it.polimi.it.network.message.others.ThisNotTheDay;
 import it.polimi.it.network.message.request.*;
 import it.polimi.it.network.message.responses.*;
 import it.polimi.it.view.View;
@@ -222,6 +223,9 @@ public class ClientTCP implements ClientInterface {
 
                     //view : passo la lista degli utenti e la lista dei loro punteggi
 
+                case THISISNOTTHEDAY:
+                    ThisNotTheDay recover = (ThisNotTheDay) response.getPayload();
+                    recover(recover.getGame(), recover.getGameID());
                 case ERROR:
                     ErrorMessage errorMessage = (ErrorMessage) response.getPayload();
                     view.printError(errorMessage.getError());
@@ -309,5 +313,10 @@ public class ClientTCP implements ClientInterface {
     @Override
     public void setFinalPoints(List<User> users, ArrayList<Integer> points) {
         view.setFinalPoints(users, points);
+    }
+
+    @Override
+    public void recover(Game game, int gameID) {
+        view.recover(game, gameID, user);
     }
 }

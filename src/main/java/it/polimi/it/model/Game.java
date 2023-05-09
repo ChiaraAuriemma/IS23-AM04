@@ -18,6 +18,7 @@ public class Game {
     private Board board;
     private Integer gameID;
 
+    private ArrayList<User> playersOrder = new ArrayList<>();
 
 
     private ArrayList<Integer> points;
@@ -116,6 +117,7 @@ public class Game {
         //mando alla view un po' di cose da inizializzare
         virtualView.startOrder(order);
         virtualView.initialMatrix(board.getMatrix());
+        playersOrder=order;
         return order;
     }
 
@@ -250,6 +252,10 @@ public class Game {
         }
 
         virtualView.pointsUpdate(player, this.points.get(i), commonToken1, commonToken2);
+    }
+
+    public ArrayList<User> playersOrder(){
+        return playersOrder;
     }
 
 

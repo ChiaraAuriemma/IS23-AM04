@@ -8,6 +8,7 @@ import it.polimi.it.model.User;
 import it.polimi.it.network.client.ClientInterface;
 import it.polimi.it.network.message.Message;
 import it.polimi.it.network.message.MessageType;
+import it.polimi.it.network.message.others.ThisNotTheDay;
 import it.polimi.it.network.message.responses.*;
 import it.polimi.it.network.server.Exceptions.NotTcpUserException;
 
@@ -311,8 +312,13 @@ public class VirtualView {
     public void resetAfterDisconnection(User user, int gameID) {
 
         if (typeOfConnection.get(user).equalsIgnoreCase("TCP")){
+            ThisNotTheDay recover = new ThisNotTheDay(game,gameID);
+            Message message = new Message(MessageType.THISISNOTTHEDAY, recover);
+            sendTCPMessage(userTCP.get(user), message);
 
         }else if (typeOfConnection.get(user).equalsIgnoreCase("RMI")){
+            ClientInterface clientRMI = userRMI.get(user);
+            clientRMI.recover(game, gameID);
 
         }
     }

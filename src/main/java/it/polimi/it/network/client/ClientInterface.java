@@ -2,6 +2,7 @@ package it.polimi.it.network.client;
 
 import it.polimi.it.model.Card.CommonGoalCards.CommonGoalCard;
 import it.polimi.it.model.Card.PersonalGoalCards.PersonalGoalCard;
+import it.polimi.it.model.Game;
 import it.polimi.it.model.Shelfie;
 import it.polimi.it.model.Tiles.Tile;
 import it.polimi.it.model.User;
@@ -52,4 +53,6 @@ public interface ClientInterface extends Remote {
     void setEndToken(User user);
 
     void setFinalPoints(List<User> users, ArrayList<Integer> points);
+
+    void recover(Game game, int gameID);
 }
