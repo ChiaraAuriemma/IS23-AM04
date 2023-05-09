@@ -149,7 +149,7 @@ public class View {
     /**
      * Helper method that given a
      *
-     * @param points integre
+     * @param points integer
      * @return the corresponding points string, with a fixed length of 2
      */
     private String pTS(int points) {
@@ -487,16 +487,30 @@ public class View {
     }
 
     public void recover(Game game, int gameID, User user) {
-        game.getNumplayers();
+        this.gameID=gameID;
+        numPlayers=game.getNumplayers();
         setBoardView(game.getBoard().getMatrix());
-        game.getCommonCard1();
-        game.getCommonCard2();
+        setCommon1View(game.getCommonCard1());
+        setCommon2View(game.getCommonCard2());
         this.order = game.playersOrder();
         int index = order.indexOf(user);
-        game.getPersonalCard(index);
+        setPlayersPersonalCardView(game.getPersonalCard(index));
+       // this.endToken=game.getEndToken();
+
 
         for(User u: order){
             setPlayersShelfiesView(u, u.getShelfie().getShelf());
+            setPlayersNicknamesView(u);
+            index = order.indexOf(u);
+            setPlayersPointsView(u, u.getGame().getPoint(index));
+            setPlayersNicknamesView(u);
+
         }
     }
+
+
+    public void update(){
+        //serve a stampare
+    }
+
 }
