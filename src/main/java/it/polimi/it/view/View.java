@@ -510,7 +510,7 @@ public class View {
 
 
     public void update(){
-        //serve a stampare todo
+        //serve a stampare
     }
 
 }
