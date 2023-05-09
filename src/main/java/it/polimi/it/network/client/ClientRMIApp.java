@@ -6,6 +6,7 @@ import it.polimi.it.model.Card.PersonalGoalCards.PersonalGoalCard;
 import it.polimi.it.model.Shelfie;
 import it.polimi.it.model.Tiles.Tile;
 import it.polimi.it.model.User;
+import it.polimi.it.network.server.RMIImplementation;
 import it.polimi.it.network.server.ServerInterface;
 import it.polimi.it.view.View;
 import java.rmi.NotBoundException;
