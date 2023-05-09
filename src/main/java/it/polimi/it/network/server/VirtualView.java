@@ -19,6 +19,7 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 public class VirtualView {
 
@@ -307,4 +308,12 @@ public class VirtualView {
 
     }
 
+    public void resetAfterDisconnection(User user, int gameID) {
+
+        if (typeOfConnection.get(user).equalsIgnoreCase("TCP")){
+
+        }else if (typeOfConnection.get(user).equalsIgnoreCase("RMI")){
+
+        }
+    }
 }

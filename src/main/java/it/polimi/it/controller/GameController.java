@@ -9,6 +9,7 @@ import it.polimi.it.model.User;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class GameController {
 
@@ -266,5 +267,9 @@ public class GameController {
 
     public List<User> getPlayerList() {
         return playerList;
+    }
+
+    public void resetGame(User user, int gameID) {
+        game.getVirtualView().resetAfterDisconnection(user, gameID);
     }
 }

@@ -58,6 +58,18 @@ public class Lobby {
                             .findFirst();
 
                     user.get().setInGame(true);
+
+                    //Re send the robe for the view
+
+                    int gameID = user.get().getGame().getGameid();
+
+                    List<GameController> findGameController = gameControllerList.stream().filter(gameController -> gameController.getGame().getGameid() == gameID).collect(Collectors.toList());
+
+                    GameController gc = findGameController.get(0);
+                    Game g = gc.getGame();
+
+                    gc.resetGame(user.get(), gameID);
+
                 }else{
                     throw  new ExistingNicknameException("This nickname already exists!");//mandare messaggio a view
                 }
