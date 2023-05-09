@@ -226,6 +226,10 @@ public class ClientTCP implements ClientInterface {
                 case THISISNOTTHEDAY:
                     ThisNotTheDay recover = (ThisNotTheDay) response.getPayload();
                     recover(recover.getGame(), recover.getGameID());
+
+                case UPDATEVIEW: updateView();
+
+
                 case ERROR:
                     ErrorMessage errorMessage = (ErrorMessage) response.getPayload();
                     view.printError(errorMessage.getError());
@@ -319,5 +323,10 @@ public class ClientTCP implements ClientInterface {
     @Override
     public void recover(Game game, int gameID) {
         view.recover(game, gameID, user);
+    }
+
+    @Override
+    public void updateView() {
+        view.update();
     }
 }

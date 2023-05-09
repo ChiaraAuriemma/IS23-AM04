@@ -307,8 +307,9 @@ public class VirtualView {
 
             } else if (typeOfConnection.get(receiver).equals("RMI")) {
                 //sviluppo in RMI
-                ClientInterface clientRMI = userRMI.get(users);
+                ClientInterface clientRMI = userRMI.get(receiver);
                 ///////////////////////////////////////////////////////metodo su clientRMI e client Interface da  chiamare
+                clientRMI.updateView();
             }
         }
     }

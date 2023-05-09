@@ -185,6 +185,11 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
         view.recover(game, gameID, user);
     }
 
+    @Override
+    public void updateView() {
+        view.update();
+    }
+
 
     public void setNewShelfie(User user, Tile[][] shelfie){
         view.setPlayersShelfiesView(user, shelfie);

@@ -55,4 +55,6 @@ public interface ClientInterface extends Remote {
     void setFinalPoints(List<User> users, ArrayList<Integer> points);
 
     void recover(Game game, int gameID);
+
+    void updateView();
 }
