@@ -296,6 +296,23 @@ public class VirtualView {
         }
     }
 
+    public void viewUpdate(){
+        for (int i=0; i < game.getNumplayers(); i++) {
+            User  receiver = game.getPlayer(i);
+
+            if (typeOfConnection.get(receiver).equals("TCP")) {
+                ViewUpdate viewUpdate = new ViewUpdate();
+                Message message = new Message(MessageType.UPDATEVIEW,viewUpdate);
+                sendTCPMessage(userTCP.get(receiver), message);
+
+            } else if (typeOfConnection.get(receiver).equals("RMI")) {
+                //sviluppo in RMI
+                ClientInterface clientRMI = userRMI.get(users);
+                ///////////////////////////////////////////////////////metodo su clientRMI e client Interface da  chiamare
+            }
+        }
+    }
+
     public void sendTCPMessage(ObjectOutputStream out, Message message){
 
         synchronized (out){
