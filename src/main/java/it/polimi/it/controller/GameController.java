@@ -7,7 +7,7 @@ import it.polimi.it.model.Tiles.Tile;
 import it.polimi.it.model.User;
 
 import java.rmi.RemoteException;
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
 
 public class GameController {
@@ -55,7 +55,7 @@ public class GameController {
     /**
      * List of tiles chosen in the current turn by the current player
      */
-    private List<Tile> currentTilesList;
+    private List<Tile> currentTilesList = new ArrayList<>();
 
 
     /**

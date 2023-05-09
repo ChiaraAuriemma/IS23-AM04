@@ -32,10 +32,14 @@ public class ClientTCP implements ClientInterface {
     private ObjectInputStream in;
     private ObjectOutputStream out;
     private Socket serverSocket;
-    public ClientTCP(int port, String ip){
+
+    private ClientInputReader buffer;
+    public ClientTCP(int port, String ip, ClientInputReader buffer){
         this.port = port;
         this.ip = ip;
         this.view=new View();
+        this.buffer=buffer;
+        buffer.setStage(TurnStages.LOGIN);
     }
 
     public View getView(){
@@ -136,18 +140,26 @@ public class ClientTCP implements ClientInterface {
                     user = loginResponse.getUser();
                     //view : faccio passare la view alla schermata di selezione join o create game
                     //view : passo alla view lo user
+                    buffer.setStage(TurnStages.CREATEorJOIN);
 
                     view.joinOrCreate(user.getNickname());
 
                 case CREATEGAMERESPONSE:
                     CreateGameResponse createGameResponse = (CreateGameResponse) response.getPayload();
                     //view : passo alla view il game id
+                    buffer.setStage(TurnStages.NOTHING);
                     view.setGameID(createGameResponse.getGameId());
+
+                case JOINGAMERESPONSE:
+                    JoinGameResponse joinGameResponse = (JoinGameResponse) response.getPayload();
+                    buffer.setStage(TurnStages.NOTHING);
+                    view.setGameID(joinGameResponse.getGameId());
 
                 case STARTORDERPLAYER:
                     StartOrderMessage startOrderMessage = (StartOrderMessage) response.getPayload();
                     //view : passo l'ordine dei giocatori in modo che può disporli
                     setStartOrder(startOrderMessage.getOrder());
+                    buffer.setStage(TurnStages.NOTURN);
 
                 case INITIALMATRIX:
                     InitialMatrixMessage initialMatrixMessage = (InitialMatrixMessage) response.getPayload();
@@ -169,20 +181,24 @@ public class ClientTCP implements ClientInterface {
                     StartTurnMessage startTurnMessage = (StartTurnMessage) response.getPayload();
                     //view : passo il maxNumOfTiles sceglibili
                     notifyTurnStart(startTurnMessage.getMaxValueofTiles());
+                    buffer.setStage(TurnStages.TILESNUM);
 
                 case TAKEABLETILES:
                     TakeableTilesResponse takeableTilesResponse = (TakeableTilesResponse) response.getPayload();
                     takeableTiles(takeableTilesResponse.getChoosableTilesList(), takeableTilesResponse.getChoosableTilesList().get(0).size());
                     //view : passo choosableTilesList per "illuminare" sulla board le tiles prendibili
+                    buffer.setStage(TurnStages.CHOOSETILES);
 
                 case POSSIBLECOLUMNS:
                     PossibleColumnsResponse possibleColumnsResponse = (PossibleColumnsResponse) response.getPayload();
                     askColumn(possibleColumnsResponse.getChoosableColumns());
                     //view : passo il booleano con true e false sulle varie colonne della shelfie
+                    buffer.setStage(TurnStages.CHOOSECOLUMN);
 
                 case SHELFIEUPDATE:
                     ShelfieUpdateMessage shelfieUpdateMessage = (ShelfieUpdateMessage) response.getPayload();
                     setNewShelfie(shelfieUpdateMessage.getUser(), shelfieUpdateMessage.getShelfie());
+                    buffer.setStage(TurnStages.NOTURN);
                     //view : passo lo user,la colonna e la lista ordinata di tiles scelte per aggiornare la shelfie dello user corrispondente
 
                 case BOARDUPDATE:

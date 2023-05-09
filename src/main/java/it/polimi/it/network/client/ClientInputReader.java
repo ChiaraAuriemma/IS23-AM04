@@ -29,6 +29,8 @@ public class ClientInputReader implements Runnable{
      */
     private View view;
 
+    private TurnStages stage;
+
 
     /**
      * Method to constantly read the input given by the user, sends the input line to the command parser
@@ -73,28 +75,50 @@ public class ClientInputReader implements Runnable{
 
 
             switch (command) {
-                case "login": //initial nickname setting
-                    String nickname = input.substring(matcher.end());
+                case "login"://initial nickname setting
 
-                    //metodo che manda il messaggio login
-                    client.login(nickname);
+                    if(stage == TurnStages.LOGIN){
+                        String nickname = input.substring(matcher.end());
+
+                        //metodo che manda il messaggio login
+                        client.login(nickname);
+                    }else{
+                        view.printError("There's a time and place for everything, but not now.");
+                    }
                     break;
 
                 case "create_game":// create_game>>4
-                    int numPlayers = Integer.parseInt(input.substring(matcher.end()));
 
-                    client.createGame(numPlayers);
+                    if(stage == TurnStages.CREATEorJOIN){
+                         int numPlayers = Integer.parseInt(input.substring(matcher.end()));
+
+
+                        client.createGame(numPlayers);
+                    } else{
+                        view.printError("There's a time and place for everything, but not now.");
+                    }
+
                     break;
 
                 case "join_game": //join_game>>gameID
-                    int gameID = Integer.parseInt(input.substring(matcher.end()));
 
-                   client.joinGame(gameID);
+                    if(stage == TurnStages.CREATEorJOIN){
+
+                        int gameID = Integer.parseInt(input.substring(matcher.end()));
+
+                        client.joinGame(gameID);
+                    }else{
+                        view.printError("There's a time and place for everything, but not now.");
+                    }
+
                    break;
 
                 case "chat": //chat>>Write here your message...
-                    String chatMessage = input.substring(matcher.end());
 
+                    if(stage != TurnStages.NOTHING) {
+                        String chatMessage = input.substring(matcher.end());
+
+                    }
 
                     switch (connectionType){
                         case "tcp": //invio messaggio TCP
@@ -118,48 +142,66 @@ public class ClientInputReader implements Runnable{
                 */
 
 
-                case "num_tiles": //num_tiles>> number of tiles you want to get from the board
-                    int numTiles = Integer.parseInt(input.substring(matcher.end()));
+                case "num_tiles"://num_tiles>> number of tiles you want to get from the board
+                    if(stage == TurnStages.TILESNUM){
+                        int numTiles = Integer.parseInt(input.substring(matcher.end()));
 
 
-                   client.tilesNumMessage(numTiles);
+                        client.tilesNumMessage(numTiles);
+
+                    }else{
+                        view.printError("There's a time and place for everything, but not now.");
+                    }
+
                    break;
 
                 case "take_tiles": // tiles; format TBD (0,2);(1,3);(4,7)
-                    String chosenTiles = input.substring(matcher.end());
+                    if(stage == TurnStages.CHOOSETILES){
+                        String chosenTiles = input.substring(matcher.end());
 
-                    // tiles; format TBD (0,2);(1,3);(4,7) -> lunghezza <6-> 1 tile; <12->2tiles; else->3tiles
+                        // tiles; format TBD (0,2);(1,3);(4,7) -> lunghezza <6-> 1 tile; <12->2tiles; else->3tiles
 
-                    client.getView();
-                    ArrayList<Tile> chosenTilesList=new ArrayList<>();
-                    char[] chosen = chosenTiles.toCharArray();
-                    int row=Character.getNumericValue(chosen[1]);
-                    int col=Character.getNumericValue(chosen[3]);
-                    Tile t = new Tile(row, col, PossibleColors.valueOf(view.getTileColor(row, col)));
-                    chosenTilesList.add(t);
-
-                    if (chosenTiles.length()>6){
-                        row=Character.getNumericValue(chosen[7]);
-                        col=Character.getNumericValue(chosen[9]);
-                        t = new Tile(row, col, PossibleColors.valueOf(view.getTileColor(row, col)));
+                        client.getView();
+                        ArrayList<Tile> chosenTilesList=new ArrayList<>();
+                        char[] chosen = chosenTiles.toCharArray();
+                        int row=Character.getNumericValue(chosen[1]);
+                        int col=Character.getNumericValue(chosen[3]);
+                        Tile t = new Tile(row, col, PossibleColors.valueOf(view.getTileColor(row, col)));
                         chosenTilesList.add(t);
 
-                        if (chosenTiles.length()>12){
-                            row=Character.getNumericValue(chosen[13]);
-                            col=Character.getNumericValue(chosen[15]);
+                        if (chosenTiles.length()>6){
+                            row=Character.getNumericValue(chosen[7]);
+                            col=Character.getNumericValue(chosen[9]);
                             t = new Tile(row, col, PossibleColors.valueOf(view.getTileColor(row, col)));
                             chosenTilesList.add(t);
+
+                            if (chosenTiles.length()>12){
+                                row=Character.getNumericValue(chosen[13]);
+                                col=Character.getNumericValue(chosen[15]);
+                                t = new Tile(row, col, PossibleColors.valueOf(view.getTileColor(row, col)));
+                                chosenTilesList.add(t);
+                            }
                         }
+
+                        client.selectedTiles(chosenTilesList);
+
+                    }else{
+                        view.printError("There's a time and place for everything, but not now.");
                     }
 
-                    client.selectedTiles(chosenTilesList);
                 break;
 
                 case "choose_column": //choose_column>>number of the column; TBD:le colonne partono da 0 o da 1????
-                    int column = Integer.parseInt(input.substring(matcher.end()));
+                    if(stage == TurnStages.CHOOSECOLUMN ){
+                        int column = Integer.parseInt(input.substring(matcher.end()));
 
 
-                    client.chooseColumn(column);
+                        client.chooseColumn(column);
+
+                    }else{
+                        view.printError("There's a time and place for everything, but not now.");
+                    }
+
                     break;
 
 
@@ -182,12 +224,16 @@ public class ClientInputReader implements Runnable{
         JsonReader jsonReader = new JsonReader( new FileReader("src/main/resources/ServerConfig.json"));
         JsonObject jsonObject = gson.fromJson(jsonReader,JsonObject.class);
         if (connectionType.equals("TCP")){
-            client = new ClientTCP(jsonObject.get("portTCP").getAsInt(),jsonObject.get("ip").getAsString());
+            client = new ClientTCP(jsonObject.get("portTCP").getAsInt(),jsonObject.get("ip").getAsString(), this);
             client.startClient();
         }if(connectionType.equals("RMI")){
-            client = new ClientRMIApp(jsonObject.get("portRMI").getAsInt(),jsonObject.get("ip").getAsString());
+            client = new ClientRMIApp(jsonObject.get("portRMI").getAsInt(),jsonObject.get("ip").getAsString(), this);
             client.startClient();
         }
+    }
+
+    public void setStage(TurnStages stage){
+        this.stage = stage;
     }
 
 }

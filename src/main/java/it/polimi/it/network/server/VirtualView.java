@@ -29,7 +29,6 @@ public class VirtualView {
 
     private HashMap<User, ObjectOutputStream> userTCP;
     private RMIImplementation serverRMI;
-
     private HashMap<User, ClientInterface> userRMI;
 
     public VirtualView( ServerTCP serverTCP ,RMIImplementation serverRMI){

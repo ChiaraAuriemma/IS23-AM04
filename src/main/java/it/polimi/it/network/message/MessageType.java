@@ -38,7 +38,8 @@ public enum MessageType {
     POINTSUPDATE("POINTSUPDATE"),
     ENDTOKEN("ENDTOKEN"),
 
-    FINALPOINTS("FINALPOINTS");
+    FINALPOINTS("FINALPOINTS"),
+    JOINGAMERESPONSE("JOINGAMERESPONSE");
     private final String message;
 
 

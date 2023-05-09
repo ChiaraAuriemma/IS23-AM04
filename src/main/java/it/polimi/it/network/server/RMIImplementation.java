@@ -60,7 +60,7 @@ public class RMIImplementation extends UnicastRemoteObject implements ServerInte
         userGame.put(user, gc);
     }
 
-    public void tilesNumMessage(User user,int numTiles) throws RemoteException, WrongListException, IndexOutOfBoundsException, WrongTurnException, WrongListException, IllegalValueException {
+    public void tilesNumMessage(User user,int numTiles) throws RemoteException, WrongTurnException, WrongListException, IllegalValueException {
         GameController gc = userGame.get(user);
         gc.getFromViewNTiles(user,numTiles);
             //numTiles è il valore scelto dall'utente (v. javadoc GameController)

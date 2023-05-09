@@ -11,6 +11,7 @@ import it.polimi.it.network.message.MessageType;
 import it.polimi.it.network.message.others.PingMessage;
 import it.polimi.it.network.message.request.*;
 import it.polimi.it.network.message.responses.CreateGameResponse;
+import it.polimi.it.network.message.responses.JoinGameResponse;
 import it.polimi.it.network.message.responses.LoginResponse;
 
 import java.io.*;
@@ -115,13 +116,16 @@ public class ClientTCPHandler implements Runnable{
                     synchronized (lobby){
                         try {
                             this.gameController = lobby.joinGame(joinGameRequest.getUser(), joinGameRequest.getID());
+                            JoinGameResponse joinGameResponse = new JoinGameResponse(gameController.getGameID());
+                            response = new Message(MessageType.JOINGAMERESPONSE, joinGameResponse);
                         } catch (InvalidIDException | WrongPlayerException | IllegalValueException e) {
 
                             ErrorMessage errorMessage = new ErrorMessage(e.getMessage());
                             response = new Message(MessageType.ERROR, errorMessage);
 
-                            send(response);
+
                         }
+                        send(response);
                     }
 
 

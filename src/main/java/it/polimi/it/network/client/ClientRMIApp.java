@@ -29,11 +29,15 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
     private Scanner scanner;
     private List<Tile> lastChosen = new ArrayList<>();
 
+    private ClientInputReader buffer;
 
-    public ClientRMIApp(int port, String ip) throws RemoteException {
+
+    public ClientRMIApp(int port, String ip, ClientInputReader buffer) throws RemoteException {
         this.port = port;
         this.ip = ip;
         this.view = new View();
+        this.buffer = buffer;
+        buffer.setStage(TurnStages.LOGIN);
     }
 
     public View getView(){
@@ -79,6 +83,10 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
     public void login(String userName) throws RemoteException {
         try{
             user = sr.login(this,userName);
+            buffer.setStage(TurnStages.CREATEorJOIN);
+            view.joinOrCreate(user.getNickname());
+            view.askNicknameAgain();
+
             //view : passo alla schermata con create e join game
         }catch (ExistingNicknameException e) {
             //view : notifico la view che deve riproporre l'inserimento del nickname con l'errore in rosso
@@ -96,6 +104,8 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
     public void createGame(int playerNumber) throws RemoteException {
         try{
             sr.createGame(user,playerNumber);
+            buffer.setStage(TurnStages.NOTHING);
+
         } catch (WrongPlayerException e) {
             //view : notifico alla view che il numero di giocatori inseriti non è corretto
             view.askNumPlayerAgain();
@@ -111,6 +121,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
     public void joinGame(int gameID) throws RemoteException {
         try{
             sr.joinGame(user,gameID);
+            buffer.setStage(TurnStages.NOTHING);
         }catch (InvalidIDException | WrongPlayerException | IllegalValueException e) {
             view.askIDAgain();
         }
@@ -120,6 +131,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
     public void tilesNumMessage(int numOfTiles) throws RemoteException {
         try {   //comunico al server il numero scelto
             sr.tilesNumMessage(user,numOfTiles);
+            buffer.setStage(TurnStages.CHOOSETILES);
         }catch (IllegalValueException e) {
             //view : notifico alla view che il numero di tiles indicato non è valido
             view.askNumTilesAgain();
@@ -138,6 +150,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
         //mando le tiles a RMIImplementation
         try{
            sr.selectedTiles(user,choosenTiles);
+           buffer.setStage(TurnStages.CHOOSECOLUMN);
         } catch (WrongPlayerException e) {
             //view : notifico che l'user non è quello giusto
         //}catch (WrongListException){
@@ -149,6 +162,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
     public void chooseColumn (int numOfColum) throws RemoteException {
         try {
             sr.chooseColumn(user,numOfColum);
+            buffer.setStage(TurnStages.NOTURN);
         } catch (InvalidIDException e) {
             //view : il numero della colonna non è valido
             view.askColumnAgain();
@@ -168,8 +182,8 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
     }
 
 
-    public void setNewShelfie(User user, Shelfie shelfie){
-        view.setPlayersShelfiesView(user, shelfie.getShelf());
+    public void setNewShelfie(User user, Tile[][] shelfie){
+        view.setPlayersShelfiesView(user, shelfie);
     }
 
     public void setNewBoard(Tile[][] matrix){
@@ -183,6 +197,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
 
     public void notifyTurnStart(int maxValueofTiles) {
         view.NotifyTurnStart(maxValueofTiles, user.getNickname());
+        buffer.setStage(TurnStages.TILESNUM);
     }
 
     public void askColumn(boolean[] choosableColumns) {
@@ -191,6 +206,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
 
     public void setStartOrder(ArrayList<User> order){
         view.setOrderView(order);
+        buffer.setStage(TurnStages.NOTURN);
     }
 
     public void setNewCommon(CommonGoalCard card1, CommonGoalCard card2){
