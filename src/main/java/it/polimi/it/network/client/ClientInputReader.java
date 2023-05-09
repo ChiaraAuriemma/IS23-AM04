@@ -65,6 +65,7 @@ public class ClientInputReader implements Runnable{
      * @throws RemoteException .
      */
     public void commandParser(String input) throws RemoteException {
+        input = input.replaceAll("\\s+","");
         String regex = "(\\w+)>>";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(input);
@@ -158,6 +159,7 @@ public class ClientInputReader implements Runnable{
                 case "take_tiles": // tiles; format TBD (0,2);(1,3);(4,7)
                     if(stage == TurnStages.CHOOSETILES){
                         String chosenTiles = input.substring(matcher.end());
+
 
                         // tiles; format TBD (0,2);(1,3);(4,7) -> lunghezza <6-> 1 tile; <12->2tiles; else->3tiles
 
