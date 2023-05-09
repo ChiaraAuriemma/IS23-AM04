@@ -249,7 +249,7 @@ public class Game {
             this.commonToken2.set(i, 0);
         }
 
-
+        virtualView.pointsUpdate(player, this.points.get(i), commonToken1, commonToken2);
     }
 
 
