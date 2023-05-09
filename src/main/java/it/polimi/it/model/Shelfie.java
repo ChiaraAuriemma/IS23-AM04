@@ -66,7 +66,7 @@ public class Shelfie{
      * Method that add the chosen tiles in the chosen column
      * @param column is the column chosen by the player to add the tiles
      * @param chosen is the list of tiles to add
-     * @return
+     * @return a boolean that is true if the BookShelf is full
      */
 
     boolean addTile(int column, List<Tile> chosen){
@@ -84,7 +84,10 @@ public class Shelfie{
         return checkEnd();
     }
 
-
+    /**
+     * Method that check if the BookShelf of a player is full
+     * @return a boolean that represents if the BookShelf is full or not
+     */
     public boolean checkEnd(){
         for(int row=0; row<6; row++){
             for(int  column=0; column<5; column++){

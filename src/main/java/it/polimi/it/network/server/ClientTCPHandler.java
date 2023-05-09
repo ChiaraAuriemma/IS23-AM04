@@ -82,7 +82,7 @@ public class ClientTCPHandler implements Runnable{
                             LoginResponse loginResponse = new LoginResponse(user);
                             response = new Message(MessageType.CREATEPLAYERRESPONSE, loginResponse);
 
-                        } catch (ExistingNicknameException e) {
+                        } catch (ExistingNicknameException | EmptyNicknameException e) {
                             ErrorMessage errorMessage = new ErrorMessage(e.getMessage());
                             response = new Message(MessageType.ERROR, errorMessage);
 
@@ -135,7 +135,7 @@ public class ClientTCPHandler implements Runnable{
                     synchronized (gameController){
                         try {
                             this.gameController.getFromViewNTiles(this.user,tilesNumRequest.getNumTiles());
-                        } catch (WrongTurnException | WrongListException | RemoteException | IllegalValueException e) {
+                        } catch (WrongPlayerException | WrongListException | RemoteException | IllegalValueException e) {
 
                             ErrorMessage errorMessage = new ErrorMessage(e.getMessage());
                             response = new Message(MessageType.ERROR, errorMessage);

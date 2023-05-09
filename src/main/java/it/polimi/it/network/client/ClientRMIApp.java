@@ -90,7 +90,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
             view.askNicknameAgain();
 
             //view : passo alla schermata con create e join game
-        }catch (ExistingNicknameException e) {
+        }catch (ExistingNicknameException | EmptyNicknameException e) {
             //view : notifico la view che deve riproporre l'inserimento del nickname con l'errore in rosso
             view.askNicknameAgain();
         }
@@ -139,12 +139,9 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
             view.askNumTilesAgain();
         }catch (WrongPlayerException e) {
             //view : non è il turno di questo giocatore
-        }catch (WrongListException e){
+        }catch (WrongListException e) {
             //view : il numero di tiles non è valido in base agli spazi rimasti liberi
             view.askNumTilesAgain();
-        } catch (WrongTurnException e) {
-           // throw new RuntimeException(e);
-            System.out.println("This is not your turn!");
         }
     }
 @Override

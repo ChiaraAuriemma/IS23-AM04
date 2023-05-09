@@ -11,13 +11,13 @@ import java.util.List;
 
 public interface ServerInterface extends Remote {
 
-    User login(ClientInterface cr, String username) throws RemoteException, ExistingNicknameException;
+    User login(ClientInterface cr, String username) throws RemoteException, ExistingNicknameException, EmptyNicknameException;
 
     int createGame(User user, int playerNumber) throws RemoteException, WrongPlayerException;
 
     void joinGame(User user,int id) throws RemoteException, InvalidIDException, WrongPlayerException, IllegalValueException;
 
-    void tilesNumMessage(User user,int numTiles) throws RemoteException, WrongPlayerException, WrongTurnException, WrongListException, IllegalValueException;
+    void tilesNumMessage(User user,int numTiles) throws RemoteException, WrongPlayerException, WrongListException, IllegalValueException;
 
     void selectedTiles(User user,List<Tile> choosenTiles) throws RemoteException, WrongPlayerException;
 

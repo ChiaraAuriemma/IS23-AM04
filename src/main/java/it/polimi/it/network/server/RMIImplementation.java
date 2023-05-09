@@ -43,7 +43,7 @@ public class RMIImplementation extends UnicastRemoteObject implements ServerInte
         return userRMI.get(user);
     }
 
-    public User login(ClientInterface cr , String username) throws RemoteException, ExistingNicknameException {
+    public User login(ClientInterface cr , String username) throws RemoteException, ExistingNicknameException, EmptyNicknameException {
         User user = lobby.createUser(username);
         userRMI.put(user,cr);
         return user;
@@ -60,7 +60,7 @@ public class RMIImplementation extends UnicastRemoteObject implements ServerInte
         userGame.put(user, gc);
     }
 
-    public void tilesNumMessage(User user,int numTiles) throws RemoteException, WrongTurnException, WrongListException, IllegalValueException {
+    public void tilesNumMessage(User user,int numTiles) throws RemoteException, WrongPlayerException, WrongListException, IllegalValueException {
         GameController gc = userGame.get(user);
         gc.getFromViewNTiles(user,numTiles);
             //numTiles è il valore scelto dall'utente (v. javadoc GameController)

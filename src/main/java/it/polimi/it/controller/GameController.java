@@ -129,7 +129,7 @@ public class GameController {
      *  in order to highlight them on the board.
      * @param chosenNumber is the input from the user
      */
-    public void getFromViewNTiles(User user,int chosenNumber) throws WrongTurnException, WrongListException, RemoteException, IllegalValueException {
+    public void getFromViewNTiles(User user,int chosenNumber) throws WrongPlayerException, WrongListException, RemoteException, IllegalValueException {
         if(user.equals(playerList.get(currentPlayer))){
             this.playerList.get(currentPlayer).choosableTiles(chosenNumber);
 
@@ -139,7 +139,7 @@ public class GameController {
             //mandare alla view la lista di liste di tile che sono prendibili
             ///highlightView(playerList.get(currentPlayer).choosableTiles(chosenNumber));
         }else{
-            throw new WrongTurnException("It's not your turn");
+            throw new WrongPlayerException("It's not your turn");
         }
 
 

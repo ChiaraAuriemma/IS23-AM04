@@ -34,11 +34,11 @@ public class Lobby {
         this.serverRMI = serverRMI;
     }
 
-    public User createUser(String  nickname) throws ExistingNicknameException {
+    public User createUser(String  nickname) throws ExistingNicknameException, EmptyNicknameException {
 
        // User user;
         if(nickname == null || nickname.length() ==0){
-            System.out.println("You must insert a nickname..."); //mandare messaggio a view
+            throw new EmptyNicknameException("Your nickname is too short"); //mandare messaggio a view
         }else{
             if(userList.stream()
                         .map(currentUser -> currentUser.getNickname())
@@ -86,10 +86,7 @@ public class Lobby {
         if(playerNumber < 2 || playerNumber > 4){
             throw new WrongPlayerException("Wrong number of players"); //mandare messaggio a view
         }
-        if(userList.size()==0){
-            System.out.println("There aren't any players that might start a game..."); //mandare messaggio a view
-        }
-        //pickUser(user); non stai facendo una pick, così togli tutto il riferimento che ti sei passato sul client
+
 
         //fai il controllo: l'user che crea il game deve esistere ed essere nella lista, vedi metodo sotto
         VirtualView virtualView = new VirtualView(serverTCP,serverRMI);
@@ -117,7 +114,7 @@ public class Lobby {
                     }
                     return gameControllerList.get(gameList.indexOf(findGame.get(0)));
                 }else{
-                    throw new InvalidIDException("This user does not exist");
+                    throw new InvalidIDException("There is no player with this nickname in this game");
                 }
             }else{
                 throw new WrongPlayerException("There are already too many players in this game!");
@@ -161,11 +158,8 @@ public class Lobby {
 
     public void notifyEndGame(int gameID) throws InvalidIDException {
 
-        Game            gameToBeDeleted = getGame(gameID);
-        GameController  gCToBeDeleted   = getGameController(gameID);
-
         gameList.remove(getGame(gameID));
-        gameControllerList.remove(gCToBeDeleted);
+        gameControllerList.remove(getGameController(gameID));
     }
 
 }
