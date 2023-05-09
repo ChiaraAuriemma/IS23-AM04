@@ -8,6 +8,7 @@ import it.polimi.it.model.User;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
@@ -89,6 +90,7 @@ public class GameController {
     void turnDealer() throws InvalidIDException, IllegalValueException {
 
         if(this.endGame && this.currentPlayer == 0){
+            game.getVirtualView().viewUpdate();
 
             game.pointsFromAdjacent();
 
@@ -154,7 +156,7 @@ public class GameController {
      * @throws WrongTileException exception used when a wrong tile is selected
      */
     public void getTilesListFromView(User user,List<Tile> chosenList) throws WrongPlayerException {
-        if(user.equals(playerList.get(currentPlayer))) {
+        if(user.equals(playerList.get(currentPlayer)) && validTilesCheck(chosenList)) {
             for (Tile t : chosenList) {
                 currentTilesList.add(new Tile(t.getRow(), t.getColumn(), PossibleColors.valueOf(t.getColor())));
             }
@@ -168,9 +170,19 @@ public class GameController {
         }else {
             throw new WrongPlayerException("It's not your turn");
         }
-
-
         //passa alla view le possibleColumns, dato che sono state eliminate dalla board
+    }
+
+
+    /**
+     * Checks if the parameter is present in the List of Lists of Tiles
+     * @param chosenList is the chosen List of tiles
+     * @return true is the choice is valid
+     */
+    private boolean validTilesCheck(List<Tile> chosenList) {
+        List<List<Tile>> choosable = game.getBoard().choosableTiles(chosenList.size());
+
+        return choosable.stream().anyMatch(list -> new HashSet<>(list).containsAll(chosenList));
     }
 
 
@@ -196,7 +208,6 @@ public class GameController {
         if(this.endGame == true){
             game.endGame(playerList.get(currentPlayer));
         }
-
 
 
         // manda alla view l'immagine della nuova shelfie da visualizzare e i nuovi punteggi, col referimento all'user
