@@ -43,6 +43,7 @@ public class RMIImplementation extends UnicastRemoteObject implements ServerInte
         return userRMI.get(user);
     }
 
+
     public User login(ClientInterface cr , String username) throws RemoteException, ExistingNicknameException, EmptyNicknameException {
         User user;
         synchronized (lobby) {
