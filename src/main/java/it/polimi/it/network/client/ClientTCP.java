@@ -255,6 +255,7 @@ public class ClientTCP implements ClientInterface {
         try {
             out.writeObject(request);
             out.flush();
+
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }

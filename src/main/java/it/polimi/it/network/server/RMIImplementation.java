@@ -43,37 +43,53 @@ public class RMIImplementation extends UnicastRemoteObject implements ServerInte
         return userRMI.get(user);
     }
 
+
     public User login(ClientInterface cr , String username) throws RemoteException, ExistingNicknameException, EmptyNicknameException {
-        User user = lobby.createUser(username);
-        userRMI.put(user,cr);
+        User user;
+        synchronized (lobby) {
+            user = lobby.createUser(username);
+        }
+        userRMI.put(user, cr);
         return user;
     }
 
     public int createGame(User user,int playerNumber) throws RemoteException, WrongPlayerException {
-        GameController gc = lobby.createGame(user,playerNumber);
+        GameController gc;
+        synchronized (lobby){
+            gc = lobby.createGame(user,playerNumber);
+        }
         userGame.put(user,gc);
         return gc.getGameID();
     }
 
     public void joinGame(User user,int id) throws RemoteException, InvalidIDException, WrongPlayerException, IllegalValueException {
-        GameController gc = lobby.joinGame(user,id);
+        GameController gc;
+        synchronized (lobby) {
+            gc = lobby.joinGame(user, id);
+        }
         userGame.put(user, gc);
     }
 
     public void tilesNumMessage(User user,int numTiles) throws RemoteException, WrongPlayerException, WrongListException, IllegalValueException {
         GameController gc = userGame.get(user);
-        gc.getFromViewNTiles(user,numTiles);
-            //numTiles è il valore scelto dall'utente (v. javadoc GameController)
+        synchronized (gc){
+            gc.getFromViewNTiles(user,numTiles);
+        }
+        //numTiles è il valore scelto dall'utente (v. javadoc GameController)
     }
 
     public void selectedTiles(User user,List<Tile> choosenTiles) throws RemoteException, WrongPlayerException {
         GameController gc = userGame.get(user);
-        gc.getTilesListFromView(user,choosenTiles);
+        synchronized (gc){
+            gc.getTilesListFromView(user,choosenTiles);
+        }
     }
 
     public void chooseColumn (User user,int columnNumber) throws RemoteException, InvalidIDException, IllegalValueException {
         GameController gc = userGame.get(user);
-        gc.getColumnFromView(user,columnNumber);
+        synchronized (gc){
+            gc.getColumnFromView(user,columnNumber);
+        }
     }
 
 
