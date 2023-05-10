@@ -509,6 +509,7 @@ public class View {
 
     public void setGameID(int gameId) {
         this.gameID = gameId;
+        out.print("Game ID: " + gameId + "\n");
     }
 
     public void setEndToken(User user) {
