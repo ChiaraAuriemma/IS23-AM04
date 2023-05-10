@@ -78,6 +78,7 @@ public class GameController {
         numOfPlayers = game.getNumplayers();
         gameID = game.getGameid();
         lobby = lobbyIn;
+        playerList = new ArrayList<>();
     }
 
     //suppongo che la partita sia già stata startata con 4 giocatori

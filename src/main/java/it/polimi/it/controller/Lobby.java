@@ -30,7 +30,7 @@ public class Lobby {
         userList = new ArrayList<>();
         gameList = new ArrayList<>();
         gameControllerList = new ArrayList<>();
-        gameCounterID = 0;
+        this.gameCounterID = 0;
         this.serverTCP = serverTCP;
         this.serverRMI = serverRMI;
     }
@@ -91,12 +91,12 @@ public class Lobby {
 
         //fai il controllo: l'user che crea il game deve esistere ed essere nella lista, vedi metodo sotto
         VirtualView virtualView = new VirtualView(serverTCP,serverRMI);
-        Game game = new Game(playerNumber, user, gameCounterID,virtualView);
+        Game game = new Game(playerNumber, user, this.gameCounterID,virtualView);
         user.setInGame(true);
         gameList.add(game);
         GameController gameContr = new GameController(game, this);
         gameControllerList.add(gameContr);
-        gameCounterID++;
+        this.gameCounterID++;
 
         return gameContr;
     }
@@ -104,19 +104,19 @@ public class Lobby {
     public GameController joinGame(User user, int gameID) throws InvalidIDException, WrongPlayerException, IllegalValueException, RemoteException {
 
         List<Game> findGame = gameList.stream().filter(game -> game.getGameid() == gameID).collect(Collectors.toList());
-        if(gameID<=gameCounterID && !findGame.isEmpty()){
+        if(gameID<gameCounterID && !findGame.isEmpty()){
             if(findGame.get(0).getCurrentPlayersNum()<findGame.get(0).getNumplayers()){
-                if (userList.contains(user) && !user.getInGame()){
+
                     findGame.get(0).joinGame(user);
-                    user.setInGame(true);
+                    if(!user.getInGame()){
+                        user.setInGame(true);
+                    }
                     if (findGame.get(0).getNumplayers()==findGame.get(0).getCurrentPlayersNum()){
                         //starto effettivamente il game
                         gameControllerList.get(gameList.indexOf(findGame.get(0))).firstTurnStarter();
                     }
+
                     return gameControllerList.get(gameList.indexOf(findGame.get(0)));
-                }else{
-                    throw new InvalidIDException("There is no player with this nickname in this game");
-                }
             }else{
                 throw new WrongPlayerException("There are already too many players in this game!");
             }
