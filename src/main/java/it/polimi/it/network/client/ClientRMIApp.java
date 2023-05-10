@@ -87,7 +87,6 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
             user = sr.login(this,userName);
             buffer.setStage(TurnStages.CREATEorJOIN);
             view.joinOrCreate(user.getNickname());
-            view.askNicknameAgain();
 
             //view : passo alla schermata con create e join game
         }catch (ExistingNicknameException | EmptyNicknameException e) {

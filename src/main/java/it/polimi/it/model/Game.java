@@ -9,6 +9,7 @@ import it.polimi.it.model.Card.PersonalGoalCards.*;
 import it.polimi.it.network.server.VirtualView;
 
 
+import java.rmi.RemoteException;
 import java.util.*;
 
 public class Game {
@@ -95,7 +96,7 @@ public class Game {
 
     }
 
-    public ArrayList<User> randomPlayers () {
+    public ArrayList<User> randomPlayers () throws RemoteException {
         ArrayList<User> order = new ArrayList<>(this.numplayers);
 
         Random rdn = new Random();
@@ -122,7 +123,7 @@ public class Game {
     }
 
 
-    public void pointsFromAdjacent(){
+    public void pointsFromAdjacent() throws RemoteException {
 
         //points from adjacent tiles with same color
         int tmp_point;
@@ -134,7 +135,7 @@ public class Game {
         virtualView.finalPoints(this.players,this.points);
     }
 
-    public void endGame (User currentPlayer){
+    public void endGame (User currentPlayer) throws RemoteException {
 
         //points from endToken
         int i;
@@ -150,7 +151,7 @@ public class Game {
 
     }
 
-    public void drawCommonCrads(){
+    public void drawCommonCrads() throws RemoteException {
 
         Random rnd = new Random();
 
@@ -178,7 +179,7 @@ public class Game {
         this.virtualView.setUser(joiner);
     }
 
-    public void drawPersonalCard (){
+    public void drawPersonalCard () throws RemoteException {
 
         PersonalGoalCard card;
         Random rnd = new Random();
@@ -196,7 +197,7 @@ public class Game {
         virtualView.drawnPersonalCard(user,card);
     }
 
-    public void pointCount(User player){
+    public void pointCount(User player) throws RemoteException {
 
         int i = players.indexOf(player);
         //User player = this.players.get(i);

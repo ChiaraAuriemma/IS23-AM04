@@ -52,14 +52,16 @@ public class ClientTCP implements ClientInterface {
         try{
             serverSocket = new Socket(ip,port);
 
-            try {
-                in = new ObjectInputStream(serverSocket.getInputStream());
+            try{
+                out = new ObjectOutputStream(serverSocket.getOutputStream());
+                //out.flush();
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
-            try{
-                out = new ObjectOutputStream(serverSocket.getOutputStream());
+            try {
+
+                in = new ObjectInputStream(serverSocket.getInputStream());
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -72,6 +74,7 @@ public class ClientTCP implements ClientInterface {
             System.out.println("Couldn't get I/O for the connection to " + ip);
             System.exit(1);
         }
+        view.askNickname();
     }
 
 

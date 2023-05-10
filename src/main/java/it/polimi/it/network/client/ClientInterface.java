@@ -22,21 +22,21 @@ public interface ClientInterface extends Remote {
 
     public void takeableTiles(List<List<Tile>> choosableTilesList, int num) throws RemoteException;
 
-    public void setStartOrder(ArrayList<User> order);
+    public void setStartOrder(ArrayList<User> order) throws RemoteException;
 
-    public void setNewBoard(Tile[][] matrix);
+    public void setNewBoard(Tile[][] matrix) throws RemoteException;
 
-    public void setNewCommon(CommonGoalCard card1, CommonGoalCard card2);
+    public void setNewCommon(CommonGoalCard card1, CommonGoalCard card2) throws RemoteException;
 
-    public void setNewPersonal(PersonalGoalCard card);
+    public void setNewPersonal(PersonalGoalCard card) throws RemoteException;
 
-    public void setNewShelfie(User receiver, Tile[][] shelfie);
+    public void setNewShelfie(User receiver, Tile[][] shelfie) throws RemoteException;
 
-    public void setNewPoints(User user, Integer points);
+    public void setNewPoints(User user, Integer points) throws RemoteException;
 
-    public void notifyTurnStart(int maxValueofTiles);
+    public void notifyTurnStart(int maxValueofTiles)throws RemoteException;
 
-    public void askColumn(boolean[] choosableColumns);
+    public void askColumn(boolean[] choosableColumns)throws RemoteException;
 
     public void createGame(int playerNumber) throws RemoteException;
 
@@ -44,17 +44,17 @@ public interface ClientInterface extends Remote {
 
     public void tilesNumMessage(int numOfTiles) throws RemoteException;
 
-    public View getView();
+    public View getView() throws RemoteException;
 
     public void selectedTiles(List<Tile> choices) throws RemoteException;
 
     public void chooseColumn(int column) throws RemoteException;
 
-    void setEndToken(User user);
+    void setEndToken(User user) throws RemoteException;
 
-    void setFinalPoints(List<User> users, ArrayList<Integer> points);
+    void setFinalPoints(List<User> users, ArrayList<Integer> points) throws RemoteException;
 
-    void recover(Game game, int gameID);
+    void recover(Game game, int gameID) throws RemoteException;
 
-    void updateView();
+    void updateView() throws RemoteException;
 }

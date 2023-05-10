@@ -26,7 +26,7 @@ public class User implements Serializable {
         this.inGame = true;
     }
 
-    public int maxValueOfTiles() throws IllegalValueException {
+    public int maxValueOfTiles() throws IllegalValueException, RemoteException {
 
         int max = shelf.possibleTiles();
         if(max < 1 || max > 3){
@@ -74,7 +74,7 @@ public class User implements Serializable {
         return columns;
     }
 
-    public boolean insertTile(int column, List<Tile> chosen) throws IllegalValueException {
+    public boolean insertTile(int column, List<Tile> chosen) throws IllegalValueException, RemoteException {
 
         boolean isEnd;
         if(column < 0 || column > 4){

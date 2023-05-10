@@ -35,6 +35,8 @@ public class VirtualView {
 
     public VirtualView( ServerTCP serverTCP ,RMIImplementation serverRMI){
         typeOfConnection = new HashMap<>();
+        userTCP = new HashMap<>();
+        userRMI = new HashMap<>();
         this.serverTCP = serverTCP;
         this.serverRMI = serverRMI;
     }
@@ -62,7 +64,7 @@ public class VirtualView {
     }
 
     //metodi di inizio partita
-    public void startOrder(ArrayList<User> order){//->da mandare a tutti
+    public void startOrder(ArrayList<User> order) throws RemoteException {//->da mandare a tutti
         for (int i=0; i < game.getNumplayers(); i++){
             User user = game.getPlayer(i);
 
@@ -83,7 +85,7 @@ public class VirtualView {
     }
 
     //mando la matrice iniziale e la lista dei token
-    public void initialMatrix(Tile[][] matrix){//da mandare a tutti
+    public void initialMatrix(Tile[][] matrix) throws RemoteException {//da mandare a tutti
         for (int i=0; i < game.getNumplayers(); i++) {
             User user = game.getPlayer(i);
 
@@ -102,7 +104,7 @@ public class VirtualView {
         }
     }
 
-    public void drawnCommonCards(CommonGoalCard card1, CommonGoalCard card2, List<Integer> commonToken1, List<Integer> commonToken2){
+    public void drawnCommonCards(CommonGoalCard card1, CommonGoalCard card2, List<Integer> commonToken1, List<Integer> commonToken2) throws RemoteException {
         for (int i=0; i < game.getNumplayers(); i++) {
             User user = game.getPlayer(i);
 
@@ -121,7 +123,7 @@ public class VirtualView {
         }
     }
 
-    public void drawnPersonalCard(User user, PersonalGoalCard card){
+    public void drawnPersonalCard(User user, PersonalGoalCard card) throws RemoteException {
 
         if (typeOfConnection.get(user).equals("TCP")) {
 
@@ -141,7 +143,7 @@ public class VirtualView {
 
     //during the turn
     //starting turn
-    public void startTurn(User user,int maxValueofTiles){
+    public void startTurn(User user,int maxValueofTiles) throws RemoteException {
 
 
         if (typeOfConnection.get(user).equals("TCP")) {
@@ -200,7 +202,7 @@ public class VirtualView {
         }
     }
 
-    public void shelfieUpdate(User user){
+    public void shelfieUpdate(User user) throws RemoteException {
         for (int i=0; i < game.getNumplayers(); i++) {
             User  receiver = game.getPlayer(i);
 
@@ -220,7 +222,7 @@ public class VirtualView {
         }
     }
 
-    public void boardUpdate(Tile[][] matrix){
+    public void boardUpdate(Tile[][] matrix) throws RemoteException {
         for (int i=0; i < game.getNumplayers(); i++) {
             User  receiver = game.getPlayer(i);
 
@@ -239,7 +241,7 @@ public class VirtualView {
         }
     }
 
-    public void pointsUpdate(User user, Integer points, List<Integer> commonToken1, List<Integer> commonToken2){
+    public void pointsUpdate(User user, Integer points, List<Integer> commonToken1, List<Integer> commonToken2) throws RemoteException {
         for (int i=0; i < game.getNumplayers(); i++) {
             User  receiver = game.getPlayer(i);
 
@@ -258,7 +260,7 @@ public class VirtualView {
         }
     }
 
-    public void endTokenTaken(User user){
+    public void endTokenTaken(User user) throws RemoteException {
         for (int i=0; i < game.getNumplayers(); i++) {
             User  receiver = game.getPlayer(i);
 
@@ -278,7 +280,7 @@ public class VirtualView {
     }
 
 
-    public void finalPoints(List<User> users, ArrayList<Integer> points){
+    public void finalPoints(List<User> users, ArrayList<Integer> points) throws RemoteException {
         for (int i=0; i < game.getNumplayers(); i++) {
             User  receiver = game.getPlayer(i);
 
@@ -296,7 +298,7 @@ public class VirtualView {
         }
     }
 
-    public void viewUpdate(){
+    public void viewUpdate() throws RemoteException {
         for (int i=0; i < game.getNumplayers(); i++) {
             User  receiver = game.getPlayer(i);
 
@@ -327,7 +329,7 @@ public class VirtualView {
 
     }
 
-    public void resetAfterDisconnection(User user, int gameID) {
+    public void resetAfterDisconnection(User user, int gameID) throws RemoteException {
 
         if (typeOfConnection.get(user).equalsIgnoreCase("TCP")){
             ThisNotTheDay recover = new ThisNotTheDay(game,gameID);

@@ -1,11 +1,5 @@
 package it.polimi.it.network.client;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.gson.stream.JsonReader;
-
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -24,8 +18,8 @@ public class Client {
         }
 
         ClientInputReader cliR = new ClientInputReader();
-        cliR.setConnectionType(inputLine.toUpperCase());
         Thread thread = new Thread(cliR);
         thread.start();
+        cliR.setConnectionType(inputLine.toUpperCase());
     }
 }

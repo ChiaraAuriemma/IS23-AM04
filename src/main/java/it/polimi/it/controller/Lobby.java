@@ -7,6 +7,7 @@ import it.polimi.it.network.server.RMIImplementation;
 import it.polimi.it.network.server.ServerTCP;
 import it.polimi.it.network.server.VirtualView;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -34,7 +35,7 @@ public class Lobby {
         this.serverRMI = serverRMI;
     }
 
-    public User createUser(String  nickname) throws ExistingNicknameException, EmptyNicknameException {
+    public User createUser(String  nickname) throws ExistingNicknameException, EmptyNicknameException, RemoteException {
 
        // User user;
         if(nickname == null || nickname.length() ==0){
@@ -100,7 +101,7 @@ public class Lobby {
         return gameContr;
     }
 
-    public GameController joinGame(User user, int gameID) throws InvalidIDException, WrongPlayerException, IllegalValueException {
+    public GameController joinGame(User user, int gameID) throws InvalidIDException, WrongPlayerException, IllegalValueException, RemoteException {
 
         List<Game> findGame = gameList.stream().filter(game -> game.getGameid() == gameID).collect(Collectors.toList());
         if(gameID<=gameCounterID && !findGame.isEmpty()){

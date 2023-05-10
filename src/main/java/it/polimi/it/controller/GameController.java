@@ -87,7 +87,7 @@ public class GameController {
      * @throws IllegalValueException exception used when an illegal value is given in input
      * @throws InvalidIDException exception used when the game ID is wrong or non-existent
      */
-    void turnDealer() throws InvalidIDException, IllegalValueException {
+    void turnDealer() throws InvalidIDException, IllegalValueException, RemoteException {
 
         if(this.endGame && this.currentPlayer == 0){
             game.getVirtualView().viewUpdate();
@@ -115,7 +115,7 @@ public class GameController {
      * Method to get the maximum possible number of tiles that can be selected from the board
      * Calls the view to ask the payer about how many tiles the player wants to retrieve
      */
-    public void firstOperation() throws IllegalValueException {
+    public void firstOperation() throws IllegalValueException, RemoteException {
 
         //faccio i controlli su qual è il massimo num di tile prendibili
         this.maxTile = playerList.get(currentPlayer).maxValueOfTiles();
@@ -195,7 +195,7 @@ public class GameController {
      * @throws WrongTileException exception used when a wrong tile is selected
      */
     //oltre a scegliere la colonna dove metterle, ordina le Tile per come le vuole nella colonna
-    public void getColumnFromView(User user,int col) throws IllegalValueException, InvalidIDException {
+    public void getColumnFromView(User user,int col) throws IllegalValueException, InvalidIDException, RemoteException {
         if(!possibleColumnArray[col]){
            System.out.println("Invalid column choice"); //da far vedere a view
         }
@@ -220,7 +220,7 @@ public class GameController {
      * Method used to initialize the parameters of the game, called before the firs turn of the game
      * Calls the view in order to display the initial board and the cards that have been extracted randomly
      */
-    public void firstTurnStarter() throws IllegalValueException {
+    public void firstTurnStarter() throws IllegalValueException, RemoteException {
         //pesca le carte, dispone i giocatori
 
         //tolgo: playerList = game.getPlayerList();//sto salvando la lista di giocatori già ordinata come deve essere
@@ -280,7 +280,7 @@ public class GameController {
         return playerList;
     }
 
-    public void resetGame(User user, int gameID) {
+    public void resetGame(User user, int gameID) throws RemoteException {
         game.getVirtualView().resetAfterDisconnection(user, gameID);
     }
 }

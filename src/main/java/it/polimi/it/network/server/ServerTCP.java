@@ -13,18 +13,17 @@ import java.util.Optional;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class ServerTCP {
+public class ServerTCP implements Runnable{
     private  int port;
-    private ServerSocket serverSocket;
+    private ServerSocket serverSocket ;
     private HashMap<User, Socket> userTCP;
     private Lobby lobby;
-    public ServerTCP(int portNumber, Lobby lobby){
+    public ServerTCP(int portNumber){
         this.port = portNumber;
-        this.lobby = lobby;
         this.userTCP = new HashMap<>();
     }
-
-    public void startServer(){
+@Override
+    public void run(){
         ExecutorService executor = Executors.newCachedThreadPool();  //crea un pool di thread che si autogestiscono
 
         System.out.println("Server TCP started");
@@ -41,6 +40,7 @@ public class ServerTCP {
         while (true) {
             try {
                 Socket clientSocket = serverSocket.accept(); //aspetta che qualcuno si colleghi
+                System.out.println("Ciao");
                 executor.submit(new ClientTCPHandler(clientSocket, lobby, this)); //l'oggetto all'interno deve essere Runnable
             } catch(IOException e) {
                 e.printStackTrace();
@@ -59,5 +59,9 @@ public class ServerTCP {
 
     public void setUserTCP(User user, Socket socket){
         userTCP.put(user,socket);
+    }
+
+    public void setLobby(Lobby lobby) {
+        this.lobby = lobby;
     }
 }

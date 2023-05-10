@@ -18,7 +18,6 @@ import java.io.*;
 import java.net.Socket;
 import java.rmi.RemoteException;
 import java.util.Timer;
-import java.util.TimerTask;
 
 public class ClientTCPHandler implements Runnable{
     private Socket socket;
@@ -39,23 +38,28 @@ public class ClientTCPHandler implements Runnable{
         this.socket = socket;
         this.lobby = lobby;
         this.serverTCP = serverTCP;
+
+
+        try{
+            out = new ObjectOutputStream(socket.getOutputStream());
+            //out.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        }
+
+        try{
+
+            in = new ObjectInputStream(socket.getInputStream());
+
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        }
     }
 
     @Override
     public void run() {
-
-       try {
-            in = new ObjectInputStream(socket.getInputStream());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        try{
-            out = new ObjectOutputStream(socket.getOutputStream());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
         Message request;
         MessageType messType;
 
@@ -64,7 +68,7 @@ public class ClientTCPHandler implements Runnable{
 
         while(true) {//CAMBIAMO : se è ancora connesso rimani nel while
 
-            disconnectionTimer();
+            //disconnectionTimer();
             try {
                 request = (Message) in.readObject();
             } catch (IOException | ClassNotFoundException e) {
@@ -86,6 +90,9 @@ public class ClientTCPHandler implements Runnable{
                             ErrorMessage errorMessage = new ErrorMessage(e.getMessage());
                             response = new Message(MessageType.ERROR, errorMessage);
 
+                        } catch (RemoteException e) {
+                            ErrorMessage errorMessage = new ErrorMessage(e.getMessage());
+                            response = new Message(MessageType.ERROR, errorMessage);
                         }
                     }
 
@@ -118,7 +125,7 @@ public class ClientTCPHandler implements Runnable{
                             this.gameController = lobby.joinGame(joinGameRequest.getUser(), joinGameRequest.getID());
                             JoinGameResponse joinGameResponse = new JoinGameResponse(gameController.getGameID());
                             response = new Message(MessageType.JOINGAMERESPONSE, joinGameResponse);
-                        } catch (InvalidIDException | WrongPlayerException | IllegalValueException e) {
+                        } catch (InvalidIDException | WrongPlayerException | IllegalValueException | RemoteException e) {
 
                             ErrorMessage errorMessage = new ErrorMessage(e.getMessage());
                             response = new Message(MessageType.ERROR, errorMessage);
@@ -168,7 +175,7 @@ public class ClientTCPHandler implements Runnable{
                             ErrorMessage errorMessage = new ErrorMessage(e.getMessage());
                             response = new Message(MessageType.ERROR, errorMessage);
                             send(response);
-                        } catch (IllegalValueException e) {
+                        } catch (IllegalValueException | RemoteException e) {
                             System.out.println("ERRORE");
                         }
                     }
@@ -185,7 +192,7 @@ public class ClientTCPHandler implements Runnable{
         }
 
     }
-
+/*
     private void disconnectionTimer(){
         timer = new Timer();
         TimerTask timerTask = new TimerTask() {
@@ -208,7 +215,9 @@ public class ClientTCPHandler implements Runnable{
                         delay - delay in milliseconds before task is to be executed.        1000->1secondo
                         period - time in milliseconds between successive task executions.   200000->20 secondi
                      */
-    }
+    //}
+
+
 
 
     public void send(Message message){

@@ -36,13 +36,20 @@ public class Server {
             portRMI = jsonObject.get("portRMI").getAsInt();
         }
 
-        ServerTCP serverTCP = new ServerTCP(portTCP, lobby);
-        serverTCP.startServer();
 
-        RMIImplementation serverRMI = new RMIImplementation(lobby);
+
+        ServerTCP serverTCP = new ServerTCP(portTCP);
+        //serverTCP.startServer();
+        Thread threadTCP = new Thread(serverTCP);
+        threadTCP.start();
+
+        RMIImplementation serverRMI = new RMIImplementation();
         serverRMI.startServer(portRMI);
 
         lobby = new Lobby(serverTCP, serverRMI);
+        serverRMI.setLobby(lobby);
+        serverTCP.setLobby(lobby);
+
     }
 
     public Lobby getLobby(){

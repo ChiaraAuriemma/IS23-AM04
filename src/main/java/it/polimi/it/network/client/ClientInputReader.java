@@ -65,18 +65,20 @@ public class ClientInputReader implements Runnable{
      * @throws RemoteException .
      */
     public void commandParser(String input) throws RemoteException {
+        String[] inp = input.split(">>");
+        String command = inp[0];
+        String action = inp[1];
+        /*
         String regex = "(\\w+)>>";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(input);
 
-        if(input.substring(matcher.end()).length() <= 0){
+
+         */
+        if(action.length() <= 0 || action == null){
             System.out.println("You didn't write anything");
         }else {
-
-            if (matcher.find()) {
-                String command = matcher.group(1);
                 command = command.toLowerCase();
-                String action = input.substring(matcher.end());
 
                 if(!command.equalsIgnoreCase("chat")){ // se è un messaggio in chat non gli tolgo gli spazi
                     action = action.replaceAll("\\s+","");
@@ -96,6 +98,7 @@ public class ClientInputReader implements Runnable{
                         } else {
                             view.printError("There's a time and place for everything, but not now.");
                         }
+
                         break;
 
                     case "create_game":// create_game>>4
@@ -197,7 +200,7 @@ public class ClientInputReader implements Runnable{
                 }
             }
         }
-    }
+
 
     /**
      * Setter method
@@ -209,10 +212,10 @@ public class ClientInputReader implements Runnable{
         Gson gson = new Gson();
         JsonReader jsonReader = new JsonReader( new FileReader("src/main/resources/ServerConfig.json"));
         JsonObject jsonObject = gson.fromJson(jsonReader,JsonObject.class);
-        if (connectionType.equals("TCP")){
+        if (connectionType.equalsIgnoreCase("TCP")){
             client = new ClientTCP(jsonObject.get("portTCP").getAsInt(),jsonObject.get("ip").getAsString(), this);
             client.startClient();
-        }if(connectionType.equals("RMI")){
+        }if(connectionType.equalsIgnoreCase("RMI")){
             client = new ClientRMIApp(jsonObject.get("portRMI").getAsInt(),jsonObject.get("ip").getAsString(), this);
             client.startClient();
         }

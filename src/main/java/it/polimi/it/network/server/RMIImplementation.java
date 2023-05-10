@@ -25,17 +25,22 @@ public class RMIImplementation extends UnicastRemoteObject implements ServerInte
     private HashMap<User, ClientInterface> userRMI;
 
     private Registry registry;
-    public RMIImplementation(Lobby lobby) throws RemoteException{
-        this.lobby = lobby;
+    public RMIImplementation() throws RemoteException{
         this.userGame = new HashMap<>();
         this.userRMI = new HashMap<>();
 
     }
 
-    public void startServer(int port) throws RemoteException, AlreadyBoundException {
+    public void startServer(int port) throws RemoteException {
+        System.out.println("Server RMI started");
         this.port = port;
-        registry = LocateRegistry.getRegistry(port);
-        registry.bind("server_RMI", this);
+        registry = LocateRegistry.createRegistry(port);
+        try {
+            registry.bind("server_RMI", this);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        System.out.println("Server RMI ready");
 
     }
 
@@ -92,6 +97,7 @@ public class RMIImplementation extends UnicastRemoteObject implements ServerInte
         }
     }
 
-
-
+    public void setLobby(Lobby lobby){
+        this.lobby=lobby;
+    }
 }
