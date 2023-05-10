@@ -49,6 +49,62 @@ public class View {
     private User endToken;
 
 
+
+
+
+
+
+    private String Line4;
+    private String Line5;
+    private String Line6;
+    private String Line7;
+    private String Line8;
+    private String Line9;
+    private String Line10;
+    private String Line11;
+    private String Line12;
+    private String Line13;
+    private String Line14;
+    private String Line15;
+    private String Line16;
+    private String Line17;
+    private String Line18;
+    private String Line19;
+    private String Line20;
+    private String Line21;
+    private String Line22;
+    private String Line23;
+    private String Line24;
+    private String Line25;
+    private String Line26;
+    private String Line27;
+    private String Line28;
+    private String Line29;
+    private String Line30;
+    private String Line31;
+    private String Line32;
+    private String Line33;
+    private String Line34;
+    private String Line35;
+    private String Line36;
+    private String Line37;
+    private String Line38;
+    private String Line39;
+    private String Line40;
+    private String Line41;
+    private String Line42;
+    private String Line43;
+    private String Line44;
+    private String Line45;
+    private String Line46;
+    private String Line47;
+    private String Line48;
+    private String Line49;
+    private String Line50;
+    private String Line51;
+    private String Line52;
+    private String Line53;
+
     public View() {
         return;
     }
@@ -511,6 +567,41 @@ public class View {
 
     public void update(){
         //serve a stampare
+        updateEveryLine();
+        printEveryLine();
+    }
+
+    private void updateEveryLine() {
+        Line4 = namesLine;
+        Line5 = blankLine;
+        Line6 = setLine6();
+        Line7 = blankLine;
+        Line20 = blankLine;
+        Line22 = blankLine;
+
+    }
+
+    private String setLine6() {
+        String returnString = null;
+        switch (numPlayers){
+            case 2: returnString = border + "   " +
+                    "   0 1 2 3 4   " + "   0 1 2 3 4   " + "               " + "               " +
+                    " " + border
+            ;break;
+            case 3: returnString = border + "   " +
+                    "   0 1 2 3 4   " + "   0 1 2 3 4   " + "   0 1 2 3 4   " + "               " +
+                    " " + border
+            ;break;
+            case 4: returnString = border + "   " +
+                                    "   0 1 2 3 4   " + "   0 1 2 3 4   " + "   0 1 2 3 4   " + "   0 1 2 3 4   " +
+                                    " " + border
+                                    ;break;
+        }
+        return returnString;
+    }
+
+    private void printEveryLine() {
+        out.printf("%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n", firstLine, blankLine, blankLine, Line4, Line5, Line6, Line7, Line8, Line9, Line10, Line11, Line12, Line13, Line14, Line15, Line16, Line17, Line18, Line19, Line20, Line21, Line22, Line23, Line24, Line25, Line26, Line27, Line28, Line29, Line30, Line31, Line32, Line33, Line34, Line35, Line36, Line37, Line38, Line39, Line40, Line41, Line42, Line43, Line44, Line45, Line46, Line47, Line48, Line49, Line50, Line51, Line52, Line53, blankLine, lastLine);
     }
 
 }

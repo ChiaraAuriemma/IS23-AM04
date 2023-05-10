@@ -65,7 +65,6 @@ public class ClientInputReader implements Runnable{
      * @throws RemoteException .
      */
     public void commandParser(String input) throws RemoteException {
-        input = input.replaceAll("\\s+","");
         String regex = "(\\w+)>>";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(input);
@@ -77,16 +76,19 @@ public class ClientInputReader implements Runnable{
             if (matcher.find()) {
                 String command = matcher.group(1);
                 command = command.toLowerCase();
+                String action = input.substring(matcher.end());
 
+                if(!command.equalsIgnoreCase("chat")){ // se è un messaggio in chat non gli tolgo gli spazi
+                    action = action.replaceAll("\\s+","");
+                }
 
                 switch (command) {
                     case "login"://initial nickname setting
 
                         if (stage == TurnStages.LOGIN) {
-                            String nickname = input.substring(matcher.end());
-
+                            String nickname = action;
                             if(nickname.length()>12){
-                                System.out.println("Nickname is too long");
+                                System.out.println("Nickname is too long, please retry... ");
                                 break;
                             }
                             //metodo che manda il messaggio login
@@ -97,35 +99,26 @@ public class ClientInputReader implements Runnable{
                         break;
 
                     case "create_game":// create_game>>4
-
                         if (stage == TurnStages.CREATEorJOIN) {
-                            int numPlayers = Integer.parseInt(input.substring(matcher.end()));
-
-
+                            int numPlayers = Integer.parseInt(action);
                             client.createGame(numPlayers);
                         } else {
                             view.printError("There's a time and place for everything, but not now.");
                         }
-
                         break;
 
                     case "join_game": //join_game>>gameID
-
                         if (stage == TurnStages.CREATEorJOIN) {
-
-                            int gameID = Integer.parseInt(input.substring(matcher.end()));
-
+                            int gameID = Integer.parseInt(action);
                             client.joinGame(gameID);
                         } else {
                             view.printError("There's a time and place for everything, but not now.");
                         }
-
                         break;
 
                     case "chat": //chat>>Write here your message...
-
                         if (stage != TurnStages.NOTHING) {
-                            String chatMessage = input.substring(matcher.end());
+                            String chatMessage = action;
 
                         }
 
@@ -141,39 +134,21 @@ public class ClientInputReader implements Runnable{
                         break;
 
 
-
-               /* case "connection": //connection>>RMI     or TCP
-                    String connectionType = input.substring(matcher.end());
-                    switch (connectionType){
-                        case "tcp": //invio messaggio TCP
-                            ;break;
-                        case "rmi": //chiamata metodi RMI
-                            ;break;
-                    }
-                    ;break;
-                */
-
-
                     case "num_tiles"://num_tiles>> number of tiles you want to get from the board
                         if (stage == TurnStages.TILESNUM) {
-                            int numTiles = Integer.parseInt(input.substring(matcher.end()));
-
-
+                            int numTiles = Integer.parseInt(action);
                             client.tilesNumMessage(numTiles);
-
                         } else {
                             view.printError("There's a time and place for everything, but not now.");
                         }
-
                         break;
 
                     case "take_tiles": // tiles; format TBD (0,2);(1,3);(4,7)
                         if (stage == TurnStages.CHOOSETILES) {
-                            String chosenTiles = input.substring(matcher.end());
+                            String chosenTiles = action;
 
 
                             // tiles; format TBD (0,2);(1,3);(4,7) -> lunghezza <6-> 1 tile; <12->2tiles; else->3tiles
-
                             client.getView();
                             ArrayList<Tile> chosenTilesList = new ArrayList<>();
                             char[] chosen = chosenTiles.toCharArray();
@@ -195,26 +170,20 @@ public class ClientInputReader implements Runnable{
                                     chosenTilesList.add(t);
                                 }
                             }
-
                             client.selectedTiles(chosenTilesList);
-
                         } else {
                             view.printError("There's a time and place for everything, but not now.");
                         }
-
                         break;
+
 
                     case "choose_column": //choose_column>>number of the column; TBD:le colonne partono da 0 o da 1????
                         if (stage == TurnStages.CHOOSECOLUMN) {
-                            int column = Integer.parseInt(input.substring(matcher.end()));
-
-
+                            int column = Integer.parseInt(action);
                             client.chooseColumn(column);
-
                         } else {
                             view.printError("There's a time and place for everything, but not now.");
                         }
-
                         break;
 
 
