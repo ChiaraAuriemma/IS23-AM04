@@ -68,13 +68,7 @@ public class ClientInputReader implements Runnable{
         String[] inp = input.split(">>");
         String command = inp[0];
         String action = inp[1];
-        /*
-        String regex = "(\\w+)>>";
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(input);
 
-
-         */
         if(action.length() <= 0 || action == null){
             System.out.println("You didn't write anything");
         }else {
