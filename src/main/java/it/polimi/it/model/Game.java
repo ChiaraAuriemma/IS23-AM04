@@ -11,12 +11,14 @@ import it.polimi.it.network.server.ServerInterface;
 import it.polimi.it.network.server.VirtualView;
 
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.util.*;
 
 public class Game implements Serializable {
 
+    private static final long serialVersionUID = 3534520497074933321L;
     private List<User> players;
     private  Integer numplayers;
     private Board board;

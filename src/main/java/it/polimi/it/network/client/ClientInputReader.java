@@ -65,6 +65,10 @@ public class ClientInputReader implements Runnable{
      * @throws RemoteException .
      */
     public void commandParser(String input) throws RemoteException {
+        if(!input.contains(">>")){
+            System.out.println("No valid commands found, please retry... ");
+            return ;
+        }
         String[] inp = input.split(">>");
         String command = inp[0];
         String action = inp[1];
