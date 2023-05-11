@@ -16,6 +16,7 @@ import it.polimi.it.network.server.Exceptions.NotTcpUserException;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 
+import java.io.Serializable;
 import java.net.Socket;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -23,8 +24,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
-public class VirtualView {
+public class VirtualView implements Serializable {
 
+    private static final long serialVersionUID = -3906432862304671330L;
     private Game game;
 
     private HashMap<User,String > typeOfConnection;
