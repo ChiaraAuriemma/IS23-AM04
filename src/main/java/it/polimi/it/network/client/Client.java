@@ -16,6 +16,7 @@ public class Client {
             System.out.println("Choose a connection type");
             inputLine = stdin.nextLine();
         }
+        stdin.close();
 
         ClientInputReader cliR = new ClientInputReader();
         Thread thread = new Thread(cliR);

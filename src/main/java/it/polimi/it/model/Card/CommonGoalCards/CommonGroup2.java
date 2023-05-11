@@ -12,6 +12,8 @@ import java.util.List;
 
 public class CommonGroup2 extends CommonGoalCard{
 
+    private static final long serialVersionUID = -1456905443935696667L;
+
     /**
      * constructor of the CommonGroup2.
      * @param id is the identification code of the CommonGoalCard, in this group the option for the ids are 2,5,6,7

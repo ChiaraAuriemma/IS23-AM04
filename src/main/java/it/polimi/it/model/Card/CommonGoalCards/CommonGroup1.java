@@ -11,8 +11,9 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CommonGroup1 extends CommonGoalCard{
+public class CommonGroup1 extends CommonGoalCard {
 
+    private static final long serialVersionUID = 274381445832608000L;
     private List<Tile> pink;
     private List<Tile> cyan;
     private List<Tile> yellow;

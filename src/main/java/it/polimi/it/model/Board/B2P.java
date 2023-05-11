@@ -4,7 +4,10 @@ import it.polimi.it.model.Tiles.PossibleColors;
 import it.polimi.it.model.Tiles.Tile;
 import it.polimi.it.model.Tiles.TilesBag;
 
+
 public class B2P extends Board{
+
+    private static final long serialVersionUID = 3553776396475547822L;
 
     /**
      * 9x9 Tiles matrix that represents the configuration of the Board when there are 2 players

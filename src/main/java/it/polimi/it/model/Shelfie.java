@@ -3,14 +3,16 @@ package it.polimi.it.model;
 import it.polimi.it.model.Tiles.PossibleColors;
 import it.polimi.it.model.Tiles.Tile;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  *Matrix that represent the BookShelf in the game
 */
 
-public class Shelfie{
+public class Shelfie implements Serializable {
 
+    private static final long serialVersionUID = -1433458226615936016L;
     private int commonToken1;
     private int commonToken2;
     private boolean endToken1;

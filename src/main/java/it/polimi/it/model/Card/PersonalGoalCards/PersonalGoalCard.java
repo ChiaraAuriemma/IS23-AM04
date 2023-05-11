@@ -7,11 +7,13 @@ import com.google.gson.stream.JsonReader;
 import it.polimi.it.model.Shelfie;
 
 import java.io.FileReader;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PersonalGoalCard {
+public class PersonalGoalCard implements Serializable {
 
+    private static final long serialVersionUID = -3897925876914460232L;
     private int numCompletedTasks;
     private List<Integer> checkColor;
     JsonArray pinkPos;

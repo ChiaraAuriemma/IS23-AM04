@@ -7,6 +7,7 @@ import java.util.List;
 
 public class CommonGroup5 extends CommonGoalCard{
 
+    private static final long serialVersionUID = -7822537206787354297L;
     private List<Integer> numColor;
 
     /**

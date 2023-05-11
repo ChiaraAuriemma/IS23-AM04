@@ -4,7 +4,10 @@ import it.polimi.it.model.Tiles.PossibleColors;
 import it.polimi.it.model.Tiles.Tile;
 import it.polimi.it.model.Tiles.TilesBag;
 
+
 public class B3P extends Board{
+
+    private static final long serialVersionUID = 4432391130262015233L;
 
     /**
      * Constructor of the board for 3 player

@@ -11,7 +11,6 @@ import it.polimi.it.network.server.ServerInterface;
 import it.polimi.it.network.server.VirtualView;
 
 
-import java.io.Serial;
 import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.util.*;

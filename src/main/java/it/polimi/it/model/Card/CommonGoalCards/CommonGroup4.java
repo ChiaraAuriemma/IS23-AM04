@@ -10,6 +10,8 @@ import java.io.FileReader;
 
 public class CommonGroup4 extends CommonGoalCard{
 
+    private static final long serialVersionUID = 6353955806722099168L;
+
     /**
      * constructor of the CommonGroup4.
      * @param id is the identification code of the CommonGoalCard, in this group the option for the ids are 8,11

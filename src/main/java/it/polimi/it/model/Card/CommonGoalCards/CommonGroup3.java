@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 public class CommonGroup3 extends CommonGoalCard{
 
+    private static final long serialVersionUID = -7419756574191643439L;
     ArrayList<Tile> checked = new ArrayList<>();
 
     /**

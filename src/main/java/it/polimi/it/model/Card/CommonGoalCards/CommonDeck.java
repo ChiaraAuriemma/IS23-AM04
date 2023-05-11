@@ -1,7 +1,10 @@
 package it.polimi.it.model.Card.CommonGoalCards;
 
-public class CommonDeck {
+import java.io.Serializable;
 
+public class CommonDeck implements Serializable {
+
+    private static final long serialVersionUID = -7413912141803144939L;
     private  CommonGoalCard commonCard1;
     private CommonGoalCard commonCard2;
 

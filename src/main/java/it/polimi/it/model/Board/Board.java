@@ -3,12 +3,14 @@ import it.polimi.it.model.Tiles.PossibleColors;
 import it.polimi.it.model.Tiles.Tile;
 import it.polimi.it.model.Tiles.TilesBag;
 
+import java.io.Serializable;
 import java.util.*;
 
 
-public abstract class Board {
+public abstract class Board implements Serializable {
 
 
+    private static final long serialVersionUID = -8544590988740975278L;
     /**
      * Matrix that represents the LivingRoom of the game
      */
