@@ -4,8 +4,10 @@ import it.polimi.it.model.Tiles.PossibleColors;
 import it.polimi.it.model.Tiles.Tile;
 import it.polimi.it.model.Tiles.TilesBag;
 
+import java.io.Serializable;
 
-public class B4P extends Board{
+
+public class B4P extends Board implements Serializable {
     private static final long serialVersionUID = 8499518824116420018L;
 
     /**

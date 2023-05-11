@@ -4,8 +4,11 @@ import it.polimi.it.model.Tiles.Tile;
 import it.polimi.it.model.User;
 import it.polimi.it.network.message.Payload;
 
-public class ShelfieUpdateMessage extends Payload {
+import java.io.Serializable;
 
+public class ShelfieUpdateMessage extends Payload  implements Serializable {
+
+    private static final long serialVersionUID = 3886151742823681824L;
     private User user;
     private int column;
     private Tile[][] newShelfie;

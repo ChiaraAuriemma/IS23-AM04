@@ -11,11 +11,10 @@ import java.io.*;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-public class ClientInputReader implements Runnable{
+public class ClientInputReader implements Runnable, Serializable{
 
+    private static final long serialVersionUID = 8133446441839369630L;
     private volatile boolean running;
 
     /**
@@ -27,7 +26,7 @@ public class ClientInputReader implements Runnable{
     /**
      * Instance of the View class
      */
-    private View view;
+    private View view = new View();
 
     private TurnStages stage;
 

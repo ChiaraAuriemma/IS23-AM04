@@ -4,8 +4,11 @@ import it.polimi.it.model.User;
 import it.polimi.it.network.client.ClientInterface;
 import it.polimi.it.network.message.Payload;
 
-public class CreateGameRequest extends Payload {
+import java.io.Serializable;
 
+public class CreateGameRequest extends Payload  implements Serializable {
+
+    private static final long serialVersionUID = 6111690709070228972L;
     User user;
     int playerNumber;
 

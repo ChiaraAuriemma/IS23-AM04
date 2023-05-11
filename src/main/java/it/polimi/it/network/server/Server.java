@@ -8,13 +8,15 @@ import it.polimi.it.model.User;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.Serializable;
 import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.HashMap;
 
-public class Server {
+public class Server implements Serializable {
+    private static final long serialVersionUID = 3768243144909833291L;
     private static Lobby lobby;
     private HashMap<User,String > typeOfConnection = new HashMap<>();
 

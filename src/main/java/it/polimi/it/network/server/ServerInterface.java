@@ -5,11 +5,12 @@ import it.polimi.it.model.Tiles.Tile;
 import it.polimi.it.model.User;
 import it.polimi.it.network.client.ClientInterface;
 
+import java.io.Serializable;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.List;
 
-public interface ServerInterface extends Remote {
+public interface ServerInterface extends Remote, Serializable {
 
     User login(ClientInterface cr, String username) throws RemoteException, ExistingNicknameException, EmptyNicknameException;
 

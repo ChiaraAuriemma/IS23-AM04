@@ -8,9 +8,10 @@ import it.polimi.it.model.Shelfie;
 import it.polimi.it.model.Tiles.Tile;
 
 import java.io.FileReader;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class CommonGroup3 extends CommonGoalCard{
+public class CommonGroup3 extends CommonGoalCard  implements Serializable {
 
     private static final long serialVersionUID = -7419756574191643439L;
     ArrayList<Tile> checked = new ArrayList<>();

@@ -3,8 +3,11 @@ package it.polimi.it.network.message.request;
 import it.polimi.it.model.User;
 import it.polimi.it.network.message.Payload;
 
-public class JoinGameRequest extends Payload {
+import java.io.Serializable;
 
+public class JoinGameRequest extends Payload  implements Serializable {
+
+    private static final long serialVersionUID = -851442629157364654L;
     User user;
     int id;
 

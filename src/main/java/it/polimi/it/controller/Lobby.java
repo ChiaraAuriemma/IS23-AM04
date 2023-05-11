@@ -8,14 +8,16 @@ import it.polimi.it.network.server.RMIImplementation;
 import it.polimi.it.network.server.ServerTCP;
 import it.polimi.it.network.server.VirtualView;
 
+import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class Lobby {
+public class Lobby implements Serializable {
 
+    private static final long serialVersionUID = 2013868577459101390L;
     private ArrayList<User> userList;
     private ArrayList<Game> gameList;
     private ArrayList<GameController> gameControllerList;

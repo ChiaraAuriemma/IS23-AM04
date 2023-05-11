@@ -1,4 +1,4 @@
-package it.polimi.it.view;
+/*package it.polimi.it.view;
 
 import it.polimi.it.model.Tiles.Tile;
 
@@ -43,7 +43,7 @@ public class Cli {
     */
 
 
-
+/*
 
     public void Title() {
         String title =  "     ▒█▀▄▀█ █░░█ 　 ▒█▀▀▀█ █░░█ █▀▀ █░░ █▀▀ ░▀░ █▀▀\n" +
@@ -87,7 +87,7 @@ public class Cli {
 asciiart.club
 
      */
-
+/*
     private void readInitializer()
     {
         this.scanner = new Scanner(System.in);
@@ -127,7 +127,7 @@ asciiart.club
         String chosenNickname = readString();
 
         while(/*faccio i controlli sul nickname ricevuto
-                    -> mentre faccio i controlli se è buono lo salvo in lobby */ chosenNickname.equals("JackB")){
+                    -> mentre faccio i controlli se è buono lo salvo in lobby */ /*chosenNickname.equals("JackB")){
             String messageRetry = "This nickname is already taken, try with another one";
             out.println(messageRetry);
             chosenNickname = readString();
@@ -163,7 +163,7 @@ asciiart.club
         out.println(message);
         int response = readInt();
 
-       // while(/*controlla se l'ID esiste*/){
+       // while(/*controlla se l'ID esiste*/ /*){
             //nel messaggio che mando per controllare l'id, se è valido joino!
          //   ){
 
@@ -218,3 +218,4 @@ asciiart.club
         }
     }
 }
+*/

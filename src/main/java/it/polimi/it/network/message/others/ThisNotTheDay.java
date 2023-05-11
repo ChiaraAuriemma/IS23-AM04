@@ -3,7 +3,10 @@ package it.polimi.it.network.message.others;
 import it.polimi.it.model.Game;
 import it.polimi.it.network.message.Payload;
 
-public class ThisNotTheDay extends Payload {
+import java.io.Serializable;
+
+public class ThisNotTheDay extends Payload  implements Serializable {
+    private static final long serialVersionUID = -3294233920082178659L;
     private Game game;
     private int gameID;
 

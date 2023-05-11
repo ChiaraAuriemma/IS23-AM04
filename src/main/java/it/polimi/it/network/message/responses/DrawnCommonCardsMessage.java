@@ -3,10 +3,12 @@ package it.polimi.it.network.message.responses;
 import it.polimi.it.model.Card.CommonGoalCards.CommonGoalCard;
 import it.polimi.it.network.message.Payload;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class DrawnCommonCardsMessage extends Payload {
+public class DrawnCommonCardsMessage extends Payload  implements Serializable {
 
+    private static final long serialVersionUID = 8895460901257459083L;
     private CommonGoalCard card1;
     private CommonGoalCard card2;
     private List<Integer> commonToken1;

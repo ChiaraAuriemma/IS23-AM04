@@ -39,13 +39,12 @@ public class TestCli {
 
 
     @Test
-    public  void advanced(){
+    public void advanced(){
         CommonDeck commonDeck = new CommonDeck();
         commonDeck.createCards(1,10);
         CommonGoalCard card1 = commonDeck.getCommonCard1();
         CommonGoalCard card2 = commonDeck.getCommonCard2();
         //PersonalGoalCard pgc = new PersonalGoalCard(4);
-
 
 
         testView.setGameID(12);
@@ -54,7 +53,6 @@ public class TestCli {
         //testView.setPlayersPersonalCardView(pgc);
 
         testView.fakePersonal();
-
 
         ArrayList<User> order = new ArrayList<>();
         User u = new User("JackB");
@@ -102,24 +100,18 @@ public class TestCli {
         testView.setPlayersShelfiesView(u4, matrix);
 
 
+
+        TilesBag bag2 = new TilesBag();
+
         Tile[][] board = new  Tile[9][9];
         for(int column=0; column<9; column++){
             for (int row=0; row<9; row++){
-
-                if(bag.getTotRemaining()==0){
-                    board[row][column] = new Tile(row, column, PossibleColors.YELLOW);
-                }else {
-                    board[row][column] = bag.randomTiles(row,column);
-                }
+                board[row][column] = bag2.randomTiles(row,column);
             }
         }
+
         testView.setBoardView(board);
-
-
-
-
-        testView.setChat();
-
+                testView.setChat();
         testView.update();
     }
 }

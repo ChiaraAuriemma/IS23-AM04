@@ -8,6 +8,7 @@ import it.polimi.it.model.Tiles.PossibleColors;
 import it.polimi.it.model.Tiles.Tile;
 import it.polimi.it.model.User;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -15,7 +16,8 @@ import java.util.List;
 
 import static java.lang.System.out;
 
-public class View {
+public class View implements Serializable {
+    private static final long serialVersionUID = 892639889752766985L;
     private HashMap<User, Tile[][]> playersShelfies = new HashMap<>();
     private HashMap<User, String> playersPoints = new HashMap<>();
     private HashMap<User, String> playersNicknames = new HashMap<>();
@@ -51,8 +53,9 @@ public class View {
 
 
 
-
-
+    private String Line1;
+    private String Line2;
+    private String Line3;
     private String Line4;
     private String Line5;
     private String Line6;
@@ -62,7 +65,7 @@ public class View {
     private String Line10;
     private String Line11;
     private String Line12;
-    private String Line13;
+    private final String Line13 = "║   Common Goal:                                     Personal:   ║";
     private String Line14;
     private String Line15;
     private String Line16;
@@ -81,29 +84,10 @@ public class View {
     private String Line29;
     private String Line30;
     private String Line31;
-    private String Line32;
+    private final String Line32 = "║                           └─────────────────────────────────┘  ║";
     private String Line33;
-    private String Line34;
-    private String Line35;
-    private String Line36;
-    private String Line37;
-    private String Line38;
-    private String Line39;
-    private String Line40;
-    private String Line41;
-    private String Line42;
-    private String Line43;
-    private String Line44;
-    private String Line45;
-    private String Line46;
-    private String Line47;
-    private String Line48;
-    private String Line49;
-    private String Line50;
-    private String Line51;
-    private String Line52;
-    private String Line53;
-    private List<String> chatMessages = new ArrayList<>(); // massimo 14 messaggi, lunghezza 33
+
+    private List<String> chatMessages = new ArrayList<>(); // massimo 9 messaggi, lunghezza 33
     private final String blankChatLine = "                                 ";
 
     public View() {
@@ -573,7 +557,7 @@ public class View {
 
 
     public String boardRow (int row){
-        String returnString = "";
+        String returnString = String.valueOf(row) +" ";
         for(int i=0; i<9; i++){
             returnString = returnString + board[row][i];
         }
@@ -584,288 +568,128 @@ public class View {
         //serve a stampare
         updateEveryLine();
         printEveryLine();
-        printEveryLineV2();
     }
 
-    private void printEveryLineV2() {
-        out.printf("VERSIONE 2\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n", firstLine,  blankLine, Line4, Line6, Line8, Line10, Line12, Line14, Line16, Line18, Line21, Line23, Line24, Line25, Line26, Line27, Line28, Line29, Line30, Line31, Line32, Line33, Line34, Line35, Line36, Line37, Line38, Line39, Line40, Line41, Line42, Line43, Line44, Line45, Line46, Line47, Line48, Line49, Line50, Line51, Line52, Line53, blankLine, lastLine);
+    private void printEveryLine() {
+        out.printf("%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n", Line1, Line2, Line3, Line4, Line5, Line6, Line7, Line8, Line9, Line10, Line11, Line12, Line13, Line14, Line15, Line16, Line17, Line18, Line19, Line20, Line21, Line22, Line23, Line24, Line25, Line26, Line27, Line28, Line29, Line30, Line31, Line32, Line33);
     }
 
     private void updateEveryLine() {
         //setPaddedNames();
+        //Line 1 is the upper, Line 2 is blank
+        Line1 = firstLine;
+        Line2 = blankLine;
         setNamesLine();
-        Line4 = namesLine;
-        Line5 = blankLine;
-        Line6 = setLine6();
-        Line7 = blankLine;
-        Line8 = setShelfiesEvenLine(5);
-        Line9 = setShelfiesUnevenLine(5);
-        Line10 = setShelfiesEvenLine(4);
-        Line11 = setShelfiesUnevenLine(4);
-        Line12 = setShelfiesEvenLine(3);
-        Line13 = setShelfiesUnevenLine(3);
-        Line14 = setShelfiesEvenLine(2);
-        Line15 = setShelfiesUnevenLine(2);
-        Line16 = setShelfiesEvenLine(1);
-        Line17 = setShelfiesUnevenLine(1);
-        Line18 = setShelfiesEvenLine(0);
-        Line19 = setShelfiesUnevenLine(0);
-        Line20 = blankLine;
+        Line3 = namesLine;
+        Line4 = setLine4();
+        Line5 = setShelfiesEvenLine(5);
+        Line6 = setShelfiesEvenLine(4);
+        Line7 = setShelfiesEvenLine(3);
+        Line8 = setShelfiesEvenLine(2);
+        Line9 = setShelfiesEvenLine(1);
+        Line10 = setShelfiesEvenLine(0);
         setPointsLine();
-        Line21 = pointsLine;
-        Line22 = blankLine;
-        //Lines 23 and 24 are always the same
-        Line25 = setLine25();
-        Line26 = setLine26();
-        Line27 = setLine27();
-        Line28 = setLine28();
-        Line29 = setLine29();
-        Line30 = setLine30();
-        Line31 = setLine31_32();
-        Line32 = setLine31_32();
-        Line33 = setLine33();
-        Line34 = setLine34();
-        Line35 = setLine35();
-        Line36 = setLine36();
-        Line37 = setLine37();
-        Line38 = setLine38();
-        Line39 = setLine39();
-        Line40 = setLine40();
-        Line41 = setLine41();
-        Line42 = setLine42();
-        Line43 = setLine43();
-        Line44 = setLine44();
-        Line45 = setLine45();
-        Line46 = setLine46();
-        Line47 = setLine47();
-        Line48 = setLine48();
-        Line49 = setLine49();
-        Line50 = setLine50();
-        Line51 = setLine51();
-        Line52 = setLine52();
-        Line53 = setLine53();
+        Line11 = pointsLine;
+        Line12 = blankLine;
+        //Lines 13 is always the same, actually final
+
+        Line14 = setLine14();
+        Line15 = setLine15();
+        Line16 = setLine16();
+        Line17 = setLine17();
+        Line18 = setLine18();
+        Line19 = setLine19();
+        Line20 = blankLine;
+
+
+        Line21 = setLine21();
+        Line22 = setLine22();
+
+        Line23 = setLineBoardChat(0);
+        Line24 = setLineBoardChat(1);
+        Line25 = setLineBoardChat(2);
+        Line26 = setLineBoardChat(3);
+        Line27 = setLineBoardChat(4);
+        Line28 = setLineBoardChat(5);
+        Line29 = setLineBoardChat(6);
+        Line30 = setLineBoardChat(7);
+        Line31 = setLineBoardChat(8);
+
+        //Lines 32 is always the same, actually final
+
+        Line33 = lastLine;
     }
 
-    private String setLine39() {
-        String returnString = null;
-        returnString =  border + "     " + boardRow(1) + "\u001B[0m    "+chatBorder + chatMessages.get(0) + chatBorder +  "\u001B[0m  " + border;
-        return returnString;
-    }
-    private String setLine40() {
-        String returnString = null;
-        returnString =  border + "   2 " + boardRow(2) + "\u001B[0m    "+chatBorder + chatMessages.get(1) + chatBorder +  "\u001B[0m  " + border;
-        return returnString;
-    }
 
-    private String setLine41() {
+    private String setLineBoardChat(int line) {
         String returnString = null;
-        returnString =  border + "     " + boardRow(2) + "\u001B[0m    "+chatBorder + chatMessages.get(2) + chatBorder +  "\u001B[0m  " + border;
-        return returnString;
-    }
-
-    private String setLine42() {
-        String returnString = null;
-        returnString =  border + "   3 " + boardRow(3) + "\u001B[0m    "+chatBorder + chatMessages.get(3) + chatBorder +  "\u001B[0m  " + border;
-        return returnString;
-    }
-
-    private String setLine43() {
-        String returnString = null;
-        returnString =  border + "     " + boardRow(3) + "\u001B[0m    "+chatBorder + chatMessages.get(4) + chatBorder +  "\u001B[0m  " + border;
-        return returnString;
-    }
-
-    private String setLine44() {
-        String returnString = null;
-        returnString =  border + "   4 " + boardRow(4) + "\u001B[0m    "+chatBorder + chatMessages.get(5) + chatBorder +  "\u001B[0m  " + border;
-        return returnString;
-    }
-
-    private String setLine45() {
-        String returnString = null;
-        returnString =  border + "     " + boardRow(4) + "\u001B[0m    "+chatBorder + chatMessages.get(6) + chatBorder +  "\u001B[0m  " + border;
-        return returnString;
-    }
-    private String setLine46() {
-        String returnString = null;
-        returnString =  border + "   5 " + boardRow(5) + "\u001B[0m    "+chatBorder + chatMessages.get(7) + chatBorder +  "\u001B[0m  " + border;
-        return returnString;
-    }
-
-    private String setLine47() {
-        String returnString = null;
-        returnString =  border + "     " + boardRow(5) + "\u001B[0m    "+chatBorder + chatMessages.get(8) + chatBorder +  "\u001B[0m  " + border;
-        return returnString;
-    }
-    private String setLine48() {
-        String returnString = null;
-        returnString =  border + "   6 " + boardRow(6) + "\u001B[0m    "+chatBorder + chatMessages.get(9) + chatBorder +  "\u001B[0m  " + border;
-        return returnString;
-    }
-
-    private String setLine49() {
-        String returnString = null;
-        returnString =  border + "     " + boardRow(6) + "\u001B[0m    "+chatBorder + chatMessages.get(10) + chatBorder +  "\u001B[0m  " + border;
+        returnString =  border + "   " + boardRow(line) + "\u001B[0m    " + chatBorder + chatMessages.get(line) + chatBorder +  "\u001B[0m  " + border;
         return returnString;
     }
 
 
-    private String setLine50() {
+    private String setLine21() {
         String returnString = null;
-        returnString =  border + "   7 " + boardRow(7) + "\u001B[0m    "+chatBorder + chatMessages.get(11) + chatBorder +  "\u001B[0m  " + border;
+        returnString =  border + "   LivingRoom:             Chat:                                " + border;
         return returnString;
     }
 
-    private String setLine51() {
+    private String setLine22() {
         String returnString = null;
-        returnString =  border + "     " + boardRow(7) + "\u001B[0m    "+chatBorder + chatMessages.get(12) + chatBorder +  "\u001B[0m  " + border;
+        returnString =  border + "      0 1 2 3 4 5 6 7 8    ┌─────────────────────────────────┐  " + border;
         return returnString;
     }
 
-
-    private String setLine52() {
-        String returnString = null;
-        returnString =  border + "   8 " + boardRow(8) + "\u001B[0m    "+chatBorder + chatMessages.get(13) + chatBorder +  "\u001B[0m  " + border;
-        return returnString;
-    }
-
-    private String setLine53() {
-        String returnString = null;
-        returnString =  border + "     " + boardRow(8) + "\u001B[0m    "+"└─────────────────────────────────┘"+  "\u001B[0m  " + border;
-        return returnString;
-    }
-
-
-    private String setLine38() {
-        String returnString = null;
-        returnString =  border + "   1 " + boardRow(1) + "\u001B[0m    ┌─────────────────────────────────┐" +  "\u001B[0m  " + border;
-        return returnString;
-    }
-
-    private String setLine37() {
-        String returnString = null;
-        returnString =  border + "     " + boardRow(0) + "\u001B[0m                                      " +  "\u001B[0m   " + border;
-        return returnString;
-    }
-
-    private String setLine36() {
-        String returnString = null;
-        returnString =  border + "   0 " + boardRow(0) + "\u001B[0m    Chat:                    " + sColorPicker(playersPersonalCard, 0, 0)
-                + sColorPicker(playersPersonalCard, 0, 1)+ sColorPicker(playersPersonalCard, 0, 2)+ sColorPicker(playersPersonalCard, 0, 3)
-                + sColorPicker(playersPersonalCard, 0, 4) + "\u001B[0m  " + border;
-        return returnString;
-    }
-
-    private String setLine35() {
-        String returnString = null;
-        returnString =  border + "                                                    " + sColorPicker(playersPersonalCard, 0, 0)
-                + sColorPicker(playersPersonalCard, 0, 1)+ sColorPicker(playersPersonalCard, 0, 2)+ sColorPicker(playersPersonalCard, 0, 3)
-                + sColorPicker(playersPersonalCard, 0, 4) + "\u001B[0m  " + border;
-        return returnString;
-    }
-
-
-    private String setLine33() {
-        String returnString = null;
-        returnString =  border + "   LivingRoom:                                      " + sColorPicker(playersPersonalCard, 1, 0)
-                + sColorPicker(playersPersonalCard, 1, 1)+ sColorPicker(playersPersonalCard, 1, 2)+ sColorPicker(playersPersonalCard, 1, 3)
-                + sColorPicker(playersPersonalCard, 1, 4) + "\u001B[0m  " + border;
-        return returnString;
-    }
-
-    private String setLine34() {
-        String returnString = null;
-        returnString =  border + "      0 1 2 3 4 5 6 7 8                             " + sColorPicker(playersPersonalCard, 1, 0)
-                + sColorPicker(playersPersonalCard, 1, 1)+ sColorPicker(playersPersonalCard, 1, 2)+ sColorPicker(playersPersonalCard, 1, 3)
-                + sColorPicker(playersPersonalCard, 1, 4) + "\u001B[0m  " + border;
-        return returnString;
-    }
-
-    private String setLine25() {
+    private String setLine14() {
         String returnString = null;
         returnString =  border + "   "+ common1 +"  " + sColorPicker(playersPersonalCard, 5, 0)
                 + sColorPicker(playersPersonalCard, 5, 1)+ sColorPicker(playersPersonalCard, 5, 2)+ sColorPicker(playersPersonalCard, 5, 3)
                 + sColorPicker(playersPersonalCard, 5, 4) + "\u001B[0m  " + border;
         return returnString;
     }
-    private String setLine26() {
+    private String setLine15() {
         String returnString = null;
-        returnString =  border + "   "+ common1SecondPart +"  " + sColorPicker(playersPersonalCard, 5, 0)
-                + sColorPicker(playersPersonalCard, 5, 1)+ sColorPicker(playersPersonalCard, 5, 2)+ sColorPicker(playersPersonalCard, 5, 3)
-                + sColorPicker(playersPersonalCard, 5, 4) + "\u001B[0m  " + border;
-        return returnString;
-    }
-
-    private String setLine27() {
-        String returnString = null;
-        returnString =  border + "                                                    "+ sColorPicker(playersPersonalCard, 4, 0)
-                + sColorPicker(playersPersonalCard, 4, 1)+ sColorPicker(playersPersonalCard, 4, 2)+ sColorPicker(playersPersonalCard, 4, 3)
-                + sColorPicker(playersPersonalCard, 4, 4) + "\u001B[0m  " + border;
-        return returnString;
-    }
-    private String setLine28() {
-        String returnString = null;
-        returnString =  border + "   Common Goal:                                     "+ sColorPicker(playersPersonalCard, 4, 0)
+        returnString =  border + "   "+ common1SecondPart +"  " + sColorPicker(playersPersonalCard, 4, 0)
                 + sColorPicker(playersPersonalCard, 4, 1)+ sColorPicker(playersPersonalCard, 4, 2)+ sColorPicker(playersPersonalCard, 4, 3)
                 + sColorPicker(playersPersonalCard, 4, 4) + "\u001B[0m  " + border;
         return returnString;
     }
 
-    private String setLine29() {
+    private String setLine16() {
         String returnString = null;
-        returnString =  border + "   "+ common2 +"  " + sColorPicker(playersPersonalCard, 3, 0)
+        returnString =  border + "                                                    "+ sColorPicker(playersPersonalCard, 3, 0)
                 + sColorPicker(playersPersonalCard, 3, 1)+ sColorPicker(playersPersonalCard, 3, 2)+ sColorPicker(playersPersonalCard, 3, 3)
                 + sColorPicker(playersPersonalCard, 3, 4) + "\u001B[0m  " + border;
         return returnString;
     }
-    private String setLine30() {
+    private String setLine17() {
         String returnString = null;
-        returnString =  border + "   "+ common2SecondPart +"  " + sColorPicker(playersPersonalCard, 3, 0)
-                + sColorPicker(playersPersonalCard, 3, 1)+ sColorPicker(playersPersonalCard, 3, 2)+ sColorPicker(playersPersonalCard, 3, 3)
-                + sColorPicker(playersPersonalCard, 3, 4) + "\u001B[0m  " + border;
-        return returnString;
-    }
-
-    private String setLine31_32() {
-        String returnString = null;
-        returnString =  border + "                                                    "+ sColorPicker(playersPersonalCard, 2, 0)
+        returnString =  border + "   Common Goal:                                     "+ sColorPicker(playersPersonalCard, 2, 0)
                 + sColorPicker(playersPersonalCard, 2, 1)+ sColorPicker(playersPersonalCard, 2, 2)+ sColorPicker(playersPersonalCard, 2, 3)
                 + sColorPicker(playersPersonalCard, 2, 4) + "\u001B[0m  " + border;
         return returnString;
     }
 
-
-    private String setShelfiesUnevenLine(int row) {//dispari; senza numero riga
-        String returnString=null;
-        Tile[][] s1 = playersShelfies.get(order.get(0));
-        Tile[][] s2 = playersShelfies.get(order.get(1));
-        switch (numPlayers){
-            case 2:
-                returnString = border + "     " +sColorPicker(s1,row,0)+sColorPicker(s1,row,1)+sColorPicker(s1,row,2)+sColorPicker(s1,row,3)+sColorPicker(s1,row,4) + "\u001B[0m   " +
-                        "  " +sColorPicker(s2,row,0)+sColorPicker(s2,row,1)+sColorPicker(s2,row,2)+sColorPicker(s2,row,3)+sColorPicker(s2,row,4) + "\u001B[0m   " +
-                        "            " + "            " + " " + border
-                ;break;
-            case 3:
-                Tile[][] s3 = playersShelfies.get(order.get(2));
-
-                returnString = border + "     " +sColorPicker(s1,row,0)+sColorPicker(s1,row,1)+sColorPicker(s1,row,2)+sColorPicker(s1,row,3)+sColorPicker(s1,row,4) + "\u001B[0m   " +
-                        "  " +sColorPicker(s2,row,0)+sColorPicker(s2,row,1)+sColorPicker(s2,row,2)+sColorPicker(s2,row,3)+sColorPicker(s2,row,4) + "\u001B[0m   " +
-                        "  " +sColorPicker(s3,row,0)+sColorPicker(s3,row,1)+sColorPicker(s3,row,2)+sColorPicker(s3,row,3)+sColorPicker(s3,row,4) + "\u001B[0m   " +
-                        "            " + " " + border
-                ;break;
-            case 4:
-                Tile[][] ss3 = playersShelfies.get(order.get(2));
-                Tile[][] s4 = playersShelfies.get(order.get(3));
-
-                returnString = border + "     " +sColorPicker(s1,row,0)+sColorPicker(s1,row,1)+sColorPicker(s1,row,2)+sColorPicker(s1,row,3)+sColorPicker(s1,row,4) + "\u001B[0m   " +
-                        "  " +sColorPicker(s2,row,0)+sColorPicker(s2,row,1)+sColorPicker(s2,row,2)+sColorPicker(s2,row,3)+sColorPicker(s2,row,4) + "\u001B[0m   " +
-                        "  " +sColorPicker(ss3,row,0)+sColorPicker(ss3,row,1)+sColorPicker(ss3,row,2)+sColorPicker(ss3,row,3)+sColorPicker(ss3,row,4) + "\u001B[0m   " +
-                        "  " +sColorPicker(s4,row,0)+sColorPicker(s4,row,1)+sColorPicker(s4,row,2)+sColorPicker(s4,row,3)+sColorPicker(s4,row,4) + "\u001B[0m   " +
-                        " " + border
-                ;break;
-        }
+    private String setLine18() {
+        String returnString = null;
+        returnString =  border + "   "+ common2 +"  " + sColorPicker(playersPersonalCard, 1, 0)
+                + sColorPicker(playersPersonalCard, 1, 1)+ sColorPicker(playersPersonalCard, 1, 2)+ sColorPicker(playersPersonalCard, 1, 3)
+                + sColorPicker(playersPersonalCard, 1, 4) + "\u001B[0m  " + border;
         return returnString;
     }
+    private String setLine19() {
+        String returnString = null;
+        returnString =  border + "   "+ common2SecondPart +"  " + sColorPicker(playersPersonalCard, 0, 0)
+                + sColorPicker(playersPersonalCard, 0, 1)+ sColorPicker(playersPersonalCard, 0, 2)+ sColorPicker(playersPersonalCard, 0, 3)
+                + sColorPicker(playersPersonalCard, 0, 4) + "\u001B[0m  " + border;
+        return returnString;
+    }
+
+
+
+
+
+
 
 
     private String setShelfiesEvenLine(int row) {//pari, con numero riga
@@ -905,7 +729,7 @@ public class View {
         return colorPicker(shelf[row][col].getColor());
     }
 
-    private String setLine6() {
+    private String setLine4() {
         String returnString = null;
         switch (numPlayers){
             case 2: returnString = border + "   " +
@@ -924,9 +748,6 @@ public class View {
         return returnString;
     }
 
-    private void printEveryLine() {
-        out.printf("%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n", firstLine,  blankLine, Line4, Line5, Line6, Line7, Line8, Line9, Line10, Line11, Line12, Line13, Line14, Line15, Line16, Line17, Line18, Line19, Line20, Line21, Line22, Line23, Line24, Line25, Line26, Line27, Line28, Line29, Line30, Line31, Line32, Line33, Line34, Line35, Line36, Line37, Line38, Line39, Line40, Line41, Line42, Line43, Line44, Line45, Line46, Line47, Line48, Line49, Line50, Line51, Line52, Line53, blankLine, lastLine);
-    }
 
 
     public void setChat(){

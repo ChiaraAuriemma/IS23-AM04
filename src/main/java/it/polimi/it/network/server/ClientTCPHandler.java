@@ -19,7 +19,8 @@ import java.net.Socket;
 import java.rmi.RemoteException;
 import java.util.Timer;
 
-public class ClientTCPHandler implements Runnable{
+public class ClientTCPHandler implements Runnable,Serializable{
+    private static final long serialVersionUID = -3839996564824280040L;
     private Socket socket;
     private ServerTCP serverTCP;
     private GameController gameController;

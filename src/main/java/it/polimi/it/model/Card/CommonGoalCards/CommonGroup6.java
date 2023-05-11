@@ -7,8 +7,9 @@ import com.google.gson.stream.JsonReader;
 import it.polimi.it.model.Shelfie;
 
 import java.io.FileReader;
+import java.io.Serializable;
 
-public class CommonGroup6 extends CommonGoalCard{
+public class CommonGroup6 extends CommonGoalCard  implements Serializable {
 
     private static final long serialVersionUID = -4150054123609637705L;
 

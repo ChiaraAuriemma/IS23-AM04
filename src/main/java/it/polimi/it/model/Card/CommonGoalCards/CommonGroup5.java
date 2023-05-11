@@ -2,10 +2,11 @@ package it.polimi.it.model.Card.CommonGoalCards;
 
 import it.polimi.it.model.Shelfie;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CommonGroup5 extends CommonGoalCard{
+public class CommonGroup5 extends CommonGoalCard  implements Serializable {
 
     private static final long serialVersionUID = -7822537206787354297L;
     private List<Integer> numColor;

@@ -9,13 +9,14 @@ import it.polimi.it.model.User;
 import it.polimi.it.view.View;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.rmi.NotBoundException;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 
-public interface ClientInterface extends Remote {
+public interface ClientInterface extends Remote, Serializable {
     //qui devo mettere solo i metodi visibili dal server (quindi tolgo startclient e login)
     public void startClient() throws IOException, NotBoundException;
     public void login(String userName) throws RemoteException;

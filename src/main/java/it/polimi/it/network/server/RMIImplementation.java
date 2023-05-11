@@ -8,7 +8,7 @@ import it.polimi.it.model.Tiles.Tile;
 import it.polimi.it.model.User;
 import it.polimi.it.network.client.ClientInterface;
 
-import java.rmi.AlreadyBoundException;
+import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -16,8 +16,9 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.HashMap;
 import java.util.List;
 
-public class RMIImplementation extends UnicastRemoteObject implements ServerInterface {
+public class RMIImplementation extends UnicastRemoteObject implements ServerInterface, Serializable {
 
+    private static final long serialVersionUID = -2905395065429128985L;
     private Lobby lobby;
     private HashMap<User,GameController> userGame;
     private int port;

@@ -1,8 +1,9 @@
 package it.polimi.it.network.message;
 
+import java.io.Serializable;
 import java.util.Optional;
 
-public enum MessageType {
+public enum MessageType  implements Serializable {
     CONNECTIONMESSAGE("CONNECTIONMESSAGE"),
     CREATEGAME("CREATEGAME"),
     CREATEPLAYER("CREATEPLAYER"),

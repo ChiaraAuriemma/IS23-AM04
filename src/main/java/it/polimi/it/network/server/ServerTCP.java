@@ -6,14 +6,15 @@ import it.polimi.it.network.server.ClientTCPHandler;
 import it.polimi.it.network.server.Exceptions.NotTcpUserException;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashMap;
-import java.util.Optional;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class ServerTCP implements Runnable{
+public class ServerTCP implements Runnable, Serializable {
+    private static final long serialVersionUID = 2221472440957074825L;
     private  int port;
     private ServerSocket serverSocket ;
     private HashMap<User, Socket> userTCP;

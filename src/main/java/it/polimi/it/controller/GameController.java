@@ -6,14 +6,15 @@ import it.polimi.it.model.Tiles.PossibleColors;
 import it.polimi.it.model.Tiles.Tile;
 import it.polimi.it.model.User;
 
+import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 
-public class GameController {
+public class GameController implements Serializable {
 
+    private static final long serialVersionUID = 9016415749066492223L;
     /**
      * Is the total number of players in the game
      */

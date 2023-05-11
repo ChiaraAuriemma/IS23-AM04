@@ -7,10 +7,11 @@ import com.google.gson.stream.JsonReader;
 import it.polimi.it.model.Shelfie;
 
 import java.io.FileReader;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CommonGroup2 extends CommonGoalCard{
+public class CommonGroup2 extends CommonGoalCard implements Serializable {
 
     private static final long serialVersionUID = -1456905443935696667L;
 

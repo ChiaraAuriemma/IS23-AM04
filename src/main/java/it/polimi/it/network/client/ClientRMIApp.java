@@ -4,12 +4,12 @@ import it.polimi.it.Exceptions.*;
 import it.polimi.it.model.Card.CommonGoalCards.CommonGoalCard;
 import it.polimi.it.model.Card.PersonalGoalCards.PersonalGoalCard;
 import it.polimi.it.model.Game;
-import it.polimi.it.model.Shelfie;
 import it.polimi.it.model.Tiles.Tile;
 import it.polimi.it.model.User;
-import it.polimi.it.network.server.RMIImplementation;
 import it.polimi.it.network.server.ServerInterface;
 import it.polimi.it.view.View;
+
+import java.io.Serializable;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -19,7 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface {
+public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface, Serializable {
+    private static final long serialVersionUID = 5072588874360370885L;
     private int port;
     private String ip;
     private Registry registry;
@@ -119,7 +120,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
      * @param gameID .
      * @throws RemoteException .
      */
-    public void joinGame(int gameID) throws RemoteException {
+    public void joinGame(int gameID) throws RemoteException{
         try{
             sr.joinGame(user,gameID);
             buffer.setStage(TurnStages.NOTHING);

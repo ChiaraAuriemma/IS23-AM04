@@ -3,10 +3,12 @@ package it.polimi.it.network.message.responses;
 import it.polimi.it.model.User;
 import it.polimi.it.network.message.Payload;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class PointsUpdateMessage extends Payload {
+public class PointsUpdateMessage extends Payload  implements Serializable {
 
+    private static final long serialVersionUID = -8843338650621711142L;
     private User user;
     private Integer point;
     private List<Integer> commonToken1;

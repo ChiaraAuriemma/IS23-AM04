@@ -13,17 +13,16 @@ import it.polimi.it.network.message.request.*;
 import it.polimi.it.network.message.responses.*;
 import it.polimi.it.view.View;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ClientTCP implements ClientInterface {
+public class ClientTCP implements ClientInterface, Serializable {
 
+    private static final long serialVersionUID = -1334206444743011550L;
     private int port;
     private String ip;
     private View view;

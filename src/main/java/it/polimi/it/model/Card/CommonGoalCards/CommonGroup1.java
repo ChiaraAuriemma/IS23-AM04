@@ -8,10 +8,11 @@ import it.polimi.it.model.Shelfie;
 import it.polimi.it.model.Tiles.Tile;
 
 import java.io.FileReader;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CommonGroup1 extends CommonGoalCard {
+public class CommonGroup1 extends CommonGoalCard  implements Serializable {
 
     private static final long serialVersionUID = 274381445832608000L;
     private List<Tile> pink;

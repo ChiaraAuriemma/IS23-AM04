@@ -1,11 +1,14 @@
 package it.polimi.it.network.client;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.Scanner;
 
-public class Client {
+public class Client implements Serializable {
+
+    private static final long serialVersionUID = 749383786771428581L;
 
     public static void main(String[] args) throws IOException, NotBoundException {
 
@@ -16,7 +19,6 @@ public class Client {
             System.out.println("Choose a connection type");
             inputLine = stdin.nextLine();
         }
-        stdin.close();
 
         ClientInputReader cliR = new ClientInputReader();
         Thread thread = new Thread(cliR);
