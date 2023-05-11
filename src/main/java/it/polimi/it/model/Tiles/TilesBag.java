@@ -1,11 +1,13 @@
 package it.polimi.it.model.Tiles;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Random;
 
-public class TilesBag {
+public class TilesBag implements Serializable{
 
 
+    private static final long serialVersionUID = -6550378525445784789L;
     /**
      * Hashmap used to store the number of the remaining tiles of each color
      */
