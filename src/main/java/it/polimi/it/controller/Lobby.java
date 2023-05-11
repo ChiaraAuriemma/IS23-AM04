@@ -3,6 +3,7 @@ package it.polimi.it.controller;
 import it.polimi.it.Exceptions.*;
 import it.polimi.it.model.Game;
 import it.polimi.it.model.User;
+import it.polimi.it.network.client.ClientInterface;
 import it.polimi.it.network.server.RMIImplementation;
 import it.polimi.it.network.server.ServerTCP;
 import it.polimi.it.network.server.VirtualView;
@@ -82,7 +83,7 @@ public class Lobby {
         return user;
     }
 
-    public GameController createGame(User user, int playerNumber) throws WrongPlayerException {
+    public GameController createGame(User user, int playerNumber, ClientInterface client) throws WrongPlayerException {
 
         if(playerNumber < 2 || playerNumber > 4){
             throw new WrongPlayerException("Wrong number of players"); //mandare messaggio a view
@@ -91,7 +92,7 @@ public class Lobby {
 
         //fai il controllo: l'user che crea il game deve esistere ed essere nella lista, vedi metodo sotto
         VirtualView virtualView = new VirtualView(serverTCP,serverRMI);
-        Game game = new Game(playerNumber, user, this.gameCounterID,virtualView);
+        Game game = new Game(playerNumber, user, this.gameCounterID,virtualView, client);
         user.setInGame(true);
         gameList.add(game);
         GameController gameContr = new GameController(game, this);

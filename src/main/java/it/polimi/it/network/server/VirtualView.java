@@ -6,6 +6,7 @@ import it.polimi.it.model.Game;
 import it.polimi.it.model.Tiles.Tile;
 import it.polimi.it.model.User;
 import it.polimi.it.network.client.ClientInterface;
+import it.polimi.it.network.client.ClientRMIApp;
 import it.polimi.it.network.message.Message;
 import it.polimi.it.network.message.MessageType;
 import it.polimi.it.network.message.others.ThisNotTheDay;
@@ -33,6 +34,8 @@ public class VirtualView {
     private RMIImplementation serverRMI;
     private HashMap<User, ClientInterface> userRMI;
 
+    private ClientInterface client;
+
     public VirtualView( ServerTCP serverTCP ,RMIImplementation serverRMI){
         typeOfConnection = new HashMap<>();
         userTCP = new HashMap<>();
@@ -48,7 +51,7 @@ public class VirtualView {
 
 
     //
-    public void setUser(User user){
+    public void setUser(User user, ClientInterface client){
         try {
             Socket socket = serverTCP.getUserTCP(user);
             typeOfConnection.put(user, "TCP");
@@ -58,7 +61,7 @@ public class VirtualView {
             throw new RuntimeException(e); /// gestiscoooooooooooooooooooooo
             }
         } catch (NotTcpUserException e) {
-            userRMI.put(user, serverRMI.getUserRMI(user));
+            userRMI.put(user, client);
             typeOfConnection.put(user, "RMI");
         }
     }
@@ -74,11 +77,15 @@ public class VirtualView {
                 Message message = new Message(MessageType.STARTORDERPLAYER, startOrderMessage);
                 sendTCPMessage(userTCP.get(user), message);
 
-            }else if(typeOfConnection.get(game.getPlayer(i)).equals("RMI")){
+            }else if(typeOfConnection.get(user).equals("RMI")){
 
                 //////////////////////
-                ClientInterface clientRMI = userRMI.get(user);
-                clientRMI.setStartOrder(order);
+
+              // this.client = userRMI.get(user);
+              // this.client.setStartOrder(order);
+
+               ClientInterface clientRMI = userRMI.get(user);
+               clientRMI.setStartOrder(order);
             }
 
         }
@@ -98,8 +105,8 @@ public class VirtualView {
             } else if (typeOfConnection.get(game.getPlayer(i)).equals("RMI")) {
                 //sviluppo in RMI
 
-                ClientInterface clientRMI = userRMI.get(user);
-                clientRMI.setNewBoard(matrix);
+                this.client = userRMI.get(user);
+                this.client.setNewBoard(matrix);
             }
         }
     }
@@ -117,8 +124,8 @@ public class VirtualView {
             } else if (typeOfConnection.get(user).equals("RMI")) {
                 //sviluppo in RMI
 
-                ClientInterface clientRMI = userRMI.get(user);
-                clientRMI.setNewCommon(card1, card2);
+               this.client = userRMI.get(user);
+               this.client.setNewCommon(card1, card2);
             }
         }
     }
@@ -134,8 +141,8 @@ public class VirtualView {
         } else if (typeOfConnection.get(user).equals("RMI")) {
             //sviluppo in RMI
 
-            ClientInterface clientRMI = userRMI.get(user);
-            clientRMI.setNewPersonal(card);
+            this.client = userRMI.get(user);
+            this.client.setNewPersonal(card);
         }
     }
 
@@ -154,8 +161,8 @@ public class VirtualView {
 
         } else if (typeOfConnection.get(user).equals("RMI")) {
             //sviluppo in RMI
-            ClientInterface clientRMI = userRMI.get(user);
-            clientRMI.notifyTurnStart(maxValueofTiles);
+            this.client = userRMI.get(user);
+            this.client.notifyTurnStart(maxValueofTiles);
         }
 
         //starto il turno mandando il massimo numero di tile da server a client
@@ -175,8 +182,8 @@ public class VirtualView {
 
 
         }else if(typeOfConnection.get(user).equals("RMI")){
-            ClientInterface clientRMI = userRMI.get(user);
-            clientRMI.takeableTiles(choosableTilesList, num);
+            this.client = userRMI.get(user);
+            this.client.takeableTiles(choosableTilesList, num);
         }
     }
 
@@ -196,8 +203,8 @@ public class VirtualView {
         }else if(typeOfConnection.get(user).equals("RMI")){
             //sviluppo in RMI
 
-            ClientInterface clientRMI = userRMI.get(user);
-            clientRMI.askColumn(choosableColumns);
+            this.client = userRMI.get(user);
+            this.client.askColumn(choosableColumns);
 
         }
     }
@@ -216,8 +223,8 @@ public class VirtualView {
             } else if (typeOfConnection.get(receiver).equals("RMI")) {
                 //sviluppo in RMI
 
-                ClientInterface clientRMI = userRMI.get(user);
-                clientRMI.setNewShelfie(receiver,receiver.getShelfie().getShelf());
+                this.client= userRMI.get(user);
+                this.client.setNewShelfie(receiver,receiver.getShelfie().getShelf());
             }
         }
     }
@@ -234,9 +241,8 @@ public class VirtualView {
 
             } else if (typeOfConnection.get(receiver).equals("RMI")) {
                 //sviluppo in RMI
-
-                ClientInterface clientRMI = userRMI.get(receiver);
-                clientRMI.setNewBoard(matrix);
+                this.client = userRMI.get(receiver);
+                this.client.setNewBoard(matrix);
             }
         }
     }
@@ -254,8 +260,8 @@ public class VirtualView {
             } else if (typeOfConnection.get(receiver).equals("RMI")) {
                 //sviluppo in RMI
 
-                ClientInterface clientRMI = userRMI.get(user);
-                clientRMI.setNewPoints(user,points);
+                this.client = userRMI.get(user);
+                this.client.setNewPoints(user,points);
             }
         }
     }
@@ -273,8 +279,8 @@ public class VirtualView {
             } else if (typeOfConnection.get(receiver).equals("RMI")) {
                 //sviluppo in RMI
 
-                ClientInterface clientRMI = userRMI.get(user);
-                clientRMI.setEndToken(user);
+                this.client = userRMI.get(user);
+                client.setEndToken(user);
             }
         }
     }

@@ -257,7 +257,7 @@ public class ClientTCP implements ClientInterface {
     }
     @Override
         public void createGame(int playerNumber){
-        CreateGameRequest createGameRequest = new CreateGameRequest(user,playerNumber);
+        CreateGameRequest createGameRequest = new CreateGameRequest(user,playerNumber, this);
         Message request = new Message(MessageType.CREATEGAME, createGameRequest);
         try {
             out.writeObject(request);

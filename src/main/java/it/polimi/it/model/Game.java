@@ -6,13 +6,16 @@ import it.polimi.it.model.Board.B4P;
 import it.polimi.it.model.Board.Board;
 import it.polimi.it.model.Card.CommonGoalCards.*;
 import it.polimi.it.model.Card.PersonalGoalCards.*;
+import it.polimi.it.network.client.ClientInterface;
+import it.polimi.it.network.server.ServerInterface;
 import it.polimi.it.network.server.VirtualView;
 
 
+import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.util.*;
 
-public class Game {
+public class Game implements Serializable {
 
     private List<User> players;
     private  Integer numplayers;
@@ -33,22 +36,25 @@ public class Game {
     private List<Integer> commonToken2;
     private  Integer endToken;
 
+    ClientInterface client;
+
 
     private VirtualView virtualView;
 
 
-    public Game(Integer numplayers, User host, int gameID, VirtualView virtualView){
+    public Game(Integer numplayers, User host, int gameID, VirtualView virtualView, ClientInterface client){
 
         this.endToken = -1;
         this.numplayers = numplayers;
         this.gameID = gameID;
         this.virtualView = virtualView;
         this.virtualView.setGame(this);
+        this.client = client;
 
         host.setGame(this);
         this.players = new ArrayList<>(numplayers);
         this.players.add(host); // controllo se è empty ???
-        this.virtualView.setUser(host);
+        this.virtualView.setUser(host, this.client);
         //start all the player points to zero
         this.points = new ArrayList<>(Collections.nCopies(numplayers, 0));
         //start all the players score from personal cards to zero
@@ -176,7 +182,7 @@ public class Game {
 
         joiner.setGame(this);
         this.players.add(joiner);
-        this.virtualView.setUser(joiner);
+        this.virtualView.setUser(joiner, this.client);
     }
 
     public void drawPersonalCard () throws RemoteException {

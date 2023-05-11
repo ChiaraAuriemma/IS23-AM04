@@ -58,10 +58,10 @@ public class RMIImplementation extends UnicastRemoteObject implements ServerInte
         return user;
     }
 
-    public int createGame(User user,int playerNumber) throws RemoteException, WrongPlayerException {
+    public int createGame(User user,int playerNumber, ClientInterface client) throws RemoteException, WrongPlayerException {
         GameController gc;
         synchronized (lobby){
-            gc = lobby.createGame(user,playerNumber);
+            gc = lobby.createGame(user,playerNumber, client);
         }
         userGame.put(user,gc);
         return gc.getGameID();

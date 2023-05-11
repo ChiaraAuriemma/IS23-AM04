@@ -104,7 +104,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
     @Override
     public void createGame(int playerNumber) throws RemoteException {
         try{
-           int a = sr.createGame(user,playerNumber);
+           int a = sr.createGame(user,playerNumber, this);
             buffer.setStage(TurnStages.NOTHING);
             view.setGameID(a);
         } catch (WrongPlayerException e) {

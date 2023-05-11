@@ -13,7 +13,7 @@ public interface ServerInterface extends Remote {
 
     User login(ClientInterface cr, String username) throws RemoteException, ExistingNicknameException, EmptyNicknameException;
 
-    int createGame(User user, int playerNumber) throws RemoteException, WrongPlayerException;
+    int createGame(User user, int playerNumber, ClientInterface client) throws RemoteException, WrongPlayerException;
 
     void joinGame(User user,int id) throws RemoteException, InvalidIDException, WrongPlayerException, IllegalValueException;
 

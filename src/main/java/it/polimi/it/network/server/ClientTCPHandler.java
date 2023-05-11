@@ -103,7 +103,7 @@ public class ClientTCPHandler implements Runnable{
                     CreateGameRequest createGameRequest = (CreateGameRequest) request.getPayload();
                     synchronized (lobby){
                         try {
-                            this.gameController = lobby.createGame(createGameRequest.getUser(), createGameRequest.getPlayerNumber());
+                            this.gameController = lobby.createGame(createGameRequest.getUser(), createGameRequest.getPlayerNumber(),createGameRequest.getClient());
                             CreateGameResponse createGameResponse = new CreateGameResponse(gameController.getGameID());
                             response = new Message(MessageType.CREATEGAMERESPONSE, createGameResponse);
 
