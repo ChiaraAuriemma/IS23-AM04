@@ -44,14 +44,17 @@ public class TestCli {
         commonDeck.createCards(1,10);
         CommonGoalCard card1 = commonDeck.getCommonCard1();
         CommonGoalCard card2 = commonDeck.getCommonCard2();
-        PersonalGoalCard pgc = new PersonalGoalCard(4);
+        //PersonalGoalCard pgc = new PersonalGoalCard(4);
 
 
 
         testView.setGameID(12);
         testView.setCommon1View(card1);
         testView.setCommon2View(card2);
-        testView.setPlayersPersonalCardView(pgc);
+        //testView.setPlayersPersonalCardView(pgc);
+
+        testView.fakePersonal();
+
 
         ArrayList<User> order = new ArrayList<>();
         User u = new User("JackB");

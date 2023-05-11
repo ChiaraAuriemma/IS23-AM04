@@ -72,7 +72,7 @@ public class View {
     private String Line20;
     private String Line21;
     private String Line22;
-    private String Line23 = "║                                                   Personal     ║";
+    private String Line23 = "║                                                    Personal    ║";
     private String Line24 = "║   Common Goal:                                                 ║";
     private String Line25;
     private String Line26;
@@ -349,11 +349,11 @@ public class View {
     public void setPointsLine() {
         switch (numPlayers) {
             case 2:
-                pointsLine = border + "    " + "Points: " + playersPoints.get(order.get(0)) + "     " + "Points: " + playersPoints.get(order.get(1)) + "     " + "          " + "     " + "          " + "      " + border;
+                pointsLine = border + "    " + "Points: " + playersPoints.get(order.get(0)) + "     " + "Points: " + playersPoints.get(order.get(1)) + "     " + "          " + "     " + "          " + "     " + border;
             case 3:
-                pointsLine = border + "    " + "Points: " + playersPoints.get(order.get(0)) + "     " + "Points: " + playersPoints.get(order.get(1)) + "     " + "Points: " + playersPoints.get(order.get(2)) + "     " + "          " + "      " + border;
+                pointsLine = border + "    " + "Points: " + playersPoints.get(order.get(0)) + "     " + "Points: " + playersPoints.get(order.get(1)) + "     " + "Points: " + playersPoints.get(order.get(2)) + "     " + "          " + "     " + border;
             case 4:
-                pointsLine = border + "    " + "Points: " + playersPoints.get(order.get(0)) + "     " + "Points: " + playersPoints.get(order.get(1)) + "     " + "Points: " + playersPoints.get(order.get(2)) + "     " + "Points: " + playersPoints.get(order.get(3)) + "      " + border;
+                pointsLine = border + "    " + "Points: " + playersPoints.get(order.get(0)) + "     " + "Points: " + playersPoints.get(order.get(1)) + "     " + "Points: " + playersPoints.get(order.get(2)) + "     " + "Points: " + playersPoints.get(order.get(3)) + "     " + border;
         }
     }
 
@@ -584,6 +584,11 @@ public class View {
         //serve a stampare
         updateEveryLine();
         printEveryLine();
+        printEveryLineV2();
+    }
+
+    private void printEveryLineV2() {
+        out.printf("VERSIONE 2\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n", firstLine,  blankLine, Line4, Line6, Line8, Line10, Line12, Line14, Line16, Line18, Line21, Line23, Line24, Line25, Line26, Line27, Line28, Line29, Line30, Line31, Line32, Line33, Line34, Line35, Line36, Line37, Line38, Line39, Line40, Line41, Line42, Line43, Line44, Line45, Line46, Line47, Line48, Line49, Line50, Line51, Line52, Line53, blankLine, lastLine);
     }
 
     private void updateEveryLine() {
@@ -739,40 +744,40 @@ public class View {
 
     private String setLine37() {
         String returnString = null;
-        returnString =  border + "     " + boardRow(0) + "\u001B[0m                                         " +  "\u001B[0m   " + border;
+        returnString =  border + "     " + boardRow(0) + "\u001B[0m                                      " +  "\u001B[0m   " + border;
         return returnString;
     }
 
     private String setLine36() {
         String returnString = null;
-        returnString =  border + "   0 " + boardRow(0) + "\u001B[0m    Chat:                      " + sColorPicker(playersPersonalCard, 0, 0)
+        returnString =  border + "   0 " + boardRow(0) + "\u001B[0m    Chat:                    " + sColorPicker(playersPersonalCard, 0, 0)
                 + sColorPicker(playersPersonalCard, 0, 1)+ sColorPicker(playersPersonalCard, 0, 2)+ sColorPicker(playersPersonalCard, 0, 3)
-                + sColorPicker(playersPersonalCard, 0, 4) + "\u001B[0m   " + border;
+                + sColorPicker(playersPersonalCard, 0, 4) + "\u001B[0m  " + border;
         return returnString;
     }
 
     private String setLine35() {
         String returnString = null;
-        returnString =  border + "                                                     " + sColorPicker(playersPersonalCard, 0, 0)
+        returnString =  border + "                                                    " + sColorPicker(playersPersonalCard, 0, 0)
                 + sColorPicker(playersPersonalCard, 0, 1)+ sColorPicker(playersPersonalCard, 0, 2)+ sColorPicker(playersPersonalCard, 0, 3)
-                + sColorPicker(playersPersonalCard, 0, 4) + "\u001B[0m   " + border;
+                + sColorPicker(playersPersonalCard, 0, 4) + "\u001B[0m  " + border;
         return returnString;
     }
 
 
     private String setLine33() {
         String returnString = null;
-        returnString =  border + "   LivingRoom:                                       " + sColorPicker(playersPersonalCard, 1, 0)
+        returnString =  border + "   LivingRoom:                                      " + sColorPicker(playersPersonalCard, 1, 0)
                 + sColorPicker(playersPersonalCard, 1, 1)+ sColorPicker(playersPersonalCard, 1, 2)+ sColorPicker(playersPersonalCard, 1, 3)
-                + sColorPicker(playersPersonalCard, 1, 4) + "\u001B[0m   " + border;
+                + sColorPicker(playersPersonalCard, 1, 4) + "\u001B[0m  " + border;
         return returnString;
     }
 
     private String setLine34() {
         String returnString = null;
-        returnString =  border + "      0 1 2 3 4 5 6 7 8                              " + sColorPicker(playersPersonalCard, 1, 0)
+        returnString =  border + "      0 1 2 3 4 5 6 7 8                             " + sColorPicker(playersPersonalCard, 1, 0)
                 + sColorPicker(playersPersonalCard, 1, 1)+ sColorPicker(playersPersonalCard, 1, 2)+ sColorPicker(playersPersonalCard, 1, 3)
-                + sColorPicker(playersPersonalCard, 1, 4) + "\u001B[0m   " + border;
+                + sColorPicker(playersPersonalCard, 1, 4) + "\u001B[0m  " + border;
         return returnString;
     }
 
@@ -780,29 +785,29 @@ public class View {
         String returnString = null;
         returnString =  border + "   "+ common1 +"  " + sColorPicker(playersPersonalCard, 5, 0)
                 + sColorPicker(playersPersonalCard, 5, 1)+ sColorPicker(playersPersonalCard, 5, 2)+ sColorPicker(playersPersonalCard, 5, 3)
-                + sColorPicker(playersPersonalCard, 5, 4) + "\u001B[0m   " + border;
+                + sColorPicker(playersPersonalCard, 5, 4) + "\u001B[0m  " + border;
         return returnString;
     }
     private String setLine26() {
         String returnString = null;
         returnString =  border + "   "+ common1SecondPart +"  " + sColorPicker(playersPersonalCard, 5, 0)
                 + sColorPicker(playersPersonalCard, 5, 1)+ sColorPicker(playersPersonalCard, 5, 2)+ sColorPicker(playersPersonalCard, 5, 3)
-                + sColorPicker(playersPersonalCard, 5, 4) + "\u001B[0m   " + border;
+                + sColorPicker(playersPersonalCard, 5, 4) + "\u001B[0m  " + border;
         return returnString;
     }
 
     private String setLine27() {
         String returnString = null;
-        returnString =  border + "                                                     "+ sColorPicker(playersPersonalCard, 4, 0)
+        returnString =  border + "                                                    "+ sColorPicker(playersPersonalCard, 4, 0)
                 + sColorPicker(playersPersonalCard, 4, 1)+ sColorPicker(playersPersonalCard, 4, 2)+ sColorPicker(playersPersonalCard, 4, 3)
-                + sColorPicker(playersPersonalCard, 4, 4) + "\u001B[0m   " + border;
+                + sColorPicker(playersPersonalCard, 4, 4) + "\u001B[0m  " + border;
         return returnString;
     }
     private String setLine28() {
         String returnString = null;
-        returnString =  border + "   Common Goal:                                      "+ sColorPicker(playersPersonalCard, 4, 0)
+        returnString =  border + "   Common Goal:                                     "+ sColorPicker(playersPersonalCard, 4, 0)
                 + sColorPicker(playersPersonalCard, 4, 1)+ sColorPicker(playersPersonalCard, 4, 2)+ sColorPicker(playersPersonalCard, 4, 3)
-                + sColorPicker(playersPersonalCard, 4, 4) + "\u001B[0m   " + border;
+                + sColorPicker(playersPersonalCard, 4, 4) + "\u001B[0m  " + border;
         return returnString;
     }
 
@@ -810,22 +815,22 @@ public class View {
         String returnString = null;
         returnString =  border + "   "+ common2 +"  " + sColorPicker(playersPersonalCard, 3, 0)
                 + sColorPicker(playersPersonalCard, 3, 1)+ sColorPicker(playersPersonalCard, 3, 2)+ sColorPicker(playersPersonalCard, 3, 3)
-                + sColorPicker(playersPersonalCard, 3, 4) + "\u001B[0m   " + border;
+                + sColorPicker(playersPersonalCard, 3, 4) + "\u001B[0m  " + border;
         return returnString;
     }
     private String setLine30() {
         String returnString = null;
         returnString =  border + "   "+ common2SecondPart +"  " + sColorPicker(playersPersonalCard, 3, 0)
                 + sColorPicker(playersPersonalCard, 3, 1)+ sColorPicker(playersPersonalCard, 3, 2)+ sColorPicker(playersPersonalCard, 3, 3)
-                + sColorPicker(playersPersonalCard, 3, 4) + "\u001B[0m   " + border;
+                + sColorPicker(playersPersonalCard, 3, 4) + "\u001B[0m  " + border;
         return returnString;
     }
 
     private String setLine31_32() {
         String returnString = null;
-        returnString =  border + "                                                     "+ sColorPicker(playersPersonalCard, 2, 0)
+        returnString =  border + "                                                    "+ sColorPicker(playersPersonalCard, 2, 0)
                 + sColorPicker(playersPersonalCard, 2, 1)+ sColorPicker(playersPersonalCard, 2, 2)+ sColorPicker(playersPersonalCard, 2, 3)
-                + sColorPicker(playersPersonalCard, 2, 4) + "\u001B[0m   " + border;
+                + sColorPicker(playersPersonalCard, 2, 4) + "\u001B[0m  " + border;
         return returnString;
     }
 
@@ -895,37 +900,6 @@ public class View {
         }
         return returnString;
     }
-    /*private String setLine8() {
-        String returnString=null;
-        Tile[][] s1 = playersShelfies.get(order.get(0));
-        Tile[][] s2 = playersShelfies.get(order.get(1));
-        switch (numPlayers){
-            case 2:
-                returnString = border + "   5 " +sColorPicker(s1,5,0)+sColorPicker(s1,5,1)+sColorPicker(s1,5,2)+sColorPicker(s1,5,3)+sColorPicker(s1,5,4) + "\u001B[0m   " +
-                        "5 " +sColorPicker(s2,5,0)+sColorPicker(s2,5,1)+sColorPicker(s2,5,2)+sColorPicker(s2,5,3)+sColorPicker(s2,5,4) + "\u001B[0m   " +
-                        "            " + "            " + " " + border
-                ;break;
-            case 3:
-                Tile[][] s3 = playersShelfies.get(order.get(2));
-
-                returnString = border + "   5 " +sColorPicker(s1,5,0)+sColorPicker(s1,5,1)+sColorPicker(s1,5,2)+sColorPicker(s1,5,3)+sColorPicker(s1,5,4) + "\u001B[0m   " +
-                        "5 " +sColorPicker(s2,5,0)+sColorPicker(s2,5,1)+sColorPicker(s2,5,2)+sColorPicker(s2,5,3)+sColorPicker(s2,5,4) + "\u001B[0m   " +
-                        "5 " +sColorPicker(s3,5,0)+sColorPicker(s3,5,1)+sColorPicker(s3,5,2)+sColorPicker(s3,5,3)+sColorPicker(s3,5,4) + "\u001B[0m   " +
-                        "            " + " " + border
-                ;break;
-            case 4:
-                Tile[][] ss3 = playersShelfies.get(order.get(2));
-                Tile[][] s4 = playersShelfies.get(order.get(3));
-
-                returnString = border + "   5 " +sColorPicker(s1,5,0)+sColorPicker(s1,5,1)+sColorPicker(s1,5,2)+sColorPicker(s1,5,3)+sColorPicker(s1,5,4) + "\u001B[0m   " +
-                        "5 " +sColorPicker(s2,5,0)+sColorPicker(s2,5,1)+sColorPicker(s2,5,2)+sColorPicker(s2,5,3)+sColorPicker(s2,5,4) + "\u001B[0m   " +
-                        "5 " +sColorPicker(ss3,5,0)+sColorPicker(ss3,5,1)+sColorPicker(ss3,5,2)+sColorPicker(ss3,5,3)+sColorPicker(ss3,5,4) + "\u001B[0m   " +
-                        "5 " +sColorPicker(s4,5,0)+sColorPicker(s4,5,1)+sColorPicker(s4,5,2)+sColorPicker(s4,5,3)+sColorPicker(s4,5,4) + "\u001B[0m   " +
-                        " " + border
-                ;break;
-        }
-        return returnString;
-    }*/
 
     private String sColorPicker(Tile[][] shelf, int row, int col){
         return colorPicker(shelf[row][col].getColor());
@@ -951,13 +925,23 @@ public class View {
     }
 
     private void printEveryLine() {
-        out.printf("%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n", firstLine, blankLine, blankLine, Line4, Line5, Line6, Line7, Line8, Line9, Line10, Line11, Line12, Line13, Line14, Line15, Line16, Line17, Line18, Line19, Line20, Line21, Line22, Line23, Line24, Line25, Line26, Line27, Line28, Line29, Line30, Line31, Line32, Line33, Line34, Line35, Line36, Line37, Line38, Line39, Line40, Line41, Line42, Line43, Line44, Line45, Line46, Line47, Line48, Line49, Line50, Line51, Line52, Line53, blankLine, lastLine);
+        out.printf("%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n", firstLine,  blankLine, Line4, Line5, Line6, Line7, Line8, Line9, Line10, Line11, Line12, Line13, Line14, Line15, Line16, Line17, Line18, Line19, Line20, Line21, Line22, Line23, Line24, Line25, Line26, Line27, Line28, Line29, Line30, Line31, Line32, Line33, Line34, Line35, Line36, Line37, Line38, Line39, Line40, Line41, Line42, Line43, Line44, Line45, Line46, Line47, Line48, Line49, Line50, Line51, Line52, Line53, blankLine, lastLine);
     }
 
 
     public void setChat(){
         for (int i=0; i<20; i++){
-            chatMessages.add("Ignorazione corretta dell'input c");
+            chatMessages.add("Placeholder Chat Message JaaackBB");
+        }
+    }
+
+
+    public void fakePersonal() {
+        playersPersonalCard = new Tile[6][5];
+        for (int row = 0; row < 6; row++) {
+            for (int column = 0; column < 5; column++) {
+                playersPersonalCard[row][column] = new Tile(row, column, PossibleColors.GREEN);
+            }
         }
     }
 
