@@ -19,8 +19,8 @@ public class View {
     private HashMap<User, Tile[][]> playersShelfies = new HashMap<>();
     private HashMap<User, String> playersPoints = new HashMap<>();
     private HashMap<User, String> playersNicknames = new HashMap<>();
-    private Tile[][] playersPersonalCard;
-    private ArrayList<User> order;
+    private Tile[][] playersPersonalCard = new Tile[6][5];
+    private ArrayList<User> order =new ArrayList<>();
     private String[][] board = new String[9][9];
     //private Tile[][] highlightedBoard = new Tile[9][9];
     private String common1;
@@ -42,8 +42,8 @@ public class View {
     private String namesLine;//line 4
     private String pointsLine;//Line 21
     private int numPlayers;
-    private ArrayList<String> names;
-    private List<List<Tile>> choosableTilesList;
+    private ArrayList<String> names = new ArrayList<>();
+    private List<List<Tile>> choosableTilesList = new ArrayList<>();
     private int gameID;
     private User endToken;
 
@@ -139,9 +139,14 @@ public class View {
      * @param order is the ordered arrayList of the users in the game
      */
     public void setOrderView(ArrayList<User> order) {
-        Collections.copy(this.order, order);
+
+        numPlayers = order.size();
+        //Collections.copy(this.order, order);
+        int i=0;
         for (User user : order) {
+            this.order.add(order.get(i));
             setPlayersNicknamesView(user);
+            i++;
         }
         setPaddedNames();
         pointInitializer();
@@ -582,6 +587,8 @@ public class View {
     }
 
     private void updateEveryLine() {
+        //setPaddedNames();
+        setNamesLine();
         Line4 = namesLine;
         Line5 = blankLine;
         Line6 = setLine6();
@@ -945,6 +952,13 @@ public class View {
 
     private void printEveryLine() {
         out.printf("%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n", firstLine, blankLine, blankLine, Line4, Line5, Line6, Line7, Line8, Line9, Line10, Line11, Line12, Line13, Line14, Line15, Line16, Line17, Line18, Line19, Line20, Line21, Line22, Line23, Line24, Line25, Line26, Line27, Line28, Line29, Line30, Line31, Line32, Line33, Line34, Line35, Line36, Line37, Line38, Line39, Line40, Line41, Line42, Line43, Line44, Line45, Line46, Line47, Line48, Line49, Line50, Line51, Line52, Line53, blankLine, lastLine);
+    }
+
+
+    public void setChat(){
+        for (int i=0; i<20; i++){
+            chatMessages.add("Ignorazione corretta dell'input c");
+        }
     }
 
 }
