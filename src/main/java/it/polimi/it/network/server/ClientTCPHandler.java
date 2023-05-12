@@ -35,8 +35,8 @@ public class ClientTCPHandler implements Runnable,Serializable{
     private Message ping;
 
 
-    public ClientTCPHandler(Socket socket, Lobby lobby, ServerTCP serverTCP){
-        this.socket = socket;
+    public ClientTCPHandler(Lobby lobby, ServerTCP serverTCP){
+        this.socket = serverTCP.getClientSocket();
         this.lobby = lobby;
         this.serverTCP = serverTCP;
 

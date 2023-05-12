@@ -13,12 +13,14 @@ import java.util.HashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class ServerTCP implements Runnable, Serializable {
+public class ServerTCP implements Runnable, Serializable{
     private static final long serialVersionUID = 2221472440957074825L;
     private  int port;
     private ServerSocket serverSocket ;
     private HashMap<User, Socket> userTCP;
     private Lobby lobby;
+
+    private Socket clientSocket;
     public ServerTCP(int portNumber){
         this.port = portNumber;
         this.userTCP = new HashMap<>();
@@ -40,9 +42,8 @@ public class ServerTCP implements Runnable, Serializable {
 
         while (true) {
             try {
-                Socket clientSocket = serverSocket.accept(); //aspetta che qualcuno si colleghi
-                System.out.println("Ciao");
-                executor.submit(new ClientTCPHandler(clientSocket, lobby, this)); //l'oggetto all'interno deve essere Runnable
+                clientSocket = serverSocket.accept(); //aspetta che qualcuno si colleghi
+                executor.submit(new ClientTCPHandler( lobby, this)); //l'oggetto all'interno deve essere Runnable
             } catch(IOException e) {
                 e.printStackTrace();
             }
@@ -64,5 +65,9 @@ public class ServerTCP implements Runnable, Serializable {
 
     public void setLobby(Lobby lobby) {
         this.lobby = lobby;
+    }
+
+    public Socket getClientSocket() {
+        return clientSocket;
     }
 }

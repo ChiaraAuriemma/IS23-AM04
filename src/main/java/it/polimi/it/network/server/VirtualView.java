@@ -36,12 +36,10 @@ public class VirtualView implements Serializable {
 
     private ClientInterface client;
 
-    public VirtualView( ServerTCP serverTCP ,RMIImplementation serverRMI){
+    public VirtualView(){
         typeOfConnection = new HashMap<>();
         userTCP = new HashMap<>();
         userRMI = new HashMap<>();
-        this.serverTCP = serverTCP;
-        this.serverRMI = serverRMI;
     }
 
     public void setGame(Game game){
@@ -347,5 +345,13 @@ public class VirtualView implements Serializable {
             clientRMI.recover(game, gameID);
 
         }
+    }
+
+    public void setServerTCP(ServerTCP serverTCP) {
+        this.serverTCP = serverTCP;
+    }
+
+    public void setServerRMI(RMIImplementation serverRMI) {
+        this.serverRMI = serverRMI;
     }
 }

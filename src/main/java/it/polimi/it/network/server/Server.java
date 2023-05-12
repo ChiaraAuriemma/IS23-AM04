@@ -48,7 +48,9 @@ public class Server implements Serializable {
         RMIImplementation serverRMI = new RMIImplementation();
         serverRMI.startServer(portRMI);
 
-        lobby = new Lobby(serverTCP, serverRMI);
+        lobby = new Lobby();
+        lobby.setServerRMI(serverRMI);
+        lobby.setServerTCP(serverTCP);
         serverRMI.setLobby(lobby);
         serverTCP.setLobby(lobby);
 

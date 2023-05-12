@@ -29,13 +29,11 @@ public class Lobby implements Serializable {
     private ServerTCP serverTCP;
     private RMIImplementation serverRMI;
 
-    public Lobby(ServerTCP serverTCP, RMIImplementation serverRMI) {
+    public Lobby() {
         userList = new ArrayList<>();
         gameList = new ArrayList<>();
         gameControllerList = new ArrayList<>();
         this.gameCounterID = 0;
-        this.serverTCP = serverTCP;
-        this.serverRMI = serverRMI;
     }
 
     public User createUser(String  nickname) throws ExistingNicknameException, EmptyNicknameException, RemoteException {
@@ -93,7 +91,9 @@ public class Lobby implements Serializable {
 
 
         //fai il controllo: l'user che crea il game deve esistere ed essere nella lista, vedi metodo sotto
-        VirtualView virtualView = new VirtualView(serverTCP,serverRMI);
+        VirtualView virtualView = new VirtualView();
+        virtualView.setServerRMI(this.serverRMI);
+        virtualView.setServerTCP(this.serverTCP);
         Game game = new Game(playerNumber, user, this.gameCounterID,virtualView, client);
         user.setInGame(true);
         gameList.add(game);
@@ -166,4 +166,11 @@ public class Lobby implements Serializable {
         gameControllerList.remove(getGameController(gameID));
     }
 
+    public void setServerRMI(RMIImplementation serverRMI) {
+        this.serverRMI = serverRMI;
+    }
+
+    public void setServerTCP(ServerTCP serverTCP) {
+        this.serverTCP = serverTCP;
+    }
 }

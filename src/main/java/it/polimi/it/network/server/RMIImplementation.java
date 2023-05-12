@@ -101,4 +101,6 @@ public class RMIImplementation extends UnicastRemoteObject implements ServerInte
     public void setLobby(Lobby lobby){
         this.lobby=lobby;
     }
+
+
 }
