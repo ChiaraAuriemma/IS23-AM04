@@ -269,7 +269,7 @@ public class ClientTCP implements ClientInterface, Serializable {
 
     @Override
     public void joinGame(int gameId){
-        JoinGameRequest joinGameRequest = new JoinGameRequest(user,gameId);
+        JoinGameRequest joinGameRequest = new JoinGameRequest(user,gameId, this);
         Message request = new Message(MessageType.JOINGAME, joinGameRequest);
         try {
             out.writeObject(request);

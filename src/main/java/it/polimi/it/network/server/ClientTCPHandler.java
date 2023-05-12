@@ -123,7 +123,7 @@ public class ClientTCPHandler implements Runnable,Serializable{
 
                     synchronized (lobby){
                         try {
-                            this.gameController = lobby.joinGame(joinGameRequest.getUser(), joinGameRequest.getID());
+                            this.gameController = lobby.joinGame(joinGameRequest.getUser(), joinGameRequest.getID(), joinGameRequest.getClient());
                             JoinGameResponse joinGameResponse = new JoinGameResponse(gameController.getGameID());
                             response = new Message(MessageType.JOINGAMERESPONSE, joinGameResponse);
                         } catch (InvalidIDException | WrongPlayerException | IllegalValueException | RemoteException e) {

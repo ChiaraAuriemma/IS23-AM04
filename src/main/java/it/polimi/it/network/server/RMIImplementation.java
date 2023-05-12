@@ -68,10 +68,10 @@ public class RMIImplementation extends UnicastRemoteObject implements ServerInte
         return gc.getGameID();
     }
 
-    public void joinGame(User user,int id) throws RemoteException, InvalidIDException, WrongPlayerException, IllegalValueException {
+    public void joinGame(User user,int id, ClientInterface client) throws RemoteException, InvalidIDException, WrongPlayerException, IllegalValueException {
         GameController gc;
         synchronized (lobby) {
-            gc = lobby.joinGame(user, id);
+            gc = lobby.joinGame(user, id, client);
         }
         userGame.put(user, gc);
     }

@@ -104,12 +104,12 @@ public class Lobby implements Serializable {
         return gameContr;
     }
 
-    public GameController joinGame(User user, int gameID) throws InvalidIDException, WrongPlayerException, IllegalValueException, RemoteException {
+    public GameController joinGame(User user, int gameID, ClientInterface client) throws InvalidIDException, WrongPlayerException, IllegalValueException, RemoteException {
 
         List<Game> findGame = gameList.stream().filter(game -> game.getGameid() == gameID).collect(Collectors.toList());
         if(gameID<gameCounterID && !findGame.isEmpty()){
             if(findGame.get(0).getCurrentPlayersNum()<findGame.get(0).getNumplayers()){
-
+                    findGame.get(0).setClient(client);
                     findGame.get(0).joinGame(user);
                     if(!user.getInGame()){
                         user.setInGame(true);

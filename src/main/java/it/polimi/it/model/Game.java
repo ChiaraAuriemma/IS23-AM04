@@ -50,12 +50,11 @@ public class Game implements Serializable {
         this.gameID = gameID;
         this.virtualView = virtualView;
         this.virtualView.setGame(this);
-        this.client = client;
 
         host.setGame(this);
         this.players = new ArrayList<>(numplayers);
         this.players.add(host); // controllo se è empty ???
-        this.virtualView.setUser(host, this.client);
+        this.virtualView.setUser(host, client);
         //start all the player points to zero
         this.points = new ArrayList<>(Collections.nCopies(numplayers, 0));
         //start all the players score from personal cards to zero
@@ -323,5 +322,7 @@ public class Game implements Serializable {
         return this.cards.get(i);
     }
 
-
+    public void setClient(ClientInterface client) {
+        this.client = client;
+    }
 }

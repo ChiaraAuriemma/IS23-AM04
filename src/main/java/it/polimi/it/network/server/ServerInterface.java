@@ -16,7 +16,7 @@ public interface ServerInterface extends Remote, Serializable {
 
     int createGame(User user, int playerNumber, ClientInterface client) throws RemoteException, WrongPlayerException;
 
-    void joinGame(User user,int id) throws RemoteException, InvalidIDException, WrongPlayerException, IllegalValueException;
+    void joinGame(User user,int id, ClientInterface client) throws RemoteException, InvalidIDException, WrongPlayerException, IllegalValueException;
 
     void tilesNumMessage(User user,int numTiles) throws RemoteException, WrongPlayerException, WrongListException, IllegalValueException;
 
