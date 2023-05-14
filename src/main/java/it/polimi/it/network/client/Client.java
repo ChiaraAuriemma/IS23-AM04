@@ -15,7 +15,7 @@ public class Client implements Serializable {
         Scanner stdin = new Scanner(System.in);
         String inputLine = " ";
 
-        while(!inputLine.equalsIgnoreCase("RMI") && !inputLine.equalsIgnoreCase("TCP")){
+        while (!inputLine.equalsIgnoreCase("RMI") && !inputLine.equalsIgnoreCase("TCP")) {
             System.out.println("Choose a connection type");
             inputLine = stdin.nextLine();
         }

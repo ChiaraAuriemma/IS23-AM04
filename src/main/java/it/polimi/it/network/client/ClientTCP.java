@@ -20,7 +20,7 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ClientTCP implements ClientInterface, Serializable {
+public class ClientTCP implements ClientInterface, Serializable, Runnable {
 
     private static final long serialVersionUID = -1334206444743011550L;
     private int port;
@@ -39,15 +39,7 @@ public class ClientTCP implements ClientInterface, Serializable {
         this.ip = ip;
         this.view=new View();
         this.buffer=buffer;
-        buffer.setStage(TurnStages.LOGIN);
-    }
 
-    public View getView(){
-        return view;
-    }
-
-
-    public void startClient(){
         try{
             serverSocket = new Socket(ip,port);
 
@@ -73,8 +65,16 @@ public class ClientTCP implements ClientInterface, Serializable {
             System.out.println("Couldn't get I/O for the connection to " + ip);
             System.exit(1);
         }
+
+        buffer.setStage(TurnStages.LOGIN);
+
         view.askNickname();
     }
+
+    public View getView(){
+        return view;
+    }
+
 
 
     @Override
@@ -125,7 +125,7 @@ public class ClientTCP implements ClientInterface, Serializable {
 
 
     //IMPORTANTE : gestisco anche l'arrivo di messaggi d'errore da parte del server
-    public void run() throws RemoteException {
+    public void run()  {
         Message response;
         MessageType messType;
 
@@ -146,96 +146,101 @@ public class ClientTCP implements ClientInterface, Serializable {
                     buffer.setStage(TurnStages.CREATEorJOIN);
 
                     view.joinOrCreate(user.getNickname());
-
+                    break;
                 case CREATEGAMERESPONSE:
                     CreateGameResponse createGameResponse = (CreateGameResponse) response.getPayload();
                     //view : passo alla view il game id
                     buffer.setStage(TurnStages.NOTHING);
                     view.setGameID(createGameResponse.getGameId());
-
+                    break;
                 case JOINGAMERESPONSE:
                     JoinGameResponse joinGameResponse = (JoinGameResponse) response.getPayload();
                     buffer.setStage(TurnStages.NOTHING);
                     view.setGameID(joinGameResponse.getGameId());
-
+                    break;
                 case STARTORDERPLAYER:
                     StartOrderMessage startOrderMessage = (StartOrderMessage) response.getPayload();
                     //view : passo l'ordine dei giocatori in modo che può disporli
                     setStartOrder(startOrderMessage.getOrder());
                     buffer.setStage(TurnStages.NOTURN);
-
+                    break;
                 case INITIALMATRIX:
                     InitialMatrixMessage initialMatrixMessage = (InitialMatrixMessage) response.getPayload();
                     //view : passo la matrice in modo da visualizzare la board
                     setNewBoard(initialMatrixMessage.getMatrix());
-
+                    break;
                 case DRAWNCOMMONCARDS:
                     DrawnCommonCardsMessage drawnCommonCardsMessage = (DrawnCommonCardsMessage) response.getPayload();
                     //view : passo le common cards e la lista dei token delle common cards
                     setNewCommon(drawnCommonCardsMessage.getCard1() , drawnCommonCardsMessage.getCard2());
-
+                    break;
 
                 case DRAWNPERSONALCARD:
                     DrawnPersonalCardMessage drawnPersonalCardMessage = (DrawnPersonalCardMessage) response.getPayload();
                     //view : passo la personal card del giocatore
                     setNewPersonal(drawnPersonalCardMessage.getCard());
-
+                    break;
                 case STARTTURN:
                     StartTurnMessage startTurnMessage = (StartTurnMessage) response.getPayload();
                     //view : passo il maxNumOfTiles sceglibili
                     notifyTurnStart(startTurnMessage.getMaxValueofTiles());
                     buffer.setStage(TurnStages.TILESNUM);
-
+                    break;
                 case TAKEABLETILES:
                     TakeableTilesResponse takeableTilesResponse = (TakeableTilesResponse) response.getPayload();
-                    takeableTiles(takeableTilesResponse.getChoosableTilesList(), takeableTilesResponse.getChoosableTilesList().get(0).size());
+                    try {
+                        takeableTiles(takeableTilesResponse.getChoosableTilesList(), takeableTilesResponse.getChoosableTilesList().get(0).size());
+                    } catch (RemoteException e) { //trovo un modo migliore per gestirla
+                        throw new RuntimeException(e);
+                    }
                     //view : passo choosableTilesList per "illuminare" sulla board le tiles prendibili
                     buffer.setStage(TurnStages.CHOOSETILES);
-
+                    break;
                 case POSSIBLECOLUMNS:
                     PossibleColumnsResponse possibleColumnsResponse = (PossibleColumnsResponse) response.getPayload();
                     askColumn(possibleColumnsResponse.getChoosableColumns());
                     //view : passo il booleano con true e false sulle varie colonne della shelfie
                     buffer.setStage(TurnStages.CHOOSECOLUMN);
-
+                    break;
                 case SHELFIEUPDATE:
                     ShelfieUpdateMessage shelfieUpdateMessage = (ShelfieUpdateMessage) response.getPayload();
                     setNewShelfie(shelfieUpdateMessage.getUser(), shelfieUpdateMessage.getShelfie());
                     buffer.setStage(TurnStages.NOTURN);
                     //view : passo lo user,la colonna e la lista ordinata di tiles scelte per aggiornare la shelfie dello user corrispondente
-
+                    break;
                 case BOARDUPDATE:
                     BoardUpdateMessage boardUpdateMessage = (BoardUpdateMessage) response.getPayload();
                     view.setBoardView(boardUpdateMessage.getMatrix());
                     //view : passo la nuova matrice in modo da visualizzare la board aggiornata
-
+                    break;
                 case POINTSUPDATE:
                     PointsUpdateMessage pointsUpdateMessage = (PointsUpdateMessage) response.getPayload();
                     setNewPoints(pointsUpdateMessage.getUser(), pointsUpdateMessage.getPoint());
                     //view : passo lo user,il nuovo punteggio e se questo ha preso qualche common token
-
+                    break;
                 case ENDTOKEN:
                     EndTokenTakenMessage endTokenTakenMessage = (EndTokenTakenMessage) response.getPayload();
                     setEndToken(endTokenTakenMessage.getUser());
                     //view : passo lo user che ha preso l'endToken
-
+                    break;
                 case FINALPOINTS:
                     FinalPointsMessage finalPointsMessage = (FinalPointsMessage) response.getPayload();
                     setFinalPoints(finalPointsMessage.getUsers(),finalPointsMessage.getPoints());
 
                     //view : passo la lista degli utenti e la lista dei loro punteggi
-
+                    break;
                 case THISISNOTTHEDAY:
                     ThisNotTheDay recover = (ThisNotTheDay) response.getPayload();
                     recover(recover.getGame(), recover.getGameID());
-
+                    break;
                 case UPDATEVIEW: updateView();
-
+                    break;
 
                 case ERROR:
                     ErrorMessage errorMessage = (ErrorMessage) response.getPayload();
                     view.printError(errorMessage.getError());
                     // il messaggio d'errore contiene la stringa error implementare la gestione dei vari errori
+                    break;
             }
         }
     }
@@ -247,71 +252,53 @@ public class ClientTCP implements ClientInterface, Serializable {
     public void login(String nickname) {
         LoginRequest loginRequest = new LoginRequest(nickname);
         Message request = new Message(MessageType.CREATEPLAYER, loginRequest);
-        try {
-            out.writeObject(request);
-            out.flush();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        send(request);
     }
     @Override
         public void createGame(int playerNumber){
         CreateGameRequest createGameRequest = new CreateGameRequest(user,playerNumber, this);
         Message request = new Message(MessageType.CREATEGAME, createGameRequest);
-        try {
-            out.writeObject(request);
-            out.flush();
-
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
+        send(request);
     }
 
     @Override
     public void joinGame(int gameId){
         JoinGameRequest joinGameRequest = new JoinGameRequest(user,gameId, this);
         Message request = new Message(MessageType.JOINGAME, joinGameRequest);
-        try {
-            out.writeObject(request);
-            out.flush();
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
+        send(request);
     }
     @Override
     public void tilesNumMessage(int numOfTiles){
         TilesNumRequest tilesNumRequest = new TilesNumRequest(numOfTiles);
         Message request = new Message(MessageType.TILESNUMMESSAGE, tilesNumRequest);
-        try {
-            out.writeObject(request);
-            out.flush();
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
+        send(request);
     }
-@Override
+    @Override
     public void selectedTiles(List<Tile> choices){
         SelectedTilesRequest selectedTilesRequest = new SelectedTilesRequest(choices);
         Message request = new Message(MessageType.SELECTEDTILES, selectedTilesRequest);
-        try {
-            out.writeObject(request);
-            out.flush();
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
+        send(request);
     }
-@Override
+    @Override
     public void chooseColumn (int column){
         ChooseColumnRequest chooseColumnRequest = new ChooseColumnRequest(column);
         Message request = new Message(MessageType.CHOOSECOLUMN, chooseColumnRequest);
-        try {
-            out.writeObject(request);
-            out.flush();
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
+        send(request);
     }
 
+
+    public void send(Message message){
+
+        synchronized (out){
+            try {
+                out.writeObject(message);
+                out.flush();
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+
+    }
     @Override
     public void setEndToken(User user) {
         view.setEndToken(user);
@@ -331,4 +318,5 @@ public class ClientTCP implements ClientInterface, Serializable {
     public void updateView() {
         view.update();
     }
+
 }

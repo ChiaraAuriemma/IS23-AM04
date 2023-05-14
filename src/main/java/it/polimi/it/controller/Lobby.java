@@ -83,7 +83,7 @@ public class Lobby implements Serializable {
         return user;
     }
 
-    public GameController createGame(User user, int playerNumber, ClientInterface client) throws WrongPlayerException {
+    public GameController createGame(User user, int playerNumber) throws WrongPlayerException {
 
         if(playerNumber < 2 || playerNumber > 4){
             throw new WrongPlayerException("Wrong number of players"); //mandare messaggio a view
@@ -94,7 +94,7 @@ public class Lobby implements Serializable {
         VirtualView virtualView = new VirtualView();
         virtualView.setServerRMI(this.serverRMI);
         virtualView.setServerTCP(this.serverTCP);
-        Game game = new Game(playerNumber, user, this.gameCounterID,virtualView, client);
+        Game game = new Game(playerNumber, user, this.gameCounterID,virtualView);
         user.setInGame(true);
         gameList.add(game);
         GameController gameContr = new GameController(game, this);
@@ -104,22 +104,26 @@ public class Lobby implements Serializable {
         return gameContr;
     }
 
-    public GameController joinGame(User user, int gameID, ClientInterface client) throws InvalidIDException, WrongPlayerException, IllegalValueException, RemoteException {
+    public GameController joinGame(User user, int gameID) throws InvalidIDException, WrongPlayerException, IllegalValueException, RemoteException {
 
         List<Game> findGame = gameList.stream().filter(game -> game.getGameid() == gameID).collect(Collectors.toList());
         if(gameID<gameCounterID && !findGame.isEmpty()){
             if(findGame.get(0).getCurrentPlayersNum()<findGame.get(0).getNumplayers()){
-                    findGame.get(0).setClient(client);
-                    findGame.get(0).joinGame(user);
-                    if(!user.getInGame()){
-                        user.setInGame(true);
-                    }
-                    if (findGame.get(0).getNumplayers()==findGame.get(0).getCurrentPlayersNum()){
-                        //starto effettivamente il game
-                        gameControllerList.get(gameList.indexOf(findGame.get(0))).firstTurnStarter();
-                    }
 
-                    return gameControllerList.get(gameList.indexOf(findGame.get(0)));
+
+                findGame.get(0).joinGame(user);
+
+                if(!user.getInGame()){
+                    user.setInGame(true);
+                }
+
+                if (findGame.get(0).getNumplayers()==findGame.get(0).getCurrentPlayersNum()){
+
+                    //starto effettivamente il game
+                    gameControllerList.get(gameList.indexOf(findGame.get(0))).firstTurnStarter();
+                }
+
+                return gameControllerList.get(gameList.indexOf(findGame.get(0)));
             }else{
                 throw new WrongPlayerException("There are already too many players in this game!");
             }
@@ -149,7 +153,7 @@ public class Lobby implements Serializable {
 
 
 
-    GameController getGameController(int gameID) throws InvalidIDException{
+    public GameController getGameController(int gameID) throws InvalidIDException{
         for (GameController gameContr: gameControllerList){
             if (gameContr.getGame().getGameid()==gameID){
                 return gameContr;

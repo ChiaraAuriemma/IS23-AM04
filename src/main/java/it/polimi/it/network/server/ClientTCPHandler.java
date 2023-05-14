@@ -43,16 +43,13 @@ public class ClientTCPHandler implements Runnable,Serializable{
 
         try{
             out = new ObjectOutputStream(socket.getOutputStream());
-            //out.flush();
         } catch (IOException e) {
             e.printStackTrace();
 
         }
 
         try{
-
             in = new ObjectInputStream(socket.getInputStream());
-
         } catch (IOException e) {
             e.printStackTrace();
 
@@ -98,13 +95,14 @@ public class ClientTCPHandler implements Runnable,Serializable{
                     }
 
                     send(response);
-
+                    break;
                 case CREATEGAME:
 
                     CreateGameRequest createGameRequest = (CreateGameRequest) request.getPayload();
                     synchronized (lobby){
                         try {
-                            this.gameController = lobby.createGame(createGameRequest.getUser(), createGameRequest.getPlayerNumber(),createGameRequest.getClient());
+                            this.gameController = lobby.createGame(createGameRequest.getUser(), createGameRequest.getPlayerNumber());
+                            this.gameController.getGame().getVirtualView().setUserTCP(createGameRequest.getUser(), this.socket);
                             CreateGameResponse createGameResponse = new CreateGameResponse(gameController.getGameID());
                             response = new Message(MessageType.CREATEGAMERESPONSE, createGameResponse);
 
@@ -116,14 +114,15 @@ public class ClientTCPHandler implements Runnable,Serializable{
                     }
 
                     send(response);
-
+                    break;
                 case JOINGAME:
                     JoinGameRequest joinGameRequest = (JoinGameRequest) request.getPayload();
                     //ottengo il riferimento alla view(dal Gamecontroller) e gli passo lo user come tcp
 
                     synchronized (lobby){
                         try {
-                            this.gameController = lobby.joinGame(joinGameRequest.getUser(), joinGameRequest.getID(), joinGameRequest.getClient());
+                            lobby.getGameController(joinGameRequest.getID()).getGame().getVirtualView().setUserTCP(joinGameRequest.getUser(), this.socket);
+                            this.gameController = lobby.joinGame(joinGameRequest.getUser(), joinGameRequest.getID());
                             JoinGameResponse joinGameResponse = new JoinGameResponse(gameController.getGameID());
                             response = new Message(MessageType.JOINGAMERESPONSE, joinGameResponse);
                         } catch (InvalidIDException | WrongPlayerException | IllegalValueException | RemoteException e) {
@@ -133,9 +132,10 @@ public class ClientTCPHandler implements Runnable,Serializable{
 
 
                         }
-                        send(response);
-                    }
 
+                    }
+                    send(response);
+                    break;
 
                 case TILESNUMMESSAGE:
                     TilesNumRequest tilesNumRequest = (TilesNumRequest) request.getPayload();
@@ -150,7 +150,7 @@ public class ClientTCPHandler implements Runnable,Serializable{
                             send(response);
                         }
                     }
-
+                    break;
 
                 case SELECTEDTILES:
                     SelectedTilesRequest selectedTilesRequest = (SelectedTilesRequest) request.getPayload();
@@ -164,7 +164,7 @@ public class ClientTCPHandler implements Runnable,Serializable{
                             send(response);
                         }
                     }
-
+                    break;
 
                 case CHOOSECOLUMN:
                     ChooseColumnRequest chooseColumnRequest = (ChooseColumnRequest) request.getPayload();
@@ -180,7 +180,7 @@ public class ClientTCPHandler implements Runnable,Serializable{
                             System.out.println("ERRORE");
                         }
                     }
-
+                    break;
 
                 case PONG://risposta del ping del timer
 
@@ -200,13 +200,8 @@ public class ClientTCPHandler implements Runnable,Serializable{
             @Override
             public void run() {
                 PingMessage pingMessage = new PingMessage(" ");
-                ping = new Message(MessageType.CREATEGAMERESPONSE, pingMessage);
-                try {
-                    out.writeObject(ping);
-                    out.flush();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+                ping = new Message(MessageType.PING, pingMessage);
+                send(ping);
             }
         };
         timer.schedule(timerTask, 1000, 20000);

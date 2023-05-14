@@ -18,7 +18,6 @@ import java.util.List;
 
 public interface ClientInterface extends Remote, Serializable {
     //qui devo mettere solo i metodi visibili dal server (quindi tolgo startclient e login)
-    public void startClient() throws IOException, NotBoundException;
     public void login(String userName) throws RemoteException;
 
     public void takeableTiles(List<List<Tile>> choosableTilesList, int num) throws RemoteException;
@@ -51,11 +50,12 @@ public interface ClientInterface extends Remote, Serializable {
 
     public void chooseColumn(int column) throws RemoteException;
 
-    void setEndToken(User user) throws RemoteException;
+    public void setEndToken(User user) throws RemoteException;
 
-    void setFinalPoints(List<User> users, ArrayList<Integer> points) throws RemoteException;
+    public void setFinalPoints(List<User> users, ArrayList<Integer> points) throws RemoteException;
 
-    void recover(Game game, int gameID) throws RemoteException;
+    public void recover(Game game, int gameID) throws RemoteException;
 
-    void updateView() throws RemoteException;
+    public void updateView() throws RemoteException;
+
 }

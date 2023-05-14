@@ -19,8 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface, Serializable {
-    private static final long serialVersionUID = 5072588874360370885L;
+public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface {
+    //private static final long serialVersionUID = 5072588874360370885L;
     private int port;
     private String ip;
     private Registry registry;
@@ -43,7 +43,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
         buffer.setStage(TurnStages.LOGIN);
     }
 
-    public View getView(){
+    public View getView() {
         return view;
     }
 
@@ -51,9 +51,9 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
      * First method used by the client, communicates with the view in order to let him choose his nickname,
      * then communicates it to the serverRMI to create an actual User instance.
      */
-    public void startClient()  {
+    public void startClient() {
         try {
-            registry = LocateRegistry.getRegistry(ip,port);
+            registry = LocateRegistry.getRegistry(ip, port);
         } catch (RemoteException e) {
             System.out.println(e.getMessage());
         }
@@ -69,28 +69,27 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
         //view : do la possibilità all'utente di inserire un nickname
         view.askNickname();
 
-            //view: mostro la scelta tra creategame e joingame
-            // delego in base alla scelta che fa la view al metodo create o join
-            //appena mi arriva startgame dal server avvio la partita
+        //view: mostro la scelta tra creategame e joingame
+        // delego in base alla scelta che fa la view al metodo create o join
+        //appena mi arriva startgame dal server avvio la partita
 
     }
 
 
-
-
     /**
      * Method called by startClient, sends the server the chosen username
-      * @param userName .
+     *
+     * @param userName .
      * @throws RemoteException .
      */
     public void login(String userName) throws RemoteException {
-        try{
-            user = sr.login(this,userName);
+        try {
+            user = sr.login(this, userName);
             buffer.setStage(TurnStages.CREATEorJOIN);
             view.joinOrCreate(user.getNickname());
 
             //view : passo alla schermata con create e join game
-        }catch (ExistingNicknameException | EmptyNicknameException e) {
+        } catch (ExistingNicknameException | EmptyNicknameException e) {
             //view : notifico la view che deve riproporre l'inserimento del nickname con l'errore in rosso
             view.askNicknameAgain();
         }
@@ -99,15 +98,16 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
 
     /**
      * Communicates the server the number of people that the user wants in his new game
+     *
      * @param playerNumber .
      * @throws RemoteException .
      */
     @Override
     public void createGame(int playerNumber) throws RemoteException {
-        try{
-            int a = sr.createGame(user,playerNumber, this);
+        try {
+            int gameid = sr.createGame(user, playerNumber, this);
             buffer.setStage(TurnStages.NOTHING);
-            view.setGameID(a);
+            view.setGameID(gameid);
         } catch (WrongPlayerException e) {
             //view : notifico alla view che il numero di giocatori inseriti non è corretto
             view.askNumPlayerAgain();
@@ -116,52 +116,54 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
 
 
     /**
-     *Method that communicates to the server the ID of the game that the user wants to join
+     * Method that communicates to the server the ID of the game that the user wants to join
+     *
      * @param gameID .
      * @throws RemoteException .
      */
-    public void joinGame(int gameID) throws RemoteException{
-        try{
-            sr.joinGame(user,gameID, this);
+    public void joinGame(int gameID) throws RemoteException {
+        try {
+            int gameid = sr.joinGame(user, gameID, this);
             buffer.setStage(TurnStages.NOTHING);
-        }catch (InvalidIDException | WrongPlayerException | IllegalValueException e) {
-            System.out.println(e.getMessage());
+            view.setGameID(gameid);
+        } catch (InvalidIDException | WrongPlayerException | IllegalValueException e) {
             view.askIDAgain();
         }
     }
 
-@Override
+    @Override
     public void tilesNumMessage(int numOfTiles) throws RemoteException {
         try {   //comunico al server il numero scelto
-            sr.tilesNumMessage(user,numOfTiles);
+            sr.tilesNumMessage(user, numOfTiles);
             buffer.setStage(TurnStages.CHOOSETILES);
-        }catch (IllegalValueException e) {
+        } catch (IllegalValueException e) {
             //view : notifico alla view che il numero di tiles indicato non è valido
             view.askNumTilesAgain();
-        }catch (WrongPlayerException e) {
+        } catch (WrongPlayerException e) {
             //view : non è il turno di questo giocatore
-        }catch (WrongListException e) {
+        } catch (WrongListException e) {
             //view : il numero di tiles non è valido in base agli spazi rimasti liberi
             view.askNumTilesAgain();
         }
     }
-@Override
-    public void selectedTiles(List<Tile>choosenTiles) throws RemoteException {
+
+    @Override
+    public void selectedTiles(List<Tile> choosenTiles) throws RemoteException {
         //mando le tiles a RMIImplementation
-        try{
-           sr.selectedTiles(user,choosenTiles);
-           buffer.setStage(TurnStages.CHOOSECOLUMN);
+        try {
+            sr.selectedTiles(user, choosenTiles);
+            buffer.setStage(TurnStages.CHOOSECOLUMN);
         } catch (WrongPlayerException e) {
             //view : notifico che l'user non è quello giusto
-        //}catch (WrongListException){
+            //}catch (WrongListException){
             //manca eccezione nel caso in cui abbia scelto un set di tile invalido
         }
     }
 
-@Override
-    public void chooseColumn (int numOfColum) throws RemoteException {
+    @Override
+    public void chooseColumn(int numOfColum) throws RemoteException {
         try {
-            sr.chooseColumn(user,numOfColum);
+            sr.chooseColumn(user, numOfColum);
             buffer.setStage(TurnStages.NOTURN);
         } catch (InvalidIDException e) {
             //view : il numero della colonna non è valido
@@ -169,7 +171,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
         } catch (IllegalValueException e) {
             System.out.println("ERROR!");
         }
-}
+    }
 
     @Override
     public void setEndToken(User user) {
@@ -191,47 +193,52 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
         view.update();
     }
 
-
-    public void setNewShelfie(User user, Tile[][] shelfie){
+    @Override
+    public void setNewShelfie(User user, Tile[][] shelfie) {
         view.setPlayersShelfiesView(user, shelfie);
     }
 
-    public void setNewBoard(Tile[][] matrix){
+    @Override
+    public void setNewBoard(Tile[][] matrix) {
         view.setBoardView(matrix);
     }
 
-    public void setNewPoints(User user, Integer points){
+    @Override
+    public void setNewPoints(User user, Integer points) {
         view.setPlayersPointsView(user, points);
     }
 
-
+    @Override
     public void notifyTurnStart(int maxValueofTiles) {
         view.NotifyTurnStart(maxValueofTiles, user.getNickname());
         buffer.setStage(TurnStages.TILESNUM);
     }
 
+    @Override
     public void askColumn(boolean[] choosableColumns) {
         view.askColumn();
     }
 
-    public void setStartOrder(ArrayList<User> order){
+    @Override
+    public void setStartOrder(ArrayList<User> order) {
         view.setOrderView(order);
         buffer.setStage(TurnStages.NOTURN);
     }
 
-    public void setNewCommon(CommonGoalCard card1, CommonGoalCard card2){
+    @Override
+    public void setNewCommon(CommonGoalCard card1, CommonGoalCard card2) {
         view.setCommon1View(card1);
         view.setCommon2View(card2);
     }
 
 
-    public void setNewPersonal(PersonalGoalCard card){
+    @Override
+    public void setNewPersonal(PersonalGoalCard card) {
         view.setPlayersPersonalCardView(card);
     }
 
-    //----------------------------------------------------------------------------------------------------------
-    //metodi che chiama il server:
 
+    @Override
     public void takeableTiles(List<List<Tile>> choosableTilesList, int num) throws RemoteException {
         //view : faccio vedere illuminate le tiles nella lista
         view.takeableTiles(choosableTilesList);

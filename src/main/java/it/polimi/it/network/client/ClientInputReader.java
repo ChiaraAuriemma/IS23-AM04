@@ -44,7 +44,6 @@ public class ClientInputReader implements Runnable, Serializable{
                 commandParser(input);
                 if (input.equalsIgnoreCase("quit") || input.equalsIgnoreCase("exit")) {
                     running = false;
-
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -210,11 +209,14 @@ public class ClientInputReader implements Runnable, Serializable{
         JsonReader jsonReader = new JsonReader( new FileReader("src/main/resources/ServerConfig.json"));
         JsonObject jsonObject = gson.fromJson(jsonReader,JsonObject.class);
         if (connectionType.equalsIgnoreCase("TCP")){
-            client = new ClientTCP(jsonObject.get("portTCP").getAsInt(),jsonObject.get("ip").getAsString(), this);
-            client.startClient();
+            ClientTCP clientTCP = new ClientTCP(jsonObject.get("portTCP").getAsInt(),jsonObject.get("ip").getAsString(), this);
+            Thread thread = new Thread(clientTCP);
+            client = clientTCP;
+            thread.start();
         }if(connectionType.equalsIgnoreCase("RMI")){
-            client = new ClientRMIApp(jsonObject.get("portRMI").getAsInt(),jsonObject.get("ip").getAsString(), this);
-            client.startClient();
+            ClientRMIApp clientRMI = new ClientRMIApp(jsonObject.get("portRMI").getAsInt(),jsonObject.get("ip").getAsString(), this);
+            clientRMI.startClient();
+            client = clientRMI;
         }
     }
 

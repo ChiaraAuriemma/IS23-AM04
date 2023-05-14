@@ -28,13 +28,11 @@ public class VirtualView implements Serializable {
     private Game game;
 
     private HashMap<User,String > typeOfConnection;
-    private ServerTCP serverTCP;
+    private ServerTCP serverTCP; //tolgo ???
 
     private HashMap<User, ObjectOutputStream> userTCP;
-    private RMIImplementation serverRMI;
+    private RMIImplementation serverRMI; //tolgo ??
     private HashMap<User, ClientInterface> userRMI;
-
-    private ClientInterface client;
 
     public VirtualView(){
         typeOfConnection = new HashMap<>();
@@ -49,7 +47,7 @@ public class VirtualView implements Serializable {
 
 
     //
-    public void setUser(User user, ClientInterface client){
+    /*public void setUser(User user, ClientInterface client){ ///////////////TOLGOOOOOOOOOOOOOOO
         try {
             Socket socket = serverTCP.getUserTCP(user);
             typeOfConnection.put(user, "TCP");
@@ -62,6 +60,20 @@ public class VirtualView implements Serializable {
             userRMI.put(user, client);
             typeOfConnection.put(user, "RMI");
         }
+    }*/
+
+    public void setUserTCP(User user,Socket socket){
+        typeOfConnection.put(user, "TCP");
+        try {
+            userTCP.put(user, new ObjectOutputStream(socket.getOutputStream()));
+        } catch (IOException e) {
+            throw new RuntimeException(e); ///gestiscoooooooooooooooooooooo
+        }
+    }
+
+    public void setUserRMI(User user, ClientInterface client){
+        typeOfConnection.put(user, "RMI");
+        userRMI.put(user, client);
     }
 
     //metodi di inizio partita
@@ -76,11 +88,6 @@ public class VirtualView implements Serializable {
                 sendTCPMessage(userTCP.get(user), message);
 
             }else if(typeOfConnection.get(user).equals("RMI")){
-
-                //////////////////////
-
-              // this.client = userRMI.get(user);
-              // this.client.setStartOrder(order);
 
                ClientInterface clientRMI = userRMI.get(user);
                clientRMI.setStartOrder(order);
@@ -103,8 +110,8 @@ public class VirtualView implements Serializable {
             } else if (typeOfConnection.get(game.getPlayer(i)).equals("RMI")) {
                 //sviluppo in RMI
 
-                this.client = userRMI.get(user);
-                this.client.setNewBoard(matrix);
+                ClientInterface clientRMI = userRMI.get(user);
+                clientRMI.setNewBoard(matrix);
             }
         }
     }
@@ -122,8 +129,8 @@ public class VirtualView implements Serializable {
             } else if (typeOfConnection.get(user).equals("RMI")) {
                 //sviluppo in RMI
 
-               this.client = userRMI.get(user);
-               this.client.setNewCommon(card1, card2);
+                ClientInterface clientRMI = userRMI.get(user);
+                clientRMI.setNewCommon(card1,card2);
             }
         }
     }
@@ -139,8 +146,8 @@ public class VirtualView implements Serializable {
         } else if (typeOfConnection.get(user).equals("RMI")) {
             //sviluppo in RMI
 
-            this.client = userRMI.get(user);
-            this.client.setNewPersonal(card);
+            ClientInterface clientRMI = userRMI.get(user);
+            clientRMI.setNewPersonal(card);
         }
     }
 
@@ -159,8 +166,9 @@ public class VirtualView implements Serializable {
 
         } else if (typeOfConnection.get(user).equals("RMI")) {
             //sviluppo in RMI
-            this.client = userRMI.get(user);
-            this.client.notifyTurnStart(maxValueofTiles);
+
+            ClientInterface clientRMI = userRMI.get(user);
+            clientRMI.notifyTurnStart(maxValueofTiles);
         }
 
         //starto il turno mandando il massimo numero di tile da server a client
@@ -180,8 +188,9 @@ public class VirtualView implements Serializable {
 
 
         }else if(typeOfConnection.get(user).equals("RMI")){
-            this.client = userRMI.get(user);
-            this.client.takeableTiles(choosableTilesList, num);
+
+            ClientInterface clientRMI = userRMI.get(user);
+            clientRMI.takeableTiles(choosableTilesList, num);
         }
     }
 
@@ -201,8 +210,8 @@ public class VirtualView implements Serializable {
         }else if(typeOfConnection.get(user).equals("RMI")){
             //sviluppo in RMI
 
-            this.client = userRMI.get(user);
-            this.client.askColumn(choosableColumns);
+            ClientInterface clientRMI = userRMI.get(user);
+            clientRMI.askColumn(choosableColumns);
 
         }
     }
@@ -221,8 +230,8 @@ public class VirtualView implements Serializable {
             } else if (typeOfConnection.get(receiver).equals("RMI")) {
                 //sviluppo in RMI
 
-                this.client= userRMI.get(user);
-                this.client.setNewShelfie(receiver,receiver.getShelfie().getShelf());
+                ClientInterface clientRMI = userRMI.get(user);
+                clientRMI.setNewShelfie(receiver, receiver.getShelfie().getShelf());
             }
         }
     }
@@ -239,8 +248,9 @@ public class VirtualView implements Serializable {
 
             } else if (typeOfConnection.get(receiver).equals("RMI")) {
                 //sviluppo in RMI
-                this.client = userRMI.get(receiver);
-                this.client.setNewBoard(matrix);
+
+                ClientInterface clientRMI = userRMI.get(receiver);
+                clientRMI.setNewBoard(matrix);
             }
         }
     }
@@ -258,8 +268,8 @@ public class VirtualView implements Serializable {
             } else if (typeOfConnection.get(receiver).equals("RMI")) {
                 //sviluppo in RMI
 
-                this.client = userRMI.get(user);
-                this.client.setNewPoints(user,points);
+                ClientInterface clientRMI = userRMI.get(receiver);
+                clientRMI.setNewPoints(user,points);
             }
         }
     }
@@ -277,8 +287,8 @@ public class VirtualView implements Serializable {
             } else if (typeOfConnection.get(receiver).equals("RMI")) {
                 //sviluppo in RMI
 
-                this.client = userRMI.get(user);
-                client.setEndToken(user);
+                ClientInterface clientRMI = userRMI.get(receiver);
+                clientRMI.setEndToken(user);
             }
         }
     }

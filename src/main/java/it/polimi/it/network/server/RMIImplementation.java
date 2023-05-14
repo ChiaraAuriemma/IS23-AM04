@@ -50,6 +50,8 @@ public class RMIImplementation extends UnicastRemoteObject implements ServerInte
     }
 
 
+
+
     public User login(ClientInterface cr , String username) throws RemoteException, ExistingNicknameException, EmptyNicknameException {
         User user;
         synchronized (lobby) {
@@ -62,18 +64,21 @@ public class RMIImplementation extends UnicastRemoteObject implements ServerInte
     public int createGame(User user,int playerNumber, ClientInterface client) throws RemoteException, WrongPlayerException {
         GameController gc;
         synchronized (lobby){
-            gc = lobby.createGame(user,playerNumber, client);
+            gc = lobby.createGame(user,playerNumber);
+            gc.getGame().getVirtualView().setUserRMI(user, client);
         }
         userGame.put(user,gc);
         return gc.getGameID();
     }
 
-    public void joinGame(User user,int id, ClientInterface client) throws RemoteException, InvalidIDException, WrongPlayerException, IllegalValueException {
+    public int joinGame(User user,int id, ClientInterface client) throws RemoteException, InvalidIDException, WrongPlayerException, IllegalValueException {
         GameController gc;
         synchronized (lobby) {
-            gc = lobby.joinGame(user, id, client);
+            lobby.getGameController(id).getGame().getVirtualView().setUserRMI(user , client);
+            gc = lobby.joinGame(user, id);
         }
         userGame.put(user, gc);
+        return gc.getGameID();
     }
 
     public void tilesNumMessage(User user,int numTiles) throws RemoteException, WrongPlayerException, WrongListException, IllegalValueException {

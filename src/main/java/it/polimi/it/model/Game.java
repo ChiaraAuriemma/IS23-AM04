@@ -37,13 +37,12 @@ public class Game implements Serializable {
     private List<Integer> commonToken2;
     private  Integer endToken;
 
-    ClientInterface client;
 
 
     private VirtualView virtualView;
 
 
-    public Game(Integer numplayers, User host, int gameID, VirtualView virtualView, ClientInterface client){
+    public Game(Integer numplayers, User host, int gameID, VirtualView virtualView){
 
         this.endToken = -1;
         this.numplayers = numplayers;
@@ -54,7 +53,6 @@ public class Game implements Serializable {
         host.setGame(this);
         this.players = new ArrayList<>(numplayers);
         this.players.add(host); // controllo se è empty ???
-        this.virtualView.setUser(host, client);
         //start all the player points to zero
         this.points = new ArrayList<>(Collections.nCopies(numplayers, 0));
         //start all the players score from personal cards to zero
@@ -178,11 +176,10 @@ public class Game implements Serializable {
         virtualView.drawnCommonCards(card1,card2,commonToken1,commonToken2);
     }
 
-    public void joinGame (User joiner ){
+    public void joinGame (User joiner){
 
         joiner.setGame(this);
         this.players.add(joiner);
-        this.virtualView.setUser(joiner, this.client);
     }
 
     public void drawPersonalCard () throws RemoteException {
@@ -322,7 +319,4 @@ public class Game implements Serializable {
         return this.cards.get(i);
     }
 
-    public void setClient(ClientInterface client) {
-        this.client = client;
-    }
 }
