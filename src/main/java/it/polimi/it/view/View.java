@@ -10,7 +10,6 @@ import it.polimi.it.model.User;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -18,13 +17,12 @@ import static java.lang.System.out;
 
 public class View implements Serializable {
     private static final long serialVersionUID = 892639889752766985L;
-    private HashMap<User, Tile[][]> playersShelfies = new HashMap<>();
-    private HashMap<User, String> playersPoints = new HashMap<>();
+    private HashMap<String, Tile[][]> playersShelfies = new HashMap<String, Tile[][]>();
+    private HashMap<String, String> playersPoints = new HashMap<String, String>();
     private HashMap<User, String> playersNicknames = new HashMap<>();
     private Tile[][] playersPersonalCard = new Tile[6][5];
-    private ArrayList<User> order =new ArrayList<>();
+    private ArrayList<String> order =new ArrayList<>();
     private String[][] board = new String[9][9];
-    //private Tile[][] highlightedBoard = new Tile[9][9];
     private String common1;
     private String common1SecondPart;
     private String common2;
@@ -47,7 +45,7 @@ public class View implements Serializable {
     private ArrayList<String> names = new ArrayList<>();
     private List<List<Tile>> choosableTilesList = new ArrayList<>();
     private int gameID;
-    private User endToken;
+    private String endToken;
 
 
 
@@ -122,14 +120,14 @@ public class View implements Serializable {
      *
      * @param order is the ordered arrayList of the users in the game
      */
-    public void setOrderView(ArrayList<User> order) {
+    public void setOrderView(ArrayList<String> order) {
 
         numPlayers = order.size();
         //Collections.copy(this.order, order);
         int i=0;
-        for (User user : order) {
+        for (String nick : order) {
             this.order.add(order.get(i));
-            setPlayersNicknamesView(user);
+            //setPlayersNicknamesView(nick);
             i++;
         }
         setPaddedNames();
@@ -142,16 +140,16 @@ public class View implements Serializable {
      *
      * @param player is a user instance
      */
-    public void setPlayersNicknamesView(User player) {
-        playersNicknames.put(player, player.getNickname());
-    }
+    //public void setPlayersNicknamesView(String player) {
+    //    playersNicknames.put(player, player.getNickname());
+    //}
 
     /**
      * Setter method for the nicknames in their padded version (fixed 12 chars length)
      */
     public void setPaddedNames() {
-        for (User user : order) {
-            names.add(nickPadder(user.getNickname()));
+        for (String user : order) {
+            names.add(nickPadder(user));
         }
     }
 
@@ -176,7 +174,7 @@ public class View implements Serializable {
      * Initializes, for every user a string "00" which represents the initial points of every player
      */
     private void pointInitializer() {
-        for (User user : order) {
+        for (String user : order) {
             playersPoints.put(user, "00");
         }
     }
@@ -187,7 +185,7 @@ public class View implements Serializable {
      * @param player is the user
      * @param points is the new value of the user's points
      */
-    public void setPlayersPointsView(User player, int points) {
+    public void setPlayersPointsView(String player, int points) {
         String pointString = pTS(points);
         playersPoints.put(player, pointString);
     }
@@ -215,7 +213,7 @@ public class View implements Serializable {
      * Initializes a new shelf for every user, to be put in the user-shelf hasmap
      */
     private void shelfieInitializer() {
-        for (User user : order) {
+        for (String user : order) {
             playersShelfies.put(user, new Shelfie().getShelf());
         }
     }
@@ -226,7 +224,7 @@ public class View implements Serializable {
      * @param player  is the current user
      * @param shelfie is the new shelfie, used to update the previous shelfie value
      */
-    public void setPlayersShelfiesView(User player, Tile[][] shelfie) {
+    public void setPlayersShelfiesView(String player, Tile[][] shelfie) {
         playersShelfies.put(player, shelfie);
     }
 
@@ -501,7 +499,7 @@ public class View implements Serializable {
         out.print("Game ID: " + gameId + "\n");
     }
 
-    public void setEndToken(User user) {
+    public void setEndToken(String user) {
         this.endToken = user;
     }
 
@@ -513,8 +511,8 @@ public class View implements Serializable {
         out.println(error);
     }
 
-    public void setFinalPoints(List<User> users, ArrayList<Integer> points) {
-        for (User u: users){
+    public void setFinalPoints(List<String> users, ArrayList<Integer> points) {
+        for (String u: users){
             setPlayersPointsView(u, points.get(users.indexOf(u)));
         }
     }
@@ -533,7 +531,7 @@ public class View implements Serializable {
         out.print("\n");
     }
 
-    public void recover(Game game, int gameID, User user) {
+   /* public void recover(Game game, int gameID, String username) {
         this.gameID=gameID;
         numPlayers=game.getNumplayers();
         setBoardView(game.getBoard().getMatrix());
@@ -555,7 +553,7 @@ public class View implements Serializable {
         }
     }
 
-
+*/
     public String boardRow (int row){
         String returnString = String.valueOf(row) +" ";
         for(int i=0; i<9; i++){
