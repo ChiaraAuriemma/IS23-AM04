@@ -63,12 +63,17 @@ public class TestCli {
         order.add(u3);
         User u4 = new User("Fra");
         order.add(u4);
-        testView.setOrderView(order);
 
-        testView.setPlayersPointsView(u, 3);
-        testView.setPlayersPointsView(u2, 39);
-        testView.setPlayersPointsView(u3, 6);
-        testView.setPlayersPointsView(u4, 23);
+        ArrayList<String> a = new ArrayList<>();
+        for (User uefwjrej: order){
+            a.add(testView.nickPadder(uefwjrej.getNickname()));
+        }
+        testView.setOrderView(a);
+
+        testView.setPlayersPointsView(a.get(0), 3);
+        testView.setPlayersPointsView(a.get(1), 39);
+        testView.setPlayersPointsView(a.get(2), 6);
+        testView.setPlayersPointsView(a.get(3), 23);
 
         Tile[][] matrix = new Tile[6][5];
         TilesBag bag = new TilesBag();
@@ -77,27 +82,27 @@ public class TestCli {
                 matrix[row][column] = bag.randomTiles(row,column);
             }
         }
-        testView.setPlayersShelfiesView(u, matrix);
+        testView.setPlayersShelfiesView(a.get(0), matrix);
         for(int column=0; column<5; column++){
             for (int row=0; row<6; row++){
                 matrix[row][column] = bag.randomTiles(row,column);
             }
         }
-        testView.setPlayersShelfiesView(u2, matrix);
+        testView.setPlayersShelfiesView(a.get(1), matrix);
 
         for(int column=0; column<5; column++){
             for (int row=0; row<6; row++){
                 matrix[row][column] = bag.randomTiles(row,column);
             }
         }
-        testView.setPlayersShelfiesView(u3, matrix);
+        testView.setPlayersShelfiesView(a.get(2), matrix);
 
         for(int column=0; column<5; column++){
             for (int row=0; row<6; row++){
                 matrix[row][column] = bag.randomTiles(row,column);
             }
         }
-        testView.setPlayersShelfiesView(u4, matrix);
+        testView.setPlayersShelfiesView(a.get(3), matrix);
 
 
 

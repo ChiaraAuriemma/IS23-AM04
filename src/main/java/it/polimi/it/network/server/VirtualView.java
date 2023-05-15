@@ -112,7 +112,7 @@ public class VirtualView implements Serializable {
                 Message message = new Message(MessageType.INITIALMATRIX, initialMatrixMessage);
                 sendTCPMessage(userTCP.get(username), message);
 
-            } else if (typeOfConnection.get(game.getPlayer(i)).equals("RMI")) {
+            } else if (typeOfConnection.get(game.getPlayer(i).getNickname()).equals("RMI")) {
                 //sviluppo in RMI
 
                 ClientInterface clientRMI = userRMI.get(username);

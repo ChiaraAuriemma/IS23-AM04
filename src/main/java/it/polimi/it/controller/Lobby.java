@@ -11,6 +11,7 @@ import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -82,7 +83,7 @@ public class Lobby implements Serializable {
         return user;
     }
 
-    public GameController createGame(String user, int playerNumber) throws WrongPlayerException {
+    public GameController createGame(String username, int playerNumber) throws WrongPlayerException {
 
         if(playerNumber < 2 || playerNumber > 4){
             throw new WrongPlayerException("Wrong number of players"); //mandare messaggio a view
@@ -93,7 +94,13 @@ public class Lobby implements Serializable {
         VirtualView virtualView = new VirtualView();
         virtualView.setServerRMI(this.serverRMI);
         virtualView.setServerTCP(this.serverTCP);
-        Game game = new Game(playerNumber, user, this.gameCounterID,virtualView);
+
+       // userList.indexOf(userList.stream().filter(user -> Objects.equals(user.getNickname(), username)).collect(Collectors.toList()).get(0));
+        //userList.get(userList.indexOf(userList.stream().filter(user -> Objects.equals(user.getNickname(), username)).collect(Collectors.toList()).get(0)))
+
+
+
+        Game game = new Game(playerNumber, userList.get(userList.indexOf(userList.stream().filter(user -> Objects.equals(user.getNickname(), username)).collect(Collectors.toList()).get(0))), this.gameCounterID,virtualView);
         user.setInGame(true);
         gameList.add(game);
         GameController gameContr = new GameController(game, this);
@@ -110,10 +117,10 @@ public class Lobby implements Serializable {
             if(findGame.get(0).getCurrentPlayersNum()<findGame.get(0).getNumplayers()){
 
 
-                findGame.get(0).joinGame(user);
+                findGame.get(0).joinGame(userList.get(userList.indexOf(userList.stream().filter(u -> Objects.equals(u.getNickname(), user)).collect(Collectors.toList()).get(0))));
 
-                if(!user.getInGame()){
-                    user.setInGame(true);
+                if(!userList.get(userList.indexOf(userList.stream().filter(u -> Objects.equals(u.getNickname(), user)).collect(Collectors.toList()).get(0))).getInGame()){
+                    userList.get(userList.indexOf(userList.stream().filter(u -> Objects.equals(u.getNickname(), user)).collect(Collectors.toList()).get(0))).setInGame(true);
                 }
 
                 if (findGame.get(0).getNumplayers()==findGame.get(0).getCurrentPlayersNum()){

@@ -142,7 +142,7 @@ public class ClientTCPHandler implements Runnable,Serializable{
 
                     synchronized (gameController){
                         try {
-                            this.gameController.getFromViewNTiles(this.user,tilesNumRequest.getNumTiles());
+                            this.gameController.getFromViewNTiles(this.user.getNickname(),tilesNumRequest.getNumTiles());
                         } catch (WrongPlayerException | WrongListException | RemoteException | IllegalValueException e) {
 
                             ErrorMessage errorMessage = new ErrorMessage(e.getMessage());
@@ -157,7 +157,7 @@ public class ClientTCPHandler implements Runnable,Serializable{
 
                     synchronized (gameController){
                         try {
-                            this.gameController.getTilesListFromView(this.user, selectedTilesRequest.getChoosenTiles());
+                            this.gameController.getTilesListFromView(this.user.getNickname(), selectedTilesRequest.getChoosenTiles());
                         } catch (WrongPlayerException e) {
                             ErrorMessage errorMessage = new ErrorMessage(e.getMessage());
                             response = new Message(MessageType.ERROR, errorMessage);
@@ -171,7 +171,7 @@ public class ClientTCPHandler implements Runnable,Serializable{
 
                     synchronized (gameController){
                         try {
-                            this.gameController.getColumnFromView(this.user, chooseColumnRequest.getColumnNumber());
+                            this.gameController.getColumnFromView(this.user.getNickname(), chooseColumnRequest.getColumnNumber());
                         } catch (InvalidIDException e) {
                             ErrorMessage errorMessage = new ErrorMessage(e.getMessage());
                             response = new Message(MessageType.ERROR, errorMessage);

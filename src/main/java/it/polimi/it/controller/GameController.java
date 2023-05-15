@@ -91,6 +91,8 @@ public class GameController implements Serializable {
      */
     void turnDealer() throws InvalidIDException, IllegalValueException, RemoteException {
 
+        game.getVirtualView().viewUpdate();
+
         if(this.endGame && this.currentPlayer == 0){
             game.getVirtualView().viewUpdate();
 
@@ -106,6 +108,7 @@ public class GameController implements Serializable {
                 currentPlayer=0;
             }
             firstOperation();
+
             //faccio tutte le cose del turno,
             //aggiorno i punti
         }
@@ -121,6 +124,8 @@ public class GameController implements Serializable {
 
         //faccio i controlli su qual è il massimo num di tile prendibili
         this.maxTile = playerList.get(currentPlayer).maxValueOfTiles();
+        game.getVirtualView().viewUpdate();
+
 
         //passo alla view, faccio scegliere il numero che vuole l'utente
         ///askFromView(maxTile);/////////////////////////////
