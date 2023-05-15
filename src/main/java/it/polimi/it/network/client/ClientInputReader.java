@@ -89,6 +89,14 @@ public class ClientInputReader implements Runnable, Serializable{
                                 System.out.println("Nickname is too long, please retry... ");
                                 break;
                             }
+                            
+                            // pad the nickname to a length of 12
+
+
+                            while (nickname.length() < 12) {
+                                nickname = nickname.concat(" ");
+                            }
+                            
                             //metodo che manda il messaggio login
                             client.login(nickname);
                         } else {
