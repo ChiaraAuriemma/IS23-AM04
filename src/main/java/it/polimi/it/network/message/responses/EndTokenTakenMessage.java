@@ -8,13 +8,13 @@ import java.io.Serializable;
 public class EndTokenTakenMessage extends Payload  implements Serializable {
 
     private static final long serialVersionUID = -9088018950772537538L;
-    private User user;
+    private String username;
 
-    public EndTokenTakenMessage(User user){
-        this.user = user;
+    public EndTokenTakenMessage(String username){
+        this.username = username;
     }
 
-    public User getUser() {
-        return user;
+    public String getUsername() {
+        return username;
     }
 }

@@ -9,20 +9,20 @@ import java.util.List;
 public class PointsUpdateMessage extends Payload  implements Serializable {
 
     private static final long serialVersionUID = -8843338650621711142L;
-    private User user;
+    private String username;
     private Integer point;
     private List<Integer> commonToken1;
     private List<Integer> commonToken2;
 
-    public PointsUpdateMessage(User user, Integer point, List<Integer> commonToken1, List<Integer> commonToken2){
-        this.user = user;
+    public PointsUpdateMessage(String username, Integer point, List<Integer> commonToken1, List<Integer> commonToken2){
+        this.username = username;
         this.point = point;
         this.commonToken1 = commonToken1;
         this.commonToken2 = commonToken2;
     }
 
-    public User getUser() {
-        return user;
+    public String getUsername() {
+        return username;
     }
 
     public Integer getPoint() {

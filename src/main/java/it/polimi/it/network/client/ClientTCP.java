@@ -29,6 +29,7 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
 
 
     private User user;
+    private String username;
     private ObjectInputStream in;
     private ObjectOutputStream out;
     private Socket serverSocket;
@@ -83,7 +84,7 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
     }
 
     @Override
-    public void setStartOrder(ArrayList<User> order) {
+    public void setStartOrder(ArrayList<String> order) {
         view.setOrderView(order);
     }
 
@@ -104,13 +105,13 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
     }
 
     @Override
-    public void setNewShelfie(User receiver, Tile[][] shelfie) {
-        view.setPlayersShelfiesView(receiver, shelfie);
+    public void setNewShelfie(String username, Tile[][] shelfie) {
+        view.setPlayersShelfiesView(username, shelfie);
     }
 
     @Override
-    public void setNewPoints(User user, Integer points) {
-        view.setPlayersPointsView(user, points);
+    public void setNewPoints(String username, Integer points) {
+        view.setPlayersPointsView(username, points);
     }
 
     @Override
@@ -140,7 +141,7 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
             switch (messType){
                 case CREATEPLAYERRESPONSE:
                     LoginResponse loginResponse = (LoginResponse) response.getPayload();
-                    user = loginResponse.getUser();
+                    username = loginResponse.getUsername();
                     //view : faccio passare la view alla schermata di selezione join o create game
                     //view : passo alla view lo user
                     buffer.setStage(TurnStages.CREATEorJOIN);
@@ -204,7 +205,7 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
                     break;
                 case SHELFIEUPDATE:
                     ShelfieUpdateMessage shelfieUpdateMessage = (ShelfieUpdateMessage) response.getPayload();
-                    setNewShelfie(shelfieUpdateMessage.getUser(), shelfieUpdateMessage.getShelfie());
+                    setNewShelfie(shelfieUpdateMessage.getUsername(), shelfieUpdateMessage.getShelfie());
                     buffer.setStage(TurnStages.NOTURN);
                     //view : passo lo user,la colonna e la lista ordinata di tiles scelte per aggiornare la shelfie dello user corrispondente
                     break;
@@ -215,17 +216,17 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
                     break;
                 case POINTSUPDATE:
                     PointsUpdateMessage pointsUpdateMessage = (PointsUpdateMessage) response.getPayload();
-                    setNewPoints(pointsUpdateMessage.getUser(), pointsUpdateMessage.getPoint());
+                    setNewPoints(pointsUpdateMessage.getUsername(), pointsUpdateMessage.getPoint());
                     //view : passo lo user,il nuovo punteggio e se questo ha preso qualche common token
                     break;
                 case ENDTOKEN:
                     EndTokenTakenMessage endTokenTakenMessage = (EndTokenTakenMessage) response.getPayload();
-                    setEndToken(endTokenTakenMessage.getUser());
+                    setEndToken(endTokenTakenMessage.getUsername());
                     //view : passo lo user che ha preso l'endToken
                     break;
                 case FINALPOINTS:
                     FinalPointsMessage finalPointsMessage = (FinalPointsMessage) response.getPayload();
-                    setFinalPoints(finalPointsMessage.getUsers(),finalPointsMessage.getPoints());
+                    setFinalPoints(finalPointsMessage.getUsernames(),finalPointsMessage.getPoints());
 
                     //view : passo la lista degli utenti e la lista dei loro punteggi
                     break;
@@ -256,14 +257,14 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
     }
     @Override
         public void createGame(int playerNumber){
-        CreateGameRequest createGameRequest = new CreateGameRequest(user,playerNumber, this);
+        CreateGameRequest createGameRequest = new CreateGameRequest(username,playerNumber, this);
         Message request = new Message(MessageType.CREATEGAME, createGameRequest);
         send(request);
     }
 
     @Override
     public void joinGame(int gameId){
-        JoinGameRequest joinGameRequest = new JoinGameRequest(user,gameId, this);
+        JoinGameRequest joinGameRequest = new JoinGameRequest(username,gameId, this);
         Message request = new Message(MessageType.JOINGAME, joinGameRequest);
         send(request);
     }
@@ -300,18 +301,18 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
 
     }
     @Override
-    public void setEndToken(User user) {
-        view.setEndToken(user);
+    public void setEndToken(String username) {
+        view.setEndToken(username);
     }
 
     @Override
-    public void setFinalPoints(List<User> users, ArrayList<Integer> points) {
-        view.setFinalPoints(users, points);
+    public void setFinalPoints(List<String> usernames, ArrayList<Integer> points) {
+        view.setFinalPoints(usernames, points);
     }
 
     @Override
     public void recover(Game game, int gameID) {
-        view.recover(game, gameID, user);
+        view.recover(game, gameID, username);
     }
 
     @Override

@@ -11,7 +11,7 @@ import java.io.Serializable;
 public class CreateGameResponse extends Payload  implements Serializable{
 
     private static final long serialVersionUID = -1080327236567829974L;
-    int gameId;
+    private int gameId;
 
     public CreateGameResponse(int gameId) {
         this.gameId = gameId;

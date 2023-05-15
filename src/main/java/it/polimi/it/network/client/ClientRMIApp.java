@@ -176,7 +176,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
 
     @Override
     public void setEndToken(String username) {
-        view.setEndToken(user);
+        view.setEndToken(username);
     }
 
     @Override
@@ -186,7 +186,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
 
     @Override
     public void recover(Game game, int gameID) {
-        view.recover(game, gameID, user);
+        view.recover(game, gameID, username);
     }
 
     @Override
@@ -196,7 +196,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
 
     @Override
     public void setNewShelfie(String username, Tile[][] shelfie) {
-        view.setPlayersShelfiesView(user, shelfie);
+        view.setPlayersShelfiesView(username, shelfie);
     }
 
     @Override
@@ -206,7 +206,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
 
     @Override
     public void setNewPoints(String username, Integer points) {
-        view.setPlayersPointsView(user, points);
+        view.setPlayersPointsView(username, points);
     }
 
     @Override
@@ -221,7 +221,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
     }
 
     @Override
-    public void setStartOrder(ArrayList<User> order) {
+    public void setStartOrder(ArrayList<String> order) {
         view.setOrderView(order);
         buffer.setStage(TurnStages.NOTURN);
     }

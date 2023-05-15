@@ -22,7 +22,7 @@ public interface ClientInterface extends Remote, Serializable {
 
     public void takeableTiles(List<List<Tile>> choosableTilesList, int num) throws RemoteException;
 
-    public void setStartOrder(ArrayList<User> order) throws RemoteException;
+    public void setStartOrder(ArrayList<String> order) throws RemoteException;
 
     public void setNewBoard(Tile[][] matrix) throws RemoteException;
 
