@@ -197,7 +197,7 @@ public class Game implements Serializable {
         this.cards.add(card);
 
         User user = players.get(cards.size() - 1);
-        virtualView.drawnPersonalCard(user,card);
+        virtualView.drawnPersonalCard(user.getNickname(),card);
     }
 
     public void pointCount(User player) throws RemoteException {

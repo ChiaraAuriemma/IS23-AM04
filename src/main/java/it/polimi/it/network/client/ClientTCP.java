@@ -28,7 +28,6 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
     private View view;
 
 
-    private User user;
     private String username;
     private ObjectInputStream in;
     private ObjectOutputStream out;
@@ -116,7 +115,7 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
 
     @Override
     public void notifyTurnStart(int maxValueofTiles) {
-        view.NotifyTurnStart(maxValueofTiles, user.getNickname());
+        view.NotifyTurnStart(maxValueofTiles, username);
     }
 
     @Override
@@ -146,7 +145,7 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
                     //view : passo alla view lo user
                     buffer.setStage(TurnStages.CREATEorJOIN);
 
-                    view.joinOrCreate(user.getNickname());
+                    view.joinOrCreate(username);
                     break;
                 case CREATEGAMERESPONSE:
                     CreateGameResponse createGameResponse = (CreateGameResponse) response.getPayload();
@@ -312,7 +311,7 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
 
     @Override
     public void recover(Game game, int gameID) {
-        view.recover(game, gameID, username);
+        //view.recover(game, gameID, username);
     }
 
     @Override
