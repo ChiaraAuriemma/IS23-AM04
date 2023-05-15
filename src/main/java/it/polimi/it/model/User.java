@@ -33,7 +33,7 @@ public class User implements Serializable {
             throw new IllegalValueException("Il numero di tiles non è accettabile");
         }
         max = board.findMaxAdjacent(max);
-        game.getVirtualView().startTurn(this,max);
+        game.getVirtualView().startTurn(this.getNickname(),max);
         return max;
     }
 
@@ -52,7 +52,7 @@ public class User implements Serializable {
             throw new WrongListException("Error in the chosen tiles list");
         }
 
-        game.getVirtualView().takeableTiles(this,choosableList, tilesNum);
+        game.getVirtualView().takeableTiles(this.getNickname(),choosableList, tilesNum);
         return choosableList;
     }
 
@@ -70,7 +70,7 @@ public class User implements Serializable {
         //board.removeTiles(chosen);
 
         boolean [] columns = shelf.chooseColumn(tilesNumber);
-        game.getVirtualView().possibleColumns(this,columns);
+        game.getVirtualView().possibleColumns(this.getNickname(),columns);
         return columns;
     }
 

@@ -3,7 +3,6 @@ package it.polimi.it.controller;
 import it.polimi.it.Exceptions.*;
 import it.polimi.it.model.Game;
 import it.polimi.it.model.User;
-import it.polimi.it.network.client.ClientInterface;
 import it.polimi.it.network.server.RMIImplementation;
 import it.polimi.it.network.server.ServerTCP;
 import it.polimi.it.network.server.VirtualView;
@@ -83,7 +82,7 @@ public class Lobby implements Serializable {
         return user;
     }
 
-    public GameController createGame(User user, int playerNumber) throws WrongPlayerException {
+    public GameController createGame(String user, int playerNumber) throws WrongPlayerException {
 
         if(playerNumber < 2 || playerNumber > 4){
             throw new WrongPlayerException("Wrong number of players"); //mandare messaggio a view
@@ -104,7 +103,7 @@ public class Lobby implements Serializable {
         return gameContr;
     }
 
-    public GameController joinGame(User user, int gameID) throws InvalidIDException, WrongPlayerException, IllegalValueException, RemoteException {
+    public GameController joinGame(String user, int gameID) throws InvalidIDException, WrongPlayerException, IllegalValueException, RemoteException {
 
         List<Game> findGame = gameList.stream().filter(game -> game.getGameid() == gameID).collect(Collectors.toList());
         if(gameID<gameCounterID && !findGame.isEmpty()){

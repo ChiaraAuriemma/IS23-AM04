@@ -133,7 +133,7 @@ public class GameController implements Serializable {
      *  in order to highlight them on the board.
      * @param chosenNumber is the input from the user
      */
-    public void getFromViewNTiles(User user,int chosenNumber) throws WrongPlayerException, WrongListException, RemoteException, IllegalValueException {
+    public void getFromViewNTiles(String user, int chosenNumber) throws WrongPlayerException, WrongListException, RemoteException, IllegalValueException {
         if(user.equals(playerList.get(currentPlayer))){
             this.playerList.get(currentPlayer).choosableTiles(chosenNumber);
 
@@ -157,7 +157,7 @@ public class GameController implements Serializable {
      * @param chosenList is the list of selected tiles
      * @throws WrongTileException exception used when a wrong tile is selected
      */
-    public void getTilesListFromView(User user,List<Tile> chosenList) throws WrongPlayerException {
+    public void getTilesListFromView(String user, List<Tile> chosenList) throws WrongPlayerException {
         if(user.equals(playerList.get(currentPlayer)) && validTilesCheck(chosenList)) {
             for (Tile t : chosenList) {
                 currentTilesList.add(new Tile(t.getRow(), t.getColumn(), PossibleColors.valueOf(t.getColor())));
@@ -197,7 +197,7 @@ public class GameController implements Serializable {
      * @throws WrongTileException exception used when a wrong tile is selected
      */
     //oltre a scegliere la colonna dove metterle, ordina le Tile per come le vuole nella colonna
-    public void getColumnFromView(User user,int col) throws IllegalValueException, InvalidIDException, RemoteException {
+    public void getColumnFromView(String user, int col) throws IllegalValueException, InvalidIDException, RemoteException {
         if(!possibleColumnArray[col]){
            System.out.println("Invalid column choice"); //da far vedere a view
         }
@@ -283,6 +283,6 @@ public class GameController implements Serializable {
     }
 
     public void resetGame(User user, int gameID) throws RemoteException {
-        game.getVirtualView().resetAfterDisconnection(user, gameID);
+        //game.getVirtualView().resetAfterDisconnection(user.getNickname(), gameID);
     }
 }
