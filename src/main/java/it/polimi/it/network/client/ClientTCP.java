@@ -256,14 +256,14 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
     }
     @Override
         public void createGame(int playerNumber){
-        CreateGameRequest createGameRequest = new CreateGameRequest(username,playerNumber, this);
+        CreateGameRequest createGameRequest = new CreateGameRequest(username,playerNumber);
         Message request = new Message(MessageType.CREATEGAME, createGameRequest);
         send(request);
     }
 
     @Override
     public void joinGame(int gameId){
-        JoinGameRequest joinGameRequest = new JoinGameRequest(username,gameId, this);
+        JoinGameRequest joinGameRequest = new JoinGameRequest(username,gameId);
         Message request = new Message(MessageType.JOINGAME, joinGameRequest);
         send(request);
     }

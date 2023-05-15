@@ -124,8 +124,12 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
     public void joinGame(int gameID) throws RemoteException {
         try {
             int gameid = sr.joinGame(this.nickname, gameID, this);
+
+            if(!buffer.getStage().equals(TurnStages.TILESNUM)){
+                buffer.setStage(TurnStages.NOTHING);
+            }
+
             view.setGameID(gameid);
-            buffer.setStage(TurnStages.NOTHING);
         } catch (InvalidIDException | WrongPlayerException | IllegalValueException e) {
             view.askIDAgain();
         }
@@ -241,6 +245,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
     @Override
     public void takeableTiles(List<List<Tile>> choosableTilesList, int num) throws RemoteException {
         //view : faccio vedere illuminate le tiles nella lista
+        System.out.println("gino");
         view.takeableTiles(choosableTilesList);
     }
 

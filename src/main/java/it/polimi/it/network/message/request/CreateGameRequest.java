@@ -12,13 +12,11 @@ public class CreateGameRequest extends Payload  implements Serializable {
     private String username;
     private int playerNumber;
 
-    private ClientInterface client;
 
-
-    public CreateGameRequest(String username, int playerNumber, ClientInterface client) {
+    public CreateGameRequest(String username, int playerNumber) {
         this.username = username;
         this.playerNumber = playerNumber;
-        this.client = client;
+
     }
 
     public String getUsername() {
@@ -29,7 +27,5 @@ public class CreateGameRequest extends Payload  implements Serializable {
         return playerNumber;
     }
 
-    public ClientInterface getClient() {
-        return client;
-    }
+
 }

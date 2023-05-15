@@ -26,7 +26,7 @@ public class ClientInputReader implements Runnable, Serializable{
     /**
      * Instance of the View class
      */
-    private View view = new View();
+    private View view ;
 
     private TurnStages stage;
 
@@ -100,7 +100,7 @@ public class ClientInputReader implements Runnable, Serializable{
                             //metodo che manda il messaggio login
                             client.login(nickname);
                         } else {
-                            view.printError("There's a time and place for everything, but not now.");
+                            view.printError("There's a time and place for everything, but not now. 1");
                         }
 
                         break;
@@ -110,7 +110,7 @@ public class ClientInputReader implements Runnable, Serializable{
                             int numPlayers = Integer.parseInt(action);
                             client.createGame(numPlayers);
                         } else {
-                            view.printError("There's a time and place for everything, but not now.");
+                            view.printError("There's a time and place for everything, but not now. 2");
                         }
                         break;
 
@@ -119,7 +119,7 @@ public class ClientInputReader implements Runnable, Serializable{
                             int gameID = Integer.parseInt(action);
                             client.joinGame(gameID);
                         } else {
-                            view.printError("There's a time and place for everything, but not now.");
+                            view.printError("There's a time and place for everything, but not now. 3");
                         }
                         break;
 
@@ -146,7 +146,7 @@ public class ClientInputReader implements Runnable, Serializable{
                             int numTiles = Integer.parseInt(action);
                             client.tilesNumMessage(numTiles);
                         } else {
-                            view.printError("There's a time and place for everything, but not now.");
+                            view.printError("There's a time and place for everything, but not now. 4");
                         }
                         break;
 
@@ -156,7 +156,7 @@ public class ClientInputReader implements Runnable, Serializable{
 
 
                             // tiles; format TBD (0,2);(1,3);(4,7) -> lunghezza <6-> 1 tile; <12->2tiles; else->3tiles
-                            client.getView();
+                            //client.getView(); (IMPORTANTE)
                             ArrayList<Tile> chosenTilesList = new ArrayList<>();
                             char[] chosen = chosenTiles.toCharArray();
                             int row = Character.getNumericValue(chosen[1]);
@@ -179,7 +179,7 @@ public class ClientInputReader implements Runnable, Serializable{
                             }
                             client.selectedTiles(chosenTilesList);
                         } else {
-                            view.printError("There's a time and place for everything, but not now.");
+                            view.printError("There's a time and place for everything, but not now. 5");
                         }
                         break;
 
@@ -189,7 +189,7 @@ public class ClientInputReader implements Runnable, Serializable{
                             int column = Integer.parseInt(action);
                             client.chooseColumn(column);
                         } else {
-                            view.printError("There's a time and place for everything, but not now.");
+                            view.printError("There's a time and place for everything, but not now. 6");
                         }
                         break;
 
@@ -226,10 +226,14 @@ public class ClientInputReader implements Runnable, Serializable{
             clientRMI.startClient();
             client = clientRMI;
         }
+        view = client.getView();
     }
 
     public void setStage(TurnStages stage){
         this.stage = stage;
     }
 
+    public TurnStages getStage() {
+        return stage;
+    }
 }

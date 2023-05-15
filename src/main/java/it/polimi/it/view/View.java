@@ -321,10 +321,13 @@ public class View implements Serializable {
         switch (numPlayers) {
             case 2:
                 namesLine = border + "   " + names.get(0) + "   " + names.get(1) + "   " + noPlayer + "   " + noPlayer + "    " + border;
+                break;
             case 3:
                 namesLine = border + "   " + names.get(0) + "   " + names.get(1) + "   " + names.get(2) + "   " + noPlayer + "    " + border;
+                break;
             case 4:
                 namesLine = border + "   " + names.get(0) + "   " + names.get(1) + "   " + names.get(2) + "   " + names.get(3) + "    " + border;
+                break;
         }
     }
 
@@ -332,10 +335,13 @@ public class View implements Serializable {
         switch (numPlayers) {
             case 2:
                 pointsLine = border + "    " + "Points: " + playersPoints.get(order.get(0)) + "     " + "Points: " + playersPoints.get(order.get(1)) + "     " + "          " + "     " + "          " + "     " + border;
+                break;
             case 3:
                 pointsLine = border + "    " + "Points: " + playersPoints.get(order.get(0)) + "     " + "Points: " + playersPoints.get(order.get(1)) + "     " + "Points: " + playersPoints.get(order.get(2)) + "     " + "          " + "     " + border;
+                break;
             case 4:
                 pointsLine = border + "    " + "Points: " + playersPoints.get(order.get(0)) + "     " + "Points: " + playersPoints.get(order.get(1)) + "     " + "Points: " + playersPoints.get(order.get(2)) + "     " + "Points: " + playersPoints.get(order.get(3)) + "     " + border;
+                break;
         }
     }
 
@@ -470,7 +476,7 @@ public class View implements Serializable {
 
 
     public void NotifyTurnStart(int maxValueofTiles, String username) {//stampa tipo Bro è il tuo turno, chiedi di scegliere quante tile vuole; in input ho il max numero che posso prendere
-        out.print("Hey " + username + " it's your turn!\nChoose how many Tiles you want to take from the LivingRoom... ");
+        out.print("Hey " + username + " it's your turn!\nChoose how many Tiles you want to take from the LivingRoom... \n");
     }
 
     public void askNumTilesAgain() {
@@ -621,7 +627,11 @@ public class View implements Serializable {
 
     private String setLineBoardChat(int line) {
         String returnString = null;
-        returnString =  border + "   " + boardRow(line) + "\u001B[0m    " + chatBorder + chatMessages.get(line) + chatBorder +  "\u001B[0m  " + border;
+        if(chatMessages.size() > line){
+            returnString =  border + "   " + boardRow(line) + "\u001B[0m    " + chatBorder + chatMessages.get(line) + chatBorder +  "\u001B[0m  " + border;
+        }else{
+            returnString =  border + "   " + boardRow(line) + "\u001B[0m    " + chatBorder + "                                 " + chatBorder +  "\u001B[0m  " + border;
+        }
         return returnString;
     }
 
@@ -699,16 +709,16 @@ public class View implements Serializable {
             case 2:
                 returnString = border + "   "+r+" " +sColorPicker(s1,row,0)+sColorPicker(s1,row,1)+sColorPicker(s1,row,2)+sColorPicker(s1,row,3)+sColorPicker(s1,row,4) + "\u001B[0m   " +
                         r +" " +sColorPicker(s2,row,0)+sColorPicker(s2,row,1)+sColorPicker(s2,row,2)+sColorPicker(s2,row,3)+sColorPicker(s2,row,4) + "\u001B[0m   " +
-                        "            " + "            " + " " + border
-                ;break;
+                        "            " + "            " + " " + "      " + border;
+                break;
             case 3:
                 Tile[][] s3 = playersShelfies.get(order.get(2));
 
                 returnString = border + "   "+r+" " +sColorPicker(s1,row,0)+sColorPicker(s1,row,1)+sColorPicker(s1,row,2)+sColorPicker(s1,row,3)+sColorPicker(s1,row,4) + "\u001B[0m   " +
                         r +" " +sColorPicker(s2,row,0)+sColorPicker(s2,row,1)+sColorPicker(s2,row,2)+sColorPicker(s2,row,3)+sColorPicker(s2,row,4) + "\u001B[0m   " +
                         r +" " +sColorPicker(s3,row,0)+sColorPicker(s3,row,1)+sColorPicker(s3,row,2)+sColorPicker(s3,row,3)+sColorPicker(s3,row,4) + "\u001B[0m   " +
-                        "            " + " " + border
-                ;break;
+                        "            " + " " + "   " + border;
+                break;
             case 4:
                 Tile[][] ss3 = playersShelfies.get(order.get(2));
                 Tile[][] s4 = playersShelfies.get(order.get(3));
@@ -717,8 +727,8 @@ public class View implements Serializable {
                         r +" " +sColorPicker(s2,row,0)+sColorPicker(s2,row,1)+sColorPicker(s2,row,2)+sColorPicker(s2,row,3)+sColorPicker(s2,row,4) + "\u001B[0m   " +
                         r +" " +sColorPicker(ss3,row,0)+sColorPicker(ss3,row,1)+sColorPicker(ss3,row,2)+sColorPicker(ss3,row,3)+sColorPicker(ss3,row,4) + "\u001B[0m   " +
                         r +" " +sColorPicker(s4,row,0)+sColorPicker(s4,row,1)+sColorPicker(s4,row,2)+sColorPicker(s4,row,3)+sColorPicker(s4,row,4) + "\u001B[0m   " +
-                        " " + border
-                ;break;
+                        " " + border;
+                break;
         }
         return returnString;
     }

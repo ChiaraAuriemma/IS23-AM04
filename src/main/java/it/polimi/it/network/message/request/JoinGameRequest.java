@@ -12,12 +12,9 @@ public class JoinGameRequest extends Payload  implements Serializable {
     private String username;
     private int id;
 
-    ClientInterface client;
-
-    public JoinGameRequest(String username, int id, ClientInterface client) {
+    public JoinGameRequest(String username, int id) {
         this.username = username;
         this.id = id;
-        this.client = client;
     }
 
     public String getUsername() {
@@ -28,7 +25,4 @@ public class JoinGameRequest extends Payload  implements Serializable {
         return id;
     }
 
-    public ClientInterface getClient() {
-        return client;
-    }
 }

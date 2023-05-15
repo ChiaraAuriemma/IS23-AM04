@@ -21,8 +21,8 @@ public class Client implements Serializable {
         }
 
         ClientInputReader cliR = new ClientInputReader();
+        cliR.setConnectionType(inputLine.toUpperCase());
         Thread thread = new Thread(cliR);
         thread.start();
-        cliR.setConnectionType(inputLine.toUpperCase());
     }
 }
