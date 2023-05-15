@@ -17,7 +17,7 @@ public class ServerTCP implements Runnable, Serializable{
     private static final long serialVersionUID = 2221472440957074825L;
     private  int port;
     private ServerSocket serverSocket ;
-    private HashMap<User, Socket> userTCP;
+    private HashMap<String, Socket> userTCP;
     private Lobby lobby;
 
     private Socket clientSocket;
@@ -52,15 +52,15 @@ public class ServerTCP implements Runnable, Serializable{
     }
 
     public Socket getUserTCP(User user) throws NotTcpUserException {
-        if(userTCP.containsKey(user)){
-            return userTCP.get(user);
+        if(userTCP.containsKey(user.getNickname())){
+            return userTCP.get(user.getNickname());
         }else{
             throw new NotTcpUserException("this user doesn't have a TCP connection");
         }
     }
 
     public void setUserTCP(User user, Socket socket){
-        userTCP.put(user,socket);
+        userTCP.put(user.getNickname(),socket);
     }
 
     public void setLobby(Lobby lobby) {

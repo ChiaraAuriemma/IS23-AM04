@@ -139,7 +139,7 @@ public class GameController implements Serializable {
      * @param chosenNumber is the input from the user
      */
     public void getFromViewNTiles(String user, int chosenNumber) throws WrongPlayerException, WrongListException, RemoteException, IllegalValueException {
-        if(user.equals(playerList.get(currentPlayer))){
+        if(user.equals(playerList.get(currentPlayer).getNickname())){
             this.playerList.get(currentPlayer).choosableTiles(chosenNumber);
 
             //messaggio alla view per far scegliere un altro valore
@@ -163,7 +163,7 @@ public class GameController implements Serializable {
      * @throws WrongTileException exception used when a wrong tile is selected
      */
     public void getTilesListFromView(String user, List<Tile> chosenList) throws WrongPlayerException {
-        if(user.equals(playerList.get(currentPlayer)) && validTilesCheck(chosenList)) {
+        if(user.equals(playerList.get(currentPlayer).getNickname()) && validTilesCheck(chosenList)) {
             for (Tile t : chosenList) {
                 currentTilesList.add(new Tile(t.getRow(), t.getColumn(), PossibleColors.valueOf(t.getColor())));
             }

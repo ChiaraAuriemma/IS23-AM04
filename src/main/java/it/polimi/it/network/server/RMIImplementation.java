@@ -46,7 +46,7 @@ public class RMIImplementation extends UnicastRemoteObject implements ServerInte
     }
 
     public ClientInterface getUserRMI (User user){
-        return userRMI.get(user);
+        return userRMI.get(user.getNickname());
     }
 
 
