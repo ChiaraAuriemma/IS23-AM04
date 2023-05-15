@@ -119,8 +119,12 @@ public class Game implements Serializable {
             order.add(i,this.players.get(position));
         }
 
+        System.out.println(order.size());
+
         //mando alla view un po' di cose da inizializzare
         virtualView.startOrder(order);
+        System.out.println("post");
+
         virtualView.initialMatrix(board.getMatrix());
         playersOrder=order;
         return order;

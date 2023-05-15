@@ -24,7 +24,6 @@ public class View implements Serializable {
     private Tile[][] playersPersonalCard = new Tile[6][5];
     private ArrayList<User> order =new ArrayList<>();
     private String[][] board = new String[9][9];
-    //private Tile[][] highlightedBoard = new Tile[9][9];
     private String common1;
     private String common1SecondPart;
     private String common2;

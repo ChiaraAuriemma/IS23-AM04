@@ -90,7 +90,13 @@ public class VirtualView implements Serializable {
             }else if(typeOfConnection.get(user).equals("RMI")){
 
                ClientInterface clientRMI = userRMI.get(user);
-               clientRMI.setStartOrder(order);
+               if(clientRMI==null){
+                   System.out.println("1");
+               }else{
+                   System.out.println("2");
+               }
+                assert clientRMI != null;
+                clientRMI.setStartOrder(order);
             }
 
         }
