@@ -30,9 +30,9 @@ public interface ClientInterface extends Remote, Serializable {
 
     public void setNewPersonal(PersonalGoalCard card) throws RemoteException;
 
-    public void setNewShelfie(User receiver, Tile[][] shelfie) throws RemoteException;
+    public void setNewShelfie(String username, Tile[][] shelfie) throws RemoteException;
 
-    public void setNewPoints(User user, Integer points) throws RemoteException;
+    public void setNewPoints(String username, Integer points) throws RemoteException;
 
     public void notifyTurnStart(int maxValueofTiles)throws RemoteException;
 
@@ -50,9 +50,9 @@ public interface ClientInterface extends Remote, Serializable {
 
     public void chooseColumn(int column) throws RemoteException;
 
-    public void setEndToken(User user) throws RemoteException;
+    public void setEndToken(String username) throws RemoteException;
 
-    public void setFinalPoints(List<User> users, ArrayList<Integer> points) throws RemoteException;
+    public void setFinalPoints(List<String> usernames, ArrayList<Integer> points) throws RemoteException;
 
     public void recover(Game game, int gameID) throws RemoteException;
 

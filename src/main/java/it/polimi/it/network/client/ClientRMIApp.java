@@ -28,6 +28,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
     private boolean nickOK = false;
 
     private User user;
+    private String nickname;
     private View view;
     private Scanner scanner;
     private List<Tile> lastChosen = new ArrayList<>();
@@ -84,9 +85,9 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
      */
     public void login(String userName) throws RemoteException {
         try {
-            this.user = sr.login(this, userName);
+            this.nickname = sr.login(this, userName);
             buffer.setStage(TurnStages.CREATEorJOIN);
-            view.joinOrCreate(user.getNickname());
+            view.joinOrCreate(this.nickname);
 
             //view : passo alla schermata con create e join game
         } catch (ExistingNicknameException | EmptyNicknameException e) {
@@ -105,7 +106,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
     @Override
     public void createGame(int playerNumber) throws RemoteException {
         try {
-            int gameid = sr.createGame(this.user, playerNumber, this);
+            int gameid = sr.createGame(this.nickname, playerNumber, this);
             buffer.setStage(TurnStages.NOTHING);
             view.setGameID(gameid);
         } catch (WrongPlayerException e) {
@@ -123,7 +124,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
      */
     public void joinGame(int gameID) throws RemoteException {
         try {
-            int gameid = sr.joinGame(this.user, gameID, this);
+            int gameid = sr.joinGame(this.nickname, gameID, this);
             view.setGameID(gameid);
             buffer.setStage(TurnStages.NOTHING);
         } catch (InvalidIDException | WrongPlayerException | IllegalValueException e) {
@@ -134,7 +135,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
     @Override
     public void tilesNumMessage(int numOfTiles) throws RemoteException {
         try {   //comunico al server il numero scelto
-            sr.tilesNumMessage(user, numOfTiles);
+            sr.tilesNumMessage(this.nickname, numOfTiles);
             buffer.setStage(TurnStages.CHOOSETILES);
         } catch (IllegalValueException e) {
             //view : notifico alla view che il numero di tiles indicato non è valido
@@ -151,7 +152,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
     public void selectedTiles(List<Tile> choosenTiles) throws RemoteException {
         //mando le tiles a RMIImplementation
         try {
-            sr.selectedTiles(user, choosenTiles);
+            sr.selectedTiles(this.nickname, choosenTiles);
             buffer.setStage(TurnStages.CHOOSECOLUMN);
         } catch (WrongPlayerException e) {
             //view : notifico che l'user non è quello giusto
@@ -163,7 +164,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
     @Override
     public void chooseColumn(int numOfColum) throws RemoteException {
         try {
-            sr.chooseColumn(user, numOfColum);
+            sr.chooseColumn(this.nickname, numOfColum);
             buffer.setStage(TurnStages.NOTURN);
         } catch (InvalidIDException e) {
             //view : il numero della colonna non è valido
@@ -174,13 +175,13 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
     }
 
     @Override
-    public void setEndToken(User user) {
+    public void setEndToken(String username) {
         view.setEndToken(user);
     }
 
     @Override
-    public void setFinalPoints(List<User> users, ArrayList<Integer> points) {
-        view.setFinalPoints(users, points);
+    public void setFinalPoints(List<String> usernames, ArrayList<Integer> points) {
+        view.setFinalPoints(usernames, points);
     }
 
     @Override
@@ -194,7 +195,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
     }
 
     @Override
-    public void setNewShelfie(User user, Tile[][] shelfie) {
+    public void setNewShelfie(String username, Tile[][] shelfie) {
         view.setPlayersShelfiesView(user, shelfie);
     }
 
@@ -204,7 +205,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
     }
 
     @Override
-    public void setNewPoints(User user, Integer points) {
+    public void setNewPoints(String username, Integer points) {
         view.setPlayersPointsView(user, points);
     }
 
