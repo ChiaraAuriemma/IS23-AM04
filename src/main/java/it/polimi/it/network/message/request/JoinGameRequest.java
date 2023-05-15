@@ -9,19 +9,19 @@ import java.io.Serializable;
 public class JoinGameRequest extends Payload  implements Serializable {
 
     private static final long serialVersionUID = -851442629157364654L;
-    User user;
-    int id;
+    private String username;
+    private int id;
 
     ClientInterface client;
 
-    public JoinGameRequest(User user, int id, ClientInterface client) {
-        this.user = user;
+    public JoinGameRequest(String username, int id, ClientInterface client) {
+        this.username = username;
         this.id = id;
         this.client = client;
     }
 
-    public User getUser() {
-        return user;
+    public String getUsername() {
+        return username;
     }
 
     public int getID() {

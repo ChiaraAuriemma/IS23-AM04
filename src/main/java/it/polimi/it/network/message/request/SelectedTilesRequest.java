@@ -11,7 +11,7 @@ import java.util.List;
 public class SelectedTilesRequest extends Payload implements Serializable {
 
     private static final long serialVersionUID = -2041763978799635846L;
-    List<Tile> choosenTiles;
+    private List<Tile> choosenTiles;
 
     public SelectedTilesRequest( List<Tile> choosenTiles) {
         this.choosenTiles = choosenTiles;

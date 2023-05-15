@@ -9,7 +9,7 @@ import java.io.Serializable;
 public class TilesNumRequest extends Payload  implements Serializable {
 
     private static final long serialVersionUID = -7710363129197514326L;
-    int numTiles;
+    private int numTiles;
 
     public TilesNumRequest(int numTiles) {
         this.numTiles = numTiles;

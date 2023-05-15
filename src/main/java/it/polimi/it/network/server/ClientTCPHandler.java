@@ -81,7 +81,7 @@ public class ClientTCPHandler implements Runnable,Serializable{
                         try {
                             user = lobby.createUser(loginRequest.getNickname());
                             serverTCP.setUserTCP(user,socket);
-                            LoginResponse loginResponse = new LoginResponse(user);
+                            LoginResponse loginResponse = new LoginResponse(user.getNickname());
                             response = new Message(MessageType.CREATEPLAYERRESPONSE, loginResponse);
 
                         } catch (ExistingNicknameException | EmptyNicknameException e) {
@@ -101,8 +101,8 @@ public class ClientTCPHandler implements Runnable,Serializable{
                     CreateGameRequest createGameRequest = (CreateGameRequest) request.getPayload();
                     synchronized (lobby){
                         try {
-                            this.gameController = lobby.createGame(createGameRequest.getUser(), createGameRequest.getPlayerNumber());
-                            this.gameController.getGame().getVirtualView().setUserTCP(createGameRequest.getUser(), this.socket);
+                            this.gameController = lobby.createGame(createGameRequest.getUsername(), createGameRequest.getPlayerNumber());
+                            this.gameController.getGame().getVirtualView().setUserTCP(createGameRequest.getUsername(), this.socket);
                             CreateGameResponse createGameResponse = new CreateGameResponse(gameController.getGameID());
                             response = new Message(MessageType.CREATEGAMERESPONSE, createGameResponse);
 
@@ -121,8 +121,8 @@ public class ClientTCPHandler implements Runnable,Serializable{
 
                     synchronized (lobby){
                         try {
-                            lobby.getGameController(joinGameRequest.getID()).getGame().getVirtualView().setUserTCP(joinGameRequest.getUser(), this.socket);
-                            this.gameController = lobby.joinGame(joinGameRequest.getUser(), joinGameRequest.getID());
+                            lobby.getGameController(joinGameRequest.getID()).getGame().getVirtualView().setUserTCP(joinGameRequest.getUsername(), this.socket);
+                            this.gameController = lobby.joinGame(joinGameRequest.getUsername(), joinGameRequest.getID());
                             JoinGameResponse joinGameResponse = new JoinGameResponse(gameController.getGameID());
                             response = new Message(MessageType.JOINGAMERESPONSE, joinGameResponse);
                         } catch (InvalidIDException | WrongPlayerException | IllegalValueException | RemoteException e) {

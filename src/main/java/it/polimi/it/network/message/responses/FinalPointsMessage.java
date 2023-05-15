@@ -10,16 +10,16 @@ import java.util.List;
 public class FinalPointsMessage extends Payload  implements Serializable {
 
     private static final long serialVersionUID = 5907269673872489026L;
-    private List<User> users;
+    private List<String> usernames;
     private ArrayList<Integer> points;
 
-    public FinalPointsMessage(List<User> users, ArrayList<Integer> points){
-        this.users = users;
+    public FinalPointsMessage(List<String> usernames, ArrayList<Integer> points){
+        this.usernames = usernames;
         this.points = points;
     }
 
-    public List<User> getUsers() {
-        return users;
+    public List<String> getUsernames() {
+        return usernames;
     }
 
     public ArrayList<Integer> getPoints() {

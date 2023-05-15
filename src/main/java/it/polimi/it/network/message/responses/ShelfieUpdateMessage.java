@@ -9,18 +9,18 @@ import java.io.Serializable;
 public class ShelfieUpdateMessage extends Payload  implements Serializable {
 
     private static final long serialVersionUID = 3886151742823681824L;
-    private User user;
+    private String username;
     private int column;
     private Tile[][] newShelfie;
 
-    public ShelfieUpdateMessage(User user, Tile[][] newShelfie){
-        this.user = user;
+    public ShelfieUpdateMessage(String username, Tile[][] newShelfie){
+        this.username = username;
         this.newShelfie=newShelfie;
 
     }
 
-    public User getUser() {
-        return user;
+    public String getUsername() {
+        return username;
     }
 
     public int getColumn() {

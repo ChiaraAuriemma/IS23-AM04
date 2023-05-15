@@ -9,20 +9,20 @@ import java.io.Serializable;
 public class CreateGameRequest extends Payload  implements Serializable {
 
     private static final long serialVersionUID = 6111690709070228972L;
-    User user;
-    int playerNumber;
+    private String username;
+    private int playerNumber;
 
-    ClientInterface client;
+    private ClientInterface client;
 
 
-    public CreateGameRequest(User user, int playerNumber, ClientInterface client) {
-        this.user = user;
+    public CreateGameRequest(String username, int playerNumber, ClientInterface client) {
+        this.username = username;
         this.playerNumber = playerNumber;
         this.client = client;
     }
 
-    public User getUser() {
-        return user;
+    public String getUsername() {
+        return username;
     }
 
     public int getPlayerNumber() {

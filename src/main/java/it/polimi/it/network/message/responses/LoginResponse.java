@@ -9,14 +9,14 @@ import java.io.Serializable;
 public class LoginResponse extends Payload  implements Serializable {
 
     private static final long serialVersionUID = 2751440945579989375L;
-    User user;
+    private String username;
 
-    public LoginResponse(User user) {
-        this.user = user;
+    public LoginResponse(String username) {
+        this.username = username;
     }
 
-    public User getUser() {
-        return user;
+    public String getUsername() {
+        return username;
     }
 
 }
