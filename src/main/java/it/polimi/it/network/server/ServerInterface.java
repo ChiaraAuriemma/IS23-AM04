@@ -12,16 +12,16 @@ import java.util.List;
 
 public interface ServerInterface extends Remote, Serializable {
 
-    public User login(ClientInterface cr, String username) throws RemoteException, ExistingNicknameException, EmptyNicknameException;
+    public String login(ClientInterface cr, String username) throws RemoteException, ExistingNicknameException, EmptyNicknameException;
 
-    public int createGame(User user, int playerNumber, ClientInterface client) throws RemoteException, WrongPlayerException;
+    public int createGame(String username, int playerNumber, ClientInterface client) throws RemoteException, WrongPlayerException;
 
-    public int joinGame(User user,int id, ClientInterface client) throws RemoteException, InvalidIDException, WrongPlayerException, IllegalValueException;
+    public int joinGame(String username,int id, ClientInterface client) throws RemoteException, InvalidIDException, WrongPlayerException, IllegalValueException;
 
-    public void tilesNumMessage(User user,int numTiles) throws RemoteException, WrongPlayerException, WrongListException, IllegalValueException;
+    public void tilesNumMessage(String username,int numTiles) throws RemoteException, WrongPlayerException, WrongListException, IllegalValueException;
 
-    public void selectedTiles(User user,List<Tile> choosenTiles) throws RemoteException, WrongPlayerException;
+    public void selectedTiles(String username,List<Tile> choosenTiles) throws RemoteException, WrongPlayerException;
 
-    public void chooseColumn (User user,int columnNumber) throws RemoteException, InvalidIDException, IllegalValueException;
+    public void chooseColumn (String username,int columnNumber) throws RemoteException, InvalidIDException, IllegalValueException;
 
 }
