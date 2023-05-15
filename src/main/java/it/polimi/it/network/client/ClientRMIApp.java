@@ -27,7 +27,6 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
     private ServerInterface sr;
     private boolean nickOK = false;
 
-    private User user;
     private String nickname;
     private View view;
     private Scanner scanner;
@@ -186,7 +185,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
 
     @Override
     public void recover(Game game, int gameID) {
-        view.recover(game, gameID, username);
+        //view.recover(game, gameID, nickname);
     }
 
     @Override
@@ -211,7 +210,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
 
     @Override
     public void notifyTurnStart(int maxValueofTiles) {
-        view.NotifyTurnStart(maxValueofTiles, user.getNickname());
+        view.NotifyTurnStart(maxValueofTiles,this.nickname);
         buffer.setStage(TurnStages.TILESNUM);
     }
 
