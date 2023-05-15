@@ -39,7 +39,7 @@ public class Game implements Serializable {
 
 
 
-    private VirtualView virtualView;
+    private transient VirtualView virtualView;
 
 
     public Game(Integer numplayers, User host, int gameID, VirtualView virtualView){

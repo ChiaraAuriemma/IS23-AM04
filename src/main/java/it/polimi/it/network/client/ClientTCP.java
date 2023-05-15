@@ -319,4 +319,6 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
         view.update();
     }
 
+
+
 }

@@ -57,5 +57,4 @@ public interface ClientInterface extends Remote, Serializable {
     public void recover(Game game, int gameID) throws RemoteException;
 
     public void updateView() throws RemoteException;
-
 }

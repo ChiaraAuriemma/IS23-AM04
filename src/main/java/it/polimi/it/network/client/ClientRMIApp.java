@@ -84,7 +84,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
      */
     public void login(String userName) throws RemoteException {
         try {
-            user = sr.login(this, userName);
+            this.user = sr.login(this, userName);
             buffer.setStage(TurnStages.CREATEorJOIN);
             view.joinOrCreate(user.getNickname());
 
@@ -105,7 +105,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
     @Override
     public void createGame(int playerNumber) throws RemoteException {
         try {
-            int gameid = sr.createGame(user, playerNumber, this);
+            int gameid = sr.createGame(this.user, playerNumber, this);
             buffer.setStage(TurnStages.NOTHING);
             view.setGameID(gameid);
         } catch (WrongPlayerException e) {
@@ -123,9 +123,9 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
      */
     public void joinGame(int gameID) throws RemoteException {
         try {
-            int gameid = sr.joinGame(user, gameID, this);
-            buffer.setStage(TurnStages.NOTHING);
+            int gameid = sr.joinGame(this.user, gameID, this);
             view.setGameID(gameid);
+            buffer.setStage(TurnStages.NOTHING);
         } catch (InvalidIDException | WrongPlayerException | IllegalValueException e) {
             view.askIDAgain();
         }
