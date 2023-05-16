@@ -20,7 +20,7 @@ public interface ServerInterface extends Remote, Serializable {
 
     public void tilesNumMessage(String username,int numTiles) throws RemoteException, WrongPlayerException, WrongListException, IllegalValueException;
 
-    public void selectedTiles(String username,List<Tile> choosenTiles) throws RemoteException, WrongPlayerException;
+    public void selectedTiles(String username,List<Tile> choosenTiles) throws RemoteException, WrongPlayerException, WrongListException;
 
     public void chooseColumn (String username,int columnNumber) throws RemoteException, InvalidIDException, IllegalValueException;
 

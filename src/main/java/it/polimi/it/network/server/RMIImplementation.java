@@ -89,7 +89,7 @@ public class RMIImplementation extends UnicastRemoteObject implements ServerInte
         //numTiles è il valore scelto dall'utente (v. javadoc GameController)
     }
 
-    public void selectedTiles(String username,List<Tile> choosenTiles) throws RemoteException, WrongPlayerException {
+    public void selectedTiles(String username,List<Tile> choosenTiles) throws RemoteException, WrongPlayerException, WrongListException {
         GameController gc = userGame.get(username);
         synchronized (gc){
             gc.getTilesListFromView(username,choosenTiles);
