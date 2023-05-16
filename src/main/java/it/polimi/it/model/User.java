@@ -23,6 +23,7 @@ public class User implements Serializable {
 
         this.nickname = nickname;
 
+        this.shelf=new Shelfie();
         this.inGame = true;
     }
 

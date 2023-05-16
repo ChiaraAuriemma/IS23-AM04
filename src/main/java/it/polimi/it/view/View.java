@@ -124,11 +124,9 @@ public class View implements Serializable {
 
         numPlayers = order.size();
         //Collections.copy(this.order, order);
-        int i=0;
         for (String nick : order) {
-            this.order.add(order.get(i));
+            this.order.add(nickPadder(nick));
             //setPlayersNicknamesView(nick);
-            i++;
         }
         setPaddedNames();
         pointInitializer();
@@ -175,6 +173,7 @@ public class View implements Serializable {
      */
     private void pointInitializer() {
         for (String user : order) {
+            user= nickPadder(user);
             playersPoints.put(user, "00");
         }
     }
@@ -187,6 +186,7 @@ public class View implements Serializable {
      */
     public void setPlayersPointsView(String player, int points) {
         String pointString = pTS(points);
+        player = nickPadder(player);
         playersPoints.put(player, pointString);
     }
 
@@ -214,6 +214,7 @@ public class View implements Serializable {
      */
     private void shelfieInitializer() {
         for (String user : order) {
+            user = nickPadder(user);
             playersShelfies.put(user, new Shelfie().getShelf());
         }
     }
@@ -225,6 +226,7 @@ public class View implements Serializable {
      * @param shelfie is the new shelfie, used to update the previous shelfie value
      */
     public void setPlayersShelfiesView(String player, Tile[][] shelfie) {
+        player=nickPadder(player);
         playersShelfies.put(player, shelfie);
     }
 
@@ -511,6 +513,7 @@ public class View implements Serializable {
     }
 
     public void setEndToken(String user) {
+        user=nickPadder(user);
         this.endToken = user;
     }
 
@@ -524,6 +527,7 @@ public class View implements Serializable {
 
     public void setFinalPoints(List<String> users, ArrayList<Integer> points) {
         for (String u: users){
+            u=nickPadder(u);
             setPlayersPointsView(u, points.get(users.indexOf(u)));
         }
     }
