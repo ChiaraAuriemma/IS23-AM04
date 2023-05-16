@@ -23,7 +23,7 @@ public class User implements Serializable {
 
         this.nickname = nickname;
 
-        this.shelf=new Shelfie();
+        this.shelf=new Shelfie(this);
         this.inGame = true;
     }
 
@@ -95,7 +95,7 @@ public class User implements Serializable {
     public Shelfie createShelfie() {
 
         this.board = this.game.getBoard();
-        return this.shelf = new Shelfie();
+        return this.shelf = new Shelfie(this);
     }
 
     public Shelfie getShelfie(){
