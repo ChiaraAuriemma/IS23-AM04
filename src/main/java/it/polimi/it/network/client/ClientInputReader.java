@@ -129,9 +129,10 @@ public class ClientInputReader implements Runnable, Serializable{
 
 
                     case "chat": //chat>>Write here your message...
-                        if (stage != TurnStages.NOTHING) {
+                        if (stage == TurnStages.NOTURN || stage == TurnStages.TILESNUM || stage == TurnStages.CHOOSETILES || stage == TurnStages.CHOOSECOLUMN) {
                             String chatMessage = action;
-                            chatMessage = lastUsedNickname + ">> " + chatMessage;
+                            chatMessage = lastUsedNickname + ": " + chatMessage;
+                            view.printError("Sending...\n");
                             client.sendChatMessage(chatMessage);
                         }else {
                             view.printError("There's a time and place for everything, but not now. 3");

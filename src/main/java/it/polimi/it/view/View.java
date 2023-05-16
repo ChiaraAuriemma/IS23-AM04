@@ -472,7 +472,7 @@ public class View implements ViewInterface, Serializable {
     }
 
     public void askNickname() {
-        out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+        out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
         Title();
         out.println("\n");
         out.println("Welcome to My Shelfie!");
@@ -488,9 +488,9 @@ public class View implements ViewInterface, Serializable {
 
 
     public void Title() {
-        String title = "     ▒█▀▄▀█ █▒ █ 　 ▒█▀▀▀█ █░ █ █▀▀ █▒░ █▀▀ ░▀░ █▀▀\n" +
+        String title = " \u001B[33m    ▒█▀▄▀█ █▒ █ 　 ▒█▀▀▀█ █░ █ █▀▀ █▒░ █▀▀ ░▀░ █▀▀\n" +
                        "     ▒█▒█░█ █▄▄█ 　 ░▀▀▀▄▄ █▀▀█ █▀▀ █▒░ █▀▀ ▀█▀ █▀▀\n" +
-                       "     ▒█░░░█ ▄▄▄█ 　 ▒█▄▄▄█ ▀░ ▀ ▀▀▀ ▀▀▀ ▀░  ▀▀▀ ▀▀▀\n";
+                       "     ▒█░░░█ ▄▄▄█ 　 ▒█▄▄▄█ ▀░ ▀ ▀▀▀ ▀▀▀ ▀░  ▀▀▀ ▀▀▀\n \u001B[39m";
         out.println(title);
     }
 
@@ -517,12 +517,21 @@ public class View implements ViewInterface, Serializable {
     }
 
     public void askIDAgain() {
-        out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+        out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
         Title();
 
         out.println("\n\n\n");
         out.println("Retry! You must insert a valid GameID... ");
     }
+
+
+
+
+
+
+
+
+
 
     public void askCreate() {
         out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
@@ -826,6 +835,7 @@ public class View implements ViewInterface, Serializable {
     }
 
     public void updateChat(List<String> currentChat) {
+        chatMessages.clear();
         chatMessages.addAll(currentChat);
     }
 }

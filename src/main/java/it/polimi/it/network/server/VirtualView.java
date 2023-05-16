@@ -46,29 +46,9 @@ public class VirtualView implements Serializable {
 
 
 
-    //
-    /*public void setUser(User user, ClientInterface client){ ///////////////TOLGOOOOOOOOOOOOOOO
-        try {
-            Socket socket = serverTCP.getUserTCP(user);
-            typeOfConnection.put(user, "TCP");
-            try{
-                userTCP.put(user, new ObjectOutputStream(socket.getOutputStream()));
-            } catch (IOException e) {
-            throw new RuntimeException(e); /// gestiscoooooooooooooooooooooo
-            }
-        } catch (NotTcpUserException e) {
-            userRMI.put(user, client);
-            typeOfConnection.put(user, "RMI");
-        }
-    }*/
-
-    public void setUserTCP(String username,Socket socket){
+    public void setUserTCP(String username,ObjectOutputStream out){
         typeOfConnection.put(username, "TCP");
-        try {
-            userTCP.put(username, new ObjectOutputStream(socket.getOutputStream()));
-        } catch (IOException e) {
-            throw new RuntimeException(e); ///gestiscoooooooooooooooooooooo
-        }
+        userTCP.put(username, out);
     }
 
     public void setUserRMI(String username, ClientInterface client){
@@ -180,6 +160,19 @@ public class VirtualView implements Serializable {
         //lui risponde col numero che vuole -> Arriva a gameController
     }
 
+    public void notifyGameStart() throws RemoteException {
+        for (int i=0; i < game.getNumplayers(); i++) {
+            User  receiver = game.getPlayer(i);
+
+            if (typeOfConnection.get(receiver.getNickname()).equals("TCP")) {
+
+            } else if (typeOfConnection.get(receiver.getNickname()).equals("RMI")) {
+                //sviluppo in RMI
+                ClientInterface clientRMI = userRMI.get(receiver.getNickname());
+                clientRMI.setStageToNoTurn();
+            }
+        }
+    }
 
 
     //chiamato da user, serve a mandare le takeable tiles fino alla view
@@ -378,4 +371,6 @@ public class VirtualView implements Serializable {
     public void setServerRMI(RMIImplementation serverRMI) {
         this.serverRMI = serverRMI;
     }
+
+
 }

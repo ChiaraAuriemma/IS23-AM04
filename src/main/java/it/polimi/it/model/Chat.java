@@ -18,7 +18,7 @@ public class Chat implements Serializable {
     }
 
     public void newMessage(String message){
-        String temp = null;
+        String temp;
         while(message!=null){
             if(message.length()>=33){
                 temp = message.substring(0, 32);
@@ -33,7 +33,6 @@ public class Chat implements Serializable {
                 message=null;
             }
         }
-
         updateChatDisplayer();
     }
 
@@ -59,6 +58,7 @@ public class Chat implements Serializable {
 
 
     public List<String> getCurrentChat(){
+        updateChatDisplayer();
         return currentChat;
     }
 }

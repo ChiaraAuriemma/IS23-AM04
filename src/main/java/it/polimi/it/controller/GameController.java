@@ -105,7 +105,6 @@ public class GameController implements Serializable {
             //manda alla view i punteggi finali (passo points)
             lobby.notifyEndGame(gameID);
         }else{
-
             if(currentPlayer!=game.getNumplayers()-1) {
                 currentPlayer++;
             }else{
@@ -146,11 +145,6 @@ public class GameController implements Serializable {
         if(user.equals(playerList.get(currentPlayer).getNickname())){
             this.playerList.get(currentPlayer).choosableTiles(chosenNumber);
 
-            //messaggio alla view per far scegliere un altro valore
-
-
-            //mandare alla view la lista di liste di tile che sono prendibili
-            ///highlightView(playerList.get(currentPlayer).choosableTiles(chosenNumber));
         }else{
             throw new WrongPlayerException("It's not your turn");
         }
@@ -237,6 +231,7 @@ public class GameController implements Serializable {
      */
     public void firstTurnStarter() throws IllegalValueException, RemoteException {
         //pesca le carte, dispone i giocatori
+        game.getVirtualView().notifyGameStart();
 
         //tolgo: playerList = game.getPlayerList();//sto salvando la lista di giocatori già ordinata come deve essere
         playerList = game.randomPlayers();
