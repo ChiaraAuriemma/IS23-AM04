@@ -98,7 +98,7 @@ public class GameController implements Serializable {
         //game.getVirtualView().viewUpdate();
 
         if(this.endGame && this.currentPlayer == 0){
-            game.getVirtualView().viewUpdate();
+            game.getVirtualView().viewUpdate(chat.getCurrentChat());
 
             game.pointsFromAdjacent();
 
@@ -128,7 +128,7 @@ public class GameController implements Serializable {
 
         //faccio i controlli su qual è il massimo num di tile prendibili
         this.maxTile = playerList.get(currentPlayer).maxValueOfTiles();
-        game.getVirtualView().viewUpdate();
+        game.getVirtualView().viewUpdate(chat.getCurrentChat());
 
 
         //passo alla view, faccio scegliere il numero che vuole l'utente

@@ -826,8 +826,6 @@ public class View implements ViewInterface, Serializable {
     }
 
     public void updateChat(List<String> currentChat) {
-        for (int i=0; i<9; i++){
-            chatMessages.set(i, currentChat.get(i) );
-        }
+        chatMessages.addAll(currentChat);
     }
 }

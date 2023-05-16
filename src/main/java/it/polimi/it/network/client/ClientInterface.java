@@ -59,4 +59,6 @@ public interface ClientInterface extends Remote, Serializable {
     public void updateView() throws RemoteException;
 
     void sendChatMessage(String chatMessage) throws RemoteException;
+
+    void updateChat(List<String> currentChat)throws  RemoteException;
 }

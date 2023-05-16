@@ -8,9 +8,7 @@ import it.polimi.it.model.User;
 import it.polimi.it.network.client.ClientInterface;
 import it.polimi.it.network.message.Message;
 import it.polimi.it.network.message.MessageType;
-import it.polimi.it.network.message.others.ThisNotTheDay;
 import it.polimi.it.network.message.responses.*;
-import it.polimi.it.network.server.Exceptions.NotTcpUserException;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -320,7 +318,7 @@ public class VirtualView implements Serializable {
         }
     }
 
-    public void viewUpdate() throws RemoteException {
+    public void viewUpdate(List<String> currentChat) throws RemoteException {
         for (int i=0; i < game.getNumplayers(); i++) {
             User  receiver = game.getPlayer(i);
 
@@ -333,6 +331,7 @@ public class VirtualView implements Serializable {
                 //sviluppo in RMI
                 ClientInterface clientRMI = userRMI.get(receiver.getNickname());
                 ///////////////////////////////////////////////////////metodo su clientRMI e client Interface da  chiamare
+                clientRMI.updateChat(currentChat);
                 clientRMI.updateView();
             }
         }

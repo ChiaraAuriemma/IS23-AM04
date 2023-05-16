@@ -324,5 +324,10 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
 
     }
 
+    @Override
+    public void updateChat(List<String> currentChat) throws RemoteException{
+
+    }
+
 
 }

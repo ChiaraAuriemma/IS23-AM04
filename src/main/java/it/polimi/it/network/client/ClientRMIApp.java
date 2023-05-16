@@ -203,6 +203,11 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
     }
 
     @Override
+    public void updateChat(List<String> currentChat) throws RemoteException{
+        view.updateChat(currentChat);
+    }
+
+    @Override
     public void setNewShelfie(String username, Tile[][] shelfie) {
         view.setPlayersShelfiesView(username, shelfie);
     }
