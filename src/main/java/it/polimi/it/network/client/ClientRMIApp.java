@@ -199,7 +199,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
 
     @Override
     public void sendChatMessage(String chatMessage) {
-        sr.chatMessage(chatMessage);
+        sr.chatMessage(this.nickname, chatMessage);
     }
 
     @Override

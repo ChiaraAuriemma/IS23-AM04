@@ -103,8 +103,12 @@ public class RMIImplementation extends UnicastRemoteObject implements ServerInte
         }
     }
 
-    public void chatMessage(String chatMessage) {
+    public void chatMessage(String username, String chatMessage) {
         //aggiungo il messaggio al model
+        GameController gc = userGame.get(username);
+        synchronized (gc) {
+            gc.pushChatMessage(chatMessage);
+        }
     }
 
     public void setLobby(Lobby lobby){

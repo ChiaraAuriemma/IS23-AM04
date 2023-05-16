@@ -1,8 +1,8 @@
 package it.polimi.it.controller;
 
 import it.polimi.it.Exceptions.*;
+import it.polimi.it.model.Chat;
 import it.polimi.it.model.Game;
-import it.polimi.it.model.Tiles.PossibleColors;
 import it.polimi.it.model.Tiles.Tile;
 import it.polimi.it.model.User;
 
@@ -67,6 +67,7 @@ public class GameController implements Serializable {
      * Max number of tiles take-able in a certain turn
      */
     private int maxTile;
+    private Chat chat;
 
     private boolean[] possibleColumnArray;
 
@@ -82,6 +83,7 @@ public class GameController implements Serializable {
         gameID = game.getGameid();
         lobby = lobbyIn;
         playerList = new ArrayList<>();
+        this.chat = new Chat();
     }
 
     //suppongo che la partita sia già stata startata con 4 giocatori
@@ -294,5 +296,9 @@ public class GameController implements Serializable {
 
     public void resetGame(User user, int gameID) throws RemoteException {
         //game.getVirtualView().resetAfterDisconnection(user.getNickname(), gameID);
+    }
+
+    public void pushChatMessage(String chatMessage) {
+        pushChatMessage(chatMessage);
     }
 }

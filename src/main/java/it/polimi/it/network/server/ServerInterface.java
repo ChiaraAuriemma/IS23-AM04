@@ -2,7 +2,6 @@ package it.polimi.it.network.server;
 
 import it.polimi.it.Exceptions.*;
 import it.polimi.it.model.Tiles.Tile;
-import it.polimi.it.model.User;
 import it.polimi.it.network.client.ClientInterface;
 
 import java.io.Serializable;
@@ -24,5 +23,5 @@ public interface ServerInterface extends Remote, Serializable {
 
     public void chooseColumn (String username,int columnNumber) throws RemoteException, InvalidIDException, IllegalValueException;
 
-    void chatMessage(String chatMessage);
+    void chatMessage(String chatMessage, String message);
 }
