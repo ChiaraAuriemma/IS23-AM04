@@ -47,6 +47,8 @@ public class View implements Serializable {
     private int gameID;
     private String endToken;
 
+    private User u;
+
 
 
 
@@ -215,7 +217,7 @@ public class View implements Serializable {
     private void shelfieInitializer() {
         for (String user : order) {
             user = nickPadder(user);
-            playersShelfies.put(user, new Shelfie().getShelf());
+            playersShelfies.put(user, new Shelfie(u).getShelf());
         }
     }
 

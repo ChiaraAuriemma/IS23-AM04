@@ -158,7 +158,7 @@ public class ClientTCPHandler implements Runnable,Serializable{
                     synchronized (gameController){
                         try {
                             this.gameController.getTilesListFromView(this.user.getNickname(), selectedTilesRequest.getChoosenTiles());
-                        } catch (WrongPlayerException e) {
+                        } catch (WrongPlayerException | WrongListException e) {
                             ErrorMessage errorMessage = new ErrorMessage(e.getMessage());
                             response = new Message(MessageType.ERROR, errorMessage);
                             send(response);
