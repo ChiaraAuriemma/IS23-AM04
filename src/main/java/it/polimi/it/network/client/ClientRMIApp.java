@@ -198,7 +198,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
     }
 
     @Override
-    public void sendChatMessage(String chatMessage) {
+    public void sendChatMessage(String chatMessage) throws RemoteException {
         sr.chatMessage(this.nickname, chatMessage);
     }
 
