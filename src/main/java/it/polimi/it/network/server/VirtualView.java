@@ -236,13 +236,7 @@ public class VirtualView implements Serializable {
             } else if (typeOfConnection.get(receiver.getNickname()).equals("RMI")) {
                 //sviluppo in RMI
                 ClientInterface clientRMI = userRMI.get(receiver.getNickname());
-                Tile[][] shelfie = new Tile[6][5];
-                for(int row=0; row<6; row++){
-                    for(int column=0; column<5; column++){
-                        shelfie[row][column] = user.getShelfie().getCell(column, row);
-                    }
-                }
-                clientRMI.setNewShelfie(user.getNickname(), shelfie);
+                clientRMI.setNewShelfie(user.getNickname(), user.getShelfie().getShelf());
             }
        }
     }
