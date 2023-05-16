@@ -225,7 +225,7 @@ public class GameController implements Serializable {
             game.endGame(playerList.get(currentPlayer));
         }
         // manda alla view l'immagine della nuova shelfie da visualizzare e i nuovi punteggi, col referimento all'user
-        game.getVirtualView().viewUpdate();
+        //game.getVirtualView().viewUpdate();
         turnDealer();
     }
 

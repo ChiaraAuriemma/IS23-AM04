@@ -6,6 +6,7 @@ import it.polimi.it.model.Shelfie;
 import it.polimi.it.model.Tiles.PossibleColors;
 import it.polimi.it.model.Tiles.Tile;
 import it.polimi.it.model.Tiles.TilesBag;
+import it.polimi.it.model.User;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -19,14 +20,14 @@ public class CommonGroup2Test {  //da aggiungere test con default
 
     private Shelfie shelfie;
     private TilesBag bag;
-
+    private User u = new User(" ");
     @Before
     public void card(){
         this.commonDeck = new CommonDeck();
         commonDeck.createCards(5,7);
         this.card1 = commonDeck.getCommonCard1();
         this.card2 = commonDeck.getCommonCard2();
-        this.shelfie = new Shelfie();
+        this.shelfie = new Shelfie(u);
         this.bag = new TilesBag();
     }
 

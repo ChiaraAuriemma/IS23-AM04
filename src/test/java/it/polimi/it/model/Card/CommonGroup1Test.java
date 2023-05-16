@@ -6,6 +6,7 @@ import it.polimi.it.model.Shelfie;
 import it.polimi.it.model.Tiles.PossibleColors;
 import it.polimi.it.model.Tiles.Tile;
 import it.polimi.it.model.Tiles.TilesBag;
+import it.polimi.it.model.User;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -19,13 +20,15 @@ public class CommonGroup1Test {
     private Shelfie shelfie;
     private TilesBag bag;
 
+    private User u = new User(" ");
+
     @Before
     public void card(){
         this.commonDeck = new CommonDeck();
         commonDeck.createCards(1,10);
         this.card1 = commonDeck.getCommonCard1();
         this.card2 = commonDeck.getCommonCard2();
-        this.shelfie = new Shelfie();
+        this.shelfie = new Shelfie(u);
         this.bag = new TilesBag();
     }
 

@@ -6,6 +6,7 @@ import it.polimi.it.model.Shelfie;
 import it.polimi.it.model.Tiles.PossibleColors;
 import it.polimi.it.model.Tiles.Tile;
 import it.polimi.it.model.Tiles.TilesBag;
+import it.polimi.it.model.User;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -19,11 +20,12 @@ public class PersonalGoalCardsTest {
     private PersonalGoalCard personalGoalCard;
     private Shelfie shelfie;
     private TilesBag bag;
+    private User u = new User(" ");
 
     @Before
     public void card(){
         this.personalGoalCard = new PersonalGoalCard(12);
-        this.shelfie = new Shelfie();
+        this.shelfie = new Shelfie(u);
         this.bag = new TilesBag();
     }
 

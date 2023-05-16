@@ -77,6 +77,8 @@ public class User implements Serializable {
 
     public boolean insertTile(int column, List<Tile> chosen) throws IllegalValueException, RemoteException {
 
+        System.out.println("Prova");
+        System.out.println(chosen.size());
         boolean isEnd;
         if(column < 0 || column > 4){
 
