@@ -235,8 +235,8 @@ public class VirtualView implements Serializable {
             } else if (typeOfConnection.get(receiver.getNickname()).equals("RMI")) {
                 //sviluppo in RMI
 
-                ClientInterface clientRMI = userRMI.get(user.getNickname());
-                clientRMI.setNewShelfie(receiver.getNickname(), receiver.getShelfie().getShelf());
+                ClientInterface clientRMI = userRMI.get(receiver.getNickname());
+                clientRMI.setNewShelfie(user.getNickname(), user.getShelfie().getShelf());
             }
         }
     }
