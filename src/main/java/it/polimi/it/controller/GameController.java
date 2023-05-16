@@ -299,6 +299,6 @@ public class GameController implements Serializable {
     }
 
     public void pushChatMessage(String chatMessage) {
-        pushChatMessage(chatMessage);
+        chat.newMessage(chatMessage);
     }
 }
