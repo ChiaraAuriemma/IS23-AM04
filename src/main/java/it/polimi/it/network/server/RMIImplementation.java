@@ -13,6 +13,7 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -89,10 +90,11 @@ public class RMIImplementation extends UnicastRemoteObject implements ServerInte
         //numTiles è il valore scelto dall'utente (v. javadoc GameController)
     }
 
-    public void selectedTiles(String username,List<Tile> choosenTiles) throws RemoteException, WrongPlayerException, WrongListException {
+    public void selectedTiles(String username, List<Tile> choosenTiles) throws RemoteException, WrongPlayerException, WrongListException {
         GameController gc = userGame.get(username);
         synchronized (gc){
-            gc.getTilesListFromView(username,choosenTiles);
+            ArrayList<Tile> chosenTiles = new ArrayList<>(choosenTiles);
+            gc.getTilesListFromView(username,chosenTiles);
         }
     }
 
