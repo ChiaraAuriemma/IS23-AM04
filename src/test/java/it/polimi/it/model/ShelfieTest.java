@@ -17,9 +17,11 @@ public class ShelfieTest {
 
     private List<Tile> chosen;
 
+    private User u = new User(" ");
+
     @Before
     public void Shelf() {
-        this.shelf = new Shelfie();
+        this.shelf = new Shelfie(u);
     }
 
     @After
@@ -266,7 +268,7 @@ public class ShelfieTest {
 
         chosen = new ArrayList<>(6);
 
-        this.shelf = new Shelfie();
+        this.shelf = new Shelfie(u);
 
         int total;
 
