@@ -75,7 +75,7 @@ public class Shelfie implements Serializable {
 
     boolean addTile(int column, List<Tile> chosen){
 
-        shelf = user.getShelfie().getShelf();
+        shelf = this.user.getShelfie().getShelf();
         int numTiles = 0;
         for(int row=0; row<6; row++) {
             if(numTiles < chosen.size()) {
