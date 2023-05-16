@@ -90,6 +90,11 @@ public class View implements Serializable {
     private List<String> chatMessages = new ArrayList<>(); // massimo 9 messaggi, lunghezza 33
     private final String blankChatLine = "                                 ";
 
+
+    private Tile[][] p1;
+    private Tile[][] p2;
+    private Tile[][] p3;
+    private Tile[][] p4;
     public View() {
         return;
     }
@@ -215,9 +220,32 @@ public class View implements Serializable {
      * Initializes a new shelf for every user, to be put in the user-shelf hasmap
      */
     private void shelfieInitializer() {
+        User a = new User("a");
+        p1=a.getShelfie().getShelf();
+
+        User b = new User("b");
+        p2=b.getShelfie().getShelf();
+
+        User c = new User("c");
+        p3=c.getShelfie().getShelf();
+
+        User d = new User("d");
+        p4=d.getShelfie().getShelf();
+
+
+        int i=0;
         for (String user : order) {
             user = nickPadder(user);
-            playersShelfies.put(user, new Shelfie(u).getShelf());
+            if(i==0){
+                playersShelfies.put(user, p1);
+            } else if (i==1) {
+                playersShelfies.put(user, p2);
+            }else if (i==2) {
+                playersShelfies.put(user, p3);
+            }else if (i==3) {
+                playersShelfies.put(user, p4);
+            }
+            i++;
         }
     }
 
@@ -229,7 +257,36 @@ public class View implements Serializable {
      */
     public void setPlayersShelfiesView(String player, Tile[][] shelfie) {
         player=nickPadder(player);
-        playersShelfies.put(player, shelfie);
+        int i = order.indexOf(player);
+        if(i==0){
+            for(int j =0; j<6; j++){
+                for(int x=0; x<5; x++){
+                    p1[j][x] = new Tile(j, x, PossibleColors.valueOf(shelfie[j][x].getColor()));
+                }
+            }
+            playersShelfies.put(player, p1);
+        } else if (i==1) {
+            for(int j =0; j<6; j++){
+                for(int x=0; x<5; x++){
+                    p2[j][x] = new Tile(j, x, PossibleColors.valueOf(shelfie[j][x].getColor()));
+                }
+            }
+            playersShelfies.put(player, p2);
+        }else if (i==2) {
+            for(int j =0; j<6; j++){
+                for(int x=0; x<5; x++){
+                    p3[j][x] = new Tile(j, x, PossibleColors.valueOf(shelfie[j][x].getColor()));
+                }
+            }
+            playersShelfies.put(player, p3);
+        }else if (i==3) {
+            for(int j =0; j<6; j++){
+                for(int x=0; x<5; x++){
+                    p4[j][x] = new Tile(j, x, PossibleColors.valueOf(shelfie[j][x].getColor()));
+                }
+            }
+            playersShelfies.put(player, p4);
+        }
     }
 
 
