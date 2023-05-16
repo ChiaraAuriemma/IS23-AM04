@@ -164,19 +164,24 @@ public class GameController implements Serializable {
      * @param chosenList is the list of selected tiles
      * @throws WrongTileException exception used when a wrong tile is selected
      */
-    public void getTilesListFromView(String user, List<Tile> chosenList) throws WrongPlayerException {
-        if(user.equals(playerList.get(currentPlayer).getNickname()) && validTilesCheck(chosenList)) {
-            currentTilesList.clear();
+    public void getTilesListFromView(String user, List<Tile> chosenList) throws WrongPlayerException, WrongListException {
+        if(user.equals(playerList.get(currentPlayer).getNickname())) {
+            if(validTilesCheck(chosenList)){
+                currentTilesList.clear();
             /*for (Tile t : chosenList) {
                 currentTilesList.add(new Tile(t.getRow(), t.getColumn(), PossibleColors.valueOf(t.getColor())));
             }*/
-            currentTilesList = new ArrayList<>(chosenList);
-            //dico ad user che tile sono state scelte
-            try {
-                possibleColumnArray = playerList.stream().filter(curr -> Objects.equals(curr.getNickname(), user)).collect(Collectors.toList()).get(0).chooseSelectedTiles(currentTilesList);
-            } catch (RemoteException | WrongTileException e) {
-                //messaggio a view per far scegliere altre tiles
+                currentTilesList = new ArrayList<>(chosenList);
+                //dico ad user che tile sono state scelte
+                try {
+                    possibleColumnArray = playerList.stream().filter(curr -> Objects.equals(curr.getNickname(), user)).collect(Collectors.toList()).get(0).chooseSelectedTiles(currentTilesList);
+                } catch (RemoteException | WrongTileException e) {
+                    //messaggio a view per far scegliere altre tiles
+                }
+            }else{
+                throw new WrongListException("You chose badly");
             }
+
         }else {
             throw new WrongPlayerException("It's not your turn");
         }
