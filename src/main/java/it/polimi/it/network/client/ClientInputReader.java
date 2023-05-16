@@ -155,9 +155,14 @@ public class ClientInputReader implements Runnable, Serializable{
                             String chosenTiles = action;
 
 
+                            //( 0 , 2 ) ; ( 1 , 3 )  ;  (  4  ,  7  )
+                            //0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16
+                            // -> 1,3 7,9 13,15
+
                             // tiles; format TBD (0,2);(1,3);(4,7) -> lunghezza <6-> 1 tile; <12->2tiles; else->3tiles
                             //client.getView(); (IMPORTANTE)
                             ArrayList<Tile> chosenTilesList = new ArrayList<>();
+                            chosenTilesList.clear();
                             char[] chosen = chosenTiles.toCharArray();
                             int row = Character.getNumericValue(chosen[1]);
                             int col = Character.getNumericValue(chosen[3]);
@@ -167,16 +172,21 @@ public class ClientInputReader implements Runnable, Serializable{
                             if (chosenTiles.length() > 6) {
                                 row = Character.getNumericValue(chosen[7]);
                                 col = Character.getNumericValue(chosen[9]);
-                                t = new Tile(row, col, PossibleColors.valueOf(view.getTileColor(row, col)));
-                                chosenTilesList.add(t);
+                                Tile t2 = new Tile(row, col, PossibleColors.valueOf(view.getTileColor(row, col)));
+                                chosenTilesList.add(t2);
 
                                 if (chosenTiles.length() > 12) {
                                     row = Character.getNumericValue(chosen[13]);
                                     col = Character.getNumericValue(chosen[15]);
-                                    t = new Tile(row, col, PossibleColors.valueOf(view.getTileColor(row, col)));
-                                    chosenTilesList.add(t);
+                                    Tile t3 = new Tile(row, col, PossibleColors.valueOf(view.getTileColor(row, col)));
+                                    chosenTilesList.add(t3);
                                 }
                             }
+                            for(Tile tile: chosenTilesList){
+                                view.printTile(tile.getColor(), tile.getRow(), tile.getColumn());
+                                view.printThings("; ");
+                            }
+                            view.printThings("; waiting for check... ");
                             client.selectedTiles(chosenTilesList);
                         } else {
                             view.printError("There's a time and place for everything, but not now. 5");

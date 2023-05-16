@@ -82,7 +82,6 @@ public class User implements Serializable {
             throw new IllegalValueException("The given column value does not exist");
 
         }else {
-
             isEnd = shelf.addTile(column, chosen);
             game.getVirtualView().shelfieUpdate(this);
         }

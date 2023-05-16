@@ -11,6 +11,8 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class GameController implements Serializable {
 
@@ -102,7 +104,7 @@ public class GameController implements Serializable {
             lobby.notifyEndGame(gameID);
         }else{
 
-            if(currentPlayer!=game.getNumplayers()) {
+            if(currentPlayer!=game.getNumplayers()-1) {
                 currentPlayer++;
             }else{
                 currentPlayer=0;
@@ -164,13 +166,14 @@ public class GameController implements Serializable {
      */
     public void getTilesListFromView(String user, List<Tile> chosenList) throws WrongPlayerException {
         if(user.equals(playerList.get(currentPlayer).getNickname()) && validTilesCheck(chosenList)) {
-            for (Tile t : chosenList) {
+            currentTilesList.clear();
+            /*for (Tile t : chosenList) {
                 currentTilesList.add(new Tile(t.getRow(), t.getColumn(), PossibleColors.valueOf(t.getColor())));
-            }
+            }*/
+            currentTilesList = new ArrayList<>(chosenList);
             //dico ad user che tile sono state scelte
             try {
-                boolean[] possibleColumns = playerList.get(currentPlayer).chooseSelectedTiles(currentTilesList);
-                possibleColumnArray = possibleColumns;
+                possibleColumnArray = playerList.stream().filter(curr -> Objects.equals(curr.getNickname(), user)).collect(Collectors.toList()).get(0).chooseSelectedTiles(currentTilesList);
             } catch (RemoteException | WrongTileException e) {
                 //messaggio a view per far scegliere altre tiles
             }
@@ -206,17 +209,14 @@ public class GameController implements Serializable {
         if(!possibleColumnArray[col]){
            System.out.println("Invalid column choice"); //da far vedere a view
         }
-
-        endGame = playerList.get(currentPlayer).insertTile(col, currentTilesList);
+        endGame = playerList.stream().filter(curr -> Objects.equals(curr.getNickname(), user)).collect(Collectors.toList()).get(0).insertTile(col, currentTilesList);
+       // endGame = playerList.get(currentPlayer).insertTile(col, currentTilesList);
             //messaggio per la view
 
         game.pointCount(playerList.get(currentPlayer));
-
-        if(this.endGame == true){
+        if(this.endGame){
             game.endGame(playerList.get(currentPlayer));
         }
-
-
         // manda alla view l'immagine della nuova shelfie da visualizzare e i nuovi punteggi, col referimento all'user
         game.getVirtualView().viewUpdate();
         turnDealer();

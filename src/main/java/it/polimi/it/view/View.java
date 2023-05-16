@@ -417,6 +417,11 @@ public class View implements Serializable {
         out.println("Welcome to My Shelfie!");
         out.println("\n\n\n");
         out.println("Please submit your nickname! ");
+        out.println("\n\n\n");
+
+        printCommands();
+        out.println("\n");
+
 
     }
 
@@ -774,4 +779,11 @@ public class View implements Serializable {
         }
     }
 
+    public void printTile(String color, int row, int column) {
+        out.print("row: " + row +  ", column: " + column + ", color: " + color);
+    }
+
+    public void printThings(String s) {
+        out.print(s);
+    }
 }

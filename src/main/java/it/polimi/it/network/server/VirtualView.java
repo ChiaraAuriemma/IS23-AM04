@@ -226,7 +226,6 @@ public class VirtualView implements Serializable {
             User  receiver = game.getPlayer(i);
 
             if (typeOfConnection.get(receiver.getNickname()).equals("TCP")) {
-
                 ShelfieUpdateMessage shelfieUpdateMessage = new ShelfieUpdateMessage(user.getNickname(), user.getShelfie().getShelf());
                 Message message = new Message(MessageType.SHELFIEUPDATE, shelfieUpdateMessage);
                 sendTCPMessage(userTCP.get(receiver.getNickname()), message);
@@ -234,7 +233,6 @@ public class VirtualView implements Serializable {
 
             } else if (typeOfConnection.get(receiver.getNickname()).equals("RMI")) {
                 //sviluppo in RMI
-
                 ClientInterface clientRMI = userRMI.get(receiver.getNickname());
                 clientRMI.setNewShelfie(user.getNickname(), user.getShelfie().getShelf());
             }

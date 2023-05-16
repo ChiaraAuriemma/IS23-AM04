@@ -245,7 +245,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
     @Override
     public void takeableTiles(List<List<Tile>> choosableTilesList, int num) throws RemoteException {
         //view : faccio vedere illuminate le tiles nella lista
-        System.out.println("gino");
+        System.out.println("Please choose " + num + " tiles from the board...\n");
         view.takeableTiles(choosableTilesList);
     }
 
