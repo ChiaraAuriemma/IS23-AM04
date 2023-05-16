@@ -30,6 +30,8 @@ public class ClientInputReader implements Runnable, Serializable{
 
     private TurnStages stage;
 
+    private String lastUsedNickname;
+
 
     /**
      * Method to constantly read the input given by the user, sends the input line to the command parser
@@ -92,6 +94,7 @@ public class ClientInputReader implements Runnable, Serializable{
                             
                             // pad the nickname to a length of 12
 
+                            lastUsedNickname = nickname;
 
                             while (nickname.length() < 12) {
                                 nickname = nickname.concat(" ");
@@ -126,7 +129,7 @@ public class ClientInputReader implements Runnable, Serializable{
                     case "chat": //chat>>Write here your message...
                         if (stage != TurnStages.NOTHING) {
                             String chatMessage = action;
-
+                            chatMessage = lastUsedNickname + ">> " + chatMessage;
                         }
 
                         switch (connectionType) {

@@ -157,7 +157,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
         try {
             sr.selectedTiles(this.nickname, choosenTiles);
             buffer.setStage(TurnStages.CHOOSECOLUMN);
-        } catch (WrongPlayerException e) {
+        } catch (WrongPlayerException | WrongListException e) {
             //view : notifico che l'user non è quello giusto
             //}catch (WrongListException){
             //manca eccezione nel caso in cui abbia scelto un set di tile invalido
