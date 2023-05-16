@@ -11,7 +11,7 @@
    <children>
       <ImageView fitHeight="601.0" fitWidth="774.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="/Images/sfondo parquet.jpg" />
+            <Image url="@Images/sfondo parquet.jpg" />
          </image>
       </ImageView>
       <Label layoutX="124.0" layoutY="166.0" text="We are looking for other players">

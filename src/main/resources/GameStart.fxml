@@ -11,7 +11,7 @@
    <children>
       <ImageView fx:id="background" fitHeight="400.0" fitWidth="600.0" pickOnBounds="true">
          <image>
-            <Image url="/Images/sfondo parquet.jpg" />
+            <Image url="@Images/sfondo parquet.jpg" />
          </image>
       </ImageView>
       <Button fx:id="TCPButton" layoutX="141.0" layoutY="214.0" mnemonicParsing="false" onAction="#GotoLogin" prefHeight="40.0" prefWidth="100.0" text="TCP">
@@ -21,7 +21,7 @@
       </Button>
       <ImageView fx:id="Titoloiniziale" fitHeight="200.0" fitWidth="300.0" layoutX="150.0" layoutY="37.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="/Images/Title 2000x618px.png" />
+            <Image url="@Images/Title 2000x618px.png" />
          </image>
       </ImageView>
       <Button fx:id="RMIButton" layoutX="366.0" layoutY="214.0" mnemonicParsing="false" onAction="#GotoLogin" prefHeight="40.0" prefWidth="100.0" text="RMI">

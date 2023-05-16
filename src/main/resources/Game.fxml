@@ -10,7 +10,7 @@
    <children>
       <ImageView fitHeight="408.0" fitWidth="600.0" pickOnBounds="true">
          <image>
-            <Image url="/Images/sfondo parquet.jpg" />
+            <Image url="@Images/sfondo parquet.jpg" />
          </image>
       </ImageView>
       <ImageView fx:id="bookshelf" fitHeight="222.0" fitWidth="208.0" layoutX="340.0" layoutY="124.0" pickOnBounds="true" preserveRatio="true">
@@ -20,12 +20,12 @@
       </ImageView>
       <ImageView fx:id="livingroom" fitHeight="234.0" fitWidth="220.0" layoutX="41.0" layoutY="119.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="/Images/livingroom.png" />
+            <Image url="@Images/livingroom.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="202.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="/Images/Title 2000x618px.png" />
+            <Image url="@Images/Title 2000x618px.png" />
          </image>
       </ImageView>
       <MenuButton layoutX="34.0" layoutY="26.0" mnemonicParsing="false" text="Menu">

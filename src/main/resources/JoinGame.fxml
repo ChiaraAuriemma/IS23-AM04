@@ -12,7 +12,7 @@
    <children>
       <ImageView fx:id="background" fitHeight="400.0" fitWidth="600.0" pickOnBounds="true">
          <image>
-            <Image url="/Images/sfondo parquet.jpg" />
+            <Image url="@Images/sfondo parquet.jpg" />
          </image>
       </ImageView>
       <Button fx:id="BottoneLogin" layoutX="277.0" layoutY="279.0" mnemonicParsing="false" onAction="#GotoGame" text="Start" />
