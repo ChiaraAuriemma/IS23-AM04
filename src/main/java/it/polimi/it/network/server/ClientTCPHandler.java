@@ -97,12 +97,11 @@ public class ClientTCPHandler implements Runnable,Serializable{
                     send(response);
                     break;
                 case CREATEGAME:
-
                     CreateGameRequest createGameRequest = (CreateGameRequest) request.getPayload();
                     synchronized (lobby){
                         try {
                             this.gameController = lobby.createGame(createGameRequest.getUsername(), createGameRequest.getPlayerNumber());
-                            this.gameController.getGame().getVirtualView().setUserTCP(createGameRequest.getUsername(), this.socket);
+                            this.gameController.getGame().getVirtualView().setUserTCP(createGameRequest.getUsername(), this.out);
                             CreateGameResponse createGameResponse = new CreateGameResponse(gameController.getGameID());
                             response = new Message(MessageType.CREATEGAMERESPONSE, createGameResponse);
 
@@ -121,7 +120,7 @@ public class ClientTCPHandler implements Runnable,Serializable{
 
                     synchronized (lobby){
                         try {
-                            lobby.getGameController(joinGameRequest.getID()).getGame().getVirtualView().setUserTCP(joinGameRequest.getUsername(), this.socket);
+                            lobby.getGameController(joinGameRequest.getID()).getGame().getVirtualView().setUserTCP(joinGameRequest.getUsername(), this.out);
                             this.gameController = lobby.joinGame(joinGameRequest.getUsername(), joinGameRequest.getID());
                             JoinGameResponse joinGameResponse = new JoinGameResponse(gameController.getGameID());
                             response = new Message(MessageType.JOINGAMERESPONSE, joinGameResponse);
@@ -182,14 +181,15 @@ public class ClientTCPHandler implements Runnable,Serializable{
                     }
                     break;
 
-                case PONG://risposta del ping del timer
+                /*case PONG://risposta del ping del timer
 
 
                 default: //messaggio non valido
                     System.out.println("User sent an illegal type of message");
+                */
 
             }
-            timer.cancel();
+            //timer.cancel();
         }
 
     }

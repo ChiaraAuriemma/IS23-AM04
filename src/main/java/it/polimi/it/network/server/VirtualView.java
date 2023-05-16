@@ -46,13 +46,9 @@ public class VirtualView implements Serializable {
 
 
 
-    public void setUserTCP(String username,Socket socket){
+    public void setUserTCP(String username,ObjectOutputStream out){
         typeOfConnection.put(username, "TCP");
-        try {
-            userTCP.put(username, new ObjectOutputStream(socket.getOutputStream()));
-        } catch (IOException e) {
-            throw new RuntimeException(e); ///gestiscoooooooooooooooooooooo
-        }
+        userTCP.put(username, out);
     }
 
     public void setUserRMI(String username, ClientInterface client){
