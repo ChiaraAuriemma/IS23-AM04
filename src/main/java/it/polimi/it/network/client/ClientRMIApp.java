@@ -173,7 +173,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
             //view : il numero della colonna non è valido
             view.askColumnAgain();
         } catch (IllegalValueException e) {
-            System.out.println("ERROR!");
+            System.out.println("You can't choose this column!");
         }
     }
 

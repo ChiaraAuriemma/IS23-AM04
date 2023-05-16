@@ -217,6 +217,7 @@ public class GameController implements Serializable {
            System.out.println("Invalid column choice"); //da far vedere a view
         }
         endGame = playerList.stream().filter(curr -> Objects.equals(curr.getNickname(), user)).collect(Collectors.toList()).get(0).insertTile(col, currentTilesList);
+        System.out.println(playerList.stream().filter(curr -> Objects.equals(curr.getNickname(), user)).collect(Collectors.toList()).get(0).getNickname());
        // endGame = playerList.get(currentPlayer).insertTile(col, currentTilesList);
             //messaggio per la view
 

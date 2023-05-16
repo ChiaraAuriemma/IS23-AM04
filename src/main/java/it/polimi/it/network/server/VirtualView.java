@@ -3,6 +3,8 @@ package it.polimi.it.network.server;
 import it.polimi.it.model.Card.CommonGoalCards.CommonGoalCard;
 import it.polimi.it.model.Card.PersonalGoalCards.PersonalGoalCard;
 import it.polimi.it.model.Game;
+import it.polimi.it.model.Shelfie;
+import it.polimi.it.model.Tiles.PossibleColors;
 import it.polimi.it.model.Tiles.Tile;
 import it.polimi.it.model.User;
 import it.polimi.it.network.client.ClientInterface;

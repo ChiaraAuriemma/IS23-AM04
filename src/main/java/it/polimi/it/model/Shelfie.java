@@ -16,7 +16,7 @@ public class Shelfie implements Serializable {
     private int commonToken1;
     private int commonToken2;
     private boolean endToken1;
-    private static Tile[][] shelf;
+    private Tile[][] shelf;
 
     private User user;
     /**
