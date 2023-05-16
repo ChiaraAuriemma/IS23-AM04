@@ -319,6 +319,10 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
         view.update();
     }
 
+    @Override
+    public void sendChatMessage(String chatMessage) {
+
+    }
 
 
 }

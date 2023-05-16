@@ -103,6 +103,10 @@ public class RMIImplementation extends UnicastRemoteObject implements ServerInte
         }
     }
 
+    public void chatMessage(String chatMessage) {
+        //aggiungo il messaggio al model
+    }
+
     public void setLobby(Lobby lobby){
         this.lobby=lobby;
     }

@@ -126,21 +126,18 @@ public class ClientInputReader implements Runnable, Serializable{
                         }
                         break;
 
+
+
                     case "chat": //chat>>Write here your message...
                         if (stage != TurnStages.NOTHING) {
                             String chatMessage = action;
                             chatMessage = lastUsedNickname + ">> " + chatMessage;
+                            client.sendChatMessage(chatMessage);
+                        }else {
+                            view.printError("There's a time and place for everything, but not now. 3");
                         }
 
-                        switch (connectionType) {
-                            case "tcp": //invio messaggio TCP
-                                ;
-                                break;
-                            case "rmi": //chiamata metodi RMI
-                                ;
-                                break;
-                        }
-                        ;
+
                         break;
 
 
