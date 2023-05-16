@@ -129,7 +129,7 @@ public class ClientInputReader implements Runnable, Serializable{
 
 
                     case "chat": //chat>>Write here your message...
-                        if (stage != TurnStages.NOTHING) {
+                        if (stage == TurnStages.NOTURN || stage == TurnStages.TILESNUM || stage == TurnStages.CHOOSETILES || stage == TurnStages.CHOOSECOLUMN) {
                             String chatMessage = action;
                             chatMessage = lastUsedNickname + ">> " + chatMessage;
                             client.sendChatMessage(chatMessage);
