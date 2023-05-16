@@ -329,5 +329,10 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
 
     }
 
+    @Override
+    public void setStageToNoTurn() throws RemoteException {
+        buffer.setStage(TurnStages.NOTURN);
+    }
+
 
 }

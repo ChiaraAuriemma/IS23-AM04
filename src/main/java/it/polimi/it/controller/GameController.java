@@ -113,6 +113,8 @@ public class GameController implements Serializable {
             }
             firstOperation();
 
+
+
             //faccio tutte le cose del turno,
             //aggiorno i punti
         }
@@ -237,6 +239,7 @@ public class GameController implements Serializable {
      */
     public void firstTurnStarter() throws IllegalValueException, RemoteException {
         //pesca le carte, dispone i giocatori
+        game.getVirtualView().notifyGameStart();
 
         //tolgo: playerList = game.getPlayerList();//sto salvando la lista di giocatori già ordinata come deve essere
         playerList = game.randomPlayers();

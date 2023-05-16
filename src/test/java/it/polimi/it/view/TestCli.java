@@ -116,7 +116,6 @@ public class TestCli {
         }
 
         testView.setBoardView(board);
-        testView.setChat();
         testView.update();
     }
 
@@ -183,7 +182,6 @@ public class TestCli {
         }
 
         testView.setBoardView(board);
-        testView.setChat();
         testView.update();
     }
 
@@ -255,7 +253,6 @@ public class TestCli {
         }
 
         testView.setBoardView(board);
-        testView.setChat();
         testView.update();
     }
 
@@ -341,7 +338,6 @@ public class TestCli {
         }
 
         testView.setBoardView(board);
-        testView.setChat();
         testView.update();
 
 
