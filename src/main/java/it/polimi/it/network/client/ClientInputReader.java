@@ -76,7 +76,7 @@ public class ClientInputReader implements Runnable, Serializable{
         }else {
                 command = command.toLowerCase();
 
-                if(!command.equalsIgnoreCase("chat")){ // se è un messaggio in chat non gli tolgo gli spazi
+            if(!command.equalsIgnoreCase("chat") && !command.equalsIgnoreCase("login")){ // se è un messaggio in chat non gli tolgo gli spazi
                     action = action.replaceAll("\\s+","");
                 }
 
