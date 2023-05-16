@@ -15,7 +15,7 @@ import java.util.List;
 
 import static java.lang.System.out;
 
-public class View implements Serializable {
+public class View implements ViewInterface, Serializable {
     private static final long serialVersionUID = 892639889752766985L;
     private HashMap<String, Tile[][]> playersShelfies = new HashMap<String, Tile[][]>();
     private HashMap<String, String> playersPoints = new HashMap<String, String>();
@@ -605,29 +605,10 @@ public class View implements Serializable {
         out.print("\n");
     }
 
-   /* public void recover(Game game, int gameID, String username) {
-        this.gameID=gameID;
-        numPlayers=game.getNumplayers();
-        setBoardView(game.getBoard().getMatrix());
-        setCommon1View(game.getCommonCard1());
-        setCommon2View(game.getCommonCard2());
-        this.order = game.playersOrder();
-        int index = order.indexOf(user);
-        setPlayersPersonalCardView(game.getPersonalCard(index));
-       // this.endToken=game.getEndToken();
 
 
-        for(User u: order){
-            setPlayersShelfiesView(u, u.getShelfie().getShelf());
-            setPlayersNicknamesView(u);
-            index = order.indexOf(u);
-            setPlayersPointsView(u, u.getGame().getPoint(index));
-            setPlayersNicknamesView(u);
 
-        }
-    }
 
-*/
     public String boardRow (int row){
         String returnString = String.valueOf(row) +" ";
         for(int i=0; i<9; i++){
@@ -826,12 +807,6 @@ public class View implements Serializable {
 
 
 
-    public void setChat(){
-        for (int i=0; i<20; i++){
-            chatMessages.add("Placeholder Chat Message JaaackBB");
-        }
-    }
-
 
     public void fakePersonal() {
         playersPersonalCard = new Tile[6][5];
@@ -848,5 +823,11 @@ public class View implements Serializable {
 
     public void printThings(String s) {
         out.print(s);
+    }
+
+    public void updateChat(List<String> currentChat) {
+        for (int i=0; i<9; i++){
+            chatMessages.set(i, currentChat.get(i) );
+        }
     }
 }
