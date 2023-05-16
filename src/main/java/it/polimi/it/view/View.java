@@ -47,7 +47,7 @@ public class View implements Serializable {
     private int gameID;
     private String endToken;
 
-    private User u;
+    private User u = new User(" ");
 
 
 
