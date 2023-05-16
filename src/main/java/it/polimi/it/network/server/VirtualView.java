@@ -222,7 +222,7 @@ public class VirtualView implements Serializable {
     }
 
     public void shelfieUpdate(User user) throws RemoteException {
-        for (int i=0; i < game.getNumplayers(); i++) {
+       for (int i=0; i < game.getNumplayers(); i++) {
             User  receiver = game.getPlayer(i);
 
             if (typeOfConnection.get(receiver.getNickname()).equals("TCP")) {
@@ -236,7 +236,7 @@ public class VirtualView implements Serializable {
                 ClientInterface clientRMI = userRMI.get(receiver.getNickname());
                 clientRMI.setNewShelfie(user.getNickname(), user.getShelfie().getShelf());
             }
-        }
+       }
     }
 
     public void boardUpdate(Tile[][] matrix) throws RemoteException {

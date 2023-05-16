@@ -95,7 +95,7 @@ public class GameController implements Serializable {
      */
     void turnDealer() throws InvalidIDException, IllegalValueException, RemoteException {
 
-        game.getVirtualView().viewUpdate();
+        //game.getVirtualView().viewUpdate();
 
         if(this.endGame && this.currentPlayer == 0){
             game.getVirtualView().viewUpdate();
