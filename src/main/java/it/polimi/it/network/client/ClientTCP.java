@@ -79,6 +79,8 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
 
     @Override
     public void takeableTiles(List<List<Tile>> choosableTilesList, int num) throws RemoteException {
+        view.update();
+        System.out.println("Please choose " + num + " tiles from the board...\n");
         view.takeableTiles(choosableTilesList);
     }
 
@@ -115,12 +117,16 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
 
     @Override
     public void notifyTurnStart(int maxValueofTiles) {
-        view.NotifyTurnStart(maxValueofTiles, username);
+        view.update();
+        view.NotifyTurnStart(maxValueofTiles,this.username);
+        buffer.setStage(TurnStages.TILESNUM);
     }
 
     @Override
     public void askColumn(boolean[] choosableColumns) {
-        view.setPossibleColumns(choosableColumns);
+        view.update();
+        view.askColumn();
+        //view.setPossibleColumns(choosableColumns);
     }
 
 
@@ -155,7 +161,10 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
                     break;
                 case JOINGAMERESPONSE:
                     JoinGameResponse joinGameResponse = (JoinGameResponse) response.getPayload();
-                    buffer.setStage(TurnStages.NOTHING);
+
+                    if(!buffer.getStage().equals(TurnStages.TILESNUM)){
+                        buffer.setStage(TurnStages.NOTHING);
+                    }
                     view.setGameID(joinGameResponse.getGameId());
                     break;
                 case STARTORDERPLAYER:
@@ -278,6 +287,7 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
         SelectedTilesRequest selectedTilesRequest = new SelectedTilesRequest(choices);
         Message request = new Message(MessageType.SELECTEDTILES, selectedTilesRequest);
         send(request);
+        buffer.setStage(TurnStages.CHOOSECOLUMN);
     }
     @Override
     public void chooseColumn (int column){
@@ -326,7 +336,10 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
 
     @Override
     public void updateChat(List<String> currentChat) throws RemoteException{
-
+        view.updateChat(currentChat);
+        if(buffer.getStage() == TurnStages.NOTURN){
+            view.update();
+        }
     }
 
     @Override
