@@ -242,7 +242,17 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
                     ThisNotTheDay recover = (ThisNotTheDay) response.getPayload();
                     recover(recover.getGame(), recover.getGameID());
                     break;
+
                 case UPDATEVIEW: updateView();
+                    break;
+
+                case CHATUPDATE:
+                    ChatUpdate chatUpdate = (ChatUpdate) response.getPayload();
+                    view.updateChat(chatUpdate.getChatUpdate());
+                    break;
+
+                case NOTURNSETTER:
+                    buffer.setStage(TurnStages.NOTURN);
                     break;
 
                 case ERROR:
@@ -331,7 +341,9 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
 
     @Override
     public void sendChatMessage(String chatMessage) {
-
+        SendChatMessage sendChatMessage = new SendChatMessage(chatMessage);
+        Message request = new Message(MessageType.CHAT, sendChatMessage);
+        send(request);
     }
 
     @Override
