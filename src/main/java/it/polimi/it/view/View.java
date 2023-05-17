@@ -586,7 +586,7 @@ public class View implements ViewInterface, Serializable {
     }
 
     public void askColumn() {
-        out.println("Please choose in which column you want to put the tiles that you took... ");
+        out.println("Please choose in which column you want to put the tiles that you took... \n");
     }
 
     public void printError(String error) {
@@ -827,7 +827,7 @@ public class View implements ViewInterface, Serializable {
     }
 
     public void printTile(String color, int row, int column) {
-        out.print("row: " + row +  ", column: " + column + ", color: " + color);
+        out.print("row: " + row +  ", column: " + column + ", color: " + color );
     }
 
     public void printThings(String s) {
