@@ -294,7 +294,10 @@ public class GameController implements Serializable {
         //game.getVirtualView().resetAfterDisconnection(user.getNickname(), gameID);
     }
 
-    public void pushChatMessage(String chatMessage) {
+    public void pushChatMessage(String chatMessage) throws RemoteException {
         chat.newMessage(chatMessage);
+
+        //live chat update
+        game.getVirtualView().sendChatUpdate(chat.getCurrentChat());
     }
 }

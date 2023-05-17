@@ -318,6 +318,17 @@ public class VirtualView implements Serializable {
             User  receiver = game.getPlayer(i);
 
             if (typeOfConnection.get(receiver.getNickname()).equals("TCP")) {
+               //mandare prima il messaggio per la chat!!!!!!!!!!!!!!!!!!!!
+                //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
                 ViewUpdate viewUpdate = new ViewUpdate();
                 Message message = new Message(MessageType.UPDATEVIEW,viewUpdate);
                 sendTCPMessage(userTCP.get(receiver.getNickname()), message);
@@ -373,4 +384,25 @@ public class VirtualView implements Serializable {
     }
 
 
+    public void sendChatUpdate(List<String> currentChat) throws RemoteException {
+        for (int i=0; i < game.getNumplayers(); i++) {
+            User  receiver = game.getPlayer(i);
+
+            if (typeOfConnection.get(receiver.getNickname()).equals("TCP")) {
+
+                //Messaggio TCP che manda la chat
+                //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+            } else if (typeOfConnection.get(receiver.getNickname()).equals("RMI")) {
+                ClientInterface clientRMI = userRMI.get(receiver.getNickname());
+                clientRMI.updateChat(currentChat);
+            }
+        }
+    }
 }
