@@ -71,11 +71,13 @@ public class ClientInputReader implements Runnable, Serializable{
         }
         String[] inp = input.split(">>");
         String command = inp[0];
-        String action = inp[1];
+        if(inp[1]!=null && inp[1].length() >= 0){
+            String action = inp[1];
 
-        if(action.length() <= 0 || action == null){
+
+
             System.out.println("You didn't write anything");
-        }else {
+
                 command = command.toLowerCase();
 
             if(!command.equalsIgnoreCase("chat") && !command.equalsIgnoreCase("login")){ // se è un messaggio in chat non gli tolgo gli spazi
@@ -100,7 +102,7 @@ public class ClientInputReader implements Runnable, Serializable{
                             while (nickname.length() < 12) {
                                 nickname = nickname.concat(" ");
                             }
-                            
+
                             //metodo che manda il messaggio login
                             client.login(nickname);
                         } else {
@@ -214,8 +216,11 @@ public class ClientInputReader implements Runnable, Serializable{
                     default:
                         System.out.println("Error! No valid message type detected!");
                 }
-            }
+            }else{
+            System.out.println("You didn't write anything");
         }
+
+    }
 
 
     /**
