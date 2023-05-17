@@ -838,4 +838,9 @@ public class View implements ViewInterface, Serializable {
         chatMessages.clear();
         chatMessages.addAll(currentChat);
     }
+
+    public void askTilesAgain(){
+
+        out.println("One or more of the tiles is not chhosable! Retry...\n");
+    }
 }
