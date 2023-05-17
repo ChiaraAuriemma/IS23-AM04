@@ -162,7 +162,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
             sr.chooseColumn(this.nickname, numOfColum);
             buffer.setStage(TurnStages.NOTURN);
         } catch (InvalidIDException | IllegalValueException e) {
-            System.out.println("You can't choose this column!");
+
             view.askColumnAgain();
         }
 
@@ -231,7 +231,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
     @Override
     public void askColumn(boolean[] choosableColumns) {
         view.update();
-        view.askColumn();
+        view.setPossibleColumns(choosableColumns);
     }
 
     @Override
@@ -257,7 +257,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
     public void takeableTiles(List<List<Tile>> choosableTilesList, int num) throws RemoteException {
         //view : faccio vedere illuminate le tiles nella lista
         view.update();
-        System.out.println("Please choose " + num + " tiles from the board...\n");
+        System.out.println("Please choose " + num + " tiles from the board... (Use take_tiles>>)\n");
         view.takeableTiles(choosableTilesList);
     }
 

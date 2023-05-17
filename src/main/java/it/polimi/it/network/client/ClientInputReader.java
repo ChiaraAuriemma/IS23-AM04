@@ -183,7 +183,7 @@ public class ClientInputReader implements Runnable, Serializable{
                                 view.printTile(tile.getColor(), tile.getRow(), tile.getColumn());
                                 view.printThings("; ");
                             }
-                            view.printThings("\nwaiting for check... ");
+                            view.printThings("\nWaiting for check...\n");
                             client.selectedTiles(chosenTilesList);
                         } else {
                             view.printError("There's a time and place for everything, but not now. 5");
