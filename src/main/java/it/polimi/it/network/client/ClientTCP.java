@@ -189,13 +189,14 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
                     //view : passo la personal card del giocatore
                     setNewPersonal(drawnPersonalCardMessage.getCard());
                     break;
+
                 case STARTTURN:
                     StartTurnMessage startTurnMessage = (StartTurnMessage) response.getPayload();
-                    //view : passo il maxNumOfTiles sceglibili
                     notifyTurnStart(startTurnMessage.getMaxValueofTiles());
                     buffer.setStage(TurnStages.TILESNUM);
                     break;
-                case TAKEABLETILES:
+
+                    case TAKEABLETILES:
                     TakeableTilesResponse takeableTilesResponse = (TakeableTilesResponse) response.getPayload();
                     try {
                         takeableTiles(takeableTilesResponse.getChoosableTilesList(), takeableTilesResponse.getChoosableTilesList().get(0).size());
@@ -249,6 +250,9 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
                 case CHATUPDATE:
                     ChatUpdate chatUpdate = (ChatUpdate) response.getPayload();
                     view.updateChat(chatUpdate.getChatUpdate());
+                    if(buffer.getStage() == TurnStages.NOTURN){
+                        view.update();
+                    }
                     break;
 
                 case NOTURNSETTER:
@@ -304,6 +308,7 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
         ChooseColumnRequest chooseColumnRequest = new ChooseColumnRequest(column);
         Message request = new Message(MessageType.CHOOSECOLUMN, chooseColumnRequest);
         send(request);
+        buffer.setStage(TurnStages.NOTURN);
     }
 
 

@@ -157,7 +157,7 @@ public class VirtualView implements Serializable {
             if (typeOfConnection.get(receiver.getNickname()).equals("TCP")) {
 
                 NoTurnSetter noTurnSetter = new NoTurnSetter(true);
-                Message message = new Message(MessageType.STARTTURN,noTurnSetter);
+                Message message = new Message(MessageType.NOTURNSETTER,noTurnSetter);
                 sendTCPMessage(userTCP.get(receiver.getNickname()), message);
 
             } else if (typeOfConnection.get(receiver.getNickname()).equals("RMI")) {

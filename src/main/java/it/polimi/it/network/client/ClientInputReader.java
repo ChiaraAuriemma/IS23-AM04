@@ -133,8 +133,6 @@ public class ClientInputReader implements Runnable, Serializable{
                         }else {
                             view.printError("There's a time and place for everything, but not now. 3");
                         }
-
-
                         break;
 
 
