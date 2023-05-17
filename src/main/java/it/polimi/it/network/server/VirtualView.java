@@ -311,9 +311,10 @@ public class VirtualView implements Serializable {
 
             if (typeOfConnection.get(receiver.getNickname()).equals("TCP")) {
 
-                ChatUpdate chatUpdate = new ChatUpdate(currentChat);
+                sendChatUpdate(currentChat);
+                /*ChatUpdate chatUpdate = new ChatUpdate(currentChat);
                 Message messageChat = new Message(MessageType.CHATUPDATE, chatUpdate);
-                sendTCPMessage(userTCP.get(receiver.getNickname()), messageChat);
+                sendTCPMessage(userTCP.get(receiver.getNickname()), messageChat);*/
 
                 ViewUpdate viewUpdate = new ViewUpdate();
                 Message message = new Message(MessageType.UPDATEVIEW,viewUpdate);
