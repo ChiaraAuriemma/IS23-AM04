@@ -213,7 +213,7 @@ public class Game implements Serializable {
         Shelfie shelfie = player.getShelfie();
 
         //points from personal cards
-        Integer personalScore = persCard.checkScore(shelfie);
+        int personalScore = persCard.checkScore(shelfie);
         int tmp_point;
         int tmp_score;
         while(this.checkPersonalScore.get(i) < personalScore){

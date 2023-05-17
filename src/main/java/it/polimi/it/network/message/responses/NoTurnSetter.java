@@ -3,7 +3,6 @@ package it.polimi.it.network.message.responses;
 import it.polimi.it.network.message.Payload;
 
 import java.awt.*;
-import java.io.Serial;
 import java.io.Serializable;
 
 public class NoTurnSetter extends Payload implements Serializable {
