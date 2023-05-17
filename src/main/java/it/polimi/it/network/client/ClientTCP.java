@@ -309,6 +309,7 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
         Message request = new Message(MessageType.CHOOSECOLUMN, chooseColumnRequest);
         send(request);
         buffer.setStage(TurnStages.NOTURN);
+        System.out.println("End of your turn\n");
     }
 
 

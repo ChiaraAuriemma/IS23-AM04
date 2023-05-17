@@ -8,9 +8,9 @@ import java.util.List;
 
 public class ChatUpdate extends Payload implements Serializable {
     private static final long serialVersionUID = 3624252035577253733L;
-    private List<String> currChat = new ArrayList<>();
+    private List<String> currChat;
     public ChatUpdate(List<String> currChat) {
-        this.currChat = currChat;
+        this.currChat = new ArrayList<>(currChat);
     }
     public List<String> getChatUpdate() {
         return currChat;
