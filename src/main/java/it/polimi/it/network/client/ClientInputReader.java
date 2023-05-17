@@ -69,47 +69,40 @@ public class ClientInputReader implements Runnable, Serializable{
             System.out.println("No valid commands found, please retry... ");
             return ;
         }
+
         String[] inp = input.split(">>");
         String command = inp[0];
+        if (inp.length == 1){
+            System.out.println("You didn't write anything");
+            return;
+        }
         if(inp[1]!=null && inp[1].length() >= 0){
             String action = inp[1];
 
-
-
-            System.out.println("You didn't write anything");
-
-                command = command.toLowerCase();
+            command = command.toLowerCase();
 
             if(!command.equalsIgnoreCase("chat") && !command.equalsIgnoreCase("login")){ // se è un messaggio in chat non gli tolgo gli spazi
                     action = action.replaceAll("\\s+","");
-                }
+            }
 
-                switch (command) {
-                    case "login"://initial nickname setting
+            switch (command) {
+                case "login"://initial nickname setting
+                    if (stage == TurnStages.LOGIN) {
+                        String nickname = action;
+                        if(nickname.length()>12){
+                            System.out.println("Nickname is too long, please retry... ");
+                            break;
+                        }
+                        lastUsedNickname = nickname;
 
-                        if (stage == TurnStages.LOGIN) {
-                            String nickname = action;
-                            if(nickname.length()>12){
-                                System.out.println("Nickname is too long, please retry... ");
-                                break;
-                            }
-
-
-                            // pad the nickname to a length of 12
-
-                            lastUsedNickname = nickname;
-
-                            while (nickname.length() < 12) {
-                                nickname = nickname.concat(" ");
-                            }
-
-                            //metodo che manda il messaggio login
-                            client.login(nickname);
-                        } else {
-                            view.printError("There's a time and place for everything, but not now. 1");
+                        while (nickname.length() < 12) {
+                            nickname = nickname.concat(" ");
                         }
 
-                        break;
+                        client.login(nickname);
+                    } else {
+                       view.printError("There's a time and place for everything, but not now. 1");
+                    } break;
 
                     case "create_game":// create_game>>4
                         if (stage == TurnStages.CREATEorJOIN) {
