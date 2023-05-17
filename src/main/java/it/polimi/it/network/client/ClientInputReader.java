@@ -91,7 +91,8 @@ public class ClientInputReader implements Runnable, Serializable{
                                 System.out.println("Nickname is too long, please retry... ");
                                 break;
                             }
-                            
+
+
                             // pad the nickname to a length of 12
 
                             lastUsedNickname = nickname;
