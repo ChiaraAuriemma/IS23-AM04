@@ -19,11 +19,11 @@
 | Model          | 🟢 |
 | Controller     | 🟢 |
 | Socket TCP     | 🟡 |
-| RMI            | 🟢 |
+| RMI            | 🟡 |
 | TUI            | 🟢 |
 | GUI            | 🟡 |
 | Multiple games | 🟢 |
-| Chat           | 🟢 |
+| Chat           | 🟡 |
 | Disconnection  | 🟡 |
 
 
