@@ -476,9 +476,9 @@ public class View implements ViewInterface, Serializable {
         Title();
         out.println("\n");
         out.println("Welcome to My Shelfie!");
-        out.println("\n\n\n");
-        out.println("Please submit your nickname! ");
-        out.println("\n\n\n");
+        out.println("\n\n");
+        out.println("Please submit your nickname! (Use login>>)");
+        out.println("\n\n");
 
         printCommands();
         out.println("\n");
@@ -499,12 +499,13 @@ public class View implements ViewInterface, Serializable {
     }
 
     public void joinOrCreate(String clientInput) {
-        out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+        out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
         Title();
         out.println("\n");
         out.println("Welcome to My Shelfie, " + clientInput + "!");
         out.println("\n\n\n");
-        out.println("Do you want to join or create a new Game? ");
+        out.println("Do you want to join or create a new Game? (Use create_game>> or join_game>>)");
+        out.println("\n");
     }
 
     public void askNumPlayerAgain() {
@@ -551,15 +552,16 @@ public class View implements ViewInterface, Serializable {
 
 
     public void NotifyTurnStart(int maxValueofTiles, String username) {//stampa tipo Bro è il tuo turno, chiedi di scegliere quante tile vuole; in input ho il max numero che posso prendere
-        out.print("Hey " + username + " it's your turn!\nChoose how many Tiles you want to take from the LivingRoom... \n");
+        out.print("Hey " + username + " it's your turn!\nChoose how many Tiles you want to take from the LivingRoom...(Use num_tiles>>) \n\n");
     }
 
     public void askNumTilesAgain() {
-        out.print("Are you dumb!? Please retry... ");
+        out.print("You can't take that number of tiles! Please retry...\n ");
 
     }
 
     public void askColumnAgain() {
+        out.print("You can't choose this column!\n");
     }
 
     public void printCommands() {
@@ -586,7 +588,7 @@ public class View implements ViewInterface, Serializable {
     }
 
     public void askColumn() {
-        out.println("Please choose in which column you want to put the tiles that you took... \n");
+        out.println("Please choose in which column you want to put the tiles that you took... (Use choose_column>>) \n");
     }
 
     public void printError(String error) {
