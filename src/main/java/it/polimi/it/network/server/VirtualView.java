@@ -328,6 +328,10 @@ public class VirtualView implements Serializable {
                 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
+                ChatUpdate chatUpdate = new ChatUpdate(currentChat);
+                Message messageChat = new Message(MessageType.CHATUPDATE, chatUpdate);
+                sendTCPMessage(userTCP.get(receiver.getNickname()), messageChat);
+
 
                 ViewUpdate viewUpdate = new ViewUpdate();
                 Message message = new Message(MessageType.UPDATEVIEW,viewUpdate);
@@ -397,11 +401,17 @@ public class VirtualView implements Serializable {
                 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                ChatUpdate chatUpdate = new ChatUpdate(currentChat);
+                Message messageChat = new Message(MessageType.CHATUPDATE, chatUpdate);
+                sendTCPMessage(userTCP.get(receiver.getNickname()), messageChat);
+
 
 
             } else if (typeOfConnection.get(receiver.getNickname()).equals("RMI")) {
                 ClientInterface clientRMI = userRMI.get(receiver.getNickname());
                 clientRMI.updateChat(currentChat);
+
+
             }
         }
     }

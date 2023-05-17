@@ -42,7 +42,15 @@ public enum MessageType  implements Serializable {
 
     FINALPOINTS("FINALPOINTS"),
     JOINGAMERESPONSE("JOINGAMERESPONSE"),
-    THISISNOTTHEDAY("THISISNOTTHEDAY");
+    THISISNOTTHEDAY("THISISNOTTHEDAY"),
+
+
+    CHAT("CHAT"),
+
+    CHATUPDATE("CHATUPDATE");
+
+
+
     private final String message;
 
 
