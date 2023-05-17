@@ -29,7 +29,6 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
 
     private String nickname;
     private View view;
-    private Scanner scanner;
     private List<Tile> lastChosen = new ArrayList<>();
 
     private ClientInputReader buffer;
@@ -205,6 +204,9 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
     @Override
     public void updateChat(List<String> currentChat) throws RemoteException{
         view.updateChat(currentChat);
+        if(buffer.getStage() == TurnStages.NOTURN){
+            view.update();
+        }
     }
 
     @Override
@@ -229,12 +231,14 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
 
     @Override
     public void notifyTurnStart(int maxValueofTiles) {
+        view.update();
         view.NotifyTurnStart(maxValueofTiles,this.nickname);
         buffer.setStage(TurnStages.TILESNUM);
     }
 
     @Override
     public void askColumn(boolean[] choosableColumns) {
+        view.update();
         view.askColumn();
     }
 
@@ -260,6 +264,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
     @Override
     public void takeableTiles(List<List<Tile>> choosableTilesList, int num) throws RemoteException {
         //view : faccio vedere illuminate le tiles nella lista
+        view.update();
         System.out.println("Please choose " + num + " tiles from the board...\n");
         view.takeableTiles(choosableTilesList);
     }
