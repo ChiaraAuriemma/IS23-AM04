@@ -15,7 +15,7 @@
       </ImageView>
       <ImageView fx:id="bookshelf" fitHeight="222.0" fitWidth="208.0" layoutX="340.0" layoutY="124.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="/Images/bookshelf.png" />
+            <Image url="@Images/bookshelf.png" />
          </image>
       </ImageView>
       <ImageView fx:id="livingroom" fitHeight="234.0" fitWidth="220.0" layoutX="41.0" layoutY="119.0" pickOnBounds="true" preserveRatio="true">
@@ -110,7 +110,6 @@
       <ImageView fx:id="tile25BS" fitHeight="19.0" fitWidth="21.0" layoutX="501.0" layoutY="255.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="tile26BS" fitHeight="19.0" fitWidth="21.0" layoutX="367.0" layoutY="283.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="tile27BS" fitHeight="19.0" fitWidth="21.0" layoutX="402.0" layoutY="283.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="tile4LV28" fitHeight="19.0" fitWidth="21.0" layoutX="434.0" layoutY="283.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="tile28BS" fitHeight="19.0" fitWidth="21.0" layoutX="434.0" layoutY="283.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="tile29BS" fitHeight="19.0" fitWidth="21.0" layoutX="468.0" layoutY="283.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="tile30BS" fitHeight="19.0" fitWidth="21.0" layoutX="501.0" layoutY="283.0" pickOnBounds="true" preserveRatio="true" />
