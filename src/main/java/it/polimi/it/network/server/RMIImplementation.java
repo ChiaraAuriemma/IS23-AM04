@@ -82,7 +82,7 @@ public class RMIImplementation extends UnicastRemoteObject implements ServerInte
         return gc.getGameID();
     }
 
-    public void tilesNumMessage(String username,int numTiles) throws RemoteException, WrongPlayerException, WrongListException, IllegalValueException {
+    public void tilesNumMessage(String username,int numTiles) throws RemoteException, WrongPlayerException, IllegalValueException {
         GameController gc = userGame.get(username);
         synchronized (gc){
             gc.getFromViewNTiles(username,numTiles);

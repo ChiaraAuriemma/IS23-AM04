@@ -139,13 +139,8 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
         try {   //comunico al server il numero scelto
             sr.tilesNumMessage(this.nickname, numOfTiles);
             buffer.setStage(TurnStages.CHOOSETILES);
-        } catch (IllegalValueException e) {
+        } catch (IllegalValueException | WrongPlayerException e) {
             //view : notifico alla view che il numero di tiles indicato non è valido
-            view.askNumTilesAgain();
-        } catch (WrongPlayerException e) {
-            //view : non è il turno di questo giocatore
-        } catch (WrongListException e) {
-            //view : il numero di tiles non è valido in base agli spazi rimasti liberi
             view.askNumTilesAgain();
         }
     }
@@ -157,9 +152,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
             sr.selectedTiles(this.nickname, choosenTiles);
             buffer.setStage(TurnStages.CHOOSECOLUMN);
         } catch (WrongPlayerException | WrongListException e) {
-            //view : notifico che l'user non è quello giusto
-            //}catch (WrongListException){
-            //manca eccezione nel caso in cui abbia scelto un set di tile invalido
+            view.askTilesAgain();
         }
     }
 
@@ -168,12 +161,11 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
         try {
             sr.chooseColumn(this.nickname, numOfColum);
             buffer.setStage(TurnStages.NOTURN);
-        } catch (InvalidIDException e) {
-            //view : il numero della colonna non è valido
-            view.askColumnAgain();
-        } catch (IllegalValueException e) {
+        } catch (InvalidIDException | IllegalValueException e) {
             System.out.println("You can't choose this column!");
+            view.askColumnAgain();
         }
+
     }
 
     @Override

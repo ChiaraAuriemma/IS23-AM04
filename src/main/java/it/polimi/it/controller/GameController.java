@@ -141,7 +141,7 @@ public class GameController implements Serializable {
      *  in order to highlight them on the board.
      * @param chosenNumber is the input from the user
      */
-    public void getFromViewNTiles(String user, int chosenNumber) throws WrongPlayerException, WrongListException, RemoteException, IllegalValueException {
+    public void getFromViewNTiles(String user, int chosenNumber) throws WrongPlayerException, RemoteException, IllegalValueException {
         if(user.equals(playerList.get(currentPlayer).getNickname())){
             this.playerList.get(currentPlayer).choosableTiles(chosenNumber);
 
