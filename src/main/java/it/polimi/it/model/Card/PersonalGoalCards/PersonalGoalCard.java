@@ -16,6 +16,7 @@ public class PersonalGoalCard implements Serializable {
 
     private static final long serialVersionUID = -3897925876914460232L;
     private int numCompletedTasks;
+    private int id;
     private List<Integer> checkColor;
     /*private transient JsonArray pinkPos;
     private transient JsonArray cyanPos;
@@ -37,6 +38,8 @@ public class PersonalGoalCard implements Serializable {
      * @param id is the identification code of the card we need to instantiate
      */
     public PersonalGoalCard(int id){
+        this.id = id;
+
         pinkPos = new ArrayList<>(Arrays.asList(0, 0));
         cyanPos = new ArrayList<>(Arrays.asList(0, 0));
         yellowPos = new ArrayList<>(Arrays.asList(0, 0));
@@ -250,5 +253,9 @@ public class PersonalGoalCard implements Serializable {
         }
 
         return numCompletedTasks;
+    }
+
+    public int getId() {
+        return id;
     }
 }

@@ -150,20 +150,21 @@ public class VirtualView implements Serializable {
         }
     }
 
-    public void notifyGameStart() throws RemoteException {
+    public void notifyTurnStart(User user) throws RemoteException {
         for (int i=0; i < game.getNumplayers(); i++) {
             User  receiver = game.getPlayer(i);
+            if(!receiver.equals(user)){
+                if (typeOfConnection.get(receiver.getNickname()).equals("TCP")) {
 
-            if (typeOfConnection.get(receiver.getNickname()).equals("TCP")) {
+                    NoTurnSetter noTurnSetter = new NoTurnSetter(true);
+                    Message message = new Message(MessageType.NOTURNSETTER,noTurnSetter);
+                    sendTCPMessage(userTCP.get(receiver.getNickname()), message);
 
-                NoTurnSetter noTurnSetter = new NoTurnSetter(true);
-                Message message = new Message(MessageType.NOTURNSETTER,noTurnSetter);
-                sendTCPMessage(userTCP.get(receiver.getNickname()), message);
-
-            } else if (typeOfConnection.get(receiver.getNickname()).equals("RMI")) {
-                //sviluppo in RMI
-                ClientInterface clientRMI = userRMI.get(receiver.getNickname());
-                clientRMI.setStageToNoTurn();
+                } else if (typeOfConnection.get(receiver.getNickname()).equals("RMI")) {
+                    //sviluppo in RMI
+                    ClientInterface clientRMI = userRMI.get(receiver.getNickname());
+                    clientRMI.setStageToNoTurn();
+                }
             }
         }
     }
