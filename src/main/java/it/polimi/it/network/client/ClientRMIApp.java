@@ -227,9 +227,8 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
     }
 
     @Override
-    public void notifyTurnStart(int maxValueofTiles) {
-        view.update();
-        view.NotifyTurnStart(maxValueofTiles,this.nickname);
+    public void notifyTurnStart(int maxValueOfTiles) {
+        view.NotifyTurnStart(maxValueOfTiles,this.nickname);
         buffer.setStage(TurnStages.TILESNUM);
     }
 
