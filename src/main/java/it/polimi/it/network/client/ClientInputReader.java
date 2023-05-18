@@ -106,7 +106,7 @@ public class ClientInputReader implements Runnable, Serializable{
 
                     case "create_game":// create_game>>4
                         if (stage == TurnStages.CREATEorJOIN) {
-                            if(!input.matches("-?\\d+")){
+                            if(!action.matches("-?\\d+")){
                                 System.out.println("Invalid number");
                                 return;
                             }
@@ -118,7 +118,7 @@ public class ClientInputReader implements Runnable, Serializable{
                         break;
 
                     case "join_game": //join_game>>gameID
-                        if(!input.matches("-?\\d+")){
+                        if(!action.matches("-?\\d+")){
                             System.out.println("Invalid number");
                             return;
                         }
@@ -145,7 +145,7 @@ public class ClientInputReader implements Runnable, Serializable{
 
 
                     case "num_tiles"://num_tiles>> number of tiles you want to get from the board
-                        if(!input.matches("-?\\d+")){
+                        if(!action.matches("-?\\d+")){
                             System.out.println("Invalid number");
                             return;
                         }
@@ -228,7 +228,7 @@ public class ClientInputReader implements Runnable, Serializable{
 
 
                     case "choose_column": //choose_column>>number of the column; TBD:le colonne partono da 0 o da 1????
-                        if(!input.matches("-?\\d+")){
+                        if(!action.matches("-?\\d+")){
                             System.out.println("Invalid number");
                             return;
                         }
