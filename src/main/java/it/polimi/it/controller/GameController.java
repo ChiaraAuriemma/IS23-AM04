@@ -17,15 +17,20 @@ import java.util.stream.Collectors;
 public class GameController implements Serializable {
 
     private static final long serialVersionUID = 9016415749066492223L;
+
+
     /**
      * Is the total number of players in the game
      */
     private int numOfPlayers;
 
+
     /**
      * Univocal ID for the current game
      */
     private int gameID;
+
+
 
     /**
      * Index of the playerList, represents the player who is able
@@ -33,10 +38,12 @@ public class GameController implements Serializable {
      */
     private int currentPlayer=0;
 
+
     /**
      * Flag to avoid continuing the game if somebody has already finished
      */
     private boolean endGame;
+
 
     /**
      * List of the players, with a maximum size of 4
@@ -67,9 +74,19 @@ public class GameController implements Serializable {
      * Max number of tiles take-able in a certain turn
      */
     private int maxTile;
+
+
+    /**
+     * Instance of the game's chat
+     */
     private Chat chat;
 
+
+    /**
+     * boolean array which represents the empty columns with true
+     */
     private boolean[] possibleColumnArray;
+
 
     /**
      * Constructor method
@@ -86,7 +103,6 @@ public class GameController implements Serializable {
         this.chat = new Chat();
     }
 
-    //suppongo che la partita sia già stata startata con 4 giocatori
 
     /**
      * Method used to control which player needs to move in the current turn
@@ -97,10 +113,7 @@ public class GameController implements Serializable {
 
         if(this.endGame && this.currentPlayer == 0){
             game.getVirtualView().viewUpdate(chat.getCurrentChat());
-
             game.pointsFromAdjacent();
-
-            //manda alla view i punteggi finali (passo points)
             lobby.notifyEndGame(gameID);
         }else{
             if(currentPlayer!=game.getNumplayers()-1) {
@@ -109,11 +122,7 @@ public class GameController implements Serializable {
                 currentPlayer=0;
             }
             firstOperation();
-
-            //faccio tutte le cose del turno,
-            //aggiorno i punti
         }
-
     }
 
 
@@ -122,13 +131,9 @@ public class GameController implements Serializable {
      * Calls the view to ask the payer about how many tiles the player wants to retrieve
      */
     public void firstOperation() throws IllegalValueException, RemoteException {
-
         game.getVirtualView().notifyTurnStart(playerList.get(currentPlayer));
-
-        //faccio i controlli su qual è il massimo num di tile prendibili
         this.maxTile = playerList.get(currentPlayer).maxValueOfTiles();
         game.getVirtualView().viewUpdate(chat.getCurrentChat());
-
     }
 
 
@@ -141,12 +146,9 @@ public class GameController implements Serializable {
     public void getFromViewNTiles(String user, int chosenNumber) throws WrongPlayerException, RemoteException, IllegalValueException {
         if(user.equals(playerList.get(currentPlayer).getNickname())){
             this.playerList.get(currentPlayer).choosableTiles(chosenNumber);
-
         }else{
             throw new WrongPlayerException("It's not your turn");
         }
-
-
     }
 
 
@@ -161,17 +163,15 @@ public class GameController implements Serializable {
         if(user.equals(playerList.get(currentPlayer).getNickname())) {
             if(validTilesCheck(chosenList)){
                 currentTilesList.clear();
-
                 currentTilesList = new ArrayList<>(chosenList);
-                //dico ad user che tile sono state scelte
                 try {
                     possibleColumnArray = playerList.stream().filter(curr -> Objects.equals(curr.getNickname(), user)).collect(Collectors.toList()).get(0).chooseSelectedTiles(currentTilesList);
                 } catch (RemoteException | WrongTileException e) {
+                    System.out.println(e.getMessage());
                 }
             }else{
                 throw new WrongListException("You chose badly");
             }
-
         }else {
             throw new WrongPlayerException("It's not your turn");
         }
@@ -185,7 +185,6 @@ public class GameController implements Serializable {
      */
     private boolean validTilesCheck(List<Tile> chosenList) {
         List<List<Tile>> choosable = game.getBoard().choosableTiles(chosenList.size());
-
         return choosable.stream().anyMatch(list -> new HashSet<>(list).containsAll(chosenList));
     }
 
@@ -195,22 +194,17 @@ public class GameController implements Serializable {
      *  in which order he wants the tiles to be.
      *  The method also calls the view to display the new points acquired by the player
      * @param col is the column of the shelfie where to put the tiles in
-
      * @throws WrongTileException exception used when a wrong tile is selected
      */
-    //oltre a scegliere la colonna dove metterle, ordina le Tile per come le vuole nella colonna
     public void getColumnFromView(String user, int col) throws IllegalValueException, InvalidIDException, RemoteException {
         if(!possibleColumnArray[col]){
-           System.out.println("Invalid column choice"); //da far vedere a view
+           System.out.println("Invalid column choice");
         }
         endGame = playerList.stream().filter(curr -> Objects.equals(curr.getNickname(), user)).collect(Collectors.toList()).get(0).insertTile(col, currentTilesList);
-
-
         game.pointCount(playerList.get(currentPlayer));
         if(this.endGame){
             game.endGame(playerList.get(currentPlayer));
         }
-
         turnDealer();
     }
 
@@ -220,24 +214,16 @@ public class GameController implements Serializable {
      * Calls the view in order to display the initial board and the cards that have been extracted randomly
      */
     public void firstTurnStarter() throws IllegalValueException, RemoteException {
-        //pesca le carte, dispone i giocatori
-
-        //sto salvando la lista di giocatori già ordinata come deve essere
         playerList = game.randomPlayers();
-
         for(int i=0; i < game.getNumplayers(); i++){
             game.drawPersonalCard();
             game.getPlayer(i).createShelfie();
         }
-
         game.drawCommonCrads();
-
-        //ho ottenuto l'ordine dei giocatori, inizio i turni effettivi
         currentPlayer=0;
-
-
         firstOperation();
     }
+
 
     /**
      * Getter method
@@ -247,6 +233,46 @@ public class GameController implements Serializable {
         return this.game;
     }
 
+
+    /**
+     * Getter method
+     * @return the list of all the players in the game
+     */
+    public List<User> getPlayerList() {
+        return playerList;
+    }
+
+
+    /**
+     * Method to reset the instances of
+     * @param user user and
+     * @param gameID gameID in case of a player's reconnection
+     * @throws RemoteException
+     */
+    public void resetGame(User user, int gameID) throws RemoteException {
+        //game.getVirtualView().resetAfterDisconnection(user.getNickname(), gameID);
+    }
+
+
+    /**
+     * Method to insert a new message in the chat records
+     * @param chatMessage is the latest chat message
+     * @throws RemoteException Exception that might come from connection issues
+     */
+    public void pushChatMessage(String chatMessage) throws RemoteException {
+        chat.newMessage(chatMessage);
+        game.getVirtualView().sendChatUpdate(chat.getCurrentChat());
+    }
+
+
+
+    /****************************************************
+     *                                                  *
+     *                                                  *
+     * Methods inserted just to test purposes           *
+     *                                                  *
+     *                                                  *
+     ****************************************************/
     public int getCurrentPlayer() {
         return currentPlayer;
     }
@@ -267,18 +293,4 @@ public class GameController implements Serializable {
         return lobby;
     }
 
-    public List<User> getPlayerList() {
-        return playerList;
-    }
-
-    public void resetGame(User user, int gameID) throws RemoteException {
-        //game.getVirtualView().resetAfterDisconnection(user.getNickname(), gameID);
-    }
-
-    public void pushChatMessage(String chatMessage) throws RemoteException {
-        chat.newMessage(chatMessage);
-
-        //live chat update
-        game.getVirtualView().sendChatUpdate(chat.getCurrentChat());
-    }
 }

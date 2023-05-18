@@ -18,16 +18,51 @@ import java.util.stream.Collectors;
 public class Lobby implements Serializable {
 
     private static final long serialVersionUID = 2013868577459101390L;
+
+
+    /**
+     * List of all the Users connected to the application
+     */
     private ArrayList<User> userList;
+
+
+    /**
+     * List of all the instances of the Games
+     * [Multiple games can be started simultaneously]
+     */
     private ArrayList<Game> gameList;
+
+
+    /**
+     * List of all the instances of the Games' Controllers
+     * [Multiple games can be started simultaneously]
+     */
     private ArrayList<GameController> gameControllerList;
 
+
+    /**
+     * Counter, used to know how many games in total have been started since the launch of the server
+     */
     private int gameCounterID;
 
+
+    /**
+     * Instance of a User
+     */
     private User user;
 
+
+    /**
+     * Instance of the TCP Server
+     */
     private ServerTCP serverTCP;
+
+
+    /**
+     * Instance of the TCP Server
+     */
     private RMIImplementation serverRMI;
+
 
     /**
      * Constructor of the class
@@ -39,6 +74,7 @@ public class Lobby implements Serializable {
         this.gameCounterID = 0;
     }
 
+
     /**
      * Method that check if the nickname is already used, check if the nickname is used by a client that disconnected and create a new user if neither of the previous check is true
      * @param nickname is the username of the user wrote by the client
@@ -48,7 +84,6 @@ public class Lobby implements Serializable {
      * @throws RemoteException if there is a problem in RMI
      */
     public User createUser(String  nickname) throws ExistingNicknameException, EmptyNicknameException, RemoteException {
-
         if(nickname == null || nickname.length() ==0){
             throw new EmptyNicknameException("Your nickname is too short");
         }else{
@@ -68,29 +103,22 @@ public class Lobby implements Serializable {
                                     .anyMatch(u -> u.getNickname().equals(nickname)))
                             .map(GameController::getGameID)
                             .findFirst();
-
                     user.get().setInGame(true);
 
-                    //Re send the robe for the view
-
                     int gameID = user.get().getGame().getGameid();
-
                     List<GameController> findGameController = gameControllerList.stream().filter(gameController -> gameController.getGame().getGameid() == gameID).collect(Collectors.toList());
 
                     GameController gc = findGameController.get(0);
                     Game g = gc.getGame();
-
                     gc.resetGame(user.get(), gameID);
-
                 }else{
                     throw  new ExistingNicknameException("This nickname already exists!");//mandare messaggio a view
                 }
-
             }
         }
-
         return user;
     }
+
 
     /**
      * Method used to create a new game with a game controller and a virtual view
@@ -100,13 +128,10 @@ public class Lobby implements Serializable {
      * @throws WrongPlayerException if the user write a player number <2 or >4
      */
     public GameController createGame(String username, int playerNumber) throws WrongPlayerException {
-
         if(playerNumber < 2 || playerNumber > 4){
             throw new WrongPlayerException("Wrong number of players"); //mandare messaggio a view
         }
 
-
-        //fai il controllo: l'user che crea il game deve esistere ed essere nella lista, vedi metodo sotto
         VirtualView virtualView = new VirtualView();
         virtualView.setServerRMI(this.serverRMI);
         virtualView.setServerTCP(this.serverTCP);
@@ -120,6 +145,7 @@ public class Lobby implements Serializable {
 
         return gameContr;
     }
+
 
     /**
      * Method used to join an already created game using the game ID
@@ -136,8 +162,6 @@ public class Lobby implements Serializable {
         List<Game> findGame = gameList.stream().filter(game -> game.getGameid() == gameID).collect(Collectors.toList());
         if(gameID<gameCounterID && !findGame.isEmpty()){
             if(findGame.get(0).getCurrentPlayersNum()<findGame.get(0).getNumplayers()){
-
-
                 findGame.get(0).joinGame(userList.get(userList.indexOf(userList.stream().filter(u -> Objects.equals(u.getNickname(), username)).collect(Collectors.toList()).get(0))));
 
                 if(!userList.get(userList.indexOf(userList.stream().filter(u -> Objects.equals(u.getNickname(), username)).collect(Collectors.toList()).get(0))).getInGame()){
@@ -145,11 +169,8 @@ public class Lobby implements Serializable {
                 }
 
                 if (findGame.get(0).getNumplayers()==findGame.get(0).getCurrentPlayersNum()){
-
-                    //starto effettivamente il game
                     gameControllerList.get(gameList.indexOf(findGame.get(0))).firstTurnStarter();
                 }
-
                 return gameControllerList.get(gameList.indexOf(findGame.get(0)));
             }else{
                 throw new WrongPlayerException("There are already too many players in this game!");
@@ -157,18 +178,14 @@ public class Lobby implements Serializable {
         }else{
             throw new InvalidIDException("The given game ID does not exists");
         }
-
     }
 
-
-    public ArrayList<User> getUserList(){
-        return userList;
-    }
-
-    int getGameCounterID(){
-        return gameCounterID;
-    }
-
+    /**
+     * Getter method that given the
+     * @param ID id of a game
+     * @return the instance of the game that contains that gameID
+     * @throws InvalidIDException if the given gameID is invalid
+     */
     Game getGame(int ID) throws InvalidIDException {
         for(Game game : gameList){
             if(game.getGameid()==ID){
@@ -179,7 +196,12 @@ public class Lobby implements Serializable {
     }
 
 
-
+    /**
+     * Getter method that given the
+     * @param gameID id of a game
+     * @return the instance of the game-controller that contains that gameID
+     * @throws InvalidIDException if the given gameID is invalid
+     */
     public GameController getGameController(int gameID) throws InvalidIDException{
         for (GameController gameContr: gameControllerList){
             if (gameContr.getGame().getGameid()==gameID){
@@ -196,15 +218,24 @@ public class Lobby implements Serializable {
      * @throws InvalidIDException if the give game ID is not existing
      */
     public void notifyEndGame(int gameID) throws InvalidIDException {
-
         gameList.remove(getGame(gameID));
         gameControllerList.remove(getGameController(gameID));
     }
 
+
+    /**
+     * Setter method for the
+     * @param serverRMI rmi server
+     */
     public void setServerRMI(RMIImplementation serverRMI) {
         this.serverRMI = serverRMI;
     }
 
+
+    /**
+     * Setter method for the
+     * @param serverTCP tcp server
+     */
     public void setServerTCP(ServerTCP serverTCP) {
         this.serverTCP = serverTCP;
     }

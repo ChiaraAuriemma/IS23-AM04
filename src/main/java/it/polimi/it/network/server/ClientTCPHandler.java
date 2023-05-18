@@ -18,6 +18,7 @@ import java.io.*;
 import java.net.Socket;
 import java.rmi.RemoteException;
 import java.util.Timer;
+import java.util.TimerTask;
 
 public class ClientTCPHandler implements Runnable,Serializable{
     private static final long serialVersionUID = -3839996564824280040L;
@@ -66,7 +67,8 @@ public class ClientTCPHandler implements Runnable,Serializable{
 
         while(true) {//CAMBIAMO : se è ancora connesso rimani nel while
 
-            //disconnectionTimer();
+           // new Thread(this::disconnectionTimer).start();
+
             try {
                 request = (Message) in.readObject();
             } catch (IOException | ClassNotFoundException e) {
@@ -193,19 +195,21 @@ public class ClientTCPHandler implements Runnable,Serializable{
                         }
                     }
 
-                /*case PONG://risposta del ping del timer
+                PONG://risposta del ping del timer
+                    timer.cancel();
+                break;
 
 
                 default: //messaggio non valido
                     System.out.println("User sent an illegal type of message");
-                */
 
             }
-            //timer.cancel();
+            timer.cancel();
         }
 
     }
-/*
+/**
+
     private void disconnectionTimer(){
         timer = new Timer();
         TimerTask timerTask = new TimerTask() {
@@ -215,15 +219,25 @@ public class ClientTCPHandler implements Runnable,Serializable{
                 ping = new Message(MessageType.PING, pingMessage);
                 send(ping);
             }
+
         };
         timer.schedule(timerTask, 1000, 20000);
+        TimerTask control = new TimerTask(){
+            @Override
+            public void run() {
+                PingMessage pingMessage = new PingMessage(" ");
+                ping = new Message(MessageType.PING, pingMessage);
+                send(ping);
+            }
+        };
+        timer.schedule(control, 1100, 20100);
                     /*
                     public void schedule(TimerTask task, long delay, long period)
                         task - task to be scheduled.
                         delay - delay in milliseconds before task is to be executed.        1000->1secondo
                         period - time in milliseconds between successive task executions.   200000->20 secondi
                      */
-    //}
+   // }
 
 
 
