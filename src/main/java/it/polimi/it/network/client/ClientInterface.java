@@ -63,4 +63,6 @@ public interface ClientInterface extends Remote, Serializable {
     void updateChat(List<String> currentChat)throws  RemoteException;
 
     void setStageToNoTurn() throws RemoteException;
+
+    void boardRefill() throws RemoteException;
 }

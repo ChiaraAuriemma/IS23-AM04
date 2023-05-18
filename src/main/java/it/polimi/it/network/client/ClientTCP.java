@@ -259,6 +259,10 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
                     buffer.setStage(TurnStages.NOTURN);
                     break;
 
+                case BOARDREFILL:
+                    boardRefill();
+                    break;
+
                 case ERROR:
                     ErrorMessage errorMessage = (ErrorMessage) response.getPayload();
                     view.printError(errorMessage.getError());
@@ -363,6 +367,11 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
     @Override
     public void setStageToNoTurn() throws RemoteException {
         buffer.setStage(TurnStages.NOTURN);
+    }
+
+    @Override
+    public void boardRefill(){
+        view.boardRefill();
     }
 
 

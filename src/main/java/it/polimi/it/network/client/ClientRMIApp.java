@@ -207,6 +207,11 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
     }
 
     @Override
+    public void boardRefill() throws RemoteException {
+        view.boardRefill();
+    }
+
+    @Override
     public void setNewShelfie(String username, Tile[][] shelfie) {
         view.setPlayersShelfiesView(username, shelfie);
     }
@@ -257,7 +262,21 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
     public void takeableTiles(List<List<Tile>> choosableTilesList, int num) throws RemoteException {
         //view : faccio vedere illuminate le tiles nella lista
         view.update();
-        System.out.println("Please choose " + num + " tiles from the board... ( Use take_tiles>>(num,num);(num,num);(num,num) )\n");
+        switch (num){
+            case 1:
+                System.out.println("Please choose " + num + " tiles from the board... ( Use take_tiles>>(row,column) )\n");
+                break;
+            case 2:
+                System.out.println("Please choose " + num + " tiles from the board... ( Use take_tiles>>(row,column);(row,column) )\n");
+                break;
+            case 3:
+                System.out.println("Please choose " + num + " tiles from the board... ( Use take_tiles>>(row,column);(row,column);(row,column) )\n");
+                break;
+            default:
+                System.out.println("Wrong number");
+                break;
+        }
+
         view.takeableTiles(choosableTilesList);
     }
 

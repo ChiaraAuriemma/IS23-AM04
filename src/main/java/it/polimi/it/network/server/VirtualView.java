@@ -387,4 +387,21 @@ public class VirtualView implements Serializable {
             }
         }
     }
+
+    public void boardRefill() throws RemoteException {
+        for (int i=0; i < game.getNumplayers(); i++) {
+            User  receiver = game.getPlayer(i);
+
+            if (typeOfConnection.get(receiver.getNickname()).equals("TCP")) {
+                BoardRefill boardRefill = new BoardRefill();
+                Message message = new Message(MessageType.BOARDREFILL, boardRefill);
+                sendTCPMessage(userTCP.get(receiver.getNickname()), message);
+
+
+            } else if (typeOfConnection.get(receiver.getNickname()).equals("RMI")) {
+                ClientInterface clientRMI = userRMI.get(receiver.getNickname());
+                clientRMI.boardRefill();
+            }
+        }
+    }
 }

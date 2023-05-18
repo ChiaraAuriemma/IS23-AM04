@@ -85,7 +85,10 @@ public class User implements Serializable {
         }
 
         board.removeTiles(chosen);
-        board.refill();
+        boolean refill = board.refill();
+        if(refill){
+            game.getVirtualView().boardRefill();
+        }
         game.getVirtualView().boardUpdate(board.getMatrix());
         return isEnd;
     }

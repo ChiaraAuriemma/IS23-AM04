@@ -90,7 +90,7 @@ public class ClientInputReader implements Runnable, Serializable{
                     if (stage == TurnStages.LOGIN) {
                         String nickname = action;
                         if(nickname.length()>12){
-                            System.out.println("Nickname is too long, please retry... ");
+                            System.out.println("Nickname is too long, please retry...\n");
                             break;
                         }
                         lastUsedNickname = nickname;
@@ -158,6 +158,10 @@ public class ClientInputReader implements Runnable, Serializable{
                             //client.getView(); (IMPORTANTE)
                             ArrayList<Tile> chosenTilesList = new ArrayList<>();
                             chosenTilesList.clear();
+                            if(action.length()< 5){
+                                System.out.println("Check the message format...\n");
+                                return;
+                            }
                             char[] chosen = chosenTiles.toCharArray();
                             int row = Character.getNumericValue(chosen[1]);
                             int col = Character.getNumericValue(chosen[3]);
