@@ -17,7 +17,6 @@ public class View implements ViewInterface, Serializable {
     private static final long serialVersionUID = 892639889752766985L;
     private HashMap<String, Tile[][]> playersShelfies = new HashMap<String, Tile[][]>();
     private HashMap<String, String> playersPoints = new HashMap<String, String>();
-    private HashMap<User, String> playersNicknames = new HashMap<>();
     private Tile[][] playersPersonalCard = new Tile[6][5];
     private ArrayList<String> order =new ArrayList<>();
     private String[][] board = new String[9][9];
@@ -30,72 +29,52 @@ public class View implements ViewInterface, Serializable {
     private final String blankLine = "║                                                                ║"; //2, 3, 5, 20, 54
     private final String lastLine = "╚════════════════════════════════════════════════════════════════╝";//55
     private final String border = "║";
-    private final String chatBoxUp = "┌─────────────────────────────────┐";
     private final String chatBorder = "│";
-    private final String chatBoxDown = "└─────────────────────────────────┘";
 
     private final String noPlayer = "            ";
     private static final String colorReset = "\u001B[0m";
 
-    private String namesLine;//line 4
-    private String pointsLine;//Line 21
+    private String namesLine;
+    private String pointsLine;
     private int numPlayers;
     private ArrayList<String> names = new ArrayList<>();
     private List<List<Tile>> choosableTilesList = new ArrayList<>();
     private int gameID;
     private String endToken;
 
-    private User u = new User(" ");
 
-
-
-
-
-    private String Line1;
-    private String Line2;
-    private String Line3;
-    private String Line4;
-    private String Line5;
-    private String Line6;
-    private String Line7;
-    private String Line8;
-    private String Line9;
-    private String Line10;
-    private String Line11;
-    private String Line12;
+    private String Line1;    private String Line2;    private String Line3;
+    private String Line4;    private String Line5;    private String Line6;
+    private String Line7;    private String Line8;    private String Line9;
+    private String Line10;    private String Line11;    private String Line12;
     private final String Line13 = "║   Common Goal:                                     Personal:   ║";
-    private String Line14;
-    private String Line15;
-    private String Line16;
-    private String Line17;
-    private String Line18;
-    private String Line19;
-    private String Line20;
-    private String Line21;
-    private String Line22;
+    private String Line14;    private String Line15;    private String Line16;
+    private String Line17;    private String Line18;    private String Line19;
+    private String Line20;    private String Line21;    private String Line22;
     private String Line23 = "║                                                    Personal    ║";
     private String Line24 = "║   Common Goal:                                                 ║";
-    private String Line25;
-    private String Line26;
-    private String Line27;
-    private String Line28;
-    private String Line29;
-    private String Line30;
-    private String Line31;
+    private String Line25;    private String Line26;    private String Line27;
+    private String Line28;    private String Line29;
+    private String Line30;    private String Line31;
     private final String Line32 = "║                           └─────────────────────────────────┘  ║";
     private String Line33;
 
     private List<String> chatMessages = new ArrayList<>(); // massimo 9 messaggi, lunghezza 33
-    private final String blankChatLine = "                                 ";
 
 
     private Tile[][] p1;
     private Tile[][] p2;
     private Tile[][] p3;
     private Tile[][] p4;
+
+
+    /**
+     * Constructor method
+     */
     public View() {
         return;
     }
+
 
     /**
      * Given
@@ -118,34 +97,21 @@ public class View implements ViewInterface, Serializable {
     }
 
 
-    //METODI PER ORDINE E NICKNAME
-
     /**
      * Setter method for the player's turn order
      *
      * @param order is the ordered arrayList of the users in the game
      */
     public void setOrderView(ArrayList<String> order) {
-
         numPlayers = order.size();
-        //Collections.copy(this.order, order);
         for (String nick : order) {
             this.order.add(nickPadder(nick));
-            //setPlayersNicknamesView(nick);
         }
         setPaddedNames();
         pointInitializer();
         shelfieInitializer();
     }
 
-    /**
-     * Setter method for the players' nicknames
-     *
-     * @param player is a user instance
-     */
-    //public void setPlayersNicknamesView(String player) {
-    //    playersNicknames.put(player, player.getNickname());
-    //}
 
     /**
      * Setter method for the nicknames in their padded version (fixed 12 chars length)
@@ -171,8 +137,6 @@ public class View implements ViewInterface, Serializable {
     }
 
 
-    ////METODI PER I PUNTI
-
     /**
      * Initializes, for every user a string "00" which represents the initial points of every player
      */
@@ -182,6 +146,7 @@ public class View implements ViewInterface, Serializable {
             playersPoints.put(user, "00");
         }
     }
+
 
     /**
      * Setter method, used when a player's points amount changed
@@ -194,6 +159,7 @@ public class View implements ViewInterface, Serializable {
         player = nickPadder(player);
         playersPoints.put(player, pointString);
     }
+
 
     /**
      * Helper method that given a
@@ -210,27 +176,18 @@ public class View implements ViewInterface, Serializable {
     }
 
 
-
-
-    //METODI PER LE SHELFIE
-
     /**
      * Initializes a new shelf for every user, to be put in the user-shelf hasmap
      */
     private void shelfieInitializer() {
         User a = new User("a");
         p1=a.getShelfie().getShelf();
-
         User b = new User("b");
         p2=b.getShelfie().getShelf();
-
         User c = new User("c");
         p3=c.getShelfie().getShelf();
-
         User d = new User("d");
         p4=d.getShelfie().getShelf();
-
-
         int i=0;
         for (String user : order) {
             user = nickPadder(user);
@@ -247,6 +204,7 @@ public class View implements ViewInterface, Serializable {
         }
     }
 
+
     /**
      * Setter method for the user-shelf hashmap
      *
@@ -257,38 +215,25 @@ public class View implements ViewInterface, Serializable {
         player=nickPadder(player);
         int i = order.indexOf(player);
         if(i==0){
-            for(int j =0; j<6; j++){
-                for(int x=0; x<5; x++){
-                    p1[j][x] = new Tile(j, x, PossibleColors.valueOf(shelfie[j][x].getColor()));
-                }
-            }
-            playersShelfies.put(player, p1);
+            shelfieSetterHelper(player, shelfie, p1);
         } else if (i==1) {
-            for(int j =0; j<6; j++){
-                for(int x=0; x<5; x++){
-                    p2[j][x] = new Tile(j, x, PossibleColors.valueOf(shelfie[j][x].getColor()));
-                }
-            }
-            playersShelfies.put(player, p2);
+            shelfieSetterHelper(player, shelfie, p2);
         }else if (i==2) {
-            for(int j =0; j<6; j++){
-                for(int x=0; x<5; x++){
-                    p3[j][x] = new Tile(j, x, PossibleColors.valueOf(shelfie[j][x].getColor()));
-                }
-            }
-            playersShelfies.put(player, p3);
+            shelfieSetterHelper(player, shelfie, p3);
         }else if (i==3) {
-            for(int j =0; j<6; j++){
-                for(int x=0; x<5; x++){
-                    p4[j][x] = new Tile(j, x, PossibleColors.valueOf(shelfie[j][x].getColor()));
-                }
-            }
-            playersShelfies.put(player, p4);
+            shelfieSetterHelper(player, shelfie, p4);
         }
     }
 
+    private void shelfieSetterHelper(String player, Tile[][] shelfie, Tile[][] p1) {
+        for(int j =0; j<6; j++){
+            for(int x=0; x<5; x++){
+                p1[j][x] = new Tile(j, x, PossibleColors.valueOf(shelfie[j][x].getColor()));
+            }
+        }
+        playersShelfies.put(player, p1);
+    }
 
-    //METODI PERSONAL CARDS
 
     /**
      * Setter Method
@@ -311,8 +256,6 @@ public class View implements ViewInterface, Serializable {
     }
 
 
-    //METODI COMMON CARDS
-
     /**
      * Setter method
      *
@@ -323,6 +266,7 @@ public class View implements ViewInterface, Serializable {
         common1 = commonDescription(id1);
         common1SecondPart = commonDescriptionSecondPart(id1);
     }
+
 
     /**
      * Setter method
@@ -336,7 +280,6 @@ public class View implements ViewInterface, Serializable {
     }
 
 
-    //MEDTODI BOARD
     public void setBoardView(Tile[][] matrix) {
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
@@ -346,7 +289,6 @@ public class View implements ViewInterface, Serializable {
     }
 
 
-    //UTILS
     private String colorPicker(String color) {
         switch (color) {
             case "CYAN":
@@ -367,16 +309,7 @@ public class View implements ViewInterface, Serializable {
     }
 
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////
-    //METODI CHE GESTISCONO CIO' CHE POI VIENE STAMPATO
     public void setNamesLine() {
-        //Line 4
         switch (numPlayers) {
             case 2:
                 namesLine = border + "   " + names.get(0) + "   " + names.get(1) + "   " + noPlayer + "   " + noPlayer + "    " + border;
@@ -389,6 +322,7 @@ public class View implements ViewInterface, Serializable {
                 break;
         }
     }
+
 
     public void setPointsLine() {
         switch (numPlayers) {
@@ -406,7 +340,6 @@ public class View implements ViewInterface, Serializable {
 
 
     public String commonDescription(int id) {
-        // stringhe lunghe 48 caselle
         switch (id) {
             case 1:
                 return "Two groups each containing 4 tiles of the same ";
@@ -437,6 +370,7 @@ public class View implements ViewInterface, Serializable {
         }
     }
 
+
     public String commonDescriptionSecondPart(int id) {
         switch (id) {
             case 1:
@@ -465,9 +399,11 @@ public class View implements ViewInterface, Serializable {
         }
     }
 
+
     public void takeableTiles(List<List<Tile>> choosableTilesList) {
         this.choosableTilesList = choosableTilesList;
     }
+
 
     public void askNickname() {
         out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
@@ -477,11 +413,8 @@ public class View implements ViewInterface, Serializable {
         out.println("\n\n");
         out.println("Please submit your nickname! ( Use login>>\"Your nickname\" )");
         out.println("\n\n");
-
         printCommands();
         out.println("\n");
-
-
     }
 
 
@@ -492,9 +425,11 @@ public class View implements ViewInterface, Serializable {
         out.println(title);
     }
 
+
     public void askNicknameAgain() {
         out.println("This nickname is already taken, try with another one! ");
     }
+
 
     public void joinOrCreate(String clientInput) {
         out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
@@ -506,46 +441,20 @@ public class View implements ViewInterface, Serializable {
         out.println("\n");
     }
 
-    public void askNumPlayerAgain() {
 
+    public void askNumPlayerAgain() {
         out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
         Title();
-
         out.println("\n\n\n");
         out.println("Retry! You must insert a number between 2 and 4... ");
     }
 
+
     public void askIDAgain() {
         out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
         Title();
-
         out.println("\n\n\n");
         out.println("Retry! You must insert a valid GameID... ");
-    }
-
-
-
-
-
-
-
-
-
-
-    public void askCreate() {
-        out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
-        Title();
-
-        out.println("\n\n\n");
-        out.println("Insert a number between 2 and 4 to choose how many players can play... ");
-    }
-
-    public void askJoin() {
-        out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
-        Title();
-
-        out.println("\n\n\n");
-        out.println("Insert the ID of the Game you'd like to play... ");
     }
 
 
@@ -562,28 +471,32 @@ public class View implements ViewInterface, Serializable {
         out.print("You can't choose this column!\n");
     }
 
+
     public void printCommands() {
         out.println("┌────────────────────┐\n" +
-                "│List of commands:   │\n" +
-                "│ login>>            │\n" +
-                "│ create_game>>      │\n" +
-                "│ join_game>>        │\n" +
-                "│ num_tiles>>        │\n" +
-                "│ take_tiles>>       │\n" +
-                "│ choose_column>>    │\n" +
-                "│ help>>             │\n" +
-                "└────────────────────┘");
+                    "│List of commands:   │\n" +
+                    "│ login>>            │\n" +
+                    "│ create_game>>      │\n" +
+                    "│ join_game>>        │\n" +
+                    "│ num_tiles>>        │\n" +
+                    "│ take_tiles>>       │\n" +
+                    "│ choose_column>>    │\n" +
+                    "│ help>>             │\n" +
+                    "└────────────────────┘\n");
     }
+
 
     public void setGameID(int gameId) {
         this.gameID = gameId;
         out.print("Game ID: " + gameId + "\n");
     }
 
+
     public void setEndToken(String user) {
         user=nickPadder(user);
         this.endToken = user;
     }
+
 
     public void askColumn() {
         out.println("Please choose in which column you want to put the tiles that you took... ( Use choose_column>>\"column number\" ) \n");
@@ -593,12 +506,14 @@ public class View implements ViewInterface, Serializable {
         out.println(error);
     }
 
+
     public void setFinalPoints(List<String> users, ArrayList<Integer> points) {
         for (String u: users){
             u=nickPadder(u);
             setPlayersPointsView(u, points.get(users.indexOf(u)));
         }
     }
+
 
     public void setPossibleColumns(boolean[] choosableColumns) {
         askColumn();
@@ -615,9 +530,6 @@ public class View implements ViewInterface, Serializable {
     }
 
 
-
-
-
     public String boardRow (int row){
         String returnString = String.valueOf(row) +" ";
         for(int i=0; i<9; i++){
@@ -626,19 +538,19 @@ public class View implements ViewInterface, Serializable {
         return returnString;
     }
 
+
     public void update(){
-        //serve a stampare
         updateEveryLine();
         printEveryLine();
     }
+
 
     private void printEveryLine() {
         out.printf("%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n", Line1, Line2, Line3, Line4, Line5, Line6, Line7, Line8, Line9, Line10, Line11, Line12, Line13, Line14, Line15, Line16, Line17, Line18, Line19, Line20, Line21, Line22, Line23, Line24, Line25, Line26, Line27, Line28, Line29, Line30, Line31, Line32, Line33);
     }
 
+
     private void updateEveryLine() {
-        //setPaddedNames();
-        //Line 1 is the upper, Line 2 is blank
         Line1 = firstLine;
         Line2 = blankLine;
         setNamesLine();
@@ -653,7 +565,6 @@ public class View implements ViewInterface, Serializable {
         setPointsLine();
         Line11 = pointsLine;
         Line12 = blankLine;
-        //Lines 13 is always the same, actually final
 
         Line14 = setLine14();
         Line15 = setLine15();
@@ -662,7 +573,6 @@ public class View implements ViewInterface, Serializable {
         Line18 = setLine18();
         Line19 = setLine19();
         Line20 = blankLine;
-
 
         Line21 = setLine21();
         Line22 = setLine22();
@@ -676,8 +586,6 @@ public class View implements ViewInterface, Serializable {
         Line29 = setLineBoardChat(6);
         Line30 = setLineBoardChat(7);
         Line31 = setLineBoardChat(8);
-
-        //Lines 32 is always the same, actually final
 
         Line33 = lastLine;
     }
@@ -700,11 +608,13 @@ public class View implements ViewInterface, Serializable {
         return returnString;
     }
 
+
     private String setLine22() {
         String returnString = null;
         returnString =  border + "      0 1 2 3 4 5 6 7 8    ┌─────────────────────────────────┐  " + border;
         return returnString;
     }
+
 
     private String setLine14() {
         String returnString = null;
@@ -713,6 +623,8 @@ public class View implements ViewInterface, Serializable {
                 + sColorPicker(playersPersonalCard, 5, 4) + "\u001B[0m  " + border;
         return returnString;
     }
+
+
     private String setLine15() {
         String returnString = null;
         returnString =  border + "   "+ common1SecondPart +"  " + sColorPicker(playersPersonalCard, 4, 0)
@@ -721,6 +633,7 @@ public class View implements ViewInterface, Serializable {
         return returnString;
     }
 
+
     private String setLine16() {
         String returnString = null;
         returnString =  border + "                                                    "+ sColorPicker(playersPersonalCard, 3, 0)
@@ -728,6 +641,8 @@ public class View implements ViewInterface, Serializable {
                 + sColorPicker(playersPersonalCard, 3, 4) + "\u001B[0m  " + border;
         return returnString;
     }
+
+
     private String setLine17() {
         String returnString = null;
         returnString =  border + "   Common Goal:                                     "+ sColorPicker(playersPersonalCard, 2, 0)
@@ -736,6 +651,7 @@ public class View implements ViewInterface, Serializable {
         return returnString;
     }
 
+
     private String setLine18() {
         String returnString = null;
         returnString =  border + "   "+ common2 +"  " + sColorPicker(playersPersonalCard, 1, 0)
@@ -743,6 +659,8 @@ public class View implements ViewInterface, Serializable {
                 + sColorPicker(playersPersonalCard, 1, 4) + "\u001B[0m  " + border;
         return returnString;
     }
+
+
     private String setLine19() {
         String returnString = null;
         returnString =  border + "   "+ common2SecondPart +"  " + sColorPicker(playersPersonalCard, 0, 0)
@@ -752,13 +670,7 @@ public class View implements ViewInterface, Serializable {
     }
 
 
-
-
-
-
-
-
-    private String setShelfiesEvenLine(int row) {//pari, con numero riga
+    private String setShelfiesEvenLine(int row) {
         String returnString=null;
         String r = String.valueOf(row);
         Tile[][] s1 = playersShelfies.get(order.get(0));
@@ -771,7 +683,6 @@ public class View implements ViewInterface, Serializable {
                 break;
             case 3:
                 Tile[][] s3 = playersShelfies.get(order.get(2));
-
                 returnString = border + "   "+r+" " +sColorPicker(s1,row,0)+sColorPicker(s1,row,1)+sColorPicker(s1,row,2)+sColorPicker(s1,row,3)+sColorPicker(s1,row,4) + "\u001B[0m   " +
                         r +" " +sColorPicker(s2,row,0)+sColorPicker(s2,row,1)+sColorPicker(s2,row,2)+sColorPicker(s2,row,3)+sColorPicker(s2,row,4) + "\u001B[0m   " +
                         r +" " +sColorPicker(s3,row,0)+sColorPicker(s3,row,1)+sColorPicker(s3,row,2)+sColorPicker(s3,row,3)+sColorPicker(s3,row,4) + "\u001B[0m   " +
@@ -780,7 +691,6 @@ public class View implements ViewInterface, Serializable {
             case 4:
                 Tile[][] ss3 = playersShelfies.get(order.get(2));
                 Tile[][] s4 = playersShelfies.get(order.get(3));
-
                 returnString = border + "   "+r+" " +sColorPicker(s1,row,0)+sColorPicker(s1,row,1)+sColorPicker(s1,row,2)+sColorPicker(s1,row,3)+sColorPicker(s1,row,4) + "\u001B[0m   " +
                         r +" " +sColorPicker(s2,row,0)+sColorPicker(s2,row,1)+sColorPicker(s2,row,2)+sColorPicker(s2,row,3)+sColorPicker(s2,row,4) + "\u001B[0m   " +
                         r +" " +sColorPicker(ss3,row,0)+sColorPicker(ss3,row,1)+sColorPicker(ss3,row,2)+sColorPicker(ss3,row,3)+sColorPicker(ss3,row,4) + "\u001B[0m   " +
@@ -791,9 +701,11 @@ public class View implements ViewInterface, Serializable {
         return returnString;
     }
 
+
     private String sColorPicker(Tile[][] shelf, int row, int col){
         return colorPicker(shelf[row][col].getColor());
     }
+
 
     private String setLine4() {
         String returnString = null;
@@ -815,8 +727,6 @@ public class View implements ViewInterface, Serializable {
     }
 
 
-
-
     public void fakePersonal() {
         playersPersonalCard = new Tile[6][5];
         for (int row = 0; row < 6; row++) {
@@ -826,23 +736,28 @@ public class View implements ViewInterface, Serializable {
         }
     }
 
+
     public void printTile(String color, int row, int column) {
         out.print("row: " + row +  ", column: " + column + ", color: " + color );
     }
 
+
     public void printThings(String s) {
         out.print(s);
     }
+
 
     public void updateChat(List<String> currentChat) {
         chatMessages.clear();
         chatMessages.addAll(currentChat);
     }
 
+
     public void askTilesAgain(){
 
         out.println("One or more of the tiles is not takeable! Retry...\n");
     }
+
 
     public void boardRefill() {
         out.println("Refilling the board, please wait...\n");
@@ -853,29 +768,10 @@ public class View implements ViewInterface, Serializable {
         String up   = "            ╔════════════════════════════════════════╗";
         String bl   = "            ║                                        ║";
         String down = "            ╚════════════════════════════════════════╝";
-        String border = "║";
-
-        String[] playersPointsArray;
-
-        /**
-         * String player + String points
-         * key              value
-         *
-         * LinkedHashMap<String, String> orderedMap = new LinkedHashMap<>(playersPoints);
-         *
-         */
-
-
-        // Create a LinkedHashMap to store the sorted values
         LinkedHashMap<String, String> sortedMap = new LinkedHashMap<>();
-        // Get the values from the HashMap
         Collection<String> values = playersPoints.values();
-        // Convert the values to a List
         List<String> valueList = new ArrayList<>(values);
-        // Sort the List
         Collections.sort(valueList, Collections.reverseOrder());
-
-        // Iterate over the sorted values and add them to the sorted LinkedHashMap
         for (String value : valueList) {
             for (Map.Entry<String, String> entry : playersPoints.entrySet()) {
                 if (entry.getValue().equals(value)) {
@@ -884,7 +780,6 @@ public class View implements ViewInterface, Serializable {
                 }
             }
         }
-
         out.println(up);
         out.println(bl);
         out.println("            ║   This game ended! GG to the winner!   ║");
@@ -899,7 +794,5 @@ public class View implements ViewInterface, Serializable {
         out.println(bl);
         out.println(bl);
         out.println(down);
-
-
     }
 }
