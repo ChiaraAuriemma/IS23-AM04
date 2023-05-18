@@ -22,6 +22,7 @@ public class Game implements Serializable {
     private  Integer numplayers;
     private Board board;
     private Integer gameID;
+    private boolean used[] = new boolean[12];
 
     private ArrayList<User> playersOrder = new ArrayList<>();
 
@@ -95,6 +96,8 @@ public class Game implements Serializable {
 
 
         }
+
+        Arrays.fill(used, false);
 
         //view: mostro alla view
 
@@ -192,13 +195,14 @@ public class Game implements Serializable {
         Random rnd = new Random();
         int id;
 
-
         do{
+            card=null;
             id = rnd.nextInt(12) + 1;
             card  = new PersonalGoalCard(id);
-        }while(this.cards.contains(card));
+        }while(this.cards.contains(card) && !used[id - 1]);
 
         this.cards.add(card);
+        used[id-1]=true;
 
         User user = players.get(cards.size() - 1);
         virtualView.drawnPersonalCard(user.getNickname(),card);
