@@ -12,6 +12,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static java.lang.System.out;
 
@@ -848,5 +849,17 @@ public class View implements ViewInterface, Serializable {
 
     public void boardRefill() {
         out.println("Refilling the board, please wait...\n");
+    }
+
+
+    public void leaderboardSet(){
+        String up   = "╔════════════════════════════════════════╗";
+        String bl   = "║                                        ║";
+        String down = "╚════════════════════════════════════════╝";
+        String border = "║";
+
+        String[] playersPointsArray;
+
+        //    private HashMap<String, String> playersPoints = new HashMap<String, String>();
     }
 }
