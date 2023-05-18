@@ -9,10 +9,7 @@ import it.polimi.it.model.Tiles.Tile;
 import it.polimi.it.model.User;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static java.lang.System.out;
 
@@ -365,7 +362,7 @@ public class View implements ViewInterface, Serializable {
             case "WHITE":
                 return "\u001B[47m  ";
             default:
-                return "\u001B[49m  ";
+                return "\u001B[40m  ";
         }
     }
 
@@ -414,7 +411,7 @@ public class View implements ViewInterface, Serializable {
             case 1:
                 return "Two groups each containing 4 tiles of the same ";
             case 2:
-                return "Two columns each formed by 6  different types  ";
+                return "Two columns each formed by 6 different types   ";
             case 3:
                 return "Four groups each containing at least 4 tiles of";
             case 4:
@@ -853,13 +850,56 @@ public class View implements ViewInterface, Serializable {
 
 
     public void leaderboardSet(){
-        String up   = "╔════════════════════════════════════════╗";
-        String bl   = "║                                        ║";
-        String down = "╚════════════════════════════════════════╝";
+        String up   = "            ╔════════════════════════════════════════╗";
+        String bl   = "            ║                                        ║";
+        String down = "            ╚════════════════════════════════════════╝";
         String border = "║";
 
         String[] playersPointsArray;
 
-        //    private HashMap<String, String> playersPoints = new HashMap<String, String>();
+        /**
+         * String player + String points
+         * key              value
+         *
+         * LinkedHashMap<String, String> orderedMap = new LinkedHashMap<>(playersPoints);
+         *
+         */
+
+
+        // Create a LinkedHashMap to store the sorted values
+        LinkedHashMap<String, String> sortedMap = new LinkedHashMap<>();
+        // Get the values from the HashMap
+        Collection<String> values = playersPoints.values();
+        // Convert the values to a List
+        List<String> valueList = new ArrayList<>(values);
+        // Sort the List
+        Collections.sort(valueList, Collections.reverseOrder());
+
+        // Iterate over the sorted values and add them to the sorted LinkedHashMap
+        for (String value : valueList) {
+            for (Map.Entry<String, String> entry : playersPoints.entrySet()) {
+                if (entry.getValue().equals(value)) {
+                    sortedMap.put(entry.getKey(), value);
+                    break;
+                }
+            }
+        }
+
+        out.println(up);
+        out.println(bl);
+        out.println("            ║   This game ended! GG to the winner!   ║");
+        out.println(bl);
+        out.println("            ║           Leaderboard:                 ║");
+        out.println(bl);
+        out.println(bl);
+        for (Map.Entry<String, String> entry : sortedMap.entrySet()) {
+            System.out.println("            ║           "+ entry.getKey() + " => " + entry.getValue()+"           ║");
+        }
+        out.println(bl);
+        out.println(bl);
+        out.println(bl);
+        out.println(down);
+
+
     }
 }

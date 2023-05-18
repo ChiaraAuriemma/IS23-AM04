@@ -346,6 +346,8 @@ public class TestCli {
         matrix[0][2] = new Tile(0, 2, PossibleColors.DEFAULT);
         testView.setPlayersShelfiesView(a.get(3), matrix);
         testView.update();
+
+        testView.leaderboardSet();
     }
 
 
