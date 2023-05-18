@@ -63,7 +63,7 @@ public class CommonGroup1 extends CommonGoalCard  implements Serializable {
                         if(jsonObject.get("id").getAsInt() == 10){
                             if(column+jsonObject.get("tile5Column").getAsInt() < 5 && row+jsonObject.get("tile5Row").getAsInt()<6){
                                 Tile tile5 = shelfie.getCell(column + jsonObject.get("tile5Column").getAsInt(),row + jsonObject.get("tile5Row").getAsInt());
-                                if(tile1.getColor().equals(tile2.getColor()) && tile2.getColor().equals(tile3.getColor()) && tile3.getColor().equals(tile4.getColor()) &&
+                                if(!tile1.getColor().equals("DEFAULT") && tile1.getColor().equals(tile2.getColor()) && tile2.getColor().equals(tile3.getColor()) && tile3.getColor().equals(tile4.getColor()) &&
                                         tile4.getColor().equals(tile5.getColor()))
                                     return true;
                             }

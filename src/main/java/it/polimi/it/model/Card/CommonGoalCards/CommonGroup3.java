@@ -60,7 +60,6 @@ public class CommonGroup3 extends CommonGoalCard  implements Serializable {
     private  ArrayList<Tile> recursiveAdjacent(Shelfie shelfie, int x, int y, ArrayList<Tile> toVisit, JsonObject jsonObject) {
         int i;
         ArrayList<Tile> tmp = new  ArrayList<>();
-        Gson gson = new Gson();
         try {
             if(toVisit.size() == jsonObject.get("numOfTile").getAsInt()){
                 for(Tile tile : toVisit){
@@ -110,7 +109,7 @@ public class CommonGroup3 extends CommonGoalCard  implements Serializable {
             for(row=0; row< 6; row++){
                 for(column=0; column<5; column++){
                     ArrayList<Tile> toVisit = new ArrayList<>();
-                    if(checked.isEmpty() || !checked.contains(shelfie.getCell(column,row))){
+                    if((checked.isEmpty() || !checked.contains(shelfie.getCell(column,row))&& !shelfie.getCell(column,row).getColor().equals("DEFAULT"))){
                         tmp= recursiveAdjacent(shelfie, column, row,toVisit, jsonObject);
                         if(tmp.size() == jsonObject.get("numOfTile").getAsInt()){
                             count++;

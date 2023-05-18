@@ -2,10 +2,7 @@ package it.polimi.it.view.GUI;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.io.IOException;
