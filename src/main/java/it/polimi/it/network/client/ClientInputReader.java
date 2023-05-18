@@ -106,6 +106,10 @@ public class ClientInputReader implements Runnable, Serializable{
 
                     case "create_game":// create_game>>4
                         if (stage == TurnStages.CREATEorJOIN) {
+                            if(input.matches("-?\\d+")){
+                                System.out.println("Invalid number");
+                                return;
+                            }
                             int numPlayers = Integer.parseInt(action);
                             client.createGame(numPlayers);
                         } else {
@@ -114,6 +118,10 @@ public class ClientInputReader implements Runnable, Serializable{
                         break;
 
                     case "join_game": //join_game>>gameID
+                        if(input.matches("-?\\d+")){
+                            System.out.println("Invalid number");
+                            return;
+                        }
                         if (stage == TurnStages.CREATEorJOIN) {
                             int gameID = Integer.parseInt(action);
                             client.joinGame(gameID);
@@ -137,6 +145,10 @@ public class ClientInputReader implements Runnable, Serializable{
 
 
                     case "num_tiles"://num_tiles>> number of tiles you want to get from the board
+                        if(input.matches("-?\\d+")){
+                            System.out.println("Invalid number");
+                            return;
+                        }
                         if (stage == TurnStages.TILESNUM) {
                             int numTiles = Integer.parseInt(action);
                             client.tilesNumMessage(numTiles);
@@ -147,6 +159,11 @@ public class ClientInputReader implements Runnable, Serializable{
 
                     case "take_tiles": // tiles; format TBD (0,2);(1,3);(4,7)
                         if (stage == TurnStages.CHOOSETILES) {
+                            if(action.matches("^[\\d,;()]+$")){
+                                System.out.println("Invalid tiles format");
+                                return;
+                            }
+
                             String chosenTiles = action;
 
 
@@ -158,7 +175,7 @@ public class ClientInputReader implements Runnable, Serializable{
                             //client.getView(); (IMPORTANTE)
                             ArrayList<Tile> chosenTilesList = new ArrayList<>();
                             chosenTilesList.clear();
-                            if(action.length()< 5){
+                            if(action.length() < 4){
                                 System.out.println("Check the message format...\n");
                                 return;
                             }
@@ -194,6 +211,10 @@ public class ClientInputReader implements Runnable, Serializable{
 
 
                     case "choose_column": //choose_column>>number of the column; TBD:le colonne partono da 0 o da 1????
+                        if(input.matches("-?\\d+")){
+                            System.out.println("Invalid number");
+                            return;
+                        }
                         if (stage == TurnStages.CHOOSECOLUMN) {
                             int column = Integer.parseInt(action);
                             client.chooseColumn(column);
