@@ -7,7 +7,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class CreateGameController {
+public class CreateGameViewController {
 
     private Stage stage;
 

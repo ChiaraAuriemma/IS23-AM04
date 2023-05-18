@@ -6,7 +6,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.it.view.GUI.GameController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.it.view.GUI.GameViewController">
    <children>
       <ImageView fitHeight="408.0" fitWidth="600.0" pickOnBounds="true">
          <image>
@@ -30,7 +30,7 @@
       </ImageView>
       <MenuButton layoutX="34.0" layoutY="26.0" mnemonicParsing="false" text="Menu">
         <items>
-          <MenuItem fx:id="OtherShelfie" mnemonicParsing="false" text="Show other shelfie" />
+          <MenuItem fx:id="OtherShelfie" mnemonicParsing="false" onAction="#GotoOtherShelfie" text="Show other shelfie" />
           <MenuItem fx:id="ShowPersonalGoalCard" mnemonicParsing="false" text="Show Personal Goal Card" />
             <MenuItem fx:id="ShowCommonGoalCards" mnemonicParsing="false" text="Show Common Goal Cards" />
             <MenuItem fx:id="Instruction" mnemonicParsing="false" text="Instruction" />

@@ -15,13 +15,13 @@
             <Image url="@Images/sfondo parquet.jpg" />
          </image>
       </ImageView>
-      <Button fx:id="BottoneLogin" layoutX="277.0" layoutY="279.0" mnemonicParsing="false" onAction="#GotoGame" text="Start" />
+      <Button fx:id="BottoneLogin" layoutX="275.0" layoutY="280.0" mnemonicParsing="false" onAction="#GotoGame" text="Start" />
       <TextField fx:id="GameID" layoutX="129.0" layoutY="173.0" prefHeight="27.0" prefWidth="333.0">
          <font>
             <Font size="13.0" />
          </font>
       </TextField>
-      <Label fx:id="TextLogin1" layoutX="203.0" layoutY="50.0" text="Insert Game ID">
+      <Label fx:id="TextLogin1" layoutX="226.0" layoutY="52.0" text="Insert Game ID">
          <font>
             <Font name="System Bold" size="21.0" />
          </font>

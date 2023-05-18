@@ -7,15 +7,13 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.DragEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class GameController implements Initializable {
+public class GameViewController implements Initializable {
 
     private Stage stage;
     @FXML
@@ -209,6 +207,15 @@ public class GameController implements Initializable {
             node.setLayoutX(mouseEvent.getSceneX() - mouseAnchorX);
             node.setLayoutY(mouseEvent.getSceneY() - mouseAnchorY);
         });
+    }
+
+    public void GotoOtherShelfie(ActionEvent actionEvent) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(GUIApplication.class.getResource("/OtherShelfie.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+        stage.setTitle("My Shelfie");
+        stage.setScene(scene);
+        stage.show();
     }
 }
 
