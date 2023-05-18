@@ -34,9 +34,9 @@ public abstract class Board implements Serializable {
      * Checks if a refill of the board is needed calling method checkRefill
      * Eventually refills the board, extracting random tiles from the TilesBag
      */
-    public void refill() {
+    public boolean refill() {
         if (!checkRefill()) {
-            return;
+            return false;
         }
         for (int a=0; a<9; a++){
             for (int b=0; b<9; b++){
@@ -58,6 +58,7 @@ public abstract class Board implements Serializable {
                 }
             }
         }
+        return true;
     }
 
 

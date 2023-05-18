@@ -141,7 +141,7 @@ public class GameController implements Serializable {
      *  in order to highlight them on the board.
      * @param chosenNumber is the input from the user
      */
-    public void getFromViewNTiles(String user, int chosenNumber) throws WrongPlayerException, WrongListException, RemoteException, IllegalValueException {
+    public void getFromViewNTiles(String user, int chosenNumber) throws WrongPlayerException, RemoteException, IllegalValueException {
         if(user.equals(playerList.get(currentPlayer).getNickname())){
             this.playerList.get(currentPlayer).choosableTiles(chosenNumber);
 
@@ -211,7 +211,6 @@ public class GameController implements Serializable {
            System.out.println("Invalid column choice"); //da far vedere a view
         }
         endGame = playerList.stream().filter(curr -> Objects.equals(curr.getNickname(), user)).collect(Collectors.toList()).get(0).insertTile(col, currentTilesList);
-        System.out.println(playerList.stream().filter(curr -> Objects.equals(curr.getNickname(), user)).collect(Collectors.toList()).get(0).getNickname());
        // endGame = playerList.get(currentPlayer).insertTile(col, currentTilesList);
             //messaggio per la view
 
@@ -294,7 +293,10 @@ public class GameController implements Serializable {
         //game.getVirtualView().resetAfterDisconnection(user.getNickname(), gameID);
     }
 
-    public void pushChatMessage(String chatMessage) {
+    public void pushChatMessage(String chatMessage) throws RemoteException {
         chat.newMessage(chatMessage);
+
+        //live chat update
+        game.getVirtualView().sendChatUpdate(chat.getCurrentChat());
     }
 }

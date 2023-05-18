@@ -69,44 +69,40 @@ public class ClientInputReader implements Runnable, Serializable{
             System.out.println("No valid commands found, please retry... ");
             return ;
         }
+
         String[] inp = input.split(">>");
         String command = inp[0];
-        String action = inp[1];
-
-        if(action.length() <= 0 || action == null){
+        if (inp.length == 1){
             System.out.println("You didn't write anything");
-        }else {
-                command = command.toLowerCase();
+            return;
+        }
+        if(inp[1]!=null && inp[1].length() >= 0){
+            String action = inp[1];
+
+            command = command.toLowerCase();
 
             if(!command.equalsIgnoreCase("chat") && !command.equalsIgnoreCase("login")){ // se è un messaggio in chat non gli tolgo gli spazi
                     action = action.replaceAll("\\s+","");
-                }
+            }
 
-                switch (command) {
-                    case "login"://initial nickname setting
+            switch (command) {
+                case "login"://initial nickname setting
+                    if (stage == TurnStages.LOGIN) {
+                        String nickname = action;
+                        if(nickname.length()>12){
+                            System.out.println("Nickname is too long, please retry...\n");
+                            break;
+                        }
+                        lastUsedNickname = nickname;
 
-                        if (stage == TurnStages.LOGIN) {
-                            String nickname = action;
-                            if(nickname.length()>12){
-                                System.out.println("Nickname is too long, please retry... ");
-                                break;
-                            }
-                            
-                            // pad the nickname to a length of 12
-
-                            lastUsedNickname = nickname;
-
-                            while (nickname.length() < 12) {
-                                nickname = nickname.concat(" ");
-                            }
-                            
-                            //metodo che manda il messaggio login
-                            client.login(nickname);
-                        } else {
-                            view.printError("There's a time and place for everything, but not now. 1");
+                        while (nickname.length() < 12) {
+                            nickname = nickname.concat(" ");
                         }
 
-                        break;
+                        client.login(nickname);
+                    } else {
+                       view.printError("There's a time and place for everything, but not now. 1");
+                    } break;
 
                     case "create_game":// create_game>>4
                         if (stage == TurnStages.CREATEorJOIN) {
@@ -137,8 +133,6 @@ public class ClientInputReader implements Runnable, Serializable{
                         }else {
                             view.printError("There's a time and place for everything, but not now. 3");
                         }
-
-
                         break;
 
 
@@ -164,6 +158,10 @@ public class ClientInputReader implements Runnable, Serializable{
                             //client.getView(); (IMPORTANTE)
                             ArrayList<Tile> chosenTilesList = new ArrayList<>();
                             chosenTilesList.clear();
+                            if(action.length()< 5){
+                                System.out.println("Check the message format...\n");
+                                return;
+                            }
                             char[] chosen = chosenTiles.toCharArray();
                             int row = Character.getNumericValue(chosen[1]);
                             int col = Character.getNumericValue(chosen[3]);
@@ -187,7 +185,7 @@ public class ClientInputReader implements Runnable, Serializable{
                                 view.printTile(tile.getColor(), tile.getRow(), tile.getColumn());
                                 view.printThings("; ");
                             }
-                            view.printThings("\nwaiting for check... ");
+                            view.printThings("\nWaiting for check...\n");
                             client.selectedTiles(chosenTilesList);
                         } else {
                             view.printError("There's a time and place for everything, but not now. 5");
@@ -213,8 +211,11 @@ public class ClientInputReader implements Runnable, Serializable{
                     default:
                         System.out.println("Error! No valid message type detected!");
                 }
-            }
+            }else{
+            System.out.println("You didn't write anything");
         }
+
+    }
 
 
     /**

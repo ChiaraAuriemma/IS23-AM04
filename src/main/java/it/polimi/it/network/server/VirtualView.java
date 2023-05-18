@@ -45,7 +45,6 @@ public class VirtualView implements Serializable {
     }
 
 
-
     public void setUserTCP(String username,ObjectOutputStream out){
         typeOfConnection.put(username, "TCP");
         userTCP.put(username, out);
@@ -56,7 +55,7 @@ public class VirtualView implements Serializable {
         userRMI.put(username, client);
     }
 
-    //metodi di inizio partita
+
     public void startOrder(ArrayList<User> order) throws RemoteException {//->da mandare a tutti
         ArrayList<String> orderNames = new ArrayList<>();
         for(User u: order){
@@ -73,15 +72,13 @@ public class VirtualView implements Serializable {
                 sendTCPMessage(userTCP.get(username), message);
 
             }else if(typeOfConnection.get(username).equals("RMI")){
-
                ClientInterface clientRMI = userRMI.get(username);
                clientRMI.setStartOrder(orderNames);
             }
-
         }
     }
 
-    //mando la matrice iniziale e la lista dei token
+
     public void initialMatrix(Tile[][] matrix) throws RemoteException {//da mandare a tutti
         for (int i=0; i < game.getNumplayers(); i++) {
             String username = game.getPlayer(i).getNickname();
@@ -93,7 +90,6 @@ public class VirtualView implements Serializable {
                 sendTCPMessage(userTCP.get(username), message);
 
             } else if (typeOfConnection.get(game.getPlayer(i).getNickname()).equals("RMI")) {
-                //sviluppo in RMI
 
                 ClientInterface clientRMI = userRMI.get(username);
                 clientRMI.setNewBoard(matrix);
@@ -112,13 +108,13 @@ public class VirtualView implements Serializable {
                 sendTCPMessage(userTCP.get(username), message);
 
             } else if (typeOfConnection.get(username).equals("RMI")) {
-                //sviluppo in RMI
 
                 ClientInterface clientRMI = userRMI.get(username);
                 clientRMI.setNewCommon(card1,card2);
             }
         }
     }
+
 
     public void drawnPersonalCard(String username, PersonalGoalCard card) throws RemoteException {
 
@@ -129,7 +125,6 @@ public class VirtualView implements Serializable {
             sendTCPMessage(userTCP.get(username), message);
 
         } else if (typeOfConnection.get(username).equals("RMI")) {
-            //sviluppo in RMI
 
             ClientInterface clientRMI = userRMI.get(username);
             clientRMI.setNewPersonal(card);
@@ -138,8 +133,7 @@ public class VirtualView implements Serializable {
 
 
 
-    //during the turn
-    //starting turn
+
     public void startTurn(String username,int maxValueofTiles) throws RemoteException {
 
 
@@ -150,14 +144,10 @@ public class VirtualView implements Serializable {
             sendTCPMessage(userTCP.get(username), message);
 
         } else if (typeOfConnection.get(username).equals("RMI")) {
-            //sviluppo in RMI
 
             ClientInterface clientRMI = userRMI.get(username);
             clientRMI.notifyTurnStart(maxValueofTiles);
         }
-
-        //starto il turno mandando il massimo numero di tile da server a client
-        //lui risponde col numero che vuole -> Arriva a gameController
     }
 
     public void notifyGameStart() throws RemoteException {
@@ -165,6 +155,10 @@ public class VirtualView implements Serializable {
             User  receiver = game.getPlayer(i);
 
             if (typeOfConnection.get(receiver.getNickname()).equals("TCP")) {
+
+                NoTurnSetter noTurnSetter = new NoTurnSetter(true);
+                Message message = new Message(MessageType.NOTURNSETTER,noTurnSetter);
+                sendTCPMessage(userTCP.get(receiver.getNickname()), message);
 
             } else if (typeOfConnection.get(receiver.getNickname()).equals("RMI")) {
                 //sviluppo in RMI
@@ -175,8 +169,6 @@ public class VirtualView implements Serializable {
     }
 
 
-    //chiamato da user, serve a mandare le takeable tiles fino alla view
-    // chi prende la risposta?.......
     public void takeableTiles(String username, List<List<Tile>> choosableTilesList, int num) throws RemoteException {
         if(typeOfConnection.get(username).equals("TCP")){
 
@@ -318,6 +310,12 @@ public class VirtualView implements Serializable {
             User  receiver = game.getPlayer(i);
 
             if (typeOfConnection.get(receiver.getNickname()).equals("TCP")) {
+
+                sendChatUpdate(currentChat);
+                /*ChatUpdate chatUpdate = new ChatUpdate(currentChat);
+                Message messageChat = new Message(MessageType.CHATUPDATE, chatUpdate);
+                sendTCPMessage(userTCP.get(receiver.getNickname()), messageChat);*/
+
                 ViewUpdate viewUpdate = new ViewUpdate();
                 Message message = new Message(MessageType.UPDATEVIEW,viewUpdate);
                 sendTCPMessage(userTCP.get(receiver.getNickname()), message);
@@ -373,4 +371,37 @@ public class VirtualView implements Serializable {
     }
 
 
+    public void sendChatUpdate(List<String> currentChat) throws RemoteException {
+        for (int i=0; i < game.getNumplayers(); i++) {
+            User  receiver = game.getPlayer(i);
+
+            if (typeOfConnection.get(receiver.getNickname()).equals("TCP")) {
+                ChatUpdate chatUpdate = new ChatUpdate(currentChat);
+                Message messageChat = new Message(MessageType.CHATUPDATE, chatUpdate);
+                sendTCPMessage(userTCP.get(receiver.getNickname()), messageChat);
+
+
+            } else if (typeOfConnection.get(receiver.getNickname()).equals("RMI")) {
+                ClientInterface clientRMI = userRMI.get(receiver.getNickname());
+                clientRMI.updateChat(currentChat);
+            }
+        }
+    }
+
+    public void boardRefill() throws RemoteException {
+        for (int i=0; i < game.getNumplayers(); i++) {
+            User  receiver = game.getPlayer(i);
+
+            if (typeOfConnection.get(receiver.getNickname()).equals("TCP")) {
+                BoardRefill boardRefill = new BoardRefill();
+                Message message = new Message(MessageType.BOARDREFILL, boardRefill);
+                sendTCPMessage(userTCP.get(receiver.getNickname()), message);
+
+
+            } else if (typeOfConnection.get(receiver.getNickname()).equals("RMI")) {
+                ClientInterface clientRMI = userRMI.get(receiver.getNickname());
+                clientRMI.boardRefill();
+            }
+        }
+    }
 }

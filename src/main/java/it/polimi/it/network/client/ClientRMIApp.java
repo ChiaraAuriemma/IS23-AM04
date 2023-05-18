@@ -29,7 +29,6 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
 
     private String nickname;
     private View view;
-    private Scanner scanner;
     private List<Tile> lastChosen = new ArrayList<>();
 
     private ClientInputReader buffer;
@@ -140,13 +139,8 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
         try {   //comunico al server il numero scelto
             sr.tilesNumMessage(this.nickname, numOfTiles);
             buffer.setStage(TurnStages.CHOOSETILES);
-        } catch (IllegalValueException e) {
+        } catch (IllegalValueException | WrongPlayerException e) {
             //view : notifico alla view che il numero di tiles indicato non è valido
-            view.askNumTilesAgain();
-        } catch (WrongPlayerException e) {
-            //view : non è il turno di questo giocatore
-        } catch (WrongListException e) {
-            //view : il numero di tiles non è valido in base agli spazi rimasti liberi
             view.askNumTilesAgain();
         }
     }
@@ -158,9 +152,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
             sr.selectedTiles(this.nickname, choosenTiles);
             buffer.setStage(TurnStages.CHOOSECOLUMN);
         } catch (WrongPlayerException | WrongListException e) {
-            //view : notifico che l'user non è quello giusto
-            //}catch (WrongListException){
-            //manca eccezione nel caso in cui abbia scelto un set di tile invalido
+            view.askTilesAgain();
         }
     }
 
@@ -169,12 +161,11 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
         try {
             sr.chooseColumn(this.nickname, numOfColum);
             buffer.setStage(TurnStages.NOTURN);
-        } catch (InvalidIDException e) {
-            //view : il numero della colonna non è valido
+            System.out.println("End of your turn\n");
+        } catch (InvalidIDException | IllegalValueException e) {
             view.askColumnAgain();
-        } catch (IllegalValueException e) {
-            System.out.println("You can't choose this column!");
         }
+
     }
 
     @Override
@@ -205,11 +196,19 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
     @Override
     public void updateChat(List<String> currentChat) throws RemoteException{
         view.updateChat(currentChat);
+        if(buffer.getStage() == TurnStages.NOTURN){
+            view.update();
+        }
     }
 
     @Override
     public void setStageToNoTurn() throws RemoteException {
         buffer.setStage(TurnStages.NOTURN);
+    }
+
+    @Override
+    public void boardRefill() throws RemoteException {
+        view.boardRefill();
     }
 
     @Override
@@ -229,13 +228,15 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
 
     @Override
     public void notifyTurnStart(int maxValueofTiles) {
+        view.update();
         view.NotifyTurnStart(maxValueofTiles,this.nickname);
         buffer.setStage(TurnStages.TILESNUM);
     }
 
     @Override
     public void askColumn(boolean[] choosableColumns) {
-        view.askColumn();
+        view.update();
+        view.setPossibleColumns(choosableColumns);
     }
 
     @Override
@@ -260,7 +261,22 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
     @Override
     public void takeableTiles(List<List<Tile>> choosableTilesList, int num) throws RemoteException {
         //view : faccio vedere illuminate le tiles nella lista
-        System.out.println("Please choose " + num + " tiles from the board...\n");
+        view.update();
+        switch (num){
+            case 1:
+                System.out.println("Please choose " + num + " tiles from the board... ( Use take_tiles>>(row,column) )\n");
+                break;
+            case 2:
+                System.out.println("Please choose " + num + " tiles from the board... ( Use take_tiles>>(row,column);(row,column) )\n");
+                break;
+            case 3:
+                System.out.println("Please choose " + num + " tiles from the board... ( Use take_tiles>>(row,column);(row,column);(row,column) )\n");
+                break;
+            default:
+                System.out.println("Wrong number");
+                break;
+        }
+
         view.takeableTiles(choosableTilesList);
     }
 

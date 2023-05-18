@@ -39,7 +39,7 @@ public class User implements Serializable {
     }
 
 
-    public List<List<Tile>> choosableTiles(int tilesNum) throws WrongListException, IllegalValueException, RemoteException {
+    public List<List<Tile>> choosableTiles(int tilesNum) throws IllegalValueException, RemoteException {
 
         if(tilesNum < 1 || tilesNum > 3){
             throw new IllegalValueException("Wrong tiles number");
@@ -49,9 +49,6 @@ public class User implements Serializable {
 
         List<List<Tile>> choosableList = board.choosableTiles(tilesNum);
 
-        if(choosableList == null || choosableList.size() == 0){
-            throw new WrongListException("Error in the chosen tiles list");
-        }
 
         game.getVirtualView().takeableTiles(this.getNickname(),choosableList, tilesNum);
         return choosableList;
@@ -88,7 +85,10 @@ public class User implements Serializable {
         }
 
         board.removeTiles(chosen);
-        board.refill();
+        boolean refill = board.refill();
+        if(refill){
+            game.getVirtualView().boardRefill();
+        }
         game.getVirtualView().boardUpdate(board.getMatrix());
         return isEnd;
     }
