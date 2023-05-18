@@ -66,6 +66,7 @@ public class View implements ViewInterface, Serializable {
     private Tile[][] p2;
     private Tile[][] p3;
     private Tile[][] p4;
+    private String yourself;
 
 
     /**
@@ -310,15 +311,21 @@ public class View implements ViewInterface, Serializable {
 
 
     public void setNamesLine() {
+        List<String> namess = new ArrayList<>(names);
+        for(String n: namess){
+            if(n.equals(yourself)){
+                n = "\u001B[31m" + n + "\u001B[0m";
+            }
+        }
         switch (numPlayers) {
             case 2:
-                namesLine = border + "   " + names.get(0) + "   " + names.get(1) + "   " + noPlayer + "   " + noPlayer + "    " + border;
+                namesLine = border + "   " + namess.get(0) + "   " + namess.get(1) + "   " + noPlayer + "   " + noPlayer + "    " + border;
                 break;
             case 3:
-                namesLine = border + "   " + names.get(0) + "   " + names.get(1) + "   " + names.get(2) + "   " + noPlayer + "    " + border;
+                namesLine = border + "   " + namess.get(0) + "   " + namess.get(1) + "   " + namess.get(2) + "   " + noPlayer + "    " + border;
                 break;
             case 4:
-                namesLine = border + "   " + names.get(0) + "   " + names.get(1) + "   " + names.get(2) + "   " + names.get(3) + "    " + border;
+                namesLine = border + "   " + namess.get(0) + "   " + namess.get(1) + "   " + namess.get(2) + "   " + namess.get(3) + "    " + border;
                 break;
         }
     }
@@ -420,8 +427,8 @@ public class View implements ViewInterface, Serializable {
 
     public void Title() {
         String title = " \u001B[33m    ▒█▀▄▀█ █▒ █ 　 ▒█▀▀▀█ █░ █ █▀▀ █▒░ █▀▀ ░▀░ █▀▀\n" +
-                       "     ▒█▒█░█ █▄▄█ 　 ░▀▀▀▄▄ █▀▀█ █▀▀ █▒░ █▀▀ ▀█▀ █▀▀\n" +
-                       "     ▒█░░░█ ▄▄▄█ 　 ▒█▄▄▄█ ▀░ ▀ ▀▀▀ ▀▀▀ ▀░  ▀▀▀ ▀▀▀\n \u001B[39m";
+                                 "     ▒█▒█░█ █▄▄█ 　 ░▀▀▀▄▄ █▀▀█ █▀▀ █▒░ █▀▀ ▀█▀ █▀▀\n" +
+                                 "     ▒█░░░█ ▄▄▄█ 　 ▒█▄▄▄█ ▀░ ▀ ▀▀▀ ▀▀▀ ▀░  ▀▀▀ ▀▀▀\n \u001B[39m";
         out.println(title);
     }
 
@@ -501,6 +508,7 @@ public class View implements ViewInterface, Serializable {
     public void askColumn() {
         out.println("Please choose in which column you want to put the tiles that you took... ( Use choose_column>>\"column number\" ) \n");
     }
+
 
     public void printError(String error) {
         out.println(error);
@@ -750,6 +758,11 @@ public class View implements ViewInterface, Serializable {
     public void updateChat(List<String> currentChat) {
         chatMessages.clear();
         chatMessages.addAll(currentChat);
+    }
+
+    @Override
+    public void setThisNick(String nickname) {
+        this.yourself = nickname;
     }
 
 

@@ -99,6 +99,7 @@ public class ClientInputReader implements Runnable, Serializable{
                             nickname = nickname.concat(" ");
                         }
 
+                        view.setThisNick(nickname);
                         client.login(nickname);
                     } else {
                        view.printError("There's a time and place for everything, but not now. 1");
