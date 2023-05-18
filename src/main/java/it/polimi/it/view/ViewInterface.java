@@ -71,4 +71,8 @@ public interface ViewInterface {
 
 
     public void updateChat(List<String> currentChat);
+
+
+    //setter per il nickname del giocatore che ha aperto l'app
+    void setThisNick(String nickname);
 }
