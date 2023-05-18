@@ -123,6 +123,8 @@ public class GameController implements Serializable {
      */
     public void firstOperation() throws IllegalValueException, RemoteException {
 
+        game.getVirtualView().notifyTurnStart(playerList.get(currentPlayer));
+
         //faccio i controlli su qual è il massimo num di tile prendibili
         this.maxTile = playerList.get(currentPlayer).maxValueOfTiles();
         game.getVirtualView().viewUpdate(chat.getCurrentChat());
@@ -219,7 +221,6 @@ public class GameController implements Serializable {
      */
     public void firstTurnStarter() throws IllegalValueException, RemoteException {
         //pesca le carte, dispone i giocatori
-        game.getVirtualView().notifyGameStart();
 
         //sto salvando la lista di giocatori già ordinata come deve essere
         playerList = game.randomPlayers();
