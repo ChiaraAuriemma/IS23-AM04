@@ -95,8 +95,6 @@ public class GameController implements Serializable {
      */
     void turnDealer() throws InvalidIDException, IllegalValueException, RemoteException {
 
-        //game.getVirtualView().viewUpdate();
-
         if(this.endGame && this.currentPlayer == 0){
             game.getVirtualView().viewUpdate(chat.getCurrentChat());
 
@@ -129,9 +127,6 @@ public class GameController implements Serializable {
         this.maxTile = playerList.get(currentPlayer).maxValueOfTiles();
         game.getVirtualView().viewUpdate(chat.getCurrentChat());
 
-
-        //passo alla view, faccio scegliere il numero che vuole l'utente
-        ///askFromView(maxTile);/////////////////////////////
     }
 
 
@@ -164,15 +159,12 @@ public class GameController implements Serializable {
         if(user.equals(playerList.get(currentPlayer).getNickname())) {
             if(validTilesCheck(chosenList)){
                 currentTilesList.clear();
-            /*for (Tile t : chosenList) {
-                currentTilesList.add(new Tile(t.getRow(), t.getColumn(), PossibleColors.valueOf(t.getColor())));
-            }*/
+
                 currentTilesList = new ArrayList<>(chosenList);
                 //dico ad user che tile sono state scelte
                 try {
                     possibleColumnArray = playerList.stream().filter(curr -> Objects.equals(curr.getNickname(), user)).collect(Collectors.toList()).get(0).chooseSelectedTiles(currentTilesList);
                 } catch (RemoteException | WrongTileException e) {
-                    //messaggio a view per far scegliere altre tiles
                 }
             }else{
                 throw new WrongListException("You chose badly");
@@ -181,7 +173,6 @@ public class GameController implements Serializable {
         }else {
             throw new WrongPlayerException("It's not your turn");
         }
-        //passa alla view le possibleColumns, dato che sono state eliminate dalla board
     }
 
 
@@ -211,15 +202,13 @@ public class GameController implements Serializable {
            System.out.println("Invalid column choice"); //da far vedere a view
         }
         endGame = playerList.stream().filter(curr -> Objects.equals(curr.getNickname(), user)).collect(Collectors.toList()).get(0).insertTile(col, currentTilesList);
-       // endGame = playerList.get(currentPlayer).insertTile(col, currentTilesList);
-            //messaggio per la view
+
 
         game.pointCount(playerList.get(currentPlayer));
         if(this.endGame){
             game.endGame(playerList.get(currentPlayer));
         }
-        // manda alla view l'immagine della nuova shelfie da visualizzare e i nuovi punteggi, col referimento all'user
-        //game.getVirtualView().viewUpdate();
+
         turnDealer();
     }
 
@@ -232,9 +221,8 @@ public class GameController implements Serializable {
         //pesca le carte, dispone i giocatori
         game.getVirtualView().notifyGameStart();
 
-        //tolgo: playerList = game.getPlayerList();//sto salvando la lista di giocatori già ordinata come deve essere
+        //sto salvando la lista di giocatori già ordinata come deve essere
         playerList = game.randomPlayers();
-        //view : dare la sedia al primo giocatore
 
         for(int i=0; i < game.getNumplayers(); i++){
             game.drawPersonalCard();
@@ -242,17 +230,10 @@ public class GameController implements Serializable {
         }
 
         game.drawCommonCrads();
-        //view: mostro alla view
-        //view: mostro alla view chi ha il sofà d'inizio
 
         //ho ottenuto l'ordine dei giocatori, inizio i turni effettivi
         currentPlayer=0;
 
-        /////////////////////////////////////////////////
-        //
-        //CHIAMARE LA VIEW PER PASSARE LA BOARD INIZIALE CON TILES E CARTE INIZIALIZZATE
-        //
-        //////////////////////////////////////////////////
 
         firstOperation();
     }

@@ -196,7 +196,7 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
                     buffer.setStage(TurnStages.TILESNUM);
                     break;
 
-                    case TAKEABLETILES:
+                case TAKEABLETILES:
                     TakeableTilesResponse takeableTilesResponse = (TakeableTilesResponse) response.getPayload();
                     try {
                         takeableTiles(takeableTilesResponse.getChoosableTilesList(), takeableTilesResponse.getChoosableTilesList().get(0).size());
@@ -206,6 +206,7 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
                     //view : passo choosableTilesList per "illuminare" sulla board le tiles prendibili
                     buffer.setStage(TurnStages.CHOOSETILES);
                     break;
+
                 case POSSIBLECOLUMNS:
                     PossibleColumnsResponse possibleColumnsResponse = (PossibleColumnsResponse) response.getPayload();
                     askColumn(possibleColumnsResponse.getChoosableColumns());
