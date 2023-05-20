@@ -14,6 +14,7 @@ public class GUIApplication extends Application {
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("My Shelfie");
         stage.setScene(scene);
+        //stage.setResizable(false); ----> volendo si può evitare che la finestra venga ingrandita
         //maximize(stage,16/9,true); --->da capire ancora come si fa
         stage.show();
     }

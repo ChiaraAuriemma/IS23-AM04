@@ -13,16 +13,32 @@ import java.io.IOException;
 public class GameStartController {
 
     private Stage stage;
+    private String connectionType;
 
 
 
-    public void GotoLogin(ActionEvent actionEvent) throws IOException {
+    public void GotoLoginTCP(ActionEvent actionEvent) throws IOException {
+        connectionType = "TCP";
         FXMLLoader fxmlLoader = new FXMLLoader(GUIApplication.class.getResource("/Login.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
         stage.setTitle("My Shelfie");
         stage.setScene(scene);
         stage.show();
+    }
+
+    public void GotoLoginRMI(ActionEvent actionEvent) throws IOException {
+        connectionType = "RMI";
+        FXMLLoader fxmlLoader = new FXMLLoader(GUIApplication.class.getResource("/Login.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+        stage.setTitle("My Shelfie");
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public String getConnectionType(){
+        return connectionType;
     }
 
 

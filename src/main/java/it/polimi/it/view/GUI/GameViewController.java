@@ -9,6 +9,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
+import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -167,6 +168,9 @@ public class GameViewController implements Initializable {
     @FXML
     ImageView tile30BS;
 
+    @FXML
+    MenuBar menuitem1;
+
     private double mouseAnchorX;
     private double mouseAnchorY;
 
@@ -209,13 +213,16 @@ public class GameViewController implements Initializable {
         });
     }
 
-    public void GotoOtherShelfie(ActionEvent actionEvent) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(GUIApplication.class.getResource("/OtherShelfie.fxml"));
+    public void GotoPersonalGoalCard(ActionEvent actionEvent) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(GUIApplication.class.getResource("/PersonalGoalCard.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
         stage.setTitle("My Shelfie");
         stage.setScene(scene);
         stage.show();
+    }
+
+    public void GotoCommonGoalCards(ActionEvent actionEvent) {
     }
 }
 

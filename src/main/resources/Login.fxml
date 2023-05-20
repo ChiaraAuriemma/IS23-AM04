@@ -5,24 +5,33 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.it.view.GUI.LoginController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.it.view.GUI.LoginController">
    <children>
-      <ImageView fx:id="background" fitHeight="409.0" fitWidth="608.0" layoutX="-5.0" layoutY="-7.0" pickOnBounds="true">
+      <ImageView fx:id="background" fitHeight="728.0" fitWidth="1087.0" layoutX="-5.0" layoutY="-7.0" pickOnBounds="true">
          <image>
-            <Image url="@Images/sfondo parquet.jpg" />
+            <Image url="@Images/sfondo_parquet.jpg" />
          </image>
       </ImageView>
-      <Label layoutX="204.0" layoutY="91.0" text="Choose an username">
+      <Label layoutX="464.0" layoutY="104.0" text="Choose an username">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <TextField fx:id="UsernameField" layoutX="100.0" layoutY="175.0" prefHeight="25.0" prefWidth="382.0" />
-      <Label layoutX="100.0" layoutY="145.0" text="Username" />
-      <Button fx:id="JoinButton" layoutX="153.0" layoutY="256.0" mnemonicParsing="false" onAction="#GotoJoinGame" text="Join Game" />
-      <Button fx:id="CreateButton" layoutX="336.0" layoutY="256.0" mnemonicParsing="false" onAction="#GotoCreateGame" text="Create Game" />
+      <TextField fx:id="UsernameField" layoutX="298.0" layoutY="222.0" prefHeight="26.0" prefWidth="558.0" />
+      <Label layoutX="306.0" layoutY="186.0" text="Username">
+         <font>
+            <Font size="15.0" />
+         </font></Label>
+      <Button fx:id="JoinButton" layoutX="383.0" layoutY="361.0" mnemonicParsing="false" onAction="#GotoJoinGame" prefHeight="40.0" prefWidth="127.0" text="Join Game">
+         <font>
+            <Font size="18.0" />
+         </font></Button>
+      <Button fx:id="CreateButton" layoutX="632.0" layoutY="362.0" mnemonicParsing="false" onAction="#GotoCreateGame" text="Create Game">
+         <font>
+            <Font size="18.0" />
+         </font></Button>
    </children>
-</Pane>
+</AnchorPane>
