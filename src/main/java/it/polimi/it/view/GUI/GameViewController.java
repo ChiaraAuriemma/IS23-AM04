@@ -168,8 +168,6 @@ public class GameViewController implements Initializable {
     @FXML
     ImageView tile30BS;
 
-    @FXML
-    MenuBar menuitem1;
 
     private double mouseAnchorX;
     private double mouseAnchorY;
@@ -222,7 +220,13 @@ public class GameViewController implements Initializable {
         stage.show();
     }
 
-    public void GotoCommonGoalCards(ActionEvent actionEvent) {
+    public void GotoCommonGoalCards(ActionEvent actionEvent) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(GUIApplication.class.getResource("/CommonGoalCards.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+        stage.setTitle("My Shelfie");
+        stage.setScene(scene);
+        stage.show();
     }
 }
 

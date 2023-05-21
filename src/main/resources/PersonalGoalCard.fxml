@@ -7,7 +7,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="720.0" prefWidth="1096.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.it.view.GUI.PersonalGoalCardController">
    <children>
       <ImageView fitHeight="739.0" fitWidth="1108.0" layoutX="-8.0" layoutY="-13.0" pickOnBounds="true">
@@ -15,13 +14,13 @@
             <Image url="@Images/sfondo_parquet.jpg" />
          </image>
       </ImageView>
-      <Label layoutX="423.0" layoutY="131.0" text="This is your Personal Goal Card!">
+      <Label layoutX="406.0" layoutY="132.0" text="This is your Personal Goal Card!">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <ImageView fitHeight="222.0" fitWidth="200.0" layoutX="459.0" layoutY="242.0" pickOnBounds="true" preserveRatio="true" />
-      <Button fx:id="ReturnButton" layoutX="467.0" layoutY="557.0" mnemonicParsing="false" onAction="#GotoGame" text="Return to main menu">
+      <ImageView fx:id="PersonalGoalCard" fitHeight="222.0" fitWidth="200.0" layoutX="459.0" layoutY="234.0" pickOnBounds="true" preserveRatio="true" />
+      <Button fx:id="ReturnButton" layoutX="445.0" layoutY="558.0" mnemonicParsing="false" onAction="#GotoGame" text="Return to main menu">
          <font>
             <Font size="18.0" />
          </font>

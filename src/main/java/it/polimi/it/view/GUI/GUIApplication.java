@@ -8,13 +8,22 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class GUIApplication extends Application {
+
+    //private GameStartController gameStartController;
+
+    /*
+    public GUIApplication(){
+        this.gameStartController = new GameStartController(this);
+    }
+
+     */
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(GUIApplication.class.getResource("/GameStart.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("My Shelfie");
         stage.setScene(scene);
-        //stage.setResizable(false); ----> volendo si può evitare che la finestra venga ingrandita
+        stage.setResizable(false); //----> volendo si può evitare che la finestra venga ingrandita
         //maximize(stage,16/9,true); --->da capire ancora come si fa
         stage.show();
     }

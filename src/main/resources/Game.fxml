@@ -134,5 +134,20 @@
             <Font size="18.0" />
          </font>
       </Button>
+      <ImageView fx:id="TokenCommonGoal1" fitHeight="65.0" fitWidth="63.0" layoutX="703.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Images/scoring_8.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="TokenCommonGoal2" fitHeight="65.0" fitWidth="63.0" layoutX="808.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Images/scoring_2.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="TokenEndGame" fitHeight="65.0" fitWidth="63.0" layoutX="912.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Images/end game.jpg" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

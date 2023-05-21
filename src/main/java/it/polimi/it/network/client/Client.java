@@ -1,5 +1,11 @@
 package it.polimi.it.network.client;
 
+
+import it.polimi.it.controller.GameController;
+import it.polimi.it.view.GUI.GUIApplication;
+import it.polimi.it.view.GUI.GUILauncher;
+import it.polimi.it.view.GUI.GameStartController;
+
 import java.io.IOException;
 import java.io.Serializable;
 import java.rmi.NotBoundException;
@@ -15,14 +21,26 @@ public class Client implements Serializable {
         Scanner stdin = new Scanner(System.in);
         String inputLine = " ";
 
-        while (!inputLine.equalsIgnoreCase("RMI") && !inputLine.equalsIgnoreCase("TCP")) {
-            System.out.println("Choose a connection type");
+        while (!inputLine.equalsIgnoreCase("CLI") && !inputLine.equalsIgnoreCase("GUI")) {
+            System.out.println("Do you want to play using GUI or CLI?");
             inputLine = stdin.nextLine();
         }
 
-        ClientInputReader cliR = new ClientInputReader();
-        cliR.setConnectionType(inputLine.toUpperCase());
-        Thread thread = new Thread(cliR);
-        thread.start();
+        if(inputLine.equalsIgnoreCase("GUI")){
+            GUIApplication guiApplication = new GUIApplication();
+            guiApplication.main(args);
+        }else{
+            while (!inputLine.equalsIgnoreCase("RMI") && !inputLine.equalsIgnoreCase("TCP")) {
+                System.out.println("Choose a connection type");
+                inputLine = stdin.nextLine();
+            }
+
+            ClientInputReader cliR = new ClientInputReader();
+            cliR.setConnectionType(inputLine.toUpperCase());
+            Thread thread = new Thread(cliR);
+            thread.start();
+        }
+
+
     }
 }
