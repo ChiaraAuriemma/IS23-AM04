@@ -111,7 +111,7 @@ public class GameController implements Serializable {
      */
     void turnDealer() throws InvalidIDException, IllegalValueException, RemoteException {
 
-        if(this.endGame && this.currentPlayer == game.getNumplayers()){
+        if(this.endGame && this.currentPlayer == game.getNumplayers() - 1){
             game.getVirtualView().viewUpdate(chat.getCurrentChat());
             game.pointsFromAdjacent();
             lobby.notifyEndGame(gameID);
