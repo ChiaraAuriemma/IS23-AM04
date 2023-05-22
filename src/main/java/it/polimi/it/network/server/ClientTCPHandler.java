@@ -35,7 +35,7 @@ public class ClientTCPHandler implements Runnable,Serializable{
     private Timer timer;
     private Message ping;
 
-
+    private boolean pong = true; //false= non ricevuto , true = ricevuto
     public ClientTCPHandler(Lobby lobby, ServerTCP serverTCP){
         this.socket = serverTCP.getClientSocket();
         this.lobby = lobby;
@@ -55,6 +55,8 @@ public class ClientTCPHandler implements Runnable,Serializable{
             e.printStackTrace();
 
         }
+
+        new Thread(this::disconnectionTimer).start();
     }
 
     @Override
@@ -67,7 +69,7 @@ public class ClientTCPHandler implements Runnable,Serializable{
 
         while(true) {//CAMBIAMO : se è ancora connesso rimani nel while
 
-           // new Thread(this::disconnectionTimer).start();
+
 
             try {
                 request = (Message) in.readObject();
@@ -194,50 +196,49 @@ public class ClientTCPHandler implements Runnable,Serializable{
                             send(response);
                         }
                     }
-    /*
+
                 PONG://risposta del ping del timer
-                    timer.cancel();
+                    pong = true;
                 break;
 
-
+/*
                 default: //messaggio non valido
                     System.out.println("User sent an illegal type of message");
     */
             }
             //timer.cancel();
+
+            //trovo dove chiudere il socket e gli input e output stream
         }
 
     }
-/**
+
 
     private void disconnectionTimer(){
         timer = new Timer();
         TimerTask timerTask = new TimerTask() {
             @Override
             public void run() {
-                PingMessage pingMessage = new PingMessage(" ");
-                ping = new Message(MessageType.PING, pingMessage);
-                send(ping);
+                if(pong == true){
+                    pong = false;
+                    PingMessage pingMessage = new PingMessage(" ");
+                    ping = new Message(MessageType.PING, pingMessage);
+                    send(ping);
+                }else{
+                    //disconnetti
+                    System.out.println(user.getNickname() + " disconnected");
+                }
             }
 
         };
-        timer.schedule(timerTask, 1000, 20000);
-        TimerTask control = new TimerTask(){
-            @Override
-            public void run() {
-                PingMessage pingMessage = new PingMessage(" ");
-                ping = new Message(MessageType.PING, pingMessage);
-                send(ping);
-            }
-        };
-        timer.schedule(control, 1100, 20100);
+        timer.schedule(timerTask, 1000, 5000);
                     /*
                     public void schedule(TimerTask task, long delay, long period)
                         task - task to be scheduled.
                         delay - delay in milliseconds before task is to be executed.        1000->1secondo
                         period - time in milliseconds between successive task executions.   200000->20 secondi
                      */
-   // }
+   }
 
 
 
