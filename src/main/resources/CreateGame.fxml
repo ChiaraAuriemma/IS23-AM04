@@ -5,28 +5,34 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.it.view.GUI.CreateGameViewController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.it.view.GUI.CreateGameViewController">
     <children>
-        <ImageView fx:id="background" fitHeight="406.0" fitWidth="600.0" layoutY="-2.0" pickOnBounds="true">
+        <ImageView fx:id="background" fitHeight="728.0" fitWidth="1082.0" layoutY="-2.0" pickOnBounds="true">
             <image>
-                <Image url="@Images/sfondo parquet.jpg" />
+                <Image url="@Images/sfondo_parquet.jpg" />
             </image>
         </ImageView>
-        <Button fx:id="StartButton" layoutX="277.0" layoutY="279.0" mnemonicParsing="false" onAction="#GotoGame" text="Start" />
-        <TextField fx:id="NumOfPlayers" layoutX="130.0" layoutY="155.0" prefHeight="27.0" prefWidth="333.0">
+        <Button fx:id="StartButton" layoutX="486.0" layoutY="327.0" mnemonicParsing="false" onAction="#GotoGame" text="Start">
+         <font>
+            <Font size="18.0" />
+         </font></Button>
+        <TextField fx:id="NumOfPlayers" layoutX="243.0" layoutY="208.0" prefHeight="27.0" prefWidth="578.0">
             <font>
                 <Font size="13.0" />
             </font>
         </TextField>
-        <Label fx:id="TextLogin2" layoutX="156.0" layoutY="52.0" text="Insert the number of players">
+        <Label fx:id="TextLogin2" layoutX="381.0" layoutY="79.0" text="Insert the number of players">
             <font>
                 <Font name="System Bold" size="21.0" />
             </font>
         </Label>
         <Label fx:id="Textusername" layoutX="130.0" layoutY="96.0" />
-        <Label fx:id="TextNumOfPlayers" layoutX="130.0" layoutY="129.0" text="Numbers of players" />
+        <Label fx:id="TextNumOfPlayers" layoutX="246.0" layoutY="174.0" text="Numbers of players">
+         <font>
+            <Font size="15.0" />
+         </font></Label>
     </children>
-</Pane>
+</AnchorPane>

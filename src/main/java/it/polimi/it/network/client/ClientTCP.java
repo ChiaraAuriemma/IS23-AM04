@@ -11,6 +11,8 @@ import it.polimi.it.network.message.MessageType;
 import it.polimi.it.network.message.others.ThisNotTheDay;
 import it.polimi.it.network.message.request.*;
 import it.polimi.it.network.message.responses.*;
+import it.polimi.it.view.GUI.GUIApplication;
+import it.polimi.it.view.GUI.GUILauncher;
 import it.polimi.it.view.View;
 
 import java.io.*;
@@ -27,6 +29,7 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
     private int port;
     private String ip;
     private View view;
+    private GUIApplication guiApplication;
 
 
     private String username;
@@ -72,6 +75,41 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
         buffer.setStage(TurnStages.LOGIN);
 
         view.askNickname();
+    }
+
+    public ClientTCP(int port, String ip, GUIApplication guiApplication){
+        this.port = port;
+        this.ip = ip;
+        this.guiApplication = guiApplication;
+
+        try{
+            serverSocket = new Socket(ip,port);
+
+            try{
+                out = new ObjectOutputStream(serverSocket.getOutputStream());
+                //out.flush();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            try {
+
+                in = new ObjectInputStream(serverSocket.getInputStream());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            // qui metto un thread che parte su run()
+        } catch (UnknownHostException e) {
+            System.out.println("Don't know about host " + ip);
+            System.exit(1);
+        } catch (IOException e) {
+            System.out.println("Couldn't get I/O for the connection to " + ip);
+            System.exit(1);
+        }
+
+        buffer.setStage(TurnStages.LOGIN);
+
     }
 
     public View getView(){
