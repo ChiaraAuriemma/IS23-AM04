@@ -120,7 +120,8 @@ public class VirtualView implements Serializable {
 
         if (typeOfConnection.get(username).equals("TCP")) {
 
-            DrawnPersonalCardMessage drawnPersonalCardMessage = new DrawnPersonalCardMessage(card);
+            PersonalGoalCard personalCard = card;
+            DrawnPersonalCardMessage drawnPersonalCardMessage = new DrawnPersonalCardMessage(personalCard);
             Message message = new Message(MessageType.DRAWNPERSONALCARD,drawnPersonalCardMessage);
             sendTCPMessage(userTCP.get(username), message);
 
