@@ -66,4 +66,8 @@ public interface ClientInterface extends Remote, Serializable {
     void setStageToNoTurn() throws RemoteException;
 
     void boardRefill() throws RemoteException;
+
+    void setView(String viewChoice) throws RemoteException;
+
+    void setBuffer(ClientInputReader cliR) throws RemoteException;
 }

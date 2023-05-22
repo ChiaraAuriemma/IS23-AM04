@@ -87,4 +87,20 @@ public interface ViewInterface {
     void printThings(String s);
 
     void printCommands();
+
+    void askColumn();
+
+    void askNicknameAgain();
+
+    void askNumPlayerAgain();
+
+    void askIDAgain();
+
+    void askNumTilesAgain();
+
+    void askTilesAgain();
+
+    void askColumnAgain();
+
+    void boardRefill();
 }

@@ -104,4 +104,74 @@ public class GuiMain implements ViewInterface {
     public void setThisNick(String nickname) {
 
     }
+
+    @Override
+    public String getTileColor(int row, int col) {
+        return null;
+    }
+
+    @Override
+    public void askNickname() {
+
+    }
+
+    @Override
+    public void joinOrCreate(String username) {
+
+    }
+
+    @Override
+    public void printTile(String color, int row, int column) {
+
+    }
+
+    @Override
+    public void printThings(String s) {
+
+    }
+
+    @Override
+    public void printCommands() {
+
+    }
+
+    @Override
+    public void askColumn() {
+
+    }
+
+    @Override
+    public void askNicknameAgain() {
+
+    }
+
+    @Override
+    public void askNumPlayerAgain() {
+
+    }
+
+    @Override
+    public void askIDAgain() {
+
+    }
+
+    @Override
+    public void askNumTilesAgain() {
+
+    }
+
+    @Override
+    public void askTilesAgain() {
+
+    }
+
+    @Override
+    public void askColumnAgain() {
+
+    }
+
+    @Override
+    public void boardRefill() {
+
+    }
 }

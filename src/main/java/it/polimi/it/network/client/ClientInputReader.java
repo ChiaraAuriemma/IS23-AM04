@@ -21,7 +21,6 @@ public class ClientInputReader implements Runnable, Serializable{
     /**
      * "RMI" or "TCP" string, used to know how to choose between the TCP-message or the RMI-method
      */
-    private String connectionType;
 
    private ClientInterface client;
     /**
@@ -259,12 +258,11 @@ public class ClientInputReader implements Runnable, Serializable{
     }
 
 
-    /**
-     * Setter method
-     * @param connectionType is a String, either "RMI" or "TCP", used to know which type of message
-     *                       has to be sent
-     */
-    public void setConnectionType(String connectionType, ViewInterface view) throws IOException{
+    public void setConnectionType(ClientInterface client) {
+        this.client = client;
+    }
+
+    /*public void setConnectionType(String connectionType, ViewInterface view) throws IOException{
         this.connectionType = connectionType;
         this.view = view;
         Gson gson = new Gson();
@@ -283,6 +281,12 @@ public class ClientInputReader implements Runnable, Serializable{
             client = clientRMI;
         }
 
+    }
+
+     */
+
+    public void setView(ViewInterface view) {
+        this.view = view;
     }
 
     public void setStage(TurnStages stage){

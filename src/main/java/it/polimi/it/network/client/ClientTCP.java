@@ -14,6 +14,7 @@ import it.polimi.it.network.message.request.*;
 import it.polimi.it.network.message.responses.*;
 import it.polimi.it.view.GUI.GUIApplication;
 import it.polimi.it.view.GUI.GUILauncher;
+import it.polimi.it.view.GUI.GuiMain;
 import it.polimi.it.view.View;
 import it.polimi.it.view.ViewInterface;
 
@@ -41,10 +42,9 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
 
     private ClientInputReader buffer;
     //private LinkedList<Message> messages;
-    public ClientTCP(int port, String ip, ViewInterface view){
+    public ClientTCP(int port, String ip){
         this.port = port;
         this.ip = ip;
-        this.view=view;
         //this.messages = new LinkedList<>();
 
         try{
@@ -74,6 +74,14 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
         }
 
 
+    }
+
+    public void setView(String viewChoice) {
+        if(viewChoice.equalsIgnoreCase("CLI")){
+            this.view = new View();
+        }else if (viewChoice.equalsIgnoreCase("GUI")){
+            this.view = new GuiMain();
+        }
 
         view.askNickname();
     }
@@ -271,9 +279,12 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
                     break;
 
                 case PING:
-                    Pong
+                   /* Pong
                     Message request = new Message(MessageType.SELECTEDTILES, selectedTilesRequest);
                     send(request);
+
+                    */
+                    break;
                 case ERROR:
                     ErrorMessage errorMessage = (ErrorMessage) response.getPayload();
                     view.printError(errorMessage.getError());
@@ -313,8 +324,8 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
     }
 
     @Override
-    public ViewInterface getView() throws RemoteException {
-        return null;
+    public ViewInterface getView(){
+        return this.view;
     }
 
     @Override
@@ -395,6 +406,7 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
         this.buffer = buffer;
         buffer.setStage(TurnStages.LOGIN);
     }
+
 
     /*public void networkReader(){
         while(true){//sostituisco con while connected

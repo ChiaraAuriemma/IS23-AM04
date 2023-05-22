@@ -7,6 +7,7 @@ import it.polimi.it.model.Game;
 import it.polimi.it.model.Tiles.Tile;
 import it.polimi.it.model.User;
 import it.polimi.it.network.server.ServerInterface;
+import it.polimi.it.view.GUI.GuiMain;
 import it.polimi.it.view.View;
 import it.polimi.it.view.ViewInterface;
 
@@ -29,23 +30,28 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
     private boolean nickOK = false;
 
     private String nickname;
-    private View view;
-
-    ViewInterface viewInterface;
+    ViewInterface view;
     private List<Tile> lastChosen = new ArrayList<>();
 
     private ClientInputReader buffer;
 
 
-    public ClientRMIApp(int port, String ip, ViewInterface viewInterface) throws RemoteException {
+    public ClientRMIApp(int port, String ip) throws RemoteException {
         this.port = port;
         this.ip = ip;
-        this.viewInterface = viewInterface;
-
     }
 
-    public ViewInterface getView() {
-        return this.viewInterface;
+    public void setView(String viewChoice) throws RemoteException{
+       if(viewChoice.equalsIgnoreCase("CLI")){
+           this.view = new View();
+       }else if (viewChoice.equalsIgnoreCase("GUI")){
+           this.view = new GuiMain();
+       }
+        view.askNickname();
+    }
+
+    public ViewInterface getView() throws RemoteException{
+        return this.view;
     }
 
     /**
@@ -64,15 +70,6 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
         } catch (RemoteException | NotBoundException e) {
             System.out.println(e.getMessage());
         }
-        //view : passo come parametro di start client un riferimento alla view che voglio usare
-
-
-        //view : do la possibilità all'utente di inserire un nickname
-        view.askNickname();
-
-        //view: mostro la scelta tra creategame e joingame
-        // delego in base alla scelta che fa la view al metodo create o join
-        //appena mi arriva startgame dal server avvio la partita
 
     }
 
@@ -281,7 +278,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
         view.takeableTiles(choosableTilesList);
     }
 
-    public void setBuffer(ClientInputReader buffer) {
+    public void setBuffer(ClientInputReader buffer) throws RemoteException{
         this.buffer = buffer;
         buffer.setStage(TurnStages.LOGIN);
     }
