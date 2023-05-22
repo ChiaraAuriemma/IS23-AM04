@@ -229,27 +229,27 @@ public class PersonalGoalCard implements Serializable {
     public int checkScore(Shelfie shelfie) {
         if(checkColor.get(0) == 0 && shelfie.getCell(pinkPos.get(0), pinkPos.get(1)).getColor().equals("PINK")){
             numCompletedTasks++;
-            checkColor.add(0,1);
+            checkColor.set(0,1);
         }
         if(checkColor.get(1) == 0 && shelfie.getCell(cyanPos.get(0), cyanPos.get(1)).getColor().equals("CYAN")){
             numCompletedTasks++;
-            checkColor.add(1,1);
+            checkColor.set(1,1);
         }
         if(checkColor.get(2)== 0 && shelfie.getCell(yellowPos.get(0), yellowPos.get(1)).getColor().equals("YELLOW")){
             numCompletedTasks++;
-            checkColor.add(2,1);
+            checkColor.set(2,1);
         }
         if(checkColor.get(3) == 0 && shelfie.getCell(bluePos.get(0), bluePos.get(1)).getColor().equals("BLUE")){
             numCompletedTasks++;
-            checkColor.add(3,1);
+            checkColor.set(3,1);
         }
         if(checkColor.get(4) == 0 && shelfie.getCell(whitePos.get(0), whitePos.get(1)).getColor().equals("WHITE")){
             numCompletedTasks++;
-            checkColor.add(4,1);
+            checkColor.set(4,1);
         }
         if(checkColor.get(5) == 0 && shelfie.getCell(greenPos.get(0), greenPos.get(1)).getColor().equals("GREEN")){
             numCompletedTasks++;
-            checkColor.add(5,1);
+            checkColor.set(5,1);
         }
 
         return numCompletedTasks;
