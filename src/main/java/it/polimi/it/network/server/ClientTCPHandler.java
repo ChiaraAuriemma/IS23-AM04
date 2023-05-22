@@ -194,7 +194,7 @@ public class ClientTCPHandler implements Runnable,Serializable{
                             send(response);
                         }
                     }
-
+    /*
                 PONG://risposta del ping del timer
                     timer.cancel();
                 break;
@@ -202,9 +202,9 @@ public class ClientTCPHandler implements Runnable,Serializable{
 
                 default: //messaggio non valido
                     System.out.println("User sent an illegal type of message");
-
+    */
             }
-            timer.cancel();
+            //timer.cancel();
         }
 
     }

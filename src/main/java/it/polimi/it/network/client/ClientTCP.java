@@ -18,6 +18,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class ClientTCP implements ClientInterface, Serializable, Runnable {
@@ -34,11 +35,13 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
     private Socket serverSocket;
 
     private ClientInputReader buffer;
+    //private LinkedList<Message> messages;
     public ClientTCP(int port, String ip, ClientInputReader buffer){
         this.port = port;
         this.ip = ip;
         this.view=new View();
         this.buffer=buffer;
+        //this.messages = new LinkedList<>();
 
         try{
             serverSocket = new Socket(ip,port);
@@ -134,13 +137,15 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
     public void run()  {
         Message response;
         MessageType messType;
+        //new Thread(this::networkReader).start();
 
-        while(true){
+        while(true){ //sostituisco con while connected
             try {
                 response = (Message) in.readObject();
             } catch (IOException | ClassNotFoundException e) {
                 throw new RuntimeException(e);
             }
+
             messType = response.getType();
 
             switch (messType){
@@ -376,4 +381,13 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
     }
 
 
+    /*public void networkReader(){
+        while(true){//sostituisco con while connected
+            try {
+                messages.push((Message) in.readObject());
+            } catch (IOException | ClassNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }*/
 }

@@ -4,6 +4,7 @@ import it.polimi.it.model.Board.Board;
 import it.polimi.it.Exceptions.IllegalValueException;
 import it.polimi.it.Exceptions.WrongTileException;
 import it.polimi.it.Exceptions.WrongListException;
+import it.polimi.it.model.Tiles.PossibleColors;
 import it.polimi.it.model.Tiles.Tile;
 
 import java.io.Serializable;
@@ -89,6 +90,7 @@ public class User implements Serializable {
         if(refill){
             game.getVirtualView().boardRefill();
         }
+
         game.getVirtualView().boardUpdate(board.getMatrix());
         return isEnd;
     }

@@ -13,11 +13,12 @@ public class BoardUpdateMessage extends Payload implements Serializable {
     private Tile[][] matrix;
 
     public BoardUpdateMessage(Tile[][] matrix){
-        for(int i = 0; i < matrix.length; i++){
-            for(int j = 0; j < matrix[i].length; j++){
+        /*for(int i = 0; i < 9; i++){
+            for(int j = 0; j < 9; j++){
                 this.matrix[i][j] = new Tile(i,j, PossibleColors.valueOf(matrix[i][j].getColor()));
             }
-        }
+        }*/
+        this.matrix = matrix;
     }
 
     public Tile[][] getMatrix() {

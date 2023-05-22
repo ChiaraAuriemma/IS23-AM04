@@ -6,6 +6,8 @@ import it.polimi.it.model.Board.B4P;
 import it.polimi.it.model.Board.Board;
 import it.polimi.it.model.Card.CommonGoalCards.*;
 import it.polimi.it.model.Card.PersonalGoalCards.*;
+import it.polimi.it.model.Tiles.PossibleColors;
+import it.polimi.it.model.Tiles.Tile;
 import it.polimi.it.network.client.ClientInterface;
 import it.polimi.it.network.server.ServerInterface;
 import it.polimi.it.network.server.VirtualView;
@@ -120,11 +122,9 @@ public class Game implements Serializable {
             order.add(i,this.players.get(position));
         }
 
-        System.out.println(order.size());
 
         //mando alla view un po' di cose da inizializzare
         virtualView.startOrder(order);
-        System.out.println("post");
 
         virtualView.initialMatrix(board.getMatrix());
         playersOrder=order;

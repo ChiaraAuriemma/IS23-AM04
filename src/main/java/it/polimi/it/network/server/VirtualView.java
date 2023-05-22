@@ -231,7 +231,13 @@ public class VirtualView implements Serializable {
 
             if (typeOfConnection.get(receiver.getNickname()).equals("TCP")) {
 
-                BoardUpdateMessage boardUpdateMessage = new BoardUpdateMessage(matrix);
+                Tile[][] m = new Tile[9][9];
+                for(int k = 0; k < 9; k++){
+                    for(int j = 0; j < 9; j++){
+                        m[k][j] = new Tile(k,j, PossibleColors.valueOf(matrix[k][j].getColor()));
+                    }
+                }
+                BoardUpdateMessage boardUpdateMessage = new BoardUpdateMessage(m);
                 Message message = new Message(MessageType.BOARDUPDATE, boardUpdateMessage);
                 sendTCPMessage(userTCP.get(receiver.getNickname()), message);
 
