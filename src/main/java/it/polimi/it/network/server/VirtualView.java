@@ -212,7 +212,17 @@ public class VirtualView implements Serializable {
             User  receiver = game.getPlayer(i);
 
             if (typeOfConnection.get(receiver.getNickname()).equals("TCP")) {
-                ShelfieUpdateMessage shelfieUpdateMessage = new ShelfieUpdateMessage(user.getNickname(), user.getShelfie().getShelf());
+
+                Tile[][] shelf = user.getShelfie().getShelf();
+
+                Tile[][] s = new Tile[6][5];
+                for(int k = 0; k < 6; k++){
+                    for(int j = 0; j < 5; j++){
+                        s[k][j] = new Tile(k,j, PossibleColors.valueOf(shelf[k][j].getColor()));
+                    }
+                }
+
+                ShelfieUpdateMessage shelfieUpdateMessage = new ShelfieUpdateMessage(user.getNickname(), s);
                 Message message = new Message(MessageType.SHELFIEUPDATE, shelfieUpdateMessage);
                 sendTCPMessage(userTCP.get(receiver.getNickname()), message);
                 // perchè non aggiorno la shelfie direttamente qui??
@@ -237,6 +247,7 @@ public class VirtualView implements Serializable {
                         m[k][j] = new Tile(k,j, PossibleColors.valueOf(matrix[k][j].getColor()));
                     }
                 }
+
                 BoardUpdateMessage boardUpdateMessage = new BoardUpdateMessage(m);
                 Message message = new Message(MessageType.BOARDUPDATE, boardUpdateMessage);
                 sendTCPMessage(userTCP.get(receiver.getNickname()), message);
