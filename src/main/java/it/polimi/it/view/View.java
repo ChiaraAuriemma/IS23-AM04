@@ -520,6 +520,7 @@ public class View implements ViewInterface, Serializable {
             u=nickPadder(u);
             setPlayersPointsView(u, points.get(users.indexOf(u)));
         }
+        leaderboardSet();
     }
 
 
