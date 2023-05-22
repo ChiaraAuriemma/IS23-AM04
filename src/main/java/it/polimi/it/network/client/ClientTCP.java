@@ -39,11 +39,10 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
 
     private ClientInputReader buffer;
     //private LinkedList<Message> messages;
-    public ClientTCP(int port, String ip, ClientInputReader buffer){
+    public ClientTCP(int port, String ip){
         this.port = port;
         this.ip = ip;
         this.view=new View();
-        this.buffer=buffer;
         //this.messages = new LinkedList<>();
 
         try{
@@ -72,44 +71,9 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
             System.exit(1);
         }
 
-        buffer.setStage(TurnStages.LOGIN);
+
 
         view.askNickname();
-    }
-
-    public ClientTCP(int port, String ip, GUIApplication guiApplication){
-        this.port = port;
-        this.ip = ip;
-        this.guiApplication = guiApplication;
-
-        try{
-            serverSocket = new Socket(ip,port);
-
-            try{
-                out = new ObjectOutputStream(serverSocket.getOutputStream());
-                //out.flush();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            try {
-
-                in = new ObjectInputStream(serverSocket.getInputStream());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            // qui metto un thread che parte su run()
-        } catch (UnknownHostException e) {
-            System.out.println("Don't know about host " + ip);
-            System.exit(1);
-        } catch (IOException e) {
-            System.out.println("Couldn't get I/O for the connection to " + ip);
-            System.exit(1);
-        }
-
-        buffer.setStage(TurnStages.LOGIN);
-
     }
 
     public View getView(){
@@ -418,6 +382,10 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
         view.boardRefill();
     }
 
+    public void setBuffer(ClientInputReader buffer) {
+        this.buffer = buffer;
+        buffer.setStage(TurnStages.LOGIN);
+    }
 
     /*public void networkReader(){
         while(true){//sostituisco con while connected
