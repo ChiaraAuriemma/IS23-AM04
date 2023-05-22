@@ -8,6 +8,7 @@ import it.polimi.it.model.User;
 import it.polimi.it.network.message.ErrorMessage;
 import it.polimi.it.network.message.Message;
 import it.polimi.it.network.message.MessageType;
+import it.polimi.it.network.message.others.PingMessage;
 import it.polimi.it.network.message.others.ThisNotTheDay;
 import it.polimi.it.network.message.request.*;
 import it.polimi.it.network.message.responses.*;
@@ -271,6 +272,10 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
                     boardRefill();
                     break;
 
+                case PING:
+                    Pong
+                    Message request = new Message(MessageType.SELECTEDTILES, selectedTilesRequest);
+                    send(request);
                 case ERROR:
                     ErrorMessage errorMessage = (ErrorMessage) response.getPayload();
                     view.printError(errorMessage.getError());
