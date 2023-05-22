@@ -6,10 +6,6 @@ import it.polimi.it.model.Board.B4P;
 import it.polimi.it.model.Board.Board;
 import it.polimi.it.model.Card.CommonGoalCards.*;
 import it.polimi.it.model.Card.PersonalGoalCards.*;
-import it.polimi.it.model.Tiles.PossibleColors;
-import it.polimi.it.model.Tiles.Tile;
-import it.polimi.it.network.client.ClientInterface;
-import it.polimi.it.network.server.ServerInterface;
 import it.polimi.it.network.server.VirtualView;
 
 
@@ -160,7 +156,7 @@ public class Game implements Serializable {
 
     }
 
-    public void drawCommonCrads() throws RemoteException {
+    public void drawCommonCards() throws RemoteException {
 
         Random rnd = new Random();
 
@@ -196,7 +192,7 @@ public class Game implements Serializable {
         do{
             id = rnd.nextInt(12) + 1;
             card  = new PersonalGoalCard(id);
-        }while(this.cards.contains(card));
+        }while(isCardIdPresent(id));
 
         this.cards.add(card);
 
@@ -228,8 +224,11 @@ public class Game implements Serializable {
             }else {
                 this.points.set(i, tmp_point + 3);
             }
+
         }
         //i punti dell'endtoken sono dati dal metodo end game
+
+
 
         //points from common card 1
         if(player.getShelfie().getCommonToken1() == 0 && card1.checkGoal(shelfie) ){
@@ -264,6 +263,15 @@ public class Game implements Serializable {
 
     public ArrayList<User> playersOrder(){
         return playersOrder;
+    }
+
+    private boolean isCardIdPresent(int id) {
+        for (PersonalGoalCard existingCard : this.cards) {
+            if (existingCard.getId() == id) {
+                return true;
+            }
+        }
+        return false;
     }
 
 

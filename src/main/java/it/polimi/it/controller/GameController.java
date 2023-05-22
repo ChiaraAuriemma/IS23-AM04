@@ -101,6 +101,7 @@ public class GameController implements Serializable {
         lobby = lobbyIn;
         playerList = new ArrayList<>();
         this.chat = new Chat();
+        this.maxTile = 0;
     }
 
 
@@ -145,7 +146,11 @@ public class GameController implements Serializable {
      */
     public void getFromViewNTiles(String user, int chosenNumber) throws WrongPlayerException, RemoteException, IllegalValueException {
         if(user.equals(playerList.get(currentPlayer).getNickname())){
-            this.playerList.get(currentPlayer).choosableTiles(chosenNumber);
+            if(chosenNumber > this.maxTile){
+                throw new IllegalValueException("You can't take so much tiles");
+            }else {
+                this.playerList.get(currentPlayer).choosableTiles(chosenNumber);
+            }
         }else{
             throw new WrongPlayerException("It's not your turn");
         }
@@ -198,7 +203,7 @@ public class GameController implements Serializable {
      */
     public void getColumnFromView(String user, int col) throws IllegalValueException, InvalidIDException, RemoteException {
         if(!possibleColumnArray[col]){
-           System.out.println("Invalid column choice");
+           throw new IllegalValueException("Invalid column choice");
         }
         endGame = playerList.stream().filter(curr -> Objects.equals(curr.getNickname(), user)).collect(Collectors.toList()).get(0).insertTile(col, currentTilesList);
         game.pointCount(playerList.get(currentPlayer));
@@ -219,7 +224,7 @@ public class GameController implements Serializable {
             game.drawPersonalCard();
             game.getPlayer(i).createShelfie();
         }
-        game.drawCommonCrads();
+        game.drawCommonCards();
         currentPlayer=0;
         firstOperation();
     }
