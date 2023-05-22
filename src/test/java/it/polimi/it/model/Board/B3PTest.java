@@ -83,6 +83,11 @@ public class B3PTest {
     public void count(){
         int max = matrix.findMaxAdjacent(3);
         assertEquals(3, max);
+        int max2 = matrix.findMaxAdjacent(2);
+        assertEquals(2, max2);
+        int max3 = matrix.findMaxAdjacent(1);
+        assertEquals(1, max3);
+
 
         List<List<Tile>> a1 = matrix.choosableTiles(1);
         System.out.println("Versione gruppi da 1");
