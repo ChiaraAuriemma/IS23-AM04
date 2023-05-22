@@ -32,7 +32,7 @@ public class User implements Serializable {
 
         int max = shelf.possibleTiles();
         if(max < 1 || max > 3){
-            throw new IllegalValueException("Il numero di tiles non è accettabile");
+            throw new IllegalValueException("Wrong tiles number");
         }
         max = board.findMaxAdjacent(max);
         game.getVirtualView().startTurn(this.getNickname(),max);

@@ -34,12 +34,11 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
     private ClientInputReader buffer;
 
 
-    public ClientRMIApp(int port, String ip, ClientInputReader buffer) throws RemoteException {
+    public ClientRMIApp(int port, String ip) throws RemoteException {
         this.port = port;
         this.ip = ip;
         this.view = new View();
-        this.buffer = buffer;
-        buffer.setStage(TurnStages.LOGIN);
+
     }
 
     public View getView() {
@@ -279,4 +278,8 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
         view.takeableTiles(choosableTilesList);
     }
 
+    public void setBuffer(ClientInputReader buffer) {
+        this.buffer = buffer;
+        buffer.setStage(TurnStages.LOGIN);
+    }
 }

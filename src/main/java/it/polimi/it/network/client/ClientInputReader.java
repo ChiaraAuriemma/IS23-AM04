@@ -262,18 +262,20 @@ public class ClientInputReader implements Runnable, Serializable{
      * @param connectionType is a String, either "RMI" or "TCP", used to know which type of message
      *                       has to be sent
      */
-    public void setConnectionType(String connectionType) throws IOException, NotBoundException {
+    public void setConnectionType(String connectionType) throws IOException{
         this.connectionType = connectionType;
         Gson gson = new Gson();
         JsonReader jsonReader = new JsonReader( new FileReader("src/main/resources/ServerConfig.json"));
         JsonObject jsonObject = gson.fromJson(jsonReader,JsonObject.class);
         if (connectionType.equalsIgnoreCase("TCP")){
-            ClientTCP clientTCP = new ClientTCP(jsonObject.get("portTCP").getAsInt(),jsonObject.get("ip").getAsString(), this);
+            ClientTCP clientTCP = new ClientTCP(jsonObject.get("portTCP").getAsInt(),jsonObject.get("ip").getAsString());
+            clientTCP.setBuffer(this);
             Thread thread = new Thread(clientTCP);
             client = clientTCP;
             thread.start();
         }if(connectionType.equalsIgnoreCase("RMI")){
-            ClientRMIApp clientRMI = new ClientRMIApp(jsonObject.get("portRMI").getAsInt(),jsonObject.get("ip").getAsString(), this);
+            ClientRMIApp clientRMI = new ClientRMIApp(jsonObject.get("portRMI").getAsInt(),jsonObject.get("ip").getAsString());
+            clientRMI.setBuffer(this);
             clientRMI.startClient();
             client = clientRMI;
         }
