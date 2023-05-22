@@ -7,6 +7,7 @@ import it.polimi.it.model.Shelfie;
 import it.polimi.it.model.Tiles.Tile;
 import it.polimi.it.model.User;
 import it.polimi.it.view.View;
+import it.polimi.it.view.ViewInterface;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -44,7 +45,7 @@ public interface ClientInterface extends Remote, Serializable {
 
     public void tilesNumMessage(int numOfTiles) throws RemoteException;
 
-    public View getView() throws RemoteException;
+    public ViewInterface getView() throws RemoteException;
 
     public void selectedTiles(List<Tile> choices) throws RemoteException;
 

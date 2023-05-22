@@ -75,4 +75,16 @@ public interface ViewInterface {
 
     //setter per il nickname del giocatore che ha aperto l'app
     void setThisNick(String nickname);
+
+    String getTileColor(int row, int col);
+
+    void askNickname();
+
+    void joinOrCreate(String username);
+
+    void printTile(String color, int row, int column);
+
+    void printThings(String s);
+
+    void printCommands();
 }

@@ -8,6 +8,7 @@ import it.polimi.it.model.Tiles.Tile;
 import it.polimi.it.model.User;
 import it.polimi.it.network.server.ServerInterface;
 import it.polimi.it.view.View;
+import it.polimi.it.view.ViewInterface;
 
 import java.io.Serializable;
 import java.rmi.NotBoundException;
@@ -29,20 +30,22 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
 
     private String nickname;
     private View view;
+
+    ViewInterface viewInterface;
     private List<Tile> lastChosen = new ArrayList<>();
 
     private ClientInputReader buffer;
 
 
-    public ClientRMIApp(int port, String ip) throws RemoteException {
+    public ClientRMIApp(int port, String ip, ViewInterface viewInterface) throws RemoteException {
         this.port = port;
         this.ip = ip;
-        this.view = new View();
+        this.viewInterface = viewInterface;
 
     }
 
-    public View getView() {
-        return view;
+    public ViewInterface getView() {
+        return this.viewInterface;
     }
 
     /**

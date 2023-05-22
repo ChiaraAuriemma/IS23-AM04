@@ -5,6 +5,9 @@ import it.polimi.it.controller.GameController;
 import it.polimi.it.view.GUI.GUIApplication;
 import it.polimi.it.view.GUI.GUILauncher;
 import it.polimi.it.view.GUI.GameStartController;
+import it.polimi.it.view.GUI.GuiMain;
+import it.polimi.it.view.View;
+import it.polimi.it.view.ViewInterface;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -29,14 +32,15 @@ public class Client implements Serializable {
         if(inputLine.equalsIgnoreCase("GUI")){
             GUIApplication guiApplication = new GUIApplication();
             guiApplication.main(args);
+            ViewInterface view = new GuiMain();
         }else{
             while (!inputLine.equalsIgnoreCase("RMI") && !inputLine.equalsIgnoreCase("TCP")) {
                 System.out.println("Choose a connection type");
                 inputLine = stdin.nextLine();
             }
-
+            ViewInterface view = new View();
             ClientInputReader cliR = new ClientInputReader();
-            cliR.setConnectionType(inputLine.toUpperCase());
+            cliR.setConnectionType(inputLine.toUpperCase(), view);
             Thread thread = new Thread(cliR);
             thread.start();
         }

@@ -6,6 +6,7 @@ import com.google.gson.stream.JsonReader;
 import it.polimi.it.model.Tiles.PossibleColors;
 import it.polimi.it.model.Tiles.Tile;
 import it.polimi.it.view.View;
+import it.polimi.it.view.ViewInterface;
 
 import java.io.*;
 import java.rmi.NotBoundException;
@@ -26,7 +27,8 @@ public class ClientInputReader implements Runnable, Serializable{
     /**
      * Instance of the View class
      */
-    private View view ;
+
+    ViewInterface view;
 
     private TurnStages stage;
 
@@ -262,24 +264,25 @@ public class ClientInputReader implements Runnable, Serializable{
      * @param connectionType is a String, either "RMI" or "TCP", used to know which type of message
      *                       has to be sent
      */
-    public void setConnectionType(String connectionType) throws IOException{
+    public void setConnectionType(String connectionType, ViewInterface view) throws IOException{
         this.connectionType = connectionType;
+        this.view = view;
         Gson gson = new Gson();
         JsonReader jsonReader = new JsonReader( new FileReader("src/main/resources/ServerConfig.json"));
         JsonObject jsonObject = gson.fromJson(jsonReader,JsonObject.class);
         if (connectionType.equalsIgnoreCase("TCP")){
-            ClientTCP clientTCP = new ClientTCP(jsonObject.get("portTCP").getAsInt(),jsonObject.get("ip").getAsString());
+            ClientTCP clientTCP = new ClientTCP(jsonObject.get("portTCP").getAsInt(),jsonObject.get("ip").getAsString(), view);
             clientTCP.setBuffer(this);
             Thread thread = new Thread(clientTCP);
             client = clientTCP;
             thread.start();
         }if(connectionType.equalsIgnoreCase("RMI")){
-            ClientRMIApp clientRMI = new ClientRMIApp(jsonObject.get("portRMI").getAsInt(),jsonObject.get("ip").getAsString());
+            ClientRMIApp clientRMI = new ClientRMIApp(jsonObject.get("portRMI").getAsInt(),jsonObject.get("ip").getAsString(), view);
             clientRMI.setBuffer(this);
             clientRMI.startClient();
             client = clientRMI;
         }
-        view = client.getView();
+
     }
 
     public void setStage(TurnStages stage){
