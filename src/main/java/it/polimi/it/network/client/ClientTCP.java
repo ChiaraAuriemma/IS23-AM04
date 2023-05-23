@@ -16,7 +16,9 @@ import it.polimi.it.network.message.request.*;
 import it.polimi.it.network.message.responses.*;
 import it.polimi.it.view.GUI.GUIApplication;
 import it.polimi.it.view.GUI.GUILauncher;
+import it.polimi.it.view.GUI.GuiMain;
 import it.polimi.it.view.View;
+import it.polimi.it.view.ViewInterface;
 
 import java.io.*;
 import java.net.Socket;
@@ -31,7 +33,7 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
     private static final long serialVersionUID = -1334206444743011550L;
     private int port;
     private String ip;
-    private View view;
+    private ViewInterface view;
     private GUIApplication guiApplication;
 
 
@@ -45,7 +47,6 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
     public ClientTCP(int port, String ip){
         this.port = port;
         this.ip = ip;
-        this.view=new View();
         //this.messages = new LinkedList<>();
 
         try{
@@ -75,13 +76,18 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
         }
 
 
+    }
+
+    public void setView(String viewChoice) {
+        if(viewChoice.equalsIgnoreCase("CLI")){
+            this.view = new View();
+        }else if (viewChoice.equalsIgnoreCase("GUI")){
+            this.view = new GuiMain();
+        }
 
         view.askNickname();
     }
 
-    public View getView(){
-        return view;
-    }
 
 
 
@@ -322,6 +328,12 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
         Message request = new Message(MessageType.TILESNUMMESSAGE, tilesNumRequest);
         send(request);
     }
+
+    @Override
+    public ViewInterface getView(){
+        return this.view;
+    }
+
     @Override
     public void selectedTiles(List<Tile> choices){
         SelectedTilesRequest selectedTilesRequest = new SelectedTilesRequest(choices);
@@ -399,6 +411,7 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
         this.buffer = buffer;
         buffer.setStage(TurnStages.LOGIN);
     }
+
 
     /*public void networkReader(){
         while(true){//sostituisco con while connected

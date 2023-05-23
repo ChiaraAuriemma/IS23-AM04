@@ -32,7 +32,7 @@ public class GameStartController {
 
     public void GotoLoginTCP(ActionEvent actionEvent) throws IOException, NotBoundException {
         connectionType = "TCP";
-        //setConnectionType(connectionType);
+
         FXMLLoader fxmlLoader = new FXMLLoader(GUIApplication.class.getResource("/Login.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
