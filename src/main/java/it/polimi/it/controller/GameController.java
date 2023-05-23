@@ -160,9 +160,16 @@ public class GameController implements Serializable {
         if(!playerList.get(currentPlayer).getInGame()) {
             turnDealer();
         }else{
-            game.getVirtualView().notifyTurnStart(playerList.get(currentPlayer));
+
             this.maxTile = playerList.get(currentPlayer).maxValueOfTiles();
+            if(maxTile==-1){
+                System.out.println("ed è qui l'ultimo momento per cambiare giocatore, ma se non lo fai sei un babbo");
+                turnDealer();
+                return;
+            }
+            game.getVirtualView().notifyTurnStart(playerList.get(currentPlayer));
             game.getVirtualView().viewUpdate(chat.getCurrentChat());
+
         }
     }
 

@@ -30,11 +30,16 @@ public class User implements Serializable {
 
     public int maxValueOfTiles() throws IllegalValueException, RemoteException {
 
+        if(inGame==false){
+            return -1;
+        }
+
         int max = shelf.possibleTiles();
         if(max < 1 || max > 3){
             throw new IllegalValueException("Wrong tiles number");
         }
         max = board.findMaxAdjacent(max);
+        System.out.println("Asking to " + nickname + "the tiles num \n");
         game.getVirtualView().startTurn(this.getNickname(),max);
         return max;
     }
