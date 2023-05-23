@@ -87,6 +87,7 @@ public class Client implements Serializable {
             client.setView("CLI");
             cliR.setView(client.getView());
             client.setBuffer(cliR);
+            //fra
 
         } else if (args[1].equalsIgnoreCase("GUI")){
             GUIApplication guiApplication = new GUIApplication();
