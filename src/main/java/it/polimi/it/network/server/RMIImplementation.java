@@ -7,15 +7,16 @@ import it.polimi.it.Exceptions.WrongListException;
 import it.polimi.it.model.Tiles.Tile;
 import it.polimi.it.model.User;
 import it.polimi.it.network.client.ClientInterface;
+import it.polimi.it.network.message.Message;
+import it.polimi.it.network.message.MessageType;
+import it.polimi.it.network.message.others.PingMessage;
 
 import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class RMIImplementation extends UnicastRemoteObject implements ServerInterface, Serializable {
 
@@ -23,14 +24,19 @@ public class RMIImplementation extends UnicastRemoteObject implements ServerInte
     private Lobby lobby;
     private HashMap<String,GameController> userGame;
     private int port;
+    private Timer timer;
 
+    private HashMap<String, Boolean> pongs;
     private HashMap<String, ClientInterface> userRMI;
+    private HashMap<String, Timer> timers;
+    private boolean first = false;
 
     private Registry registry;
     public RMIImplementation() throws RemoteException{
         this.userGame = new HashMap<>();
         this.userRMI = new HashMap<>();
-
+        this.pongs = new HashMap<>();
+        this.timers = new HashMap<>();
     }
 
     public void startServer(int port) throws RemoteException {
@@ -44,6 +50,7 @@ public class RMIImplementation extends UnicastRemoteObject implements ServerInte
         }
         System.out.println("Server RMI ready");
 
+       // new Thread(this::disconnectionTimer).start();
     }
 
     public ClientInterface getUserRMI (User user){
@@ -59,6 +66,8 @@ public class RMIImplementation extends UnicastRemoteObject implements ServerInte
             user = lobby.createUser(username);
         }
         userRMI.put(user.getNickname(), cr);
+        pongs.put(user.getNickname(), true);
+        timers.put(user.getNickname(), new Timer());
         return user.getNickname();
     }
 
@@ -82,7 +91,7 @@ public class RMIImplementation extends UnicastRemoteObject implements ServerInte
         return gc.getGameID();
     }
 
-    public void tilesNumMessage(String username,int numTiles) throws RemoteException, WrongPlayerException, IllegalValueException {
+    public void tilesNumMessage(String username,int numTiles) throws RemoteException, WrongPlayerException, IllegalValueException, InvalidIDException {
         GameController gc = userGame.get(username);
         synchronized (gc){
             gc.getFromViewNTiles(username,numTiles);
@@ -90,7 +99,7 @@ public class RMIImplementation extends UnicastRemoteObject implements ServerInte
         //numTiles è il valore scelto dall'utente (v. javadoc GameController)
     }
 
-    public void selectedTiles(String username, List<Tile> choosenTiles) throws RemoteException, WrongPlayerException, WrongListException {
+    public void selectedTiles(String username, List<Tile> choosenTiles) throws RemoteException, WrongPlayerException, WrongListException, IllegalValueException, InvalidIDException {
         GameController gc = userGame.get(username);
         synchronized (gc){
             ArrayList<Tile> chosenTiles = new ArrayList<>(choosenTiles);
@@ -116,6 +125,64 @@ public class RMIImplementation extends UnicastRemoteObject implements ServerInte
     public void setLobby(Lobby lobby){
         this.lobby=lobby;
     }
+
+    public void disconnect_user(String username) {
+
+        //trovare l'istanza dell'utente e mettergli
+        //il bool della connessione a false
+
+        lobby.disconnect_user(username);
+    }
+
+
+    //per ogni client va mandato un diverso timer    new Thread(this::disconnectionTimer).start();
+    /*private void disconnectionTimer(){
+        timer = new Timer();
+        TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                if(userRMI.size()>0){
+
+                    //itero su tutti gli user
+                   String a[] = new String[]{userRMI.toString()};
+
+                   Set<String> set = userRMI.keySet();
+
+                   for (String user: set){
+                       //if(pongs.get(user)==true){//guardo se questo user ha il suo
+
+                       //}
+                       if(lobby.checkIfStillConnected(user)){
+
+                           userRMI.get(user).ping();
+                       }
+                   }
+
+
+                                    for(Map.Entry<String, ClientInterface>entry: userRMI){
+
+                                    }
+                }
+                if(pong == true){
+                    pong = false;
+
+
+                    chiamare metodo rmi sui client che resetti
+                    System.out.println(" is still connected, SADLY");
+                }else{
+                    //disconnetti
+                    System.out.println(" disconnected");
+                }
+            }
+        };
+        timer.schedule(timerTask, 1000, 15000);
+
+                   // public void schedule(TimerTask task, long delay, long period)
+                     //   task - task to be scheduled.
+                     //   delay - delay in milliseconds before task is to be executed.        1000->1secondo
+                     //   period - time in milliseconds between successive task executions.   200000->20 secondi
+
+    }*/
 
 
 }

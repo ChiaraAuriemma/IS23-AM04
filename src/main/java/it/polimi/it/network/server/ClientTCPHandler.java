@@ -56,7 +56,8 @@ public class ClientTCPHandler implements Runnable,Serializable{
 
         }
 
-        new Thread(this::disconnectionTimer).start();
+      //  new Thread(this::disconnectionTimer).start();
+        //MESSO QUI FUNZIONAVA
     }
 
     @Override
@@ -87,6 +88,7 @@ public class ClientTCPHandler implements Runnable,Serializable{
                             serverTCP.setUserTCP(user,socket);
                             LoginResponse loginResponse = new LoginResponse(user.getNickname());
                             response = new Message(MessageType.CREATEPLAYERRESPONSE, loginResponse);
+                            new Thread(this::disconnectionTimer).start();
 
                         } catch (ExistingNicknameException | EmptyNicknameException e) {
                             ErrorMessage errorMessage = new ErrorMessage(e.getMessage());
@@ -151,6 +153,8 @@ public class ClientTCPHandler implements Runnable,Serializable{
                             ErrorMessage errorMessage = new ErrorMessage(e.getMessage());
                             response = new Message(MessageType.ERROR, errorMessage);
                             send(response);
+                        } catch (InvalidIDException e) {
+                            throw new RuntimeException(e);
                         }
                     }
                     break;
@@ -161,7 +165,8 @@ public class ClientTCPHandler implements Runnable,Serializable{
                     synchronized (gameController){
                         try {
                             this.gameController.getTilesListFromView(this.user.getNickname(), selectedTilesRequest.getChoosenTiles());
-                        } catch (WrongPlayerException | WrongListException e) {
+                        } catch (WrongPlayerException | WrongListException | IllegalValueException |
+                                 InvalidIDException | RemoteException e) {
                             ErrorMessage errorMessage = new ErrorMessage(e.getMessage());
                             response = new Message(MessageType.ERROR, errorMessage);
                             send(response);
@@ -196,8 +201,10 @@ public class ClientTCPHandler implements Runnable,Serializable{
                             send(response);
                         }
                     }
+                    break;
 
-                PONG://risposta del ping del timer
+                case PONG://risposta del ping del timer
+                    System.out.println("Received pong from " );
                     pong = true;
                 break;
 
@@ -223,15 +230,16 @@ public class ClientTCPHandler implements Runnable,Serializable{
                     pong = false;
                     PingMessage pingMessage = new PingMessage(" ");
                     ping = new Message(MessageType.PING, pingMessage);
+                    System.out.println(" is still connected, SADLY");
                     send(ping);
                 }else{
                     //disconnetti
-                    System.out.println(user.getNickname() + " disconnected");
+                    lobby.disconnect_user(user.getNickname());
+                    System.out.println(" disconnected");
                 }
             }
-
         };
-        timer.schedule(timerTask, 1000, 5000);
+        timer.schedule(timerTask, 1000, 15000);
                     /*
                     public void schedule(TimerTask task, long delay, long period)
                         task - task to be scheduled.

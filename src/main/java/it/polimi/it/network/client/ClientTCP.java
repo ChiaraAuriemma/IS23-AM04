@@ -8,7 +8,9 @@ import it.polimi.it.model.User;
 import it.polimi.it.network.message.ErrorMessage;
 import it.polimi.it.network.message.Message;
 import it.polimi.it.network.message.MessageType;
+import it.polimi.it.network.message.Payload;
 import it.polimi.it.network.message.others.PingMessage;
+import it.polimi.it.network.message.others.PongMessage;
 import it.polimi.it.network.message.others.ThisNotTheDay;
 import it.polimi.it.network.message.request.*;
 import it.polimi.it.network.message.responses.*;
@@ -273,9 +275,16 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
                     break;
 
                 case PING:
-                    Pong
-                    Message request = new Message(MessageType.SELECTEDTILES, selectedTilesRequest);
+                    System.out.println("ping received");
+                    PingMessage pingMessage= (PingMessage) response.getPayload();
+                    PongMessage pongMessage = new PongMessage(" ");
+                    Message request = new Message(MessageType.PONG, pongMessage);
+
                     send(request);
+                    System.out.println("sent pong ");
+
+                    break;
+
                 case ERROR:
                     ErrorMessage errorMessage = (ErrorMessage) response.getPayload();
                     view.printError(errorMessage.getError());
@@ -331,7 +340,6 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
 
 
     public void send(Message message){
-
         synchronized (out){
             try {
                 out.writeObject(message);

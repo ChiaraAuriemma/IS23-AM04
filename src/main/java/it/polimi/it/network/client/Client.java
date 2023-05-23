@@ -40,7 +40,5 @@ public class Client implements Serializable {
             Thread thread = new Thread(cliR);
             thread.start();
         }
-
-
     }
 }

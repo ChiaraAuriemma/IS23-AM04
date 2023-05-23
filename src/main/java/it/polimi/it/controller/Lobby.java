@@ -239,4 +239,19 @@ public class Lobby implements Serializable {
     public void setServerTCP(ServerTCP serverTCP) {
         this.serverTCP = serverTCP;
     }
+
+    public void disconnect_user(String username) {
+
+        //trovare l'istanza dell'utente e mettergli
+        //il bool della connessione a false
+
+       userList.get(userList.indexOf(userList
+                        .stream().filter(u -> Objects.equals(u.getNickname(), username))
+                        .collect(Collectors.toList()).get(0)))
+                        .setInGame(false);
+
+
+        System.out.println("Player " + username + " got disconnected - lobby \n");
+    }
+
 }

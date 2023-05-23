@@ -112,18 +112,39 @@ public class GameController implements Serializable {
      */
     void turnDealer() throws InvalidIDException, IllegalValueException, RemoteException {
 
-        if(this.endGame && this.currentPlayer == game.getNumplayers() - 1){
+        if(this.endGame && this.currentPlayer == game.getNumplayers() - 1){ //caso di fine partita
             game.getVirtualView().viewUpdate(chat.getCurrentChat());
             game.pointsFromAdjacent();
             lobby.notifyEndGame(gameID);
-        }else{
-            if(currentPlayer!=game.getNumplayers()-1) {
-                currentPlayer++;
-            }else{
-                currentPlayer=0;
+        }else{ //show must go on
+
+            currentPlayer= (currentPlayer + 1)%game.getNumplayers();
+
+            if(!playerList.get(currentPlayer).getInGame()){ //==false
+
+                if(checkIfEverybodyIsDisconnected()){
+                    //chiudi il game
+                    lobby.notifyEndGame(gameID);
+                }
+
+                while(!playerList.get(currentPlayer).getInGame()){
+                    currentPlayer= (currentPlayer + 1)%game.getNumplayers();
+                }
+
+
             }
+
             firstOperation();
         }
+    }
+
+    private boolean checkIfEverybodyIsDisconnected() {
+        for (User u: playerList){
+            if (u.getInGame()){
+                return false;
+            }
+        }
+        return true;
     }
 
 
@@ -131,10 +152,14 @@ public class GameController implements Serializable {
      * Method to get the maximum possible number of tiles that can be selected from the board
      * Calls the view to ask the payer about how many tiles the player wants to retrieve
      */
-    public void firstOperation() throws IllegalValueException, RemoteException {
-        game.getVirtualView().notifyTurnStart(playerList.get(currentPlayer));
-        this.maxTile = playerList.get(currentPlayer).maxValueOfTiles();
-        game.getVirtualView().viewUpdate(chat.getCurrentChat());
+    public void firstOperation() throws IllegalValueException, RemoteException, InvalidIDException {
+        if(!playerList.get(currentPlayer).getInGame()) {
+            turnDealer();
+        }else{
+            game.getVirtualView().notifyTurnStart(playerList.get(currentPlayer));
+            this.maxTile = playerList.get(currentPlayer).maxValueOfTiles();
+            game.getVirtualView().viewUpdate(chat.getCurrentChat());
+        }
     }
 
 
@@ -144,15 +169,20 @@ public class GameController implements Serializable {
      *  in order to highlight them on the board.
      * @param chosenNumber is the input from the user
      */
-    public void getFromViewNTiles(String user, int chosenNumber) throws WrongPlayerException, RemoteException, IllegalValueException {
-        if(user.equals(playerList.get(currentPlayer).getNickname())){
-            if(chosenNumber > this.maxTile){
-                throw new IllegalValueException("You can't take so much tiles");
-            }else {
-                this.playerList.get(currentPlayer).choosableTiles(chosenNumber);
+    public void getFromViewNTiles(String user, int chosenNumber) throws WrongPlayerException, RemoteException, IllegalValueException, InvalidIDException {
+
+        if(!playerList.get(currentPlayer).getInGame()) {
+            turnDealer();
+        }else {
+            if (user.equals(playerList.get(currentPlayer).getNickname())) {
+                if (chosenNumber > this.maxTile) {
+                    throw new IllegalValueException("You can't take so much tiles");
+                } else {
+                    this.playerList.get(currentPlayer).choosableTiles(chosenNumber);
+                }
+            } else {
+                throw new WrongPlayerException("It's not your turn");
             }
-        }else{
-            throw new WrongPlayerException("It's not your turn");
         }
     }
 
@@ -164,21 +194,26 @@ public class GameController implements Serializable {
      * @param chosenList is the list of selected tiles
      * @throws WrongTileException exception used when a wrong tile is selected
      */
-    public void getTilesListFromView(String user, List<Tile> chosenList) throws WrongPlayerException, WrongListException {
-        if(user.equals(playerList.get(currentPlayer).getNickname())) {
-            if(validTilesCheck(chosenList)){
-                currentTilesList.clear();
-                currentTilesList = new ArrayList<>(chosenList);
-                try {
-                    possibleColumnArray = playerList.stream().filter(curr -> Objects.equals(curr.getNickname(), user)).collect(Collectors.toList()).get(0).chooseSelectedTiles(currentTilesList);
-                } catch (RemoteException | WrongTileException e) {
-                    System.out.println(e.getMessage());
-                }
-            }else{
-                throw new WrongListException("You chose badly");
-            }
+    public void getTilesListFromView(String user, List<Tile> chosenList) throws WrongPlayerException, WrongListException, IllegalValueException, InvalidIDException, RemoteException {
+
+        if(!playerList.get(currentPlayer).getInGame()) {
+            turnDealer();
         }else {
-            throw new WrongPlayerException("It's not your turn");
+            if (user.equals(playerList.get(currentPlayer).getNickname())) {
+                if (validTilesCheck(chosenList)) {
+                    currentTilesList.clear();
+                    currentTilesList = new ArrayList<>(chosenList);
+                    try {
+                        possibleColumnArray = playerList.stream().filter(curr -> Objects.equals(curr.getNickname(), user)).collect(Collectors.toList()).get(0).chooseSelectedTiles(currentTilesList);
+                    } catch (RemoteException | WrongTileException e) {
+                        System.out.println(e.getMessage());
+                    }
+                } else {
+                    throw new WrongListException("You chose badly");
+                }
+            } else {
+                throw new WrongPlayerException("It's not your turn");
+            }
         }
     }
 
@@ -202,15 +237,19 @@ public class GameController implements Serializable {
      * @throws WrongTileException exception used when a wrong tile is selected
      */
     public void getColumnFromView(String user, int col) throws IllegalValueException, InvalidIDException, RemoteException {
-        if(!possibleColumnArray[col]){
-           throw new IllegalValueException("Invalid column choice");
+        if(!playerList.get(currentPlayer).getInGame()) {
+            turnDealer();
+        }else {
+            if (!possibleColumnArray[col]) {
+                throw new IllegalValueException("Invalid column choice");
+            }
+            endGame = playerList.stream().filter(curr -> Objects.equals(curr.getNickname(), user)).collect(Collectors.toList()).get(0).insertTile(col, currentTilesList);
+            game.pointCount(playerList.get(currentPlayer));
+            if (this.endGame) {
+                game.endGame(playerList.get(currentPlayer));
+            }
+            turnDealer();
         }
-        endGame = playerList.stream().filter(curr -> Objects.equals(curr.getNickname(), user)).collect(Collectors.toList()).get(0).insertTile(col, currentTilesList);
-        game.pointCount(playerList.get(currentPlayer));
-        if(this.endGame){
-            game.endGame(playerList.get(currentPlayer));
-        }
-        turnDealer();
     }
 
 
@@ -218,7 +257,7 @@ public class GameController implements Serializable {
      * Method used to initialize the parameters of the game, called before the firs turn of the game
      * Calls the view in order to display the initial board and the cards that have been extracted randomly
      */
-    public void firstTurnStarter() throws IllegalValueException, RemoteException {
+    public void firstTurnStarter() throws IllegalValueException, RemoteException, InvalidIDException {
         playerList = game.randomPlayers();
         for(int i=0; i < game.getNumplayers(); i++){
             game.drawPersonalCard();

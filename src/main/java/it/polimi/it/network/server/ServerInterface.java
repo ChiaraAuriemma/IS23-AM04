@@ -17,9 +17,9 @@ public interface ServerInterface extends Remote, Serializable {
 
     public int joinGame(String username,int id, ClientInterface client) throws RemoteException, InvalidIDException, WrongPlayerException, IllegalValueException;
 
-    public void tilesNumMessage(String username,int numTiles) throws RemoteException, WrongPlayerException, IllegalValueException;
+    public void tilesNumMessage(String username,int numTiles) throws RemoteException, WrongPlayerException, IllegalValueException, InvalidIDException;
 
-    public void selectedTiles(String username,List<Tile> choosenTiles) throws RemoteException, WrongPlayerException, WrongListException;
+    public void selectedTiles(String username,List<Tile> choosenTiles) throws RemoteException, WrongPlayerException, WrongListException, IllegalValueException, InvalidIDException;
 
     public void chooseColumn (String username,int columnNumber) throws RemoteException, InvalidIDException, IllegalValueException;
 

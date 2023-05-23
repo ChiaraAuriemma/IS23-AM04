@@ -28,10 +28,11 @@ public class VirtualView implements Serializable {
     private Game game;
 
     private HashMap<String,String > typeOfConnection;
-    private ServerTCP serverTCP; //tolgo ???
+    private ServerTCP serverTCP; //tolgo ???  NO
 
     private HashMap<String, ObjectOutputStream> userTCP;
     private RMIImplementation serverRMI; //tolgo ??
+                                            // NO, MI SERVE. Fra
     private HashMap<String, ClientInterface> userRMI;
 
     public VirtualView(){
@@ -72,10 +73,19 @@ public class VirtualView implements Serializable {
                 sendTCPMessage(userTCP.get(username), message);
 
             }else if(typeOfConnection.get(username).equals("RMI")){
-               ClientInterface clientRMI = userRMI.get(username);
-               clientRMI.setStartOrder(orderNames);
+               try{
+                   ClientInterface clientRMI = userRMI.get(username);
+                   clientRMI.setStartOrder(orderNames);
+               }catch(RemoteException e){
+                   System.out.println(e.getMessage() + " user: " + username +"/n");
+                   disconnect_user(username);
+               }
             }
         }
+    }
+
+    private void disconnect_user(String username) {
+        serverRMI.disconnect_user(username);
     }
 
 
@@ -91,11 +101,17 @@ public class VirtualView implements Serializable {
 
             } else if (typeOfConnection.get(game.getPlayer(i).getNickname()).equals("RMI")) {
 
+                try{
                 ClientInterface clientRMI = userRMI.get(username);
                 clientRMI.setNewBoard(matrix);
+                }catch(RemoteException e){
+                    System.out.println(e.getMessage() + " user: " + username +"/n");
+                    disconnect_user(username);
+                }
             }
         }
     }
+
 
     public void drawnCommonCards(CommonGoalCard card1, CommonGoalCard card2, List<Integer> commonToken1, List<Integer> commonToken2) throws RemoteException {
         for (int i=0; i < game.getNumplayers(); i++) {
@@ -109,8 +125,13 @@ public class VirtualView implements Serializable {
 
             } else if (typeOfConnection.get(username).equals("RMI")) {
 
+                try{
                 ClientInterface clientRMI = userRMI.get(username);
                 clientRMI.setNewCommon(card1,card2);
+            }catch(RemoteException e){
+                System.out.println(e.getMessage() + " user: " + username +"/n");
+                disconnect_user(username);
+            }
             }
         }
     }
@@ -127,8 +148,14 @@ public class VirtualView implements Serializable {
 
         } else if (typeOfConnection.get(username).equals("RMI")) {
 
-            ClientInterface clientRMI = userRMI.get(username);
-            clientRMI.setNewPersonal(card);
+            try{
+                ClientInterface clientRMI = userRMI.get(username);
+                clientRMI.setNewPersonal(card);
+            }catch(RemoteException e){
+                System.out.println(e.getMessage() + " user: " + username +"/n");
+                disconnect_user(username);
+            }
+
         }
     }
 
@@ -146,8 +173,14 @@ public class VirtualView implements Serializable {
 
         } else if (typeOfConnection.get(username).equals("RMI")) {
 
-            ClientInterface clientRMI = userRMI.get(username);
-            clientRMI.notifyTurnStart(maxValueofTiles);
+            try{
+                ClientInterface clientRMI = userRMI.get(username);
+                clientRMI.notifyTurnStart(maxValueofTiles);
+            }catch(RemoteException e){
+                System.out.println(e.getMessage() + " user: " + username +"/n");
+                disconnect_user(username);
+            }
+
         }
     }
 
@@ -163,8 +196,14 @@ public class VirtualView implements Serializable {
 
                 } else if (typeOfConnection.get(receiver.getNickname()).equals("RMI")) {
                     //sviluppo in RMI
-                    ClientInterface clientRMI = userRMI.get(receiver.getNickname());
-                    clientRMI.setStageToNoTurn();
+
+                    try{
+                        ClientInterface clientRMI = userRMI.get(receiver.getNickname());
+                        clientRMI.setStageToNoTurn();
+                    }catch(RemoteException e){
+                        System.out.println(e.getMessage() + " user: " + user.getNickname() +"/n");
+                        disconnect_user(user.getNickname());
+                    }
                 }
             }
         }
@@ -181,8 +220,14 @@ public class VirtualView implements Serializable {
 
         }else if(typeOfConnection.get(username).equals("RMI")){
 
-            ClientInterface clientRMI = userRMI.get(username);
-            clientRMI.takeableTiles(choosableTilesList, num);
+            try{
+                ClientInterface clientRMI = userRMI.get(username);
+                clientRMI.takeableTiles(choosableTilesList, num);
+            }catch(RemoteException e){
+                System.out.println(e.getMessage() + " user: " + username +"/n");
+                disconnect_user(username);
+            }
+
         }
     }
 
@@ -202,8 +247,14 @@ public class VirtualView implements Serializable {
         }else if(typeOfConnection.get(username).equals("RMI")){
             //sviluppo in RMI
 
-            ClientInterface clientRMI = userRMI.get(username);
-            clientRMI.askColumn(choosableColumns);
+            try{
+                ClientInterface clientRMI = userRMI.get(username);
+                clientRMI.askColumn(choosableColumns);
+            }catch(RemoteException e){
+                System.out.println(e.getMessage() + " user: " + username +"/n");
+                disconnect_user(username);
+            }
+
 
         }
     }
@@ -230,8 +281,14 @@ public class VirtualView implements Serializable {
 
             } else if (typeOfConnection.get(receiver.getNickname()).equals("RMI")) {
                 //sviluppo in RMI
-                ClientInterface clientRMI = userRMI.get(receiver.getNickname());
-                clientRMI.setNewShelfie(user.getNickname(), user.getShelfie().getShelf());
+                try{
+                    ClientInterface clientRMI = userRMI.get(receiver.getNickname());
+                    clientRMI.setNewShelfie(user.getNickname(), user.getShelfie().getShelf());
+                }catch(RemoteException e){
+                    System.out.println(e.getMessage() + " user: " + user.getNickname() +"/n");
+                    disconnect_user(user.getNickname());
+                }
+
             }
        }
     }
@@ -255,9 +312,14 @@ public class VirtualView implements Serializable {
 
             } else if (typeOfConnection.get(receiver.getNickname()).equals("RMI")) {
                 //sviluppo in RMI
+                try{
+                    ClientInterface clientRMI = userRMI.get(receiver.getNickname());
+                    clientRMI.setNewBoard(matrix);
+                }catch(RemoteException e){
+                    System.out.println(e.getMessage() + " user: " + receiver.getNickname() +"/n");
+                    disconnect_user(receiver.getNickname());
+                }
 
-                ClientInterface clientRMI = userRMI.get(receiver.getNickname());
-                clientRMI.setNewBoard(matrix);
             }
         }
     }
@@ -275,8 +337,14 @@ public class VirtualView implements Serializable {
             } else if (typeOfConnection.get(receiver.getNickname()).equals("RMI")) {
                 //sviluppo in RMI
 
-                ClientInterface clientRMI = userRMI.get(receiver.getNickname());
-                clientRMI.setNewPoints(user.getNickname(),points);
+                try{
+                    ClientInterface clientRMI = userRMI.get(receiver.getNickname());
+                    clientRMI.setNewPoints(user.getNickname(),points);
+                }catch(RemoteException e){
+                    System.out.println(e.getMessage() + " user: " + receiver.getNickname() +"/n");
+                    disconnect_user(receiver.getNickname());
+                }
+
             }
         }
     }
@@ -294,8 +362,13 @@ public class VirtualView implements Serializable {
             } else if (typeOfConnection.get(receiver.getNickname()).equals("RMI")) {
                 //sviluppo in RMI
 
-                ClientInterface clientRMI = userRMI.get(receiver.getNickname());
-                clientRMI.setEndToken(user.getNickname());
+                try{
+                    ClientInterface clientRMI = userRMI.get(receiver.getNickname());
+                    clientRMI.setEndToken(user.getNickname());
+                }catch(RemoteException e){
+                    System.out.println(e.getMessage() + " user: " + receiver.getNickname() +"/n");
+                    disconnect_user(receiver.getNickname());
+                }
             }
         }
     }
@@ -318,8 +391,14 @@ public class VirtualView implements Serializable {
 
             } else if (typeOfConnection.get(receiver.getNickname()).equals("RMI")) {
                 //sviluppo in RMI
-                ClientInterface clientRMI = userRMI.get(receiver.getNickname());
-                clientRMI.setFinalPoints(usernames, points);
+                try{
+                    ClientInterface clientRMI = userRMI.get(receiver.getNickname());
+                    clientRMI.setFinalPoints(usernames, points);
+                }catch(RemoteException e){
+                    System.out.println(e.getMessage() + " user: " + receiver.getNickname() +"/n");
+                    disconnect_user(receiver.getNickname());
+                }
+
             }
         }
     }
@@ -327,24 +406,34 @@ public class VirtualView implements Serializable {
     public void viewUpdate(List<String> currentChat) throws RemoteException {
         for (int i=0; i < game.getNumplayers(); i++) {
             User  receiver = game.getPlayer(i);
+            if(receiver.getInGame()){
 
-            if (typeOfConnection.get(receiver.getNickname()).equals("TCP")) {
 
-                sendChatUpdate(currentChat);
-                /*ChatUpdate chatUpdate = new ChatUpdate(currentChat);
-                Message messageChat = new Message(MessageType.CHATUPDATE, chatUpdate);
-                sendTCPMessage(userTCP.get(receiver.getNickname()), messageChat);*/
 
-                ViewUpdate viewUpdate = new ViewUpdate();
-                Message message = new Message(MessageType.UPDATEVIEW,viewUpdate);
-                sendTCPMessage(userTCP.get(receiver.getNickname()), message);
+                if (typeOfConnection.get(receiver.getNickname()).equals("TCP")) {
 
-            } else if (typeOfConnection.get(receiver.getNickname()).equals("RMI")) {
-                //sviluppo in RMI
-                ClientInterface clientRMI = userRMI.get(receiver.getNickname());
-                ///////////////////////////////////////////////////////metodo su clientRMI e client Interface da  chiamare
-                clientRMI.updateChat(currentChat);
-                clientRMI.updateView();
+                    sendChatUpdate(currentChat);
+                    /*ChatUpdate chatUpdate = new ChatUpdate(currentChat);
+                    Message messageChat = new Message(MessageType.CHATUPDATE, chatUpdate);
+                    sendTCPMessage(userTCP.get(receiver.getNickname()), messageChat);*/
+
+                    ViewUpdate viewUpdate = new ViewUpdate();
+                    Message message = new Message(MessageType.UPDATEVIEW,viewUpdate);
+                    sendTCPMessage(userTCP.get(receiver.getNickname()), message);
+
+                } else if (typeOfConnection.get(receiver.getNickname()).equals("RMI")) {
+                    //sviluppo in RMI
+                    try{
+                        ClientInterface clientRMI = userRMI.get(receiver.getNickname());
+
+                    ///////////////////////////////////////////////////////metodo su clientRMI e client Interface da  chiamare
+                        clientRMI.updateChat(currentChat);
+                        clientRMI.updateView();
+                    }catch(RemoteException e){
+                        System.out.println(e.getMessage() + " user: " + receiver.getNickname() +"/n");
+                        disconnect_user(receiver.getNickname());
+                    }
+                }
             }
         }
     }
@@ -393,33 +482,46 @@ public class VirtualView implements Serializable {
     public void sendChatUpdate(List<String> currentChat) throws RemoteException {
         for (int i=0; i < game.getNumplayers(); i++) {
             User  receiver = game.getPlayer(i);
+            if(receiver.getInGame()){
+                if (typeOfConnection.get(receiver.getNickname()).equals("TCP")) {
+                    ChatUpdate chatUpdate = new ChatUpdate(currentChat);
+                    Message messageChat = new Message(MessageType.CHATUPDATE, chatUpdate);
+                    sendTCPMessage(userTCP.get(receiver.getNickname()), messageChat);
 
-            if (typeOfConnection.get(receiver.getNickname()).equals("TCP")) {
-                ChatUpdate chatUpdate = new ChatUpdate(currentChat);
-                Message messageChat = new Message(MessageType.CHATUPDATE, chatUpdate);
-                sendTCPMessage(userTCP.get(receiver.getNickname()), messageChat);
 
-
-            } else if (typeOfConnection.get(receiver.getNickname()).equals("RMI")) {
-                ClientInterface clientRMI = userRMI.get(receiver.getNickname());
-                clientRMI.updateChat(currentChat);
+                } else if (typeOfConnection.get(receiver.getNickname()).equals("RMI")) {
+                    try{
+                        ClientInterface clientRMI = userRMI.get(receiver.getNickname());
+                        clientRMI.updateChat(currentChat);
+                    }catch(RemoteException e){
+                        System.out.println(e.getMessage() + " user: " + receiver.getNickname() +"/n");
+                        disconnect_user(receiver.getNickname());
+                    }
+                }
             }
         }
     }
 
     public void boardRefill() throws RemoteException {
         for (int i=0; i < game.getNumplayers(); i++) {
-            User  receiver = game.getPlayer(i);
+            User receiver = game.getPlayer(i);
+            if (receiver.getInGame()) {
 
-            if (typeOfConnection.get(receiver.getNickname()).equals("TCP")) {
-                BoardRefill boardRefill = new BoardRefill();
-                Message message = new Message(MessageType.BOARDREFILL, boardRefill);
-                sendTCPMessage(userTCP.get(receiver.getNickname()), message);
+                if (typeOfConnection.get(receiver.getNickname()).equals("TCP")) {
+                    BoardRefill boardRefill = new BoardRefill();
+                    Message message = new Message(MessageType.BOARDREFILL, boardRefill);
+                    sendTCPMessage(userTCP.get(receiver.getNickname()), message);
 
 
-            } else if (typeOfConnection.get(receiver.getNickname()).equals("RMI")) {
-                ClientInterface clientRMI = userRMI.get(receiver.getNickname());
-                clientRMI.boardRefill();
+                } else if (typeOfConnection.get(receiver.getNickname()).equals("RMI")) {
+                    try {
+                        ClientInterface clientRMI = userRMI.get(receiver.getNickname());
+                        clientRMI.boardRefill();
+                    } catch (RemoteException e) {
+                        System.out.println(e.getMessage() + " user: " + receiver.getNickname() + "/n");
+                        disconnect_user(receiver.getNickname());
+                    }
+                }
             }
         }
     }

@@ -141,6 +141,8 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
         } catch (IllegalValueException | WrongPlayerException e) {
             //view : notifico alla view che il numero di tiles indicato non è valido
             view.askNumTilesAgain();
+        } catch (InvalidIDException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -152,6 +154,8 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
             buffer.setStage(TurnStages.CHOOSECOLUMN);
         } catch (WrongPlayerException | WrongListException e) {
             view.askTilesAgain();
+        } catch (IllegalValueException | InvalidIDException e) {
+            throw new RuntimeException(e);
         }
     }
 
