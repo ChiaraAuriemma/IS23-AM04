@@ -56,7 +56,7 @@ public class ClientTCPHandler implements Runnable,Serializable{
 
         }
 
-        new Thread(this::disconnectionTimer).start();
+        //new Thread(this::disconnectionTimer).start();
     }
 
     @Override
