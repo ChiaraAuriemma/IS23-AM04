@@ -88,7 +88,6 @@ public class ClientTCPHandler implements Runnable,Serializable{
                             serverTCP.setUserTCP(user,socket);
                             LoginResponse loginResponse = new LoginResponse(user.getNickname());
                             response = new Message(MessageType.CREATEPLAYERRESPONSE, loginResponse);
-                            new Thread(this::disconnectionTimer).start();
 
                         } catch (ExistingNicknameException | EmptyNicknameException e) {
                             ErrorMessage errorMessage = new ErrorMessage(e.getMessage());
@@ -165,8 +164,9 @@ public class ClientTCPHandler implements Runnable,Serializable{
                     synchronized (gameController){
                         try {
                             this.gameController.getTilesListFromView(this.user.getNickname(), selectedTilesRequest.getChoosenTiles());
-                        } catch (WrongPlayerException | WrongListException | IllegalValueException |
-                                 InvalidIDException | RemoteException e) {
+
+                        } catch (WrongPlayerException | WrongListException | RemoteException | IllegalValueException | InvalidIDException e) {
+
                             ErrorMessage errorMessage = new ErrorMessage(e.getMessage());
                             response = new Message(MessageType.ERROR, errorMessage);
                             send(response);

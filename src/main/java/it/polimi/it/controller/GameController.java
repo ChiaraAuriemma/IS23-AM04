@@ -118,27 +118,31 @@ public class GameController implements Serializable {
             lobby.notifyEndGame(gameID);
         }else{ //show must go on
 
+            System.out.println("turndealer");
             currentPlayer= (currentPlayer + 1)%game.getNumplayers();
+            System.out.println("turndealer: player " + currentPlayer + "\n");
+
 
             if(!playerList.get(currentPlayer).getInGame()){ //==false
 
-                if(checkIfEverybodyIsDisconnected()){
+                if(checkIfEverybodyIsDisconnected()){//-> gli dai false se c'è ancora qualcuno
                     //chiudi il game
                     lobby.notifyEndGame(gameID);
+                    return;
+                }else{
+
+                    while(!playerList.get(currentPlayer).getInGame()){
+                        currentPlayer= (currentPlayer + 1)%game.getNumplayers();
+                        System.out.println("turndealer - while: player " + currentPlayer + "\n");
+                    }
                 }
-
-                while(!playerList.get(currentPlayer).getInGame()){
-                    currentPlayer= (currentPlayer + 1)%game.getNumplayers();
-                }
-
-
             }
 
             firstOperation();
         }
     }
 
-    private boolean checkIfEverybodyIsDisconnected() {
+    private boolean checkIfEverybodyIsDisconnected() {//se c'è ancora qualcuno online metto false
         for (User u: playerList){
             if (u.getInGame()){
                 return false;

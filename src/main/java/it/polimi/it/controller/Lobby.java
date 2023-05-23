@@ -252,6 +252,7 @@ public class Lobby implements Serializable {
 
 
         System.out.println("Player " + username + " got disconnected - lobby \n");
+
     }
 
 }

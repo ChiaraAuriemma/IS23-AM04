@@ -201,8 +201,8 @@ public class VirtualView implements Serializable {
                         ClientInterface clientRMI = userRMI.get(receiver.getNickname());
                         clientRMI.setStageToNoTurn();
                     }catch(RemoteException e){
-                        System.out.println(e.getMessage() + " user: " + user.getNickname() +"/n");
-                        disconnect_user(user.getNickname());
+                        System.out.println(e.getMessage() + " user: " + receiver.getNickname() +"/n");
+                        disconnect_user(receiver.getNickname());
                     }
                 }
             }
@@ -285,8 +285,8 @@ public class VirtualView implements Serializable {
                     ClientInterface clientRMI = userRMI.get(receiver.getNickname());
                     clientRMI.setNewShelfie(user.getNickname(), user.getShelfie().getShelf());
                 }catch(RemoteException e){
-                    System.out.println(e.getMessage() + " user: " + user.getNickname() +"/n");
-                    disconnect_user(user.getNickname());
+                    System.out.println(e.getMessage() + " user: " + receiver.getNickname() +"/n");
+                    disconnect_user(receiver.getNickname());
                 }
 
             }
