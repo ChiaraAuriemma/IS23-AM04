@@ -85,7 +85,7 @@ public class Lobby implements Serializable {
      */
     public User createUser(String  nickname) throws ExistingNicknameException, EmptyNicknameException, RemoteException {
         if(nickname == null || nickname.length() ==0){
-            throw new EmptyNicknameException("Your nickname is too short");
+            throw new EmptyNicknameException("You have to write something");
         }else{
             if(userList.stream()
                         .map(currentUser -> currentUser.getNickname())
@@ -245,13 +245,15 @@ public class Lobby implements Serializable {
         //trovare l'istanza dell'utente e mettergli
         //il bool della connessione a false
 
+
+        //se il player è già in partita chiamo il turndealer???
+
        userList.get(userList.indexOf(userList
                         .stream().filter(u -> Objects.equals(u.getNickname(), username))
                         .collect(Collectors.toList()).get(0)))
                         .setInGame(false);
 
-
-        System.out.println("Player " + username + " got disconnected - lobby \n");
+       System.out.println("Player " + username + " got disconnected - lobby \n");
 
     }
 

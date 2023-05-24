@@ -89,7 +89,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
             //view : passo alla schermata con create e join game
         } catch (ExistingNicknameException | EmptyNicknameException e) {
             //view : notifico la view che deve riproporre l'inserimento del nickname con l'errore in rosso
-            view.askNicknameAgain();
+            view.askNicknameAgain(e.getMessage());
         }
 
     }
@@ -163,7 +163,6 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
     public void chooseColumn(int numOfColum) throws RemoteException {
         try {
             sr.chooseColumn(this.nickname, numOfColum);
-            buffer.setStage(TurnStages.NOTURN);
             System.out.println("End of your turn\n");
         } catch (InvalidIDException | IllegalValueException e) {
             view.askColumnAgain();

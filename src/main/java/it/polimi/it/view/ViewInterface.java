@@ -90,7 +90,7 @@ public interface ViewInterface {
 
     void askColumn();
 
-    void askNicknameAgain();
+    void askNicknameAgain(String errorMessage);
 
     void askNumPlayerAgain();
 

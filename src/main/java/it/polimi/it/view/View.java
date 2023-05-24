@@ -9,6 +9,7 @@ import it.polimi.it.model.Tiles.Tile;
 import it.polimi.it.model.User;
 
 import java.io.Serializable;
+import java.rmi.RemoteException;
 import java.util.*;
 
 import static java.lang.System.out;
@@ -433,8 +434,8 @@ public class View implements ViewInterface, Serializable {
     }
 
 
-    public void askNicknameAgain() {
-        out.println("This nickname is already taken, try with another one! ");
+    public void askNicknameAgain(String errorMessage) {
+        out.println(errorMessage);
     }
 
 

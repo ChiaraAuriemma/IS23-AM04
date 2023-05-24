@@ -141,7 +141,7 @@ public class GuiMain implements ViewInterface {
     }
 
     @Override
-    public void askNicknameAgain() {
+    public void askNicknameAgain(String errorMessage) {
 
     }
 

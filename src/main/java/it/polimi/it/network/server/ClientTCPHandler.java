@@ -56,7 +56,7 @@ public class ClientTCPHandler implements Runnable,Serializable{
 
         }
 
-      //  new Thread(this::disconnectionTimer).start();
+        new Thread(this::disconnectionTimer).start();
         //MESSO QUI FUNZIONAVA
     }
 
@@ -69,7 +69,6 @@ public class ClientTCPHandler implements Runnable,Serializable{
 
 
         while(true) {//CAMBIAMO : se è ancora connesso rimani nel while
-
 
 
             try {
@@ -89,13 +88,10 @@ public class ClientTCPHandler implements Runnable,Serializable{
                             LoginResponse loginResponse = new LoginResponse(user.getNickname());
                             response = new Message(MessageType.CREATEPLAYERRESPONSE, loginResponse);
 
-                        } catch (ExistingNicknameException | EmptyNicknameException e) {
+                        } catch (ExistingNicknameException | EmptyNicknameException | RemoteException e) {
                             ErrorMessage errorMessage = new ErrorMessage(e.getMessage());
                             response = new Message(MessageType.ERROR, errorMessage);
 
-                        } catch (RemoteException e) {
-                            ErrorMessage errorMessage = new ErrorMessage(e.getMessage());
-                            response = new Message(MessageType.ERROR, errorMessage);
                         }
                     }
 
@@ -134,7 +130,6 @@ public class ClientTCPHandler implements Runnable,Serializable{
                             ErrorMessage errorMessage = new ErrorMessage(e.getMessage());
                             response = new Message(MessageType.ERROR, errorMessage);
 
-
                         }
 
                     }
@@ -147,13 +142,11 @@ public class ClientTCPHandler implements Runnable,Serializable{
                     synchronized (gameController){
                         try {
                             this.gameController.getFromViewNTiles(this.user.getNickname(),tilesNumRequest.getNumTiles());
-                        } catch (WrongPlayerException | RemoteException | IllegalValueException e) {
+                        } catch (WrongPlayerException | RemoteException | IllegalValueException | InvalidIDException e) {
 
                             ErrorMessage errorMessage = new ErrorMessage(e.getMessage());
                             response = new Message(MessageType.ERROR, errorMessage);
                             send(response);
-                        } catch (InvalidIDException e) {
-                            throw new RuntimeException(e);
                         }
                     }
                     break;
@@ -180,12 +173,10 @@ public class ClientTCPHandler implements Runnable,Serializable{
                     synchronized (gameController){
                         try {
                             this.gameController.getColumnFromView(this.user.getNickname(), chooseColumnRequest.getColumnNumber());
-                        } catch (InvalidIDException e) {
+                        } catch (InvalidIDException | IllegalValueException | RemoteException e) {
                             ErrorMessage errorMessage = new ErrorMessage(e.getMessage());
                             response = new Message(MessageType.ERROR, errorMessage);
                             send(response);
-                        } catch (IllegalValueException | RemoteException e) {
-                            System.out.println("ERRORE");
                         }
                     }
                     break;
@@ -233,8 +224,18 @@ public class ClientTCPHandler implements Runnable,Serializable{
                     System.out.println(" is still connected, SADLY");
                     send(ping);
                 }else{
+                    //se il player è già in partita chiamo il turndealer
+                    if(gameController != null && user.getInGame()){
+                        try {
+                            gameController.turnDealer();
+                        } catch (InvalidIDException | IllegalValueException | RemoteException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
                     //disconnetti
                     lobby.disconnect_user(user.getNickname());
+
+
                     System.out.println(" disconnected");
                 }
             }

@@ -103,157 +103,157 @@ public class ClientInputReader implements Runnable, Serializable{
                         view.setThisNick(nickname);
                         client.login(nickname);
                     } else {
-                       view.printError("There's a time and place for everything, but not now. 1");
+                       view.printError("There's a time and place for everything, but not now.");
                     } break;
 
-                    case "create_game":// create_game>>4
-                        if (stage == TurnStages.CREATEorJOIN) {
-                            if(!action.matches("-?\\d+")){
-                                System.out.println("Invalid number");
-                                return;
-                            }
-                            int numPlayers = Integer.parseInt(action);
-                            client.createGame(numPlayers);
-                        } else {
-                            view.printError("There's a time and place for everything, but not now. 2");
-                        }
-                        break;
-
-                    case "join_game": //join_game>>gameID
+                case "create_game":// create_game>>4
+                    if (stage == TurnStages.CREATEorJOIN) {
                         if(!action.matches("-?\\d+")){
                             System.out.println("Invalid number");
                             return;
                         }
-                        if (stage == TurnStages.CREATEorJOIN) {
-                            int gameID = Integer.parseInt(action);
-                            client.joinGame(gameID);
-                        } else {
-                            view.printError("There's a time and place for everything, but not now. 3");
-                        }
-                        break;
+                        int numPlayers = Integer.parseInt(action);
+                        client.createGame(numPlayers);
+                    } else {
+                        view.printError("There's a time and place for everything, but not now.");
+                    }
+                    break;
+
+                case "join_game": //join_game>>gameID
+                    if(!action.matches("-?\\d+")){
+                        System.out.println("Invalid number");
+                        return;
+                    }
+                    if (stage == TurnStages.CREATEorJOIN) {
+                        int gameID = Integer.parseInt(action);
+                        client.joinGame(gameID);
+                    } else {
+                        view.printError("There's a time and place for everything, but not now.");
+                    }
+                    break;
 
 
 
-                    case "chat": //chat>>Write here your message...
-                        if (stage == TurnStages.NOTURN || stage == TurnStages.TILESNUM || stage == TurnStages.CHOOSETILES || stage == TurnStages.CHOOSECOLUMN) {
-                            String chatMessage = action;
-                            chatMessage = lastUsedNickname + ": " + chatMessage;
-                            view.printError("Sending...\n");
-                            client.sendChatMessage(chatMessage);
-                        }else {
-                            view.printError("There's a time and place for everything, but not now. 3");
-                        }
-                        break;
+                case "chat": //chat>>Write here your message...
+                    if (stage == TurnStages.NOTURN || stage == TurnStages.TILESNUM || stage == TurnStages.CHOOSETILES || stage == TurnStages.CHOOSECOLUMN) {
+                        String chatMessage = action;
+                        chatMessage = lastUsedNickname + ": " + chatMessage;
+                        view.printError("Sending...\n");
+                        client.sendChatMessage(chatMessage);
+                    }else {
+                        view.printError("There's a time and place for everything, but not now.");
+                    }
+                    break;
 
 
-                    case "num_tiles"://num_tiles>> number of tiles you want to get from the board
-                        if(!action.matches("-?\\d+")){
-                            System.out.println("Invalid number");
+                case "num_tiles"://num_tiles>> number of tiles you want to get from the board
+                    if(!action.matches("-?\\d+")){
+                        System.out.println("Invalid number");
+                        return;
+                    }
+                    if (stage == TurnStages.TILESNUM) {
+                        int numTiles = Integer.parseInt(action);
+                        client.tilesNumMessage(numTiles);
+                    } else {
+                        view.printError("There's a time and place for everything, but not now.");
+                    }
+                    break;
+
+                case "take_tiles": // tiles; format TBD (0,2);(1,3);(4,7)
+                    if (stage == TurnStages.CHOOSETILES) {
+
+                        if(!action.matches("^[\\d,;()]+$")){
+                            System.out.println("Invalid tiles format");
                             return;
                         }
-                        if (stage == TurnStages.TILESNUM) {
-                            int numTiles = Integer.parseInt(action);
-                            client.tilesNumMessage(numTiles);
-                        } else {
-                            view.printError("There's a time and place for everything, but not now. 4");
+
+                        String chosenTiles = action;
+
+
+                        //( 0 , 2 ) ; ( 1 , 3 )  ;  (  4  ,  7  )
+                        //0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16
+                        // -> 1,3 7,9 13,15
+
+                        // tiles; format TBD (0,2);(1,3);(4,7) -> lunghezza <6-> 1 tile; <12->2tiles; else->3tiles
+                        //client.getView(); (IMPORTANTE)
+                        ArrayList<Tile> chosenTilesList = new ArrayList<>();
+                        chosenTilesList.clear();
+                        if(action.length() < 4){
+                            System.out.println("Check the message format...\n");
+                            return;
                         }
-                        break;
+                        char[] chosen = chosenTiles.toCharArray();
 
-                    case "take_tiles": // tiles; format TBD (0,2);(1,3);(4,7)
-                        if (stage == TurnStages.CHOOSETILES) {
+                        if(!Character.isDigit(chosen[1]) || !Character.isDigit(chosen[3])){
+                            System.out.println("Invalid tiles format");
+                            return;
+                        }
 
-                            if(!action.matches("^[\\d,;()]+$")){
+                        int row = Character.getNumericValue(chosen[1]);
+                        int col = Character.getNumericValue(chosen[3]);
+                        Tile t = new Tile(row, col, PossibleColors.valueOf(view.getTileColor(row, col)));
+                        chosenTilesList.add(t);
+
+                        if (chosenTiles.length() > 6) {
+                            if(!Character.isDigit(chosen[7]) || !Character.isDigit(chosen[9])){
                                 System.out.println("Invalid tiles format");
                                 return;
                             }
 
-                            String chosenTiles = action;
+                            row = Character.getNumericValue(chosen[7]);
+                            col = Character.getNumericValue(chosen[9]);
+                            Tile t2 = new Tile(row, col, PossibleColors.valueOf(view.getTileColor(row, col)));
+                            chosenTilesList.add(t2);
 
-
-                            //( 0 , 2 ) ; ( 1 , 3 )  ;  (  4  ,  7  )
-                            //0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16
-                            // -> 1,3 7,9 13,15
-
-                            // tiles; format TBD (0,2);(1,3);(4,7) -> lunghezza <6-> 1 tile; <12->2tiles; else->3tiles
-                            //client.getView(); (IMPORTANTE)
-                            ArrayList<Tile> chosenTilesList = new ArrayList<>();
-                            chosenTilesList.clear();
-                            if(action.length() < 4){
-                                System.out.println("Check the message format...\n");
-                                return;
-                            }
-                            char[] chosen = chosenTiles.toCharArray();
-
-                            if(!Character.isDigit(chosen[1]) || !Character.isDigit(chosen[3])){
-                                System.out.println("Invalid tiles format");
-                                return;
-                            }
-
-                            int row = Character.getNumericValue(chosen[1]);
-                            int col = Character.getNumericValue(chosen[3]);
-                            Tile t = new Tile(row, col, PossibleColors.valueOf(view.getTileColor(row, col)));
-                            chosenTilesList.add(t);
-
-                            if (chosenTiles.length() > 6) {
-                                if(!Character.isDigit(chosen[7]) || !Character.isDigit(chosen[9])){
+                            if (chosenTiles.length() > 12) {
+                                if(!Character.isDigit(chosen[13]) || !Character.isDigit(chosen[15])){
                                     System.out.println("Invalid tiles format");
                                     return;
                                 }
 
-                                row = Character.getNumericValue(chosen[7]);
-                                col = Character.getNumericValue(chosen[9]);
-                                Tile t2 = new Tile(row, col, PossibleColors.valueOf(view.getTileColor(row, col)));
-                                chosenTilesList.add(t2);
-
-                                if (chosenTiles.length() > 12) {
-                                    if(!Character.isDigit(chosen[13]) || !Character.isDigit(chosen[15])){
-                                        System.out.println("Invalid tiles format");
-                                        return;
-                                    }
-
-                                    row = Character.getNumericValue(chosen[13]);
-                                    col = Character.getNumericValue(chosen[15]);
-                                    Tile t3 = new Tile(row, col, PossibleColors.valueOf(view.getTileColor(row, col)));
-                                    chosenTilesList.add(t3);
-                                }
+                                row = Character.getNumericValue(chosen[13]);
+                                col = Character.getNumericValue(chosen[15]);
+                                Tile t3 = new Tile(row, col, PossibleColors.valueOf(view.getTileColor(row, col)));
+                                chosenTilesList.add(t3);
                             }
-                            for(Tile tile: chosenTilesList){
-                                view.printTile(tile.getColor(), tile.getRow(), tile.getColumn());
-                                view.printThings("; ");
-                            }
-                            view.printThings("\nWaiting for check...\n");
-                            client.selectedTiles(chosenTilesList);
-                        } else {
-                            view.printError("There's a time and place for everything, but not now. 5");
                         }
-                        break;
-
-
-                    case "choose_column": //choose_column>>number of the column; TBD:le colonne partono da 0 o da 1????
-                        if(!action.matches("-?\\d+")){
-                            System.out.println("Invalid number");
-                            return;
+                        for(Tile tile: chosenTilesList){
+                            view.printTile(tile.getColor(), tile.getRow(), tile.getColumn());
+                            view.printThings("; ");
                         }
-                        if (stage == TurnStages.CHOOSECOLUMN) {
-                            int column = Integer.parseInt(action);
-                            client.chooseColumn(column);
-                        } else {
-                            view.printError("There's a time and place for everything, but not now. 6");
-                        }
-                        break;
+                        view.printThings("\nWaiting for check...\n");
+                        client.selectedTiles(chosenTilesList);
+                    } else {
+                        view.printError("There's a time and place for everything, but not now.");
+                    }
+                    break;
 
 
-                    case "help":
-                        view.printCommands();
-                        break;
+                case "choose_column": //choose_column>>number of the column; TBD:le colonne partono da 0 o da 1????
+                    if(!action.matches("-?\\d+")){
+                        System.out.println("Invalid number");
+                        return;
+                    }
+                    if (stage == TurnStages.CHOOSECOLUMN) {
+                        int column = Integer.parseInt(action);
+                        client.chooseColumn(column);
+                    } else {
+                        view.printError("There's a time and place for everything, but not now.");
+                    }
+                    break;
 
 
-                    default:
-                        System.out.println("Error! No valid message type detected!");
-                }
-            }else{
-            System.out.println("You didn't write anything");
-        }
+                case "help":
+                    view.printCommands();
+                    break;
+
+
+                default:
+                    System.out.println("Error! No valid message type detected!");
+            }
+        }else{
+        System.out.println("You didn't write anything");
+    }
 
     }
 

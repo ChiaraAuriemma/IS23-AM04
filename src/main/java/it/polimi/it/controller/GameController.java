@@ -110,7 +110,7 @@ public class GameController implements Serializable {
      * @throws IllegalValueException exception used when an illegal value is given in input
      * @throws InvalidIDException exception used when the game ID is wrong or non-existent
      */
-    void turnDealer() throws InvalidIDException, IllegalValueException, RemoteException {
+    public void turnDealer() throws InvalidIDException, IllegalValueException, RemoteException {
 
         if(this.endGame && this.currentPlayer == game.getNumplayers() - 1){ //caso di fine partita
             game.getVirtualView().viewUpdate(chat.getCurrentChat());
@@ -119,7 +119,7 @@ public class GameController implements Serializable {
         }else{ //show must go on
 
             System.out.println("turndealer");
-            currentPlayer= (currentPlayer + 1)%game.getNumplayers();
+            currentPlayer= (currentPlayer + 1) % game.getNumplayers();
             System.out.println("turndealer: player " + currentPlayer + "\n");
 
 
@@ -132,7 +132,7 @@ public class GameController implements Serializable {
                 }else{
 
                     while(!playerList.get(currentPlayer).getInGame()){
-                        currentPlayer= (currentPlayer + 1)%game.getNumplayers();
+                        currentPlayer= (currentPlayer + 1) % game.getNumplayers();
                         System.out.println("turndealer - while: player " + currentPlayer + "\n");
                     }
                 }
