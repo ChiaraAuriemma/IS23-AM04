@@ -352,4 +352,7 @@ public class GameController implements Serializable {
         return playerList.indexOf(user);
     }
 
+    public User getUser(String nickname){
+        return playerList.stream().filter(user -> user.getNickname().equals(nickname)).collect(Collectors.toList()).get(0);
+    }
 }

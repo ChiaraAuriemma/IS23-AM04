@@ -204,7 +204,7 @@ public class ClientTCPHandler implements Runnable,Serializable{
                     System.out.println("User sent an illegal type of message");
     */
             }
-            //timer.cancel();
+
 
             //trovo dove chiudere il socket e gli input e output stream
         }
@@ -217,7 +217,7 @@ public class ClientTCPHandler implements Runnable,Serializable{
         TimerTask timerTask = new TimerTask() {
             @Override
             public void run() {
-                if(pong == true){
+                if(pong){
                     pong = false;
                     PingMessage pingMessage = new PingMessage(" ");
                     ping = new Message(MessageType.PING, pingMessage);
@@ -235,10 +235,11 @@ public class ClientTCPHandler implements Runnable,Serializable{
                             }
                         }
 
-                        //disconnetti
+                        //disconnetti dal game
                         lobby.disconnect_user(user.getNickname());
 
                         System.out.println(" disconnected");
+                        timer.cancel();
                     }
 
                     //TODO:

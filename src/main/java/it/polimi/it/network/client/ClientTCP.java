@@ -411,6 +411,11 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
         buffer.setStage(TurnStages.LOGIN);
     }
 
+    @Override
+    public void ping() throws RemoteException {
+
+    }
+
 
     /*public void networkReader(){
         while(true){//sostituisco con while connected

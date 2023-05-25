@@ -253,6 +253,11 @@ public class Lobby implements Serializable {
                         .collect(Collectors.toList()).get(0)))
                         .setInGame(false);
 
+        userList.get(userList.indexOf(userList
+                .stream().filter(u -> Objects.equals(u.getNickname(), username))
+                .collect(Collectors.toList()).get(0)))
+                .getGame().getVirtualView().insertDisconnection(username);
+
        System.out.println("Player " + username + " got disconnected - lobby \n");
 
     }

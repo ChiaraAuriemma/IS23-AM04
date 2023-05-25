@@ -28,7 +28,7 @@ public class RMIImplementation extends UnicastRemoteObject implements ServerInte
 
     private HashMap<String, Boolean> pongs;
     private HashMap<String, ClientInterface> userRMI;
-    private HashMap<String, Timer> timers;
+
     private boolean first = false;
 
     private Registry registry;
@@ -36,7 +36,7 @@ public class RMIImplementation extends UnicastRemoteObject implements ServerInte
         this.userGame = new HashMap<>();
         this.userRMI = new HashMap<>();
         this.pongs = new HashMap<>();
-        this.timers = new HashMap<>();
+        new Thread(this::disconnectionTimer).start();
     }
 
     public void startServer(int port) throws RemoteException {
@@ -67,7 +67,6 @@ public class RMIImplementation extends UnicastRemoteObject implements ServerInte
         }
         userRMI.put(user.getNickname(), cr);
         pongs.put(user.getNickname(), true);
-        timers.put(user.getNickname(), new Timer());
         return user.getNickname();
     }
 
@@ -183,6 +182,52 @@ public class RMIImplementation extends UnicastRemoteObject implements ServerInte
                      //   period - time in milliseconds between successive task executions.   200000->20 secondi
 
     }*/
+
+    private void disconnectionTimer(){
+        timer = new Timer();
+        TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                for(String user: pongs.keySet()){
+
+                    if(pongs.get(user)){
+                        try{
+                            ClientInterface clientRMI = userRMI.get(user);
+                            clientRMI.ping();
+                            System.out.println(" is still connected, SADLY");
+                        } catch (RemoteException e) {
+                            pongs.put(user, false);
+                            //se il player è già in partita chiamo lo disconnetto
+                            if(userGame.containsKey(user) && userGame.get(user).getUser(user).getInGame()){
+
+                                if(userGame.get(user).getCurrentPlayer() == userGame.get(user).getPlayerNumber(userGame.get(user).getUser(user))){
+
+                                    try {
+                                        userGame.get(user).turnDealer();
+                                    } catch (InvalidIDException | IllegalValueException | RemoteException ex) {
+                                        throw new RuntimeException(ex);
+                                    }
+                                }
+                                //disconnetti dal game
+                                lobby.disconnect_user(user);
+                                System.out.println(" disconnected");
+                            }
+                        }
+                    }
+
+                    //TODO:
+                    //gestisco caso in cui il player è in lobby e si disconnette (forse non c'è bisogno... non si userà quel nickname e basta )
+                }
+            }
+        };
+        timer.schedule(timerTask, 1000, 15000);
+                    /*
+                    public void schedule(TimerTask task, long delay, long period)
+                        task - task to be scheduled.
+                        delay - delay in milliseconds before task is to be executed.        1000->1secondo
+                        period - time in milliseconds between successive task executions.   200000->20 secondi
+                     */
+    }
 
 
 }

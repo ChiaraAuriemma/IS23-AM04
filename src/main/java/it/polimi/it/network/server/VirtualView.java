@@ -34,11 +34,13 @@ public class VirtualView implements Serializable {
     private RMIImplementation serverRMI; //tolgo ??
                                             // NO, MI SERVE. Fra
     private HashMap<String, ClientInterface> userRMI;
+    private List<String> disconn_users ;
 
     public VirtualView(){
         typeOfConnection = new HashMap<>();
         userTCP = new HashMap<>();
         userRMI = new HashMap<>();
+        disconn_users = new ArrayList<>();
     }
 
     public void setGame(Game game){
@@ -85,7 +87,12 @@ public class VirtualView implements Serializable {
     }
 
     private void disconnect_user(String username) {
-        serverRMI.disconnect_user(username);
+        if (!disconn_users.contains(username))
+            serverRMI.disconnect_user(username);
+    }
+
+    public void insertDisconnection (String username){
+        disconn_users.add(username);
     }
 
 
@@ -93,7 +100,7 @@ public class VirtualView implements Serializable {
         for (int i=0; i < game.getNumplayers(); i++) {
             String username = game.getPlayer(i).getNickname();
 
-            if (typeOfConnection.get(username).equals("TCP")) {
+            if (typeOfConnection.get(username).equals("TCP") && !disconn_users.contains(username)) {
 
                 InitialMatrixMessage initialMatrixMessage = new InitialMatrixMessage(matrix);
                 Message message = new Message(MessageType.INITIALMATRIX, initialMatrixMessage);
@@ -117,7 +124,7 @@ public class VirtualView implements Serializable {
         for (int i=0; i < game.getNumplayers(); i++) {
             String username = game.getPlayer(i).getNickname();
 
-            if (typeOfConnection.get(username).equals("TCP")) {
+            if (typeOfConnection.get(username).equals("TCP") && !disconn_users.contains(username)) {
 
                 DrawnCommonCardsMessage drawnCommonCardsMessage = new DrawnCommonCardsMessage(card1,card2,commonToken1,commonToken2);
                 Message message = new Message(MessageType.DRAWNCOMMONCARDS, drawnCommonCardsMessage);
@@ -139,7 +146,7 @@ public class VirtualView implements Serializable {
 
     public void drawnPersonalCard(String username, PersonalGoalCard card) throws RemoteException {
 
-        if (typeOfConnection.get(username).equals("TCP")) {
+        if (typeOfConnection.get(username).equals("TCP") && !disconn_users.contains(username)) {
 
             PersonalGoalCard personalCard = card;
             DrawnPersonalCardMessage drawnPersonalCardMessage = new DrawnPersonalCardMessage(personalCard);
@@ -165,7 +172,7 @@ public class VirtualView implements Serializable {
     public void startTurn(String username,int maxValueofTiles) throws RemoteException {
 
 
-        if (typeOfConnection.get(username).equals("TCP")) {
+        if (typeOfConnection.get(username).equals("TCP") && !disconn_users.contains(username)) {
 
             StartTurnMessage startTurnMessage = new StartTurnMessage(maxValueofTiles);
             Message message = new Message(MessageType.STARTTURN,startTurnMessage);
@@ -188,7 +195,7 @@ public class VirtualView implements Serializable {
         for (int i=0; i < game.getNumplayers(); i++) {
             User  receiver = game.getPlayer(i);
             if(!receiver.equals(user)){
-                if (typeOfConnection.get(receiver.getNickname()).equals("TCP")) {
+                if (typeOfConnection.get(receiver.getNickname()).equals("TCP") && !disconn_users.contains(receiver.getNickname())) {
 
                     NoTurnSetter noTurnSetter = new NoTurnSetter(true);
                     Message message = new Message(MessageType.NOTURNSETTER,noTurnSetter);
@@ -211,7 +218,7 @@ public class VirtualView implements Serializable {
 
 
     public void takeableTiles(String username, List<List<Tile>> choosableTilesList, int num) throws RemoteException {
-        if(typeOfConnection.get(username).equals("TCP")){
+        if(typeOfConnection.get(username).equals("TCP") && !disconn_users.contains(username)){
 
                 TakeableTilesResponse takeableTilesResponse = new TakeableTilesResponse(choosableTilesList);
                 Message response = new Message(MessageType.TAKEABLETILES , takeableTilesResponse);
@@ -237,7 +244,7 @@ public class VirtualView implements Serializable {
     //client sceglierà una di queste colonne e la manda a RMIImplementation
     public void possibleColumns(String username, boolean[] choosableColumns) throws RemoteException {
 
-        if(typeOfConnection.get(username).equals("TCP")){
+        if(typeOfConnection.get(username).equals("TCP") && !disconn_users.contains(username)){
 
             PossibleColumnsResponse possibleColumnsResponse = new PossibleColumnsResponse(choosableColumns);
             Message response = new Message(MessageType.POSSIBLECOLUMNS , possibleColumnsResponse);
@@ -263,7 +270,7 @@ public class VirtualView implements Serializable {
        for (int i=0; i < game.getNumplayers(); i++) {
             User  receiver = game.getPlayer(i);
 
-            if (typeOfConnection.get(receiver.getNickname()).equals("TCP")) {
+            if (typeOfConnection.get(receiver.getNickname()).equals("TCP") && !disconn_users.contains(receiver.getNickname())) {
 
                 Tile[][] shelf = user.getShelfie().getShelf();
 
@@ -297,7 +304,7 @@ public class VirtualView implements Serializable {
         for (int i=0; i < game.getNumplayers(); i++) {
             User  receiver = game.getPlayer(i);
 
-            if (typeOfConnection.get(receiver.getNickname()).equals("TCP")) {
+            if (typeOfConnection.get(receiver.getNickname()).equals("TCP") && !disconn_users.contains(receiver.getNickname())) {
 
                 Tile[][] m = new Tile[9][9];
                 for(int k = 0; k < 9; k++){
@@ -328,7 +335,7 @@ public class VirtualView implements Serializable {
         for (int i=0; i < game.getNumplayers(); i++) {
             User  receiver = game.getPlayer(i);
 
-            if (typeOfConnection.get(receiver.getNickname()).equals("TCP")) {
+            if (typeOfConnection.get(receiver.getNickname()).equals("TCP") && !disconn_users.contains(receiver.getNickname())) {
 
                 PointsUpdateMessage pointsUpdateMessage = new PointsUpdateMessage(user.getNickname(),points,commonToken1,commonToken2);
                 Message message = new Message(MessageType.POINTSUPDATE, pointsUpdateMessage);
@@ -353,7 +360,7 @@ public class VirtualView implements Serializable {
         for (int i=0; i < game.getNumplayers(); i++) {
             User  receiver = game.getPlayer(i);
 
-            if (typeOfConnection.get(receiver.getNickname()).equals("TCP")) {
+            if (typeOfConnection.get(receiver.getNickname()).equals("TCP") && !disconn_users.contains(receiver.getNickname())) {
 
                 EndTokenTakenMessage endTokenTakenMessage = new EndTokenTakenMessage(user.getNickname());
                 Message message = new Message(MessageType.ENDTOKEN, endTokenTakenMessage);
@@ -383,7 +390,7 @@ public class VirtualView implements Serializable {
         for (int i=0; i < game.getNumplayers(); i++) {
             User  receiver = game.getPlayer(i);
 
-            if (typeOfConnection.get(receiver.getNickname()).equals("TCP")) {
+            if (typeOfConnection.get(receiver.getNickname()).equals("TCP") && !disconn_users.contains(receiver.getNickname())) {
 
                 FinalPointsMessage finalPointsMessage = new FinalPointsMessage(usernames,points);
                 Message message = new Message(MessageType.FINALPOINTS, finalPointsMessage);
@@ -410,7 +417,7 @@ public class VirtualView implements Serializable {
 
 
 
-                if (typeOfConnection.get(receiver.getNickname()).equals("TCP")) {
+                if (typeOfConnection.get(receiver.getNickname()).equals("TCP") && !disconn_users.contains(receiver.getNickname())) {
 
                     sendChatUpdate(currentChat);
                     /*ChatUpdate chatUpdate = new ChatUpdate(currentChat);
@@ -483,7 +490,7 @@ public class VirtualView implements Serializable {
         for (int i=0; i < game.getNumplayers(); i++) {
             User  receiver = game.getPlayer(i);
             if(receiver.getInGame()){
-                if (typeOfConnection.get(receiver.getNickname()).equals("TCP")) {
+                if (typeOfConnection.get(receiver.getNickname()).equals("TCP") && !disconn_users.contains(receiver.getNickname())) {
                     ChatUpdate chatUpdate = new ChatUpdate(currentChat);
                     Message messageChat = new Message(MessageType.CHATUPDATE, chatUpdate);
                     sendTCPMessage(userTCP.get(receiver.getNickname()), messageChat);
@@ -507,7 +514,7 @@ public class VirtualView implements Serializable {
             User receiver = game.getPlayer(i);
             if (receiver.getInGame()) {
 
-                if (typeOfConnection.get(receiver.getNickname()).equals("TCP")) {
+                if (typeOfConnection.get(receiver.getNickname()).equals("TCP") && !disconn_users.contains(receiver.getNickname())) {
                     BoardRefill boardRefill = new BoardRefill();
                     Message message = new Message(MessageType.BOARDREFILL, boardRefill);
                     sendTCPMessage(userTCP.get(receiver.getNickname()), message);

@@ -70,4 +70,6 @@ public interface ClientInterface extends Remote, Serializable {
     void setView(String viewChoice) throws RemoteException;
 
     void setBuffer(ClientInputReader cliR) throws RemoteException;
+
+    void ping() throws RemoteException;
 }

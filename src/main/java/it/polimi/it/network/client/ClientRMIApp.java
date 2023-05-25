@@ -285,4 +285,8 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
         this.buffer = buffer;
         buffer.setStage(TurnStages.LOGIN);
     }
+
+    public void ping() throws RemoteException{
+        return;
+    }
 }
