@@ -348,4 +348,8 @@ public class GameController implements Serializable {
         return lobby;
     }
 
+    public int getPlayerNumber(User user){
+        return playerList.indexOf(user);
+    }
+
 }

@@ -224,19 +224,26 @@ public class ClientTCPHandler implements Runnable,Serializable{
                     System.out.println(" is still connected, SADLY");
                     send(ping);
                 }else{
-                    //se il player è già in partita chiamo il turndealer
+                    //se il player è già in partita chiamo lo disconnetto
                     if(gameController != null && user.getInGame()){
-                        try {
-                            gameController.turnDealer();
-                        } catch (InvalidIDException | IllegalValueException | RemoteException e) {
-                            throw new RuntimeException(e);
+                        //se il player si disconnette mentre sta giocando il suo turno chiamo il turndealer
+                        if(gameController.getCurrentPlayer() == gameController.getPlayerNumber(user)){
+                            try {
+                                gameController.turnDealer();
+                            } catch (InvalidIDException | IllegalValueException | RemoteException e) {
+                                throw new RuntimeException(e);
+                            }
                         }
+
+                        //disconnetti
+                        lobby.disconnect_user(user.getNickname());
+
+                        System.out.println(" disconnected");
                     }
-                    //disconnetti
-                    lobby.disconnect_user(user.getNickname());
 
+                    //TODO:
+                    //gestisco caso in cui il player è in lobby e si disconnette (forse non c'è bisogno... non si userà quel nickname e basta )
 
-                    System.out.println(" disconnected");
                 }
             }
         };
