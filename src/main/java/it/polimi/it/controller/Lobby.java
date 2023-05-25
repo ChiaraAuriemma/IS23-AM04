@@ -98,19 +98,18 @@ public class Lobby implements Serializable {
                         .filter(name -> name.getNickname().equals(nickname))
                         .findFirst();
                 if(!user.get().getInGame()) {
-                    Optional<Integer> disconnectedGameID = gameControllerList.stream()
+                    /*Optional<Integer> disconnectedGameID = gameControllerList.stream()
                             .filter(gc -> gc.getPlayerList().stream()
                                     .anyMatch(u -> u.getNickname().equals(nickname)))
                             .map(GameController::getGameID)
-                            .findFirst();
+                            .findFirst();*/
                     user.get().setInGame(true);
 
                     int gameID = user.get().getGame().getGameid();
                     List<GameController> findGameController = gameControllerList.stream().filter(gameController -> gameController.getGame().getGameid() == gameID).collect(Collectors.toList());
 
                     GameController gc = findGameController.get(0);
-                    Game g = gc.getGame();
-                    gc.resetGame(user.get(), gameID);
+                    gc.resetGame(user.get());
                 }else{
                     throw  new ExistingNicknameException("This nickname already exists!");//mandare messaggio a view
                 }
@@ -157,7 +156,8 @@ public class Lobby implements Serializable {
      * @throws IllegalValueException if the client write a game ID that not exist
      * @throws RemoteException if there is some problem with RMI
      */
-    public GameController joinGame(String username, int gameID) throws InvalidIDException, WrongPlayerException, IllegalValueException, RemoteException {
+    public GameController
+    joinGame(String username, int gameID) throws InvalidIDException, WrongPlayerException, IllegalValueException, RemoteException {
 
         List<Game> findGame = gameList.stream().filter(game -> game.getGameid() == gameID).collect(Collectors.toList());
         if(gameID<gameCounterID && !findGame.isEmpty()){

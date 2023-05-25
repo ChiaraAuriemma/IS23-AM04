@@ -95,6 +95,10 @@ public class VirtualView implements Serializable {
         disconn_users.add(username);
     }
 
+    public void removeDisconnection (String username){
+        disconn_users.remove(username);
+    }
+
 
     public void initialMatrix(Tile[][] matrix) throws RemoteException {//da mandare a tutti
         for (int i=0; i < game.getNumplayers(); i++) {

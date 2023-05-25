@@ -11,4 +11,5 @@ public enum TurnStages implements Serializable {
     TILESNUM,
     CHOOSETILES,
     CHOOSECOLUMN;
+
 }

@@ -84,6 +84,10 @@ public class ClientTCPHandler implements Runnable,Serializable{
                     synchronized (lobby){
                         try {
                             user = lobby.createUser(loginRequest.getNickname());
+                            /*if(user.getInGame()){// se il giocatore si riconnette devo passare il riferimento del socket alla virtualview
+                                                  // controllo se li tolgo dalla virtualview quando si disconnete
+                                user.getGame().getVirtualView().setUserTCP(user.getNickname(), this.out);
+                            }*/
                             serverTCP.setUserTCP(user,socket);
                             LoginResponse loginResponse = new LoginResponse(user.getNickname());
                             response = new Message(MessageType.CREATEPLAYERRESPONSE, loginResponse);
@@ -237,7 +241,7 @@ public class ClientTCPHandler implements Runnable,Serializable{
 
                         //disconnetti dal game
                         lobby.disconnect_user(user.getNickname());
-
+                        serverTCP.removeUserTCP(user.getNickname());
                         System.out.println(" disconnected");
                         timer.cancel();
                     }

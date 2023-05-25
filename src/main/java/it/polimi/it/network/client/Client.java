@@ -78,13 +78,14 @@ public class Client implements Serializable {
         }
 
         if (args[1].equalsIgnoreCase("CLI")) {
-            ClientInputReader cliR = new ClientInputReader();
+            GameStage gameStage = new GameStage();
+            ClientInputReader cliR = new ClientInputReader(gameStage);
             Thread thread = new Thread(cliR);
             thread.start();
             cliR.setConnectionType(client);
             client.setView("CLI");
             cliR.setView(client.getView());
-            client.setBuffer(cliR);
+            client.setGameStage(gameStage);
             //fra
 
         } else if (args[1].equalsIgnoreCase("GUI")){

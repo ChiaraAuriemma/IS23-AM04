@@ -331,4 +331,7 @@ public class Game implements Serializable {
         return this.cards.get(i);
     }
 
+    public PersonalGoalCard getPersonalCard(User user){
+        return this.cards.get(players.indexOf(user));
+    }
 }

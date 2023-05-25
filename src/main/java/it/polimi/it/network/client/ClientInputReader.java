@@ -1,15 +1,11 @@
 package it.polimi.it.network.client;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.gson.stream.JsonReader;
+
 import it.polimi.it.model.Tiles.PossibleColors;
 import it.polimi.it.model.Tiles.Tile;
-import it.polimi.it.view.View;
 import it.polimi.it.view.ViewInterface;
 
 import java.io.*;
-import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
@@ -29,10 +25,14 @@ public class ClientInputReader implements Runnable, Serializable{
 
     ViewInterface view;
 
-    private TurnStages stage;
+    private GameStage stage;
 
     private String lastUsedNickname;
 
+
+    public ClientInputReader(GameStage stage){
+        this.stage = stage;
+    }
 
     /**
      * Method to constantly read the input given by the user, sends the input line to the command parser
@@ -88,7 +88,7 @@ public class ClientInputReader implements Runnable, Serializable{
 
             switch (command) {
                 case "login"://initial nickname setting
-                    if (stage == TurnStages.LOGIN) {
+                    if (stage.getStage() == TurnStages.LOGIN) {
                         String nickname = action;
                         if(nickname.length()>12){
                             System.out.println("Nickname is too long, please retry...\n");
@@ -107,7 +107,7 @@ public class ClientInputReader implements Runnable, Serializable{
                     } break;
 
                 case "create_game":// create_game>>4
-                    if (stage == TurnStages.CREATEorJOIN) {
+                    if (stage.getStage() == TurnStages.CREATEorJOIN) {
                         if(!action.matches("-?\\d+")){
                             System.out.println("Invalid number");
                             return;
@@ -124,7 +124,7 @@ public class ClientInputReader implements Runnable, Serializable{
                         System.out.println("Invalid number");
                         return;
                     }
-                    if (stage == TurnStages.CREATEorJOIN) {
+                    if (stage.getStage() == TurnStages.CREATEorJOIN) {
                         int gameID = Integer.parseInt(action);
                         client.joinGame(gameID);
                     } else {
@@ -135,7 +135,7 @@ public class ClientInputReader implements Runnable, Serializable{
 
 
                 case "chat": //chat>>Write here your message...
-                    if (stage == TurnStages.NOTURN || stage == TurnStages.TILESNUM || stage == TurnStages.CHOOSETILES || stage == TurnStages.CHOOSECOLUMN) {
+                    if (stage.getStage() == TurnStages.NOTURN || stage.getStage() == TurnStages.TILESNUM || stage.getStage() == TurnStages.CHOOSETILES || stage.getStage() == TurnStages.CHOOSECOLUMN) {
                         String chatMessage = action;
                         chatMessage = lastUsedNickname + ": " + chatMessage;
                         view.printError("Sending...\n");
@@ -151,7 +151,7 @@ public class ClientInputReader implements Runnable, Serializable{
                         System.out.println("Invalid number");
                         return;
                     }
-                    if (stage == TurnStages.TILESNUM) {
+                    if (stage.getStage() == TurnStages.TILESNUM) {
                         int numTiles = Integer.parseInt(action);
                         client.tilesNumMessage(numTiles);
                     } else {
@@ -160,7 +160,7 @@ public class ClientInputReader implements Runnable, Serializable{
                     break;
 
                 case "take_tiles": // tiles; format TBD (0,2);(1,3);(4,7)
-                    if (stage == TurnStages.CHOOSETILES) {
+                    if (stage.getStage() == TurnStages.CHOOSETILES) {
 
                         if(!action.matches("^[\\d,;()]+$")){
                             System.out.println("Invalid tiles format");
@@ -234,7 +234,7 @@ public class ClientInputReader implements Runnable, Serializable{
                         System.out.println("Invalid number");
                         return;
                     }
-                    if (stage == TurnStages.CHOOSECOLUMN) {
+                    if (stage.getStage() == TurnStages.CHOOSECOLUMN) {
                         int column = Integer.parseInt(action);
                         client.chooseColumn(column);
                     } else {
@@ -289,11 +289,11 @@ public class ClientInputReader implements Runnable, Serializable{
         this.view = view;
     }
 
-    public void setStage(TurnStages stage){
+    /*public void setStage(TurnStages stage){
         this.stage = stage;
-    }
+    }*/
 
-    public TurnStages getStage() {
+    /*public TurnStages getStage() {
         return stage;
-    }
+    }*/
 }

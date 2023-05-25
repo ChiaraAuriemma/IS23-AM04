@@ -42,12 +42,11 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
     private ObjectOutputStream out;
     private Socket serverSocket;
 
-    private ClientInputReader buffer;
-    //private LinkedList<Message> messages;
+    private GameStage stage;
+
     public ClientTCP(int port, String ip){
         this.port = port;
         this.ip = ip;
-        //this.messages = new LinkedList<>();
 
         try{
             serverSocket = new Socket(ip,port);
@@ -133,7 +132,7 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
     public void notifyTurnStart(int maxValueofTiles) {
         view.update();
         view.NotifyTurnStart(maxValueofTiles,this.username);
-        buffer.setStage(TurnStages.TILESNUM);
+        stage.setStage(TurnStages.TILESNUM);
     }
 
     @Override
@@ -165,21 +164,21 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
                     username = loginResponse.getUsername();
                     //view : faccio passare la view alla schermata di selezione join o create game
                     //view : passo alla view lo user
-                    buffer.setStage(TurnStages.CREATEorJOIN);
+                    stage.setStage(TurnStages.CREATEorJOIN);
 
                     view.joinOrCreate(username);
                     break;
                 case CREATEGAMERESPONSE:
                     CreateGameResponse createGameResponse = (CreateGameResponse) response.getPayload();
                     //view : passo alla view il game id
-                    buffer.setStage(TurnStages.NOTHING);
+                    stage.setStage(TurnStages.NOTHING);
                     view.setGameID(createGameResponse.getGameId());
                     break;
                 case JOINGAMERESPONSE:
                     JoinGameResponse joinGameResponse = (JoinGameResponse) response.getPayload();
 
-                    if(!buffer.getStage().equals(TurnStages.TILESNUM)){
-                        buffer.setStage(TurnStages.NOTHING);
+                    if(!stage.getStage().equals(TurnStages.TILESNUM)){
+                        stage.setStage(TurnStages.NOTHING);
                     }
                     view.setGameID(joinGameResponse.getGameId());
                     break;
@@ -187,7 +186,7 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
                     StartOrderMessage startOrderMessage = (StartOrderMessage) response.getPayload();
                     //view : passo l'ordine dei giocatori in modo che può disporli
                     setStartOrder(startOrderMessage.getOrder());
-                    buffer.setStage(TurnStages.NOTURN);
+                    stage.setStage(TurnStages.NOTURN);
                     break;
                 case INITIALMATRIX:
                     InitialMatrixMessage initialMatrixMessage = (InitialMatrixMessage) response.getPayload();
@@ -209,7 +208,7 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
                 case STARTTURN:
                     StartTurnMessage startTurnMessage = (StartTurnMessage) response.getPayload();
                     notifyTurnStart(startTurnMessage.getMaxValueofTiles());
-                    buffer.setStage(TurnStages.TILESNUM);
+                    stage.setStage(TurnStages.TILESNUM);
                     break;
 
                 case TAKEABLETILES:
@@ -220,19 +219,19 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
                         throw new RuntimeException(e);
                     }
                     //view : passo choosableTilesList per "illuminare" sulla board le tiles prendibili
-                    buffer.setStage(TurnStages.CHOOSETILES);
+                    stage.setStage(TurnStages.CHOOSETILES);
                     break;
 
                 case POSSIBLECOLUMNS:
                     PossibleColumnsResponse possibleColumnsResponse = (PossibleColumnsResponse) response.getPayload();
                     askColumn(possibleColumnsResponse.getChoosableColumns());
                     //view : passo il booleano con true e false sulle varie colonne della shelfie
-                    buffer.setStage(TurnStages.CHOOSECOLUMN);
+                    stage.setStage(TurnStages.CHOOSECOLUMN);
                     break;
                 case SHELFIEUPDATE:
                     ShelfieUpdateMessage shelfieUpdateMessage = (ShelfieUpdateMessage) response.getPayload();
                     setNewShelfie(shelfieUpdateMessage.getUsername(), shelfieUpdateMessage.getShelfie());
-                    buffer.setStage(TurnStages.NOTURN);
+                    stage.setStage(TurnStages.NOTURN);
                     //view : passo lo user,la colonna e la lista ordinata di tiles scelte per aggiornare la shelfie dello user corrispondente
                     break;
                 case BOARDUPDATE:
@@ -267,13 +266,13 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
                 case CHATUPDATE:
                     ChatUpdate chatUpdate = (ChatUpdate) response.getPayload();
                     view.updateChat(chatUpdate.getChatUpdate());
-                    if(buffer.getStage() == TurnStages.NOTURN){
+                    if(stage.getStage() == TurnStages.NOTURN){
                         view.update();
                     }
                     break;
 
                 case NOTURNSETTER:
-                    buffer.setStage(TurnStages.NOTURN);
+                    stage.setStage(TurnStages.NOTURN);
                     break;
 
                 case BOARDREFILL:
@@ -339,7 +338,7 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
         SelectedTilesRequest selectedTilesRequest = new SelectedTilesRequest(choices);
         Message request = new Message(MessageType.SELECTEDTILES, selectedTilesRequest);
         send(request);
-        buffer.setStage(TurnStages.CHOOSECOLUMN);
+        stage.setStage(TurnStages.CHOOSECOLUMN);
     }
     @Override
     public void chooseColumn (int column){
@@ -391,14 +390,14 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
     @Override
     public void updateChat(List<String> currentChat) throws RemoteException{
         view.updateChat(currentChat);
-        if(buffer.getStage() == TurnStages.NOTURN){
+        if(stage.getStage() == TurnStages.NOTURN){
             view.update();
         }
     }
 
     @Override
     public void setStageToNoTurn() throws RemoteException {
-        buffer.setStage(TurnStages.NOTURN);
+        stage.setStage(TurnStages.NOTURN);
     }
 
     @Override
@@ -406,9 +405,9 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
         view.boardRefill();
     }
 
-    public void setBuffer(ClientInputReader buffer) {
-        this.buffer = buffer;
-        buffer.setStage(TurnStages.LOGIN);
+    public void setGameStage(GameStage gameStage) {
+        this.stage = gameStage;
+        stage.setStage(TurnStages.LOGIN);
     }
 
     @Override

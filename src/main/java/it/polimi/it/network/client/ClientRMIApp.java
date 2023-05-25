@@ -33,7 +33,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
     ViewInterface view;
     private List<Tile> lastChosen = new ArrayList<>();
 
-    private ClientInputReader buffer;
+    private GameStage stage;
 
 
     public ClientRMIApp(int port, String ip) throws RemoteException {
@@ -83,7 +83,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
     public void login(String userName) throws RemoteException {
         try {
             this.nickname = sr.login(this, userName);
-            buffer.setStage(TurnStages.CREATEorJOIN);
+            stage.setStage(TurnStages.CREATEorJOIN);
             view.joinOrCreate(this.nickname);
 
             //view : passo alla schermata con create e join game
@@ -104,7 +104,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
     public void createGame(int playerNumber) throws RemoteException {
         try {
             int gameid = sr.createGame(this.nickname, playerNumber, this);
-            buffer.setStage(TurnStages.NOTHING);
+            stage.setStage(TurnStages.NOTHING);
             view.setGameID(gameid);
         } catch (WrongPlayerException e) {
             //view : notifico alla view che il numero di giocatori inseriti non è corretto
@@ -123,8 +123,8 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
         try {
             int gameid = sr.joinGame(this.nickname, gameID, this);
 
-            if(!buffer.getStage().equals(TurnStages.TILESNUM)){
-                buffer.setStage(TurnStages.NOTHING);
+            if(!stage.getStage().equals(TurnStages.TILESNUM)){
+                stage.setStage(TurnStages.NOTHING);
             }
 
             view.setGameID(gameid);
@@ -137,7 +137,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
     public void tilesNumMessage(int numOfTiles) throws RemoteException {
         try {   //comunico al server il numero scelto
             sr.tilesNumMessage(this.nickname, numOfTiles);
-            buffer.setStage(TurnStages.CHOOSETILES);
+            stage.setStage(TurnStages.CHOOSETILES);
         } catch (IllegalValueException | WrongPlayerException e) {
             //view : notifico alla view che il numero di tiles indicato non è valido
             view.askNumTilesAgain();
@@ -151,7 +151,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
         //mando le tiles a RMIImplementation
         try {
             sr.selectedTiles(this.nickname, choosenTiles);
-            buffer.setStage(TurnStages.CHOOSECOLUMN);
+            stage.setStage(TurnStages.CHOOSECOLUMN);
         } catch (WrongPlayerException | WrongListException e) {
             view.askTilesAgain();
         } catch (IllegalValueException | InvalidIDException e) {
@@ -198,14 +198,14 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
     @Override
     public void updateChat(List<String> currentChat) throws RemoteException{
         view.updateChat(currentChat);
-        if(buffer.getStage() == TurnStages.NOTURN){
+        if(stage.getStage() == TurnStages.NOTURN){
             view.update();
         }
     }
 
     @Override
     public void setStageToNoTurn() throws RemoteException {
-        buffer.setStage(TurnStages.NOTURN);
+        stage.setStage(TurnStages.NOTURN);
     }
 
     @Override
@@ -231,7 +231,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
     @Override
     public void notifyTurnStart(int maxValueOfTiles) {
         view.NotifyTurnStart(maxValueOfTiles,this.nickname);
-        buffer.setStage(TurnStages.TILESNUM);
+        stage.setStage(TurnStages.TILESNUM);
     }
 
     @Override
@@ -243,7 +243,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
     @Override
     public void setStartOrder(ArrayList<String> order) {
         view.setOrderView(order);
-        buffer.setStage(TurnStages.NOTURN);
+        stage.setStage(TurnStages.NOTURN);
     }
 
     @Override
@@ -281,9 +281,9 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
         view.takeableTiles(choosableTilesList);
     }
 
-    public void setBuffer(ClientInputReader buffer) throws RemoteException{
-        this.buffer = buffer;
-        buffer.setStage(TurnStages.LOGIN);
+    public void setGameStage(GameStage gameStage) throws RemoteException{
+        this.stage = gameStage;
+        stage.setStage(TurnStages.LOGIN);
     }
 
     public void ping() throws RemoteException{

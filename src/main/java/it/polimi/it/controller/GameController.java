@@ -1,6 +1,8 @@
 package it.polimi.it.controller;
 
 import it.polimi.it.Exceptions.*;
+import it.polimi.it.model.Card.CommonGoalCards.CommonGoalCard;
+import it.polimi.it.model.Card.PersonalGoalCards.PersonalGoalCard;
 import it.polimi.it.model.Chat;
 import it.polimi.it.model.Game;
 import it.polimi.it.model.Tiles.Tile;
@@ -301,11 +303,24 @@ public class GameController implements Serializable {
     /**
      * Method to reset the instances of
      * @param user user and
-     * @param gameID gameID in case of a player's reconnection
      * @throws RemoteException
      */
-    public void resetGame(User user, int gameID) throws RemoteException {
-        //game.getVirtualView().resetAfterDisconnection(user.getNickname(), gameID);
+    public void resetGame(User user) throws RemoteException {
+        game.getVirtualView().removeDisconnection(user.getNickname());
+        Tile[][] matrix = game.getBoard().getMatrix();
+        ArrayList<Tile[][]> shelfies = new ArrayList<>();
+        for(int i=0; i < game.getNumplayers(); i++){
+            shelfies.add(playerList.get(i).getShelfie().getShelf());
+        }
+        CommonGoalCard card1 = game.getCommonCard1();
+        CommonGoalCard card2 = game.getCommonCard2();
+        PersonalGoalCard personalGoalCard = game.getPersonalCard(user);
+        ArrayList<Integer> points = new ArrayList<>();
+        for(int i=0; i < game.getNumplayers(); i++){
+            points.add(game.getPoint(i));
+        }
+        //devo mandare l'ordine dei giocatori se no  non capisce più un cazzo il client
+        //game.getVirtualView().resetAfterDisconnection(user.getNickname(), game.getGameid(), matrix, shelfies, card1, card2, personalGoalCard, points, playerList);
     }
 
 

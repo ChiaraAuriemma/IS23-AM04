@@ -70,4 +70,8 @@ public class ServerTCP implements Runnable, Serializable{
     public Socket getClientSocket() {
         return clientSocket;
     }
+
+    public void removeUserTCP(String user){
+        this.userTCP.remove(user);
+    }
 }
