@@ -19,7 +19,7 @@ import java.util.List;
 
 public interface ClientInterface extends Remote, Serializable {
     //qui devo mettere solo i metodi visibili dal server (quindi tolgo startclient e login)
-    public void login(String userName) throws RemoteException;
+    public void login(String userName) throws RemoteException, IOException;
 
     public void takeableTiles(List<List<Tile>> choosableTilesList, int num) throws RemoteException;
 

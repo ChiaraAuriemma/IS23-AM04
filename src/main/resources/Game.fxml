@@ -44,7 +44,7 @@
             <Image url="@Images/bookshelf.png" />
          </image>
       </ImageView>
-      <Label layoutX="590.0" layoutY="118.0" text="Label" />
+      <Label fx:id="Username" layoutX="590.0" layoutY="118.0" text="Label" />
       <Label layoutX="875.0" layoutY="118.0" text="Label" />
       <Label layoutX="591.0" layoutY="390.0" text="Label" />
       <Label layoutX="875.0" layoutY="390.0" text="Label" />

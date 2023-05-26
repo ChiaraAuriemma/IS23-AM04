@@ -5,13 +5,11 @@ import it.polimi.it.model.Card.CommonGoalCards.CommonGoalCard;
 import it.polimi.it.model.Card.PersonalGoalCards.PersonalGoalCard;
 import it.polimi.it.model.Game;
 import it.polimi.it.model.Tiles.Tile;
-import it.polimi.it.model.User;
 import it.polimi.it.network.server.ServerInterface;
-import it.polimi.it.view.GUI.GuiMain;
 import it.polimi.it.view.View;
 import it.polimi.it.view.ViewInterface;
 
-import java.io.Serializable;
+import java.io.IOException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -19,7 +17,6 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface {
     //private static final long serialVersionUID = 5072588874360370885L;
@@ -45,7 +42,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
        if(viewChoice.equalsIgnoreCase("CLI")){
            this.view = new View();
        }else if (viewChoice.equalsIgnoreCase("GUI")){
-           this.view = new GuiMain();
+           this.view = new GUIHandler();
        }
         view.askNickname();
     }
@@ -80,7 +77,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
      * @param userName .
      * @throws RemoteException .
      */
-    public void login(String userName) throws RemoteException {
+    public void login(String userName) throws RemoteException,IOException {
         try {
             this.nickname = sr.login(this, userName);
             stage.setStage(TurnStages.CREATEorJOIN);

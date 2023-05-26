@@ -4,20 +4,12 @@ package it.polimi.it.network.client;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonReader;
-import it.polimi.it.controller.GameController;
 import it.polimi.it.view.GUI.GUIApplication;
-import it.polimi.it.view.GUI.GUILauncher;
-import it.polimi.it.view.GUI.GameStartController;
-import it.polimi.it.view.GUI.GuiMain;
-import it.polimi.it.view.View;
-import it.polimi.it.view.ViewInterface;
 
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Serializable;
 import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
-import java.util.Scanner;
 
 public class Client implements Serializable {
 
@@ -89,11 +81,11 @@ public class Client implements Serializable {
             //fra
 
         } else if (args[1].equalsIgnoreCase("GUI")){
-            GUIApplication guiApplication = new GUIApplication();
-            guiApplication.main(args);
             client.setView("GUI");
-            //fatti un metodo per la tua classe che chiamerà i metodi della tua view (il client input reader della gui)
-
+            GUIApplication.setClient(client);
+            GUIHandler guiHandler = (GUIHandler) client.getView();
+            GUIApplication.setGuiHandler(guiHandler);
+            GUIApplication.main(args);
         }
 
 

@@ -65,7 +65,7 @@ public class ClientInputReader implements Runnable, Serializable{
      * @param input is the String read by the buffer
      * @throws RemoteException .
      */
-    public void commandParser(String input) throws RemoteException {
+    public void commandParser(String input) throws IOException {
         if(!input.contains(">>")){
             System.out.println("No valid commands found, please retry... ");
             return ;

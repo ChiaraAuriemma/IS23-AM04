@@ -28,16 +28,20 @@
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <Button alignment="CENTER" contentDisplay="CENTER" layoutX="260.0" layoutY="109.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="79.0" text="TCP" AnchorPane.leftAnchor="260.0" AnchorPane.rightAnchor="260.8">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Button>
-            <Button alignment="CENTER" contentDisplay="CENTER" layoutX="260.0" layoutY="177.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="79.0" text="RMI" AnchorPane.leftAnchor="260.0" AnchorPane.rightAnchor="260.8">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Button>
+            <AnchorPane layoutX="56.0" layoutY="90.0" prefHeight="190.0" prefWidth="500.0" AnchorPane.bottomAnchor="57.20000000000002" AnchorPane.leftAnchor="56.0" AnchorPane.rightAnchor="44.0" AnchorPane.topAnchor="90.0">
+               <children>
+                  <Button alignment="CENTER" contentDisplay="CENTER" layoutX="200.0" layoutY="46.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="72.0" text="TCP">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Button>
+                  <Button alignment="CENTER" contentDisplay="CENTER" layoutX="199.0" layoutY="119.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="74.0" text="RMI">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Button>
+               </children>
+            </AnchorPane>
          </children>
       </AnchorPane>
    </center>

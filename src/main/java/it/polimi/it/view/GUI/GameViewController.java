@@ -1,22 +1,25 @@
 package it.polimi.it.view.GUI;
+import it.polimi.it.network.client.ClientInterface;
+import it.polimi.it.network.client.GUIHandler;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
-import java.awt.*;
+import javafx.scene.control.TextField;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class GameViewController implements Initializable {
+public class GameViewController implements Initializable, GuiInterface {
 
-    private Stage stage;
+    private static Stage stage;
     @FXML
     ImageView tile1LV;
     @FXML
@@ -167,15 +170,21 @@ public class GameViewController implements Initializable {
     ImageView tile29BS;
     @FXML
     ImageView tile30BS;
+    @FXML
+    Label Username;
 
 
     private double mouseAnchorX;
     private double mouseAnchorY;
 
+    private static ClientInterface client;
+    private static GUIApplication guiApp;
+    private static GUIHandler guiHandler;
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        Username.setText(GUIApplication.getNickname());
         URL imageUrl1 = getClass().getResource("/Images/Cornici1.png");
         Image tile1 = new Image(imageUrl1.toString());
         tile1LV.setImage(tile1);
@@ -214,6 +223,12 @@ public class GameViewController implements Initializable {
     public void GotoPersonalGoalCard(ActionEvent actionEvent) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(GUIApplication.class.getResource("/PersonalGoalCard.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
+        //guiApp.setCurrentController(fxmlLoader.getController());
+        //guiApp.getCurrentController().setReferenceGUI(guiApp);
+        //guiApp.getCurrentController().setClient(client);
+        GuiInterface currentController = fxmlLoader.getController();
+        currentController.setClient(client);
+        GUIApplication.setCurrentController(currentController);
         stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
         stage.setTitle("My Shelfie");
         stage.setScene(scene);
@@ -223,10 +238,40 @@ public class GameViewController implements Initializable {
     public void GotoCommonGoalCards(ActionEvent actionEvent) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(GUIApplication.class.getResource("/CommonGoalCards.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
+        //guiApp.setCurrentController(fxmlLoader.getController());
+        //guiApp.getCurrentController().setReferenceGUI(guiApp);
+        //guiApp.getCurrentController().setClient(client);
+        GuiInterface currentController = fxmlLoader.getController();
+        currentController.setClient(client);
+        GUIApplication.setCurrentController(currentController);
         stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
         stage.setTitle("My Shelfie");
         stage.setScene(scene);
         stage.show();
+    }
+
+    public void setClient(ClientInterface clientRef){
+        client = clientRef;
+    }
+
+    @Override
+    public void setReferenceGUI(GUIApplication guiRef) {
+        guiApp = guiRef;
+    }
+
+    @Override
+    public void setReferenceHandler(GUIHandler handlerRef) {
+        guiHandler = handlerRef;
+    }
+
+    @Override
+    public void setStage(Stage stageRef) {
+        stage = stageRef;
+    }
+
+    @Override
+    public String getType() {
+        return "game";
     }
 }
 
