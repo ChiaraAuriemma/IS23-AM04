@@ -4,6 +4,7 @@ import it.polimi.it.model.Card.CommonGoalCards.CommonGoalCard;
 import it.polimi.it.model.Card.PersonalGoalCards.PersonalGoalCard;
 import it.polimi.it.model.Tiles.Tile;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -90,6 +91,7 @@ public interface ViewInterface {
 
     void askColumn();
 
+    void askNicknameAgain() throws IOException;
     void askNicknameAgain(String errorMessage);
 
     void askNumPlayerAgain();
@@ -103,4 +105,5 @@ public interface ViewInterface {
     void askColumnAgain();
 
     void boardRefill();
+
 }

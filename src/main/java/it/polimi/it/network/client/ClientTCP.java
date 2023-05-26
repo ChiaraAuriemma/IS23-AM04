@@ -15,8 +15,6 @@ import it.polimi.it.network.message.others.ThisNotTheDay;
 import it.polimi.it.network.message.request.*;
 import it.polimi.it.network.message.responses.*;
 import it.polimi.it.view.GUI.GUIApplication;
-import it.polimi.it.view.GUI.GUILauncher;
-import it.polimi.it.view.GUI.GuiMain;
 import it.polimi.it.view.View;
 import it.polimi.it.view.ViewInterface;
 
@@ -81,7 +79,7 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
         if(viewChoice.equalsIgnoreCase("CLI")){
             this.view = new View();
         }else if (viewChoice.equalsIgnoreCase("GUI")){
-            this.view = new GuiMain();
+            this.view = new GUIHandler();
         }
 
         view.askNickname();
