@@ -62,7 +62,7 @@ public interface ViewInterface {
 
 
     //"tocca a te"; maxValueofTiles è il num max di tile che può prendere dalla board
-    public void NotifyTurnStart(int maxValueofTiles, String username);
+    public void NotifyTurnStart(int maxValueofTiles, String username) throws IOException;
 
 
 
@@ -81,7 +81,7 @@ public interface ViewInterface {
 
     void askNickname();
 
-    void joinOrCreate(String username);
+    void joinOrCreate(String username) throws IOException;
 
     void printTile(String color, int row, int column);
 
@@ -89,9 +89,8 @@ public interface ViewInterface {
 
     void printCommands();
 
-    void askColumn();
+    void askColumn() throws IOException;
 
-    void askNicknameAgain() throws IOException;
     void askNicknameAgain(String errorMessage);
 
     void askNumPlayerAgain();

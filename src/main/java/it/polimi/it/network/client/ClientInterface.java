@@ -35,9 +35,9 @@ public interface ClientInterface extends Remote, Serializable {
 
     public void setNewPoints(String username, Integer points) throws RemoteException;
 
-    public void notifyTurnStart(int maxValueofTiles)throws RemoteException;
+    public void notifyTurnStart(int maxValueofTiles) throws IOException;
 
-    public void askColumn(boolean[] choosableColumns)throws RemoteException;
+    public void askColumn(boolean[] choosableColumns) throws IOException;
 
     public void createGame(int playerNumber) throws RemoteException;
 
@@ -70,6 +70,7 @@ public interface ClientInterface extends Remote, Serializable {
     void setView(String viewChoice) throws RemoteException;
 
     void setGameStage(GameStage gameStage) throws RemoteException;
+    TurnStages getGameStage()throws RemoteException;
 
     void ping() throws RemoteException;
 }

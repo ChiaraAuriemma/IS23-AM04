@@ -127,14 +127,14 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
     }
 
     @Override
-    public void notifyTurnStart(int maxValueofTiles) {
+    public void notifyTurnStart(int maxValueofTiles) throws IOException {
         view.update();
         view.NotifyTurnStart(maxValueofTiles,this.username);
         stage.setStage(TurnStages.TILESNUM);
     }
 
     @Override
-    public void askColumn(boolean[] choosableColumns) {
+    public void askColumn(boolean[] choosableColumns) throws IOException {
         view.update();
         view.askColumn();
         //view.setPossibleColumns(choosableColumns);
@@ -164,7 +164,11 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
                     //view : passo alla view lo user
                     stage.setStage(TurnStages.CREATEorJOIN);
 
-                    view.joinOrCreate(username);
+                    try {
+                        view.joinOrCreate(username);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                     break;
                 case CREATEGAMERESPONSE:
                     CreateGameResponse createGameResponse = (CreateGameResponse) response.getPayload();
@@ -205,7 +209,11 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
 
                 case STARTTURN:
                     StartTurnMessage startTurnMessage = (StartTurnMessage) response.getPayload();
-                    notifyTurnStart(startTurnMessage.getMaxValueofTiles());
+                    try {
+                        notifyTurnStart(startTurnMessage.getMaxValueofTiles());
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                     stage.setStage(TurnStages.TILESNUM);
                     break;
 
@@ -222,7 +230,11 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
 
                 case POSSIBLECOLUMNS:
                     PossibleColumnsResponse possibleColumnsResponse = (PossibleColumnsResponse) response.getPayload();
-                    askColumn(possibleColumnsResponse.getChoosableColumns());
+                    try {
+                        askColumn(possibleColumnsResponse.getChoosableColumns());
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                     //view : passo il booleano con true e false sulle varie colonne della shelfie
                     stage.setStage(TurnStages.CHOOSECOLUMN);
                     break;
@@ -406,6 +418,11 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
     public void setGameStage(GameStage gameStage) {
         this.stage = gameStage;
         stage.setStage(TurnStages.LOGIN);
+    }
+
+    @Override
+    public TurnStages getGameStage() {
+        return stage.getStage();
     }
 
     @Override

@@ -6,17 +6,19 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 
 
 
 import javafx.scene.control.TextField;
 import java.io.IOException;
+import java.util.Objects;
 
 public class CreateGameViewController implements GuiInterface{
 
     private static Stage stage;
-    private String players;
+
     private static ClientInterface client;
     private static GUIApplication guiApp;
     private static GUIHandler guiHandler;
@@ -25,19 +27,24 @@ public class CreateGameViewController implements GuiInterface{
     TextField NumOfPlayers;
 
     public void GotoGame(ActionEvent actionEvent) throws IOException {
-        players = NumOfPlayers.getText();
-        FXMLLoader fxmlLoader = new FXMLLoader(GUIApplication.class.getResource("/Game.fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
-        //guiApp.setCurrentController(fxmlLoader.getController());
-        //guiApp.getCurrentController().setReferenceGUI(guiApp);
-        //guiApp.getCurrentController().setClient(client);
-        GuiInterface currentController = fxmlLoader.getController();
-        currentController.setClient(client);
-        GUIApplication.setCurrentController(currentController);
-        stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
-        stage.setTitle("My Shelfie");
-        stage.setScene(scene);
-        stage.show();
+        if(NumOfPlayers.getText().length() != 0) {
+            int players = Integer.parseInt(NumOfPlayers.getText());
+            client.createGame(players);
+            /*
+            FXMLLoader fxmlLoader = new FXMLLoader(GUIApplication.class.getResource(Objects.requireNonNull(GUIApplication.changeScene())));
+            Scene scene = new Scene(fxmlLoader.load());
+            GuiInterface currentController = fxmlLoader.getController();
+            currentController.setClient(client);
+            GUIApplication.setCurrentController(currentController);
+            stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            stage.setTitle("My Shelfie");
+            stage.setScene(scene);
+            stage.show();
+
+             */
+        }else {
+            GUIApplication.showAlert(Alert.AlertType.WARNING, "Create Game error", "You must enter a number of players");
+        }
     }
 
     public void setClient(ClientInterface clientRef){

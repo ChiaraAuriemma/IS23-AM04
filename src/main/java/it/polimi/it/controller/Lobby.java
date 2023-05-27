@@ -7,6 +7,7 @@ import it.polimi.it.network.server.RMIImplementation;
 import it.polimi.it.network.server.ServerTCP;
 import it.polimi.it.network.server.VirtualView;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -157,7 +158,7 @@ public class Lobby implements Serializable {
      * @throws RemoteException if there is some problem with RMI
      */
     public GameController
-    joinGame(String username, int gameID) throws InvalidIDException, WrongPlayerException, IllegalValueException, RemoteException {
+    joinGame(String username, int gameID) throws InvalidIDException, WrongPlayerException, IllegalValueException, IOException {
 
         List<Game> findGame = gameList.stream().filter(game -> game.getGameid() == gameID).collect(Collectors.toList());
         if(gameID<gameCounterID && !findGame.isEmpty()){

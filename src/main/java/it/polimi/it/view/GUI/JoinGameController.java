@@ -6,10 +6,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 
 import javafx.scene.control.TextField;
 import java.io.IOException;
+import java.util.Objects;
 
 public class JoinGameController implements GuiInterface {
 
@@ -24,20 +26,24 @@ public class JoinGameController implements GuiInterface {
 
 
     public void GotoGame(ActionEvent actionEvent) throws IOException {
-        int id = Integer.parseInt(GameID.getText());
-        client.joinGame(id);
-        FXMLLoader fxmlLoader = new FXMLLoader(GUIApplication.class.getResource("/Game.fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
-        //guiApp.setCurrentController(fxmlLoader.getController());
-        //guiApp.getCurrentController().setReferenceGUI(guiApp);
-        //guiApp.getCurrentController().setClient(client);
-        GuiInterface currentController = fxmlLoader.getController();
-        currentController.setClient(client);
-        GUIApplication.setCurrentController(currentController);
-        stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
-        stage.setTitle("My Shelfie");
-        stage.setScene(scene);
-        stage.show();
+        if(GameID.getText().length() != 0) {
+            int id = Integer.parseInt(GameID.getText());
+            client.joinGame(id);
+            /*
+            FXMLLoader fxmlLoader = new FXMLLoader(GUIApplication.class.getResource(Objects.requireNonNull(GUIApplication.changeScene())));
+            Scene scene = new Scene(fxmlLoader.load());
+            GuiInterface currentController = fxmlLoader.getController();
+            currentController.setClient(client);
+            GUIApplication.setCurrentController(currentController);
+            stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            stage.setTitle("My Shelfie");
+            stage.setScene(scene);
+            stage.show();
+
+             */
+        }else {
+            GUIApplication.showAlert(Alert.AlertType.WARNING, "Join Game error", "You must enter a game id");
+        }
     }
 
     public void setClient(ClientInterface clientRef){

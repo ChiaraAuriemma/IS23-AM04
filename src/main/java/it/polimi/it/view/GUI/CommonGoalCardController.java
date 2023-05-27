@@ -33,28 +33,17 @@ public class CommonGoalCardController implements Initializable, GuiInterface {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        URL common1 = getClass().getResource("/Images/1.jpg");
-        Image card1 = new Image(common1.toString());
+        Image card1 = new Image(GUIApplication.getCommonCard1().toString());
         CommonGoalCard1.setImage(card1);
-        URL common2 = getClass().getResource("/Images/2.jpg");
-        Image card2 = new Image(common2.toString());
+        Image card2 = new Image(GUIApplication.getCommonCard2().toString());
         CommonGoalCard2.setImage(card2);
 
     }
 
-    public void setCommon1(URL image){
-        common1 = image;
-    }
-
-    public void setCommon2(URL image){
-        common2 = image;
-    }
 
     public void GotoGame(ActionEvent actionEvent) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(GUIApplication.class.getResource("/Game.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
-        //guiApp.setCurrentController(fxmlLoader.getController());
-        //guiApp.getCurrentController().setClient(client);
         GuiInterface currentController = fxmlLoader.getController();
         currentController.setClient(client);
         GUIApplication.setCurrentController(currentController);

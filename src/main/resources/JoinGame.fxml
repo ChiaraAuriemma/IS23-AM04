@@ -15,21 +15,21 @@
             <Image url="@Images/sfondo_parquet.jpg" />
          </image>
       </ImageView>
-      <Button fx:id="BottoneLogin" layoutX="502.0" layoutY="341.0" mnemonicParsing="false" onAction="#GotoGame" text="Start">
+      <Button fx:id="BottoneLogin" layoutX="510.0" layoutY="393.0" mnemonicParsing="false" onAction="#GotoGame" text="Start">
          <font>
             <Font size="18.0" />
          </font></Button>
-      <TextField fx:id="GameID" layoutX="304.0" layoutY="228.0" prefHeight="27.0" prefWidth="451.0">
+      <TextField fx:id="GameID" layoutX="270.0" layoutY="310.0" prefHeight="27.0" prefWidth="576.0">
          <font>
             <Font size="13.0" />
          </font>
       </TextField>
-      <Label fx:id="TextLogin1" layoutX="458.0" layoutY="82.0" text="Insert Game ID">
+      <Label fx:id="TextLogin1" layoutX="465.0" layoutY="110.0" text="Insert Game ID">
          <font>
             <Font name="System Bold" size="21.0" />
          </font>
       </Label>
-      <Label fx:id="TextGameID" layoutX="314.0" layoutY="191.0" text="Game ID">
+      <Label fx:id="TextGameID" layoutX="280.0" layoutY="284.0" text="Game ID">
          <font>
             <Font size="15.0" />
          </font></Label>

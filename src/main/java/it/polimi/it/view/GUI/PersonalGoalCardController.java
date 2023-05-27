@@ -30,21 +30,15 @@ public class PersonalGoalCardController implements Initializable, GuiInterface {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        URL imageUrl1 = getClass().getResource("/Images/Personal_Goals.png");
-        Image card1 = new Image(imageUrl1.toString());
-        PersonalGoalCard.setImage(card1);
+        Image card = new Image(GUIApplication.getPersonalCard().toString());
+        PersonalGoalCard.setImage(card);
 
     }
 
-    public void setPersonal(URL image){
-
-    }
 
     public void GotoGame(ActionEvent actionEvent) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(GUIApplication.class.getResource("/Game.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
-        //guiApp.setCurrentController(fxmlLoader.getController());
-        //guiApp.getCurrentController().setClient(client);
         GuiInterface currentController = fxmlLoader.getController();
         currentController.setClient(client);
         GUIApplication.setCurrentController(currentController);

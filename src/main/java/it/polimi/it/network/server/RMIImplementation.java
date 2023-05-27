@@ -11,6 +11,7 @@ import it.polimi.it.network.message.Message;
 import it.polimi.it.network.message.MessageType;
 import it.polimi.it.network.message.others.PingMessage;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -80,7 +81,7 @@ public class RMIImplementation extends UnicastRemoteObject implements ServerInte
         return gc.getGameID();
     }
 
-    public int joinGame(String username,int id, ClientInterface client) throws RemoteException, InvalidIDException, WrongPlayerException, IllegalValueException {
+    public int joinGame(String username,int id, ClientInterface client) throws IOException, InvalidIDException, WrongPlayerException, IllegalValueException {
         GameController gc;
         synchronized (lobby) {
             lobby.getGameController(id).getGame().getVirtualView().setUserRMI(username , client);
@@ -90,7 +91,7 @@ public class RMIImplementation extends UnicastRemoteObject implements ServerInte
         return gc.getGameID();
     }
 
-    public void tilesNumMessage(String username,int numTiles) throws RemoteException, WrongPlayerException, IllegalValueException, InvalidIDException {
+    public void tilesNumMessage(String username,int numTiles) throws IOException, WrongPlayerException, IllegalValueException, InvalidIDException {
         GameController gc = userGame.get(username);
         synchronized (gc){
             gc.getFromViewNTiles(username,numTiles);
@@ -98,7 +99,7 @@ public class RMIImplementation extends UnicastRemoteObject implements ServerInte
         //numTiles è il valore scelto dall'utente (v. javadoc GameController)
     }
 
-    public void selectedTiles(String username, List<Tile> choosenTiles) throws RemoteException, WrongPlayerException, WrongListException, IllegalValueException, InvalidIDException {
+    public void selectedTiles(String username, List<Tile> choosenTiles) throws IOException, WrongPlayerException, WrongListException, IllegalValueException, InvalidIDException {
         GameController gc = userGame.get(username);
         synchronized (gc){
             ArrayList<Tile> chosenTiles = new ArrayList<>(choosenTiles);
@@ -106,7 +107,7 @@ public class RMIImplementation extends UnicastRemoteObject implements ServerInte
         }
     }
 
-    public void chooseColumn (String username,int columnNumber) throws RemoteException, InvalidIDException, IllegalValueException {
+    public void chooseColumn (String username,int columnNumber) throws IOException, InvalidIDException, IllegalValueException {
         GameController gc = userGame.get(username);
         synchronized (gc){
             gc.getColumnFromView(username,columnNumber);
@@ -204,7 +205,7 @@ public class RMIImplementation extends UnicastRemoteObject implements ServerInte
 
                                     try {
                                         userGame.get(user).turnDealer();
-                                    } catch (InvalidIDException | IllegalValueException | RemoteException ex) {
+                                    } catch (InvalidIDException | IllegalValueException | IOException ex) {
                                         throw new RuntimeException(ex);
                                     }
                                 }

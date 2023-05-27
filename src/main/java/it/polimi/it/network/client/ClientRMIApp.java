@@ -9,6 +9,7 @@ import it.polimi.it.network.server.ServerInterface;
 import it.polimi.it.view.View;
 import it.polimi.it.view.ViewInterface;
 
+
 import java.io.IOException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -127,6 +128,8 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
             view.setGameID(gameid);
         } catch (InvalidIDException | WrongPlayerException | IllegalValueException e) {
             view.askIDAgain();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -138,7 +141,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
         } catch (IllegalValueException | WrongPlayerException e) {
             //view : notifico alla view che il numero di tiles indicato non è valido
             view.askNumTilesAgain();
-        } catch (InvalidIDException e) {
+        } catch (InvalidIDException | IOException e) {
             throw new RuntimeException(e);
         }
     }
@@ -151,7 +154,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
             stage.setStage(TurnStages.CHOOSECOLUMN);
         } catch (WrongPlayerException | WrongListException e) {
             view.askTilesAgain();
-        } catch (IllegalValueException | InvalidIDException e) {
+        } catch (IllegalValueException | InvalidIDException | IOException e) {
             throw new RuntimeException(e);
         }
     }
@@ -161,7 +164,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
         try {
             sr.chooseColumn(this.nickname, numOfColum);
             System.out.println("End of your turn\n");
-        } catch (InvalidIDException | IllegalValueException e) {
+        } catch (InvalidIDException | IllegalValueException | IOException e) {
             view.askColumnAgain();
         }
 
@@ -226,7 +229,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
     }
 
     @Override
-    public void notifyTurnStart(int maxValueOfTiles) {
+    public void notifyTurnStart(int maxValueOfTiles) throws IOException {
         view.NotifyTurnStart(maxValueOfTiles,this.nickname);
         stage.setStage(TurnStages.TILESNUM);
     }
@@ -281,6 +284,11 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
     public void setGameStage(GameStage gameStage) throws RemoteException{
         this.stage = gameStage;
         stage.setStage(TurnStages.LOGIN);
+    }
+
+    @Override
+    public TurnStages getGameStage() {
+        return stage.getStage();
     }
 
     public void ping() throws RemoteException{

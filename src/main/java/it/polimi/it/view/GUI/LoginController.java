@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 
 import javafx.scene.control.TextField;
 import java.io.IOException;
+import java.util.Objects;
 
 public class LoginController implements GuiInterface{
 
@@ -30,10 +31,12 @@ public class LoginController implements GuiInterface{
 
 
     public void GotoJoinGame(ActionEvent actionEvent) throws IOException {
+        GUIApplication.setCreateOrJoin("JOIN");
         if(UsernameField.getText().length() > 0 && UsernameField.getText().length() < 12){
             client.login(UsernameField.getText());
             GUIApplication.setNickname(UsernameField.getText());
-            FXMLLoader fxmlLoader = new FXMLLoader(GUIApplication.class.getResource("/JoinGame.fxml"));
+            /*
+            FXMLLoader fxmlLoader = new FXMLLoader(GUIApplication.class.getResource(Objects.requireNonNull(GUIApplication.changeScene())));
             Scene scene = new Scene(fxmlLoader.load());
             GuiInterface currentController = fxmlLoader.getController();
             currentController.setClient(client);
@@ -42,16 +45,20 @@ public class LoginController implements GuiInterface{
             stage.setTitle("My Shelfie");
             stage.setScene(scene);
             stage.show();
+
+             */
         }else{
-            showAlert(Alert.AlertType.WARNING, "Login error", "Invalid username, try again");
+            GUIApplication.showAlert(Alert.AlertType.WARNING, "Login error", "Invalid username, try again");
         }
     }
 
     public void GotoCreateGame(ActionEvent actionEvent) throws IOException {
+        GUIApplication.setCreateOrJoin("CREATE");
         if(UsernameField.getText().length() > 0 && UsernameField.getText().length() < 12){
             client.login(UsernameField.getText());
             GUIApplication.setNickname(UsernameField.getText());
-            FXMLLoader fxmlLoader = new FXMLLoader(GUIApplication.class.getResource("/CreateGame.fxml"));
+            /*
+            FXMLLoader fxmlLoader = new FXMLLoader(GUIApplication.class.getResource(Objects.requireNonNull(GUIApplication.changeScene())));
             Scene scene = new Scene(fxmlLoader.load());
             GuiInterface currentController = fxmlLoader.getController();
             currentController.setClient(client);
@@ -60,8 +67,10 @@ public class LoginController implements GuiInterface{
             stage.setTitle("My Shelfie");
             stage.setScene(scene);
             stage.show();
+
+             */
         }else{
-            showAlert(Alert.AlertType.WARNING, "Login error", "Invalid username, try again");
+            GUIApplication.showAlert(Alert.AlertType.WARNING, "Login error", "Invalid username, try again");
         }
     }
 
@@ -73,25 +82,7 @@ public class LoginController implements GuiInterface{
         return username;
     }
 
-    public void askNicknameAgain() throws IOException {
-        showAlert(Alert.AlertType.WARNING, "Login error", "Invalid username, try again");
-        FXMLLoader fxmlLoader = new FXMLLoader(GUIApplication.class.getResource("/Login.fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
-        GuiInterface currentController = fxmlLoader.getController();
-        currentController.setClient(client);
-        GUIApplication.setCurrentController(currentController);
-        stage.setTitle("My Shelfie");
-        stage.setScene(scene);
-        stage.show();
-    }
 
-    public void showAlert(Alert.AlertType alertType, String title, String content) {
-        Alert alert = new Alert(alertType);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(content);
-        alert.showAndWait();
-    }
 
     @Override
     public void setReferenceGUI(GUIApplication guiRef) {

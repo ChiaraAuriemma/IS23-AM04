@@ -173,7 +173,7 @@ public class VirtualView implements Serializable {
 
 
 
-    public void startTurn(String username,int maxValueofTiles) throws RemoteException {
+    public void startTurn(String username,int maxValueofTiles) throws IOException {
 
 
         if (typeOfConnection.get(username).equals("TCP") && !disconn_users.contains(username)) {
@@ -246,7 +246,7 @@ public class VirtualView implements Serializable {
 
     //ricevo lista di colonne possibili, le comunico al client
     //client sceglierà una di queste colonne e la manda a RMIImplementation
-    public void possibleColumns(String username, boolean[] choosableColumns) throws RemoteException {
+    public void possibleColumns(String username, boolean[] choosableColumns) throws IOException {
 
         if(typeOfConnection.get(username).equals("TCP") && !disconn_users.contains(username)){
 

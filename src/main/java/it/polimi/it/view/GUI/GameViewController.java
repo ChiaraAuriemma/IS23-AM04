@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 import javafx.scene.control.TextField;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class GameViewController implements Initializable, GuiInterface {
@@ -223,9 +224,6 @@ public class GameViewController implements Initializable, GuiInterface {
     public void GotoPersonalGoalCard(ActionEvent actionEvent) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(GUIApplication.class.getResource("/PersonalGoalCard.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
-        //guiApp.setCurrentController(fxmlLoader.getController());
-        //guiApp.getCurrentController().setReferenceGUI(guiApp);
-        //guiApp.getCurrentController().setClient(client);
         GuiInterface currentController = fxmlLoader.getController();
         currentController.setClient(client);
         GUIApplication.setCurrentController(currentController);
@@ -238,9 +236,6 @@ public class GameViewController implements Initializable, GuiInterface {
     public void GotoCommonGoalCards(ActionEvent actionEvent) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(GUIApplication.class.getResource("/CommonGoalCards.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
-        //guiApp.setCurrentController(fxmlLoader.getController());
-        //guiApp.getCurrentController().setReferenceGUI(guiApp);
-        //guiApp.getCurrentController().setClient(client);
         GuiInterface currentController = fxmlLoader.getController();
         currentController.setClient(client);
         GUIApplication.setCurrentController(currentController);

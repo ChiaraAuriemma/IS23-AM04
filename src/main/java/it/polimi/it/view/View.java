@@ -8,6 +8,7 @@ import it.polimi.it.model.Tiles.PossibleColors;
 import it.polimi.it.model.Tiles.Tile;
 import it.polimi.it.model.User;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.util.*;
@@ -509,6 +510,7 @@ public class View implements ViewInterface, Serializable {
     public void askColumn() {
         out.println("Please choose in which column you want to put the tiles that you took... ( Use choose_column>>\"column number\" ) \n");
     }
+
 
 
     public void printError(String error) {

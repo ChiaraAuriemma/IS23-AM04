@@ -7,6 +7,7 @@ import it.polimi.it.Exceptions.WrongListException;
 import it.polimi.it.model.Tiles.PossibleColors;
 import it.polimi.it.model.Tiles.Tile;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.util.List;
@@ -28,7 +29,7 @@ public class User implements Serializable {
         this.inGame = true;
     }
 
-    public int maxValueOfTiles() throws IllegalValueException, RemoteException {
+    public int maxValueOfTiles() throws IllegalValueException, IOException {
 
         if(inGame==false){
             return -1;
@@ -60,7 +61,7 @@ public class User implements Serializable {
         return choosableList;
     }
 
-    public boolean[] chooseSelectedTiles(List<Tile> chosen) throws WrongTileException, RemoteException {
+    public boolean[] chooseSelectedTiles(List<Tile> chosen) throws WrongTileException, IOException {
 
         for(Tile t : chosen){
             if(t.getColor().equals("XTILE") || t.getColor().equals("DEFAULT")){

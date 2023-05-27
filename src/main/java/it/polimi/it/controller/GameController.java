@@ -8,6 +8,7 @@ import it.polimi.it.model.Game;
 import it.polimi.it.model.Tiles.Tile;
 import it.polimi.it.model.User;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -112,7 +113,7 @@ public class GameController implements Serializable {
      * @throws IllegalValueException exception used when an illegal value is given in input
      * @throws InvalidIDException exception used when the game ID is wrong or non-existent
      */
-    public void turnDealer() throws InvalidIDException, IllegalValueException, RemoteException {
+    public void turnDealer() throws InvalidIDException, IllegalValueException, IOException {
 
         if(this.endGame && this.currentPlayer == game.getNumplayers() - 1){ //caso di fine partita
             game.getVirtualView().viewUpdate(chat.getCurrentChat());
@@ -158,7 +159,7 @@ public class GameController implements Serializable {
      * Method to get the maximum possible number of tiles that can be selected from the board
      * Calls the view to ask the payer about how many tiles the player wants to retrieve
      */
-    public void firstOperation() throws IllegalValueException, RemoteException, InvalidIDException {
+    public void firstOperation() throws IllegalValueException, IOException, InvalidIDException {
         if(!playerList.get(currentPlayer).getInGame()) {
             turnDealer();
         }else{
@@ -182,7 +183,7 @@ public class GameController implements Serializable {
      *  in order to highlight them on the board.
      * @param chosenNumber is the input from the user
      */
-    public void getFromViewNTiles(String user, int chosenNumber) throws WrongPlayerException, RemoteException, IllegalValueException, InvalidIDException {
+    public void getFromViewNTiles(String user, int chosenNumber) throws WrongPlayerException, IOException, IllegalValueException, InvalidIDException {
 
         if(!playerList.get(currentPlayer).getInGame()) {
             turnDealer();
@@ -207,7 +208,7 @@ public class GameController implements Serializable {
      * @param chosenList is the list of selected tiles
      * @throws WrongTileException exception used when a wrong tile is selected
      */
-    public void getTilesListFromView(String user, List<Tile> chosenList) throws WrongPlayerException, WrongListException, IllegalValueException, InvalidIDException, RemoteException {
+    public void getTilesListFromView(String user, List<Tile> chosenList) throws WrongPlayerException, WrongListException, IllegalValueException, InvalidIDException, IOException {
 
         if(!playerList.get(currentPlayer).getInGame()) {
             turnDealer();
@@ -249,7 +250,7 @@ public class GameController implements Serializable {
      * @param col is the column of the shelfie where to put the tiles in
      * @throws WrongTileException exception used when a wrong tile is selected
      */
-    public void getColumnFromView(String user, int col) throws IllegalValueException, InvalidIDException, RemoteException {
+    public void getColumnFromView(String user, int col) throws IllegalValueException, InvalidIDException, IOException {
         if(!playerList.get(currentPlayer).getInGame()) {
             turnDealer();
         }else {
@@ -270,7 +271,7 @@ public class GameController implements Serializable {
      * Method used to initialize the parameters of the game, called before the firs turn of the game
      * Calls the view in order to display the initial board and the cards that have been extracted randomly
      */
-    public void firstTurnStarter() throws IllegalValueException, RemoteException, InvalidIDException {
+    public void firstTurnStarter() throws IllegalValueException, IOException, InvalidIDException {
         playerList = game.randomPlayers();
         for(int i=0; i < game.getNumplayers(); i++){
             game.drawPersonalCard();

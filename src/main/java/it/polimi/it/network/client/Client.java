@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.rmi.NotBoundException;
 
+
 public class Client implements Serializable {
 
     private static final long serialVersionUID = 749383786771428581L;
@@ -82,6 +83,8 @@ public class Client implements Serializable {
 
         } else if (args[1].equalsIgnoreCase("GUI")){
             client.setView("GUI");
+            GameStage gameStage = new GameStage();
+            client.setGameStage(gameStage);
             GUIApplication.setClient(client);
             GUIHandler guiHandler = (GUIHandler) client.getView();
             GUIApplication.setGuiHandler(guiHandler);

@@ -17,21 +17,7 @@ public class GUIHandler implements ViewInterface {
 
     private ClientInterface client;
     private ViewInterface view;
-    private GUIApplication gui;
-    private PersonalGoalCardController personalGoalCardController;
-    private CommonGoalCardController commonGoalCardController;
-    private LoginController loginController;
 
-
-
-
-
-    public GUIApplication getGui(){
-        return gui;
-    }
-
-    //--------------------------------------------------------------------------------------------------------------
-    // metodi per inviare alla network informazioni
 
 
 
@@ -67,51 +53,51 @@ public class GUIHandler implements ViewInterface {
         int id = card.getId();
         if(id == 1){
             URL imageUrl = getClass().getResource("/Images/Personal_Goals.png");
-            personalGoalCardController.setPersonal(imageUrl);
+            GUIApplication.setPersonalCard(imageUrl);
         }
         if(id==2){
             URL imageUrl = getClass().getResource("/Images/Personal_Goals2.png");
-            personalGoalCardController.setPersonal(imageUrl);
+            GUIApplication.setPersonalCard(imageUrl);
         }
         if(id==3){
             URL imageUrl = getClass().getResource("/Images/Personal_Goals3.png");
-            personalGoalCardController.setPersonal(imageUrl);
+            GUIApplication.setPersonalCard(imageUrl);
         }
         if(id==4){
             URL imageUrl = getClass().getResource("/Images/Personal_Goals4.png");
-            personalGoalCardController.setPersonal(imageUrl);
+            GUIApplication.setPersonalCard(imageUrl);
         }
         if(id==5){
             URL imageUrl = getClass().getResource("/Images/Personal_Goals5.png");
-            personalGoalCardController.setPersonal(imageUrl);
+            GUIApplication.setPersonalCard(imageUrl);
         }
         if(id==6){
             URL imageUrl = getClass().getResource("/Images/Personal_Goals6.png");
-            personalGoalCardController.setPersonal(imageUrl);
+            GUIApplication.setPersonalCard(imageUrl);
         }
         if(id==7){
             URL imageUrl = getClass().getResource("/Images/Personal_Goals7.png");
-            personalGoalCardController.setPersonal(imageUrl);
+            GUIApplication.setPersonalCard(imageUrl);
         }
         if(id==8){
             URL imageUrl = getClass().getResource("/Images/Personal_Goals8.png");
-            personalGoalCardController.setPersonal(imageUrl);
+            GUIApplication.setPersonalCard(imageUrl);
         }
         if(id==9){
             URL imageUrl = getClass().getResource("/Images/Personal_Goals9.png");
-            personalGoalCardController.setPersonal(imageUrl);
+            GUIApplication.setPersonalCard(imageUrl);
         }
         if(id==10){
             URL imageUrl = getClass().getResource("/Images/Personal_Goals10.png");
-            personalGoalCardController.setPersonal(imageUrl);
+            GUIApplication.setPersonalCard(imageUrl);
         }
         if(id==11){
             URL imageUrl = getClass().getResource("/Images/Personal_Goals11.png");
-            personalGoalCardController.setPersonal(imageUrl);
+            GUIApplication.setPersonalCard(imageUrl);
         }
         if(id==12){
             URL imageUrl = getClass().getResource("/Images/Personal_Goals12.png");
-            personalGoalCardController.setPersonal(imageUrl);
+            GUIApplication.setPersonalCard(imageUrl);
         }
     }
 
@@ -120,51 +106,51 @@ public class GUIHandler implements ViewInterface {
         int id = card1.getID();
         if(id == 1){
             URL imageUrl = getClass().getResource("/Images/1.jpg");
-            commonGoalCardController.setCommon1(imageUrl);
+            GUIApplication.setCommonCard1(imageUrl);
         }
         if(id==2){
             URL imageUrl = getClass().getResource("/Images/2.jpg");
-            commonGoalCardController.setCommon1(imageUrl);
+            GUIApplication.setCommonCard1(imageUrl);
         }
         if(id==3){
             URL imageUrl = getClass().getResource("/Images/3.jpg");
-            commonGoalCardController.setCommon1(imageUrl);
+            GUIApplication.setCommonCard1(imageUrl);
         }
         if(id==4){
             URL imageUrl = getClass().getResource("/Images/4.jpg");
-            commonGoalCardController.setCommon1(imageUrl);
+            GUIApplication.setCommonCard1(imageUrl);
         }
         if(id==5){
             URL imageUrl = getClass().getResource("/Images/5.jpg");
-            commonGoalCardController.setCommon1(imageUrl);
+            GUIApplication.setCommonCard1(imageUrl);
         }
         if(id==6){
             URL imageUrl = getClass().getResource("/Images/6.jpg");
-            commonGoalCardController.setCommon1(imageUrl);
+            GUIApplication.setCommonCard1(imageUrl);
         }
         if(id==7){
             URL imageUrl = getClass().getResource("/Images/7.jpg");
-            commonGoalCardController.setCommon1(imageUrl);
+            GUIApplication.setCommonCard1(imageUrl);
         }
         if(id==8){
             URL imageUrl = getClass().getResource("/Images/8.jpg");
-            commonGoalCardController.setCommon1(imageUrl);
+            GUIApplication.setCommonCard1(imageUrl);
         }
         if(id==9){
             URL imageUrl = getClass().getResource("/Images/9.jpg");
-            commonGoalCardController.setCommon1(imageUrl);
+            GUIApplication.setCommonCard1(imageUrl);
         }
         if(id==10){
             URL imageUrl = getClass().getResource("/Images/10.jpg");
-            commonGoalCardController.setCommon1(imageUrl);
+            GUIApplication.setCommonCard1(imageUrl);
         }
         if(id==11){
             URL imageUrl = getClass().getResource("/Images/11.jpg");
-            commonGoalCardController.setCommon1(imageUrl);
+            GUIApplication.setCommonCard1(imageUrl);
         }
         if(id==12){
             URL imageUrl = getClass().getResource("/Images/12.jpg");
-            commonGoalCardController.setCommon1(imageUrl);
+            GUIApplication.setCommonCard1(imageUrl);
         }
     }
 
@@ -173,51 +159,51 @@ public class GUIHandler implements ViewInterface {
         int id = card2.getID();
         if(id == 1){
             URL imageUrl = getClass().getResource("/Images/1.jpg");
-            commonGoalCardController.setCommon2(imageUrl);
+            GUIApplication.setCommonCard2(imageUrl);
         }
         if(id==2){
             URL imageUrl = getClass().getResource("/Images/2.jpg");
-            commonGoalCardController.setCommon2(imageUrl);
+            GUIApplication.setCommonCard2(imageUrl);
         }
         if(id==3){
             URL imageUrl = getClass().getResource("/Images/3.jpg");
-            commonGoalCardController.setCommon2(imageUrl);
+            GUIApplication.setCommonCard2(imageUrl);
         }
         if(id==4){
             URL imageUrl = getClass().getResource("/Images/4.jpg");
-            commonGoalCardController.setCommon2(imageUrl);
+            GUIApplication.setCommonCard2(imageUrl);
         }
         if(id==5){
             URL imageUrl = getClass().getResource("/Images/5.jpg");
-            commonGoalCardController.setCommon2(imageUrl);
+            GUIApplication.setCommonCard2(imageUrl);
         }
         if(id==6){
             URL imageUrl = getClass().getResource("/Images/6.jpg");
-            commonGoalCardController.setCommon2(imageUrl);
+            GUIApplication.setCommonCard2(imageUrl);
         }
         if(id==7){
             URL imageUrl = getClass().getResource("/Images/7.jpg");
-            commonGoalCardController.setCommon2(imageUrl);
+            GUIApplication.setCommonCard2(imageUrl);
         }
         if(id==8){
             URL imageUrl = getClass().getResource("/Images/8.jpg");
-            commonGoalCardController.setCommon2(imageUrl);
+            GUIApplication.setCommonCard2(imageUrl);
         }
         if(id==9){
             URL imageUrl = getClass().getResource("/Images/9.jpg");
-            commonGoalCardController.setCommon2(imageUrl);
+            GUIApplication.setCommonCard2(imageUrl);
         }
         if(id==10){
             URL imageUrl = getClass().getResource("/Images/10.jpg");
-            commonGoalCardController.setCommon2(imageUrl);
+            GUIApplication.setCommonCard2(imageUrl);
         }
         if(id==11){
             URL imageUrl = getClass().getResource("/Images/11.jpg");
-            commonGoalCardController.setCommon2(imageUrl);
+            GUIApplication.setCommonCard2(imageUrl);
         }
         if(id==12){
             URL imageUrl = getClass().getResource("/Images/12.jpg");
-            commonGoalCardController.setCommon2(imageUrl);
+            GUIApplication.setCommonCard2(imageUrl);
         }
     }
 
@@ -248,7 +234,7 @@ public class GUIHandler implements ViewInterface {
 
     @Override
     public void setGameID(int gameId) {
-
+        GUIApplication.showAlert(Alert.AlertType.INFORMATION, "Create Game ID", "your game id is " + gameId);
     }
 
     @Override
@@ -258,7 +244,13 @@ public class GUIHandler implements ViewInterface {
 
     @Override
     public void NotifyTurnStart(int maxValueofTiles, String username) {
-
+        Platform.runLater(new Thread(()-> {
+            try {
+                GUIApplication.changeScene();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }));
     }
 
     @Override
@@ -283,12 +275,11 @@ public class GUIHandler implements ViewInterface {
 
     @Override
     public void askNickname() {
-
     }
 
     @Override
-    public void joinOrCreate(String username) {
-
+    public void joinOrCreate(String username) throws IOException {
+        GUIApplication.changeScene();
     }
 
     @Override
@@ -307,40 +298,39 @@ public class GUIHandler implements ViewInterface {
     }
 
     @Override
-    public void askColumn() {
-
+    public void askColumn() throws IOException {
+        GUIApplication.changeScene();
     }
 
-    @Override
-    public void askNicknameAgain() {
-        LoginController loginController = (LoginController) GUIApplication.getCurrentController();
-        loginController.showAlert(Alert.AlertType.WARNING, "Login error", "This nickname is already in use");
 
+    @Override
+    public void askNicknameAgain(String errorMessage) {
+        GUIApplication.showAlert(Alert.AlertType.WARNING, "Login error", errorMessage);
     }
 
     @Override
     public void askNumPlayerAgain() {
-
+        GUIApplication.showAlert(Alert.AlertType.WARNING, "Create Game error", "The game is for 2 to 4 players");
     }
 
     @Override
     public void askIDAgain() {
-
+        GUIApplication.showAlert(Alert.AlertType.WARNING, "Join Game error", "This game id is invalid");
     }
 
     @Override
     public void askNumTilesAgain() {
-
+        GUIApplication.showAlert(Alert.AlertType.WARNING, "Tiles error", "you can choose from 1 to 3 tiles");
     }
 
     @Override
     public void askTilesAgain() {
-
+        GUIApplication.showAlert(Alert.AlertType.WARNING, "Tiles error", "You can only take adjacent tiles with a free edge");
     }
 
     @Override
     public void askColumnAgain() {
-
+        GUIApplication.showAlert(Alert.AlertType.WARNING, "Tiles error", "The number of the column is invalid");
     }
 
     @Override
@@ -348,9 +338,6 @@ public class GUIHandler implements ViewInterface {
 
     }
 
-    public void setReferenceGui(GUIApplication gui){
-        this.gui = gui;
-    }
 
     public ClientInterface getClient(){
         return client;

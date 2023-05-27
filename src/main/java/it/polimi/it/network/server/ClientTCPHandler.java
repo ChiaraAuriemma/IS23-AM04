@@ -134,6 +134,8 @@ public class ClientTCPHandler implements Runnable,Serializable{
                             ErrorMessage errorMessage = new ErrorMessage(e.getMessage());
                             response = new Message(MessageType.ERROR, errorMessage);
 
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
                         }
 
                     }
@@ -151,6 +153,8 @@ public class ClientTCPHandler implements Runnable,Serializable{
                             ErrorMessage errorMessage = new ErrorMessage(e.getMessage());
                             response = new Message(MessageType.ERROR, errorMessage);
                             send(response);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
                         }
                     }
                     break;
@@ -167,6 +171,8 @@ public class ClientTCPHandler implements Runnable,Serializable{
                             ErrorMessage errorMessage = new ErrorMessage(e.getMessage());
                             response = new Message(MessageType.ERROR, errorMessage);
                             send(response);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
                         }
                     }
                     break;
@@ -181,6 +187,8 @@ public class ClientTCPHandler implements Runnable,Serializable{
                             ErrorMessage errorMessage = new ErrorMessage(e.getMessage());
                             response = new Message(MessageType.ERROR, errorMessage);
                             send(response);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
                         }
                     }
                     break;
@@ -234,7 +242,7 @@ public class ClientTCPHandler implements Runnable,Serializable{
                         if(gameController.getCurrentPlayer() == gameController.getPlayerNumber(user)){
                             try {
                                 gameController.turnDealer();
-                            } catch (InvalidIDException | IllegalValueException | RemoteException e) {
+                            } catch (InvalidIDException | IllegalValueException | IOException e) {
                                 throw new RuntimeException(e);
                             }
                         }
