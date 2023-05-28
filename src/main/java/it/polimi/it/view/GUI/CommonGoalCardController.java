@@ -42,15 +42,7 @@ public class CommonGoalCardController implements Initializable, GuiInterface {
 
 
     public void GotoGame(ActionEvent actionEvent) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(GUIApplication.class.getResource("/Game.fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
-        GuiInterface currentController = fxmlLoader.getController();
-        currentController.setClient(client);
-        GUIApplication.setCurrentController(currentController);
-        stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
-        stage.setTitle("My Shelfie");
-        stage.setScene(scene);
-        stage.show();
+        GUIApplication.changeScene();
     }
 
     @Override

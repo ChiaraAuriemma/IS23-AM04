@@ -7,11 +7,13 @@ import it.polimi.it.view.GUI.*;
 import it.polimi.it.view.ViewInterface;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
+import javafx.scene.image.Image;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class GUIHandler implements ViewInterface {
 
@@ -40,7 +42,124 @@ public class GUIHandler implements ViewInterface {
 
     @Override
     public void setBoardView(Tile[][] matrix) {
+        Image[][] board = new Image[9][9];
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                String color = matrix[i][j].getColor();
+                Image image = chooseAnImage(color);
+                board[i][j] = image;
+            }
+        }
+        GUIApplication.setBoard(board);
+    }
 
+    public Image chooseAnImage(String color){
+        Random random = new Random();
+        int randomNumber = random.nextInt(3) + 1;
+        if(color.equals("CYAN")){
+            if(randomNumber == 1){
+                URL imageUrl = getClass().getResource("/Images/Trofei1.1.png");
+                return new Image(imageUrl.toString());
+
+            }
+            if(randomNumber == 2){
+                URL imageUrl = getClass().getResource("/Images/Trofei1.2.png");
+                return new Image(imageUrl.toString());
+
+            }else {
+                URL imageUrl = getClass().getResource("/Images/Trofei1.3.png");
+                return new Image(imageUrl.toString());
+
+            }
+
+        }
+        if(color.equals("PINK")){
+            if(randomNumber == 1){
+                URL imageUrl = getClass().getResource("/Images/Piante1.1.png");
+                return new Image(imageUrl.toString());
+
+            }
+            if(randomNumber == 2){
+                URL imageUrl = getClass().getResource("/Images/Piante1.2.png");
+                return new Image(imageUrl.toString());
+
+            }else {
+                URL imageUrl = getClass().getResource("/Images/Piante1.3.png");
+                return new Image(imageUrl.toString());
+
+            }
+
+        }
+        if(color.equals("YELLOW")){
+            if(randomNumber == 1){
+                URL imageUrl = getClass().getResource("/Images/Giochi1.1.png");
+                return new Image(imageUrl.toString());
+
+            }
+            if(randomNumber == 2){
+                URL imageUrl = getClass().getResource("/Images/Giochi1.2.png");
+                return new Image(imageUrl.toString());
+
+            }else {
+                URL imageUrl = getClass().getResource("/Images/Giochi1.3.png");
+                return new Image(imageUrl.toString());
+
+            }
+
+        }
+        if(color.equals("BLUE")){
+            if(randomNumber == 1){
+                URL imageUrl = getClass().getResource("/Images/Cornici1.png");
+                return new Image(imageUrl.toString());
+
+            }
+            if(randomNumber == 2){
+                URL imageUrl = getClass().getResource("/Images/Cornici1.2.png");
+                return new Image(imageUrl.toString());
+
+            }else {
+                URL imageUrl = getClass().getResource("/Images/Cornici1.3.png");
+                return new Image(imageUrl.toString());
+
+            }
+
+        }
+        if(color.equals("GREEN")){
+            if(randomNumber == 1){
+                URL imageUrl = getClass().getResource("/Images/Gatti1.1.png");
+                return new Image(imageUrl.toString());
+
+            }
+            if(randomNumber == 2){
+                URL imageUrl = getClass().getResource("/Images/Gatti1.2.png");
+                return new Image(imageUrl.toString());
+
+            }else {
+                URL imageUrl = getClass().getResource("/Images/Gatti1.3.png");
+                return new Image(imageUrl.toString());
+
+            }
+
+        }
+        if(color.equals("WHITE")){
+            if(randomNumber == 1){
+                URL imageUrl = getClass().getResource("/Images/Libri1.1.png");
+                return new Image(imageUrl.toString());
+
+            }
+            if(randomNumber == 2){
+                URL imageUrl = getClass().getResource("/Images/Libri1.2.png");
+                return new Image(imageUrl.toString());
+
+            }else {
+                URL imageUrl = getClass().getResource("/Images/Libri1.3.png");
+                return new Image(imageUrl.toString());
+
+            }
+
+        }
+
+        return null;
     }
 
     @Override
@@ -254,8 +373,14 @@ public class GUIHandler implements ViewInterface {
     }
 
     @Override
-    public void update() {
-
+    public void update() throws IOException {
+        Platform.runLater(new Thread(()-> {
+            try {
+                GUIApplication.changeScene();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }));
     }
 
     @Override

@@ -16,6 +16,7 @@ import javafx.scene.control.TextField;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class PersonalGoalCardController implements Initializable, GuiInterface {
@@ -37,15 +38,7 @@ public class PersonalGoalCardController implements Initializable, GuiInterface {
 
 
     public void GotoGame(ActionEvent actionEvent) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(GUIApplication.class.getResource("/Game.fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
-        GuiInterface currentController = fxmlLoader.getController();
-        currentController.setClient(client);
-        GUIApplication.setCurrentController(currentController);
-        stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
-        stage.setTitle("My Shelfie");
-        stage.setScene(scene);
-        stage.show();
+        GUIApplication.changeScene();
     }
 
     public void setClient(ClientInterface clientRef){

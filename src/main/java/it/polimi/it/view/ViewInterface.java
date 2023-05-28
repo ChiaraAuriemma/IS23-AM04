@@ -67,7 +67,7 @@ public interface ViewInterface {
 
 
     //io lo uso per stampare la nuova cli da capo, a te potrebbe non servire
-    public void update();
+    public void update() throws IOException;
 
 
 

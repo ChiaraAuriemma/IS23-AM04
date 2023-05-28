@@ -89,7 +89,7 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
 
 
     @Override
-    public void takeableTiles(List<List<Tile>> choosableTilesList, int num) throws RemoteException {
+    public void takeableTiles(List<List<Tile>> choosableTilesList, int num) throws RemoteException, IOException {
         view.update();
         System.out.println("Please choose " + num + " tiles from the board...\n");
         view.takeableTiles(choosableTilesList);
@@ -223,6 +223,8 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
                         takeableTiles(takeableTilesResponse.getChoosableTilesList(), takeableTilesResponse.getChoosableTilesList().get(0).size());
                     } catch (RemoteException e) { //trovo un modo migliore per gestirla
                         throw new RuntimeException(e);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
                     }
                     //view : passo choosableTilesList per "illuminare" sulla board le tiles prendibili
                     stage.setStage(TurnStages.CHOOSETILES);
@@ -270,14 +272,23 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
                     recover(recover.getGame(), recover.getGameID());
                     break;
 
-                case UPDATEVIEW: updateView();
+                case UPDATEVIEW:
+                    try {
+                        updateView();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                     break;
 
                 case CHATUPDATE:
                     ChatUpdate chatUpdate = (ChatUpdate) response.getPayload();
                     view.updateChat(chatUpdate.getChatUpdate());
                     if(stage.getStage() == TurnStages.NOTURN){
-                        view.update();
+                        try {
+                            view.update();
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
                     }
                     break;
 
@@ -386,7 +397,7 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
     }
 
     @Override
-    public void updateView() {
+    public void updateView() throws IOException {
         view.update();
     }
 
@@ -401,7 +412,11 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
     public void updateChat(List<String> currentChat) throws RemoteException{
         view.updateChat(currentChat);
         if(stage.getStage() == TurnStages.NOTURN){
-            view.update();
+            try {
+                view.update();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 

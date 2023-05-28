@@ -186,7 +186,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
     }
 
     @Override
-    public void updateView() {
+    public void updateView() throws IOException {
         view.update();
     }
 
@@ -196,7 +196,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
     }
 
     @Override
-    public void updateChat(List<String> currentChat) throws RemoteException{
+    public void updateChat(List<String> currentChat) throws IOException {
         view.updateChat(currentChat);
         if(stage.getStage() == TurnStages.NOTURN){
             view.update();
@@ -235,7 +235,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
     }
 
     @Override
-    public void askColumn(boolean[] choosableColumns) {
+    public void askColumn(boolean[] choosableColumns) throws IOException {
         view.update();
         view.setPossibleColumns(choosableColumns);
     }
@@ -260,7 +260,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
 
 
     @Override
-    public void takeableTiles(List<List<Tile>> choosableTilesList, int num) throws RemoteException {
+    public void takeableTiles(List<List<Tile>> choosableTilesList, int num) throws IOException {
         //view : faccio vedere illuminate le tiles nella lista
         view.update();
         switch (num){

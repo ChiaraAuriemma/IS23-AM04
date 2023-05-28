@@ -237,6 +237,8 @@ public class VirtualView implements Serializable {
             }catch(RemoteException e){
                 System.out.println(e.getMessage() + " user: " + username +"/n");
                 disconnect_user(username);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
 
         }
@@ -443,6 +445,8 @@ public class VirtualView implements Serializable {
                     }catch(RemoteException e){
                         System.out.println(e.getMessage() + " user: " + receiver.getNickname() +"/n");
                         disconnect_user(receiver.getNickname());
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
                     }
                 }
             }
@@ -507,6 +511,8 @@ public class VirtualView implements Serializable {
                     }catch(RemoteException e){
                         System.out.println(e.getMessage() + " user: " + receiver.getNickname() +"/n");
                         disconnect_user(receiver.getNickname());
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
                     }
                 }
             }

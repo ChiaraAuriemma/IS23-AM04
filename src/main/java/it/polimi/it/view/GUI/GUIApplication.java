@@ -6,7 +6,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
+import javafx.scene.image.Image;
 
+import java.awt.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -26,7 +28,10 @@ public class GUIApplication extends Application {
     private static URL PersonalCard;
     private static URL CommonCard1;
     private static URL CommonCard2;
+    private static Image[][] board = new Image[9][9];
     private static Stage stageRef;
+
+    private static int numTiles;
 
 
     @Override
@@ -130,7 +135,18 @@ public class GUIApplication extends Application {
             stageRef.setResizable(false);
             stageRef.show();
         }
-        if(client.getGameStage().equals(TurnStages.NOTURN) || client.getGameStage().equals(TurnStages.CHOOSETILES)){
+        if(client.getGameStage().equals(TurnStages.CHOOSETILES)){
+            FXMLLoader fxmlLoader = new FXMLLoader(GUIApplication.class.getResource("/ChooseTiles.fxml"));
+            Scene scene = new Scene(fxmlLoader.load());
+            setCurrentController(fxmlLoader.getController());
+            currentController.setClient(client);
+            GUIApplication.setCurrentController(currentController);
+            stageRef.setTitle("My Shelfie");
+            stageRef.setScene(scene);
+            stageRef.setResizable(false);
+            stageRef.show();
+        }
+        if(client.getGameStage().equals(TurnStages.NOTURN)){
             FXMLLoader fxmlLoader = new FXMLLoader(GUIApplication.class.getResource("/Game.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
             setCurrentController(fxmlLoader.getController());
@@ -200,6 +216,22 @@ public class GUIApplication extends Application {
 
     public static void setCommonCard2(URL commonCard2Ref) {
         CommonCard2 = commonCard2Ref;
+    }
+
+    public static Image[][] getBoard() {
+        return board;
+    }
+
+    public static void setBoard(Image[][] boardRef) {
+        board = boardRef;
+    }
+
+    public static int getNumTiles() {
+        return numTiles;
+    }
+
+    public static void setNumTiles(int numTilesRef) {
+        numTiles = numTilesRef;
     }
 
     public static GuiInterface getCurrentController(){

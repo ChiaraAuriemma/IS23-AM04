@@ -21,7 +21,7 @@ public interface ClientInterface extends Remote, Serializable {
     //qui devo mettere solo i metodi visibili dal server (quindi tolgo startclient e login)
     public void login(String userName) throws RemoteException, IOException;
 
-    public void takeableTiles(List<List<Tile>> choosableTilesList, int num) throws RemoteException;
+    public void takeableTiles(List<List<Tile>> choosableTilesList, int num) throws RemoteException, IOException;
 
     public void setStartOrder(ArrayList<String> order) throws RemoteException;
 
@@ -57,11 +57,11 @@ public interface ClientInterface extends Remote, Serializable {
 
     public void recover(Game game, int gameID) throws RemoteException;
 
-    public void updateView() throws RemoteException;
+    public void updateView() throws IOException;
 
     void sendChatMessage(String chatMessage) throws RemoteException;
 
-    void updateChat(List<String> currentChat)throws  RemoteException;
+    void updateChat(List<String> currentChat) throws IOException;
 
     void setStageToNoTurn() throws RemoteException;
 

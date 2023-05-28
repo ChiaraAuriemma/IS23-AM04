@@ -771,7 +771,6 @@ public class View implements ViewInterface, Serializable {
 
 
     public void askTilesAgain(){
-
         out.println("One or more of the tiles is not takeable! Retry...\n");
     }
 
