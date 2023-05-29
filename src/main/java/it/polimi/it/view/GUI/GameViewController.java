@@ -36,9 +36,6 @@ public class GameViewController implements Initializable, GuiInterface {
     GridPane LivingRoom;
 
 
-    private double mouseAnchorX;
-    private double mouseAnchorY;
-
     private static ClientInterface client;
     private static GUIApplication guiApp;
     private static GUIHandler guiHandler;
@@ -80,20 +77,6 @@ public class GameViewController implements Initializable, GuiInterface {
                 }
             }
         }
-    }
-
-
-    public void makeDraggable(Node node){
-
-        node.setOnMousePressed(mouseEvent -> {
-            mouseAnchorX = mouseEvent.getX();
-            mouseAnchorY = mouseEvent.getY();
-        });
-
-        node.setOnMouseDragged(mouseEvent -> {
-            node.setLayoutX(mouseEvent.getSceneX() - mouseAnchorX);
-            node.setLayoutY(mouseEvent.getSceneY() - mouseAnchorY);
-        });
     }
 
     public void GotoPersonalGoalCard(ActionEvent actionEvent) throws IOException {
