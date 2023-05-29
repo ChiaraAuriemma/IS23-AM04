@@ -266,9 +266,13 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
 
                     //view : passo la lista degli utenti e la lista dei loro punteggi
                     break;
-                case THISISNOTTHEDAY:
+                case THISNOTTHEDAY:
                     ThisNotTheDay recover = (ThisNotTheDay) response.getPayload();
-                    recover(recover.getGame(), recover.getGameID());
+                    try {
+                        recover(recover.getGame(), recover.getGameID(), recover.getMatrix(), recover.getShelfies(), recover.getCard1(), recover.getCard2(), recover.getPersonalGoalCard(), recover.getPoints(), recover.getPlayerList());
+                    } catch (RemoteException e) {
+                        throw new RuntimeException(e);
+                    }
                     break;
 
                 case UPDATEVIEW:
@@ -391,8 +395,8 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
     }
 
     @Override
-    public void recover(Game game, int gameID) {
-        //view.recover(game, gameID, username);
+    public void recover(Game game, int gameID, Tile[][] matrix, ArrayList<Tile[][]> shelfies, CommonGoalCard card1, CommonGoalCard card2, PersonalGoalCard personalGoalCard, ArrayList<Integer> points, List<String> playerList) throws RemoteException {
+
     }
 
     @Override

@@ -3,20 +3,19 @@ package it.polimi.it.network.server;
 import it.polimi.it.model.Card.CommonGoalCards.CommonGoalCard;
 import it.polimi.it.model.Card.PersonalGoalCards.PersonalGoalCard;
 import it.polimi.it.model.Game;
-import it.polimi.it.model.Shelfie;
 import it.polimi.it.model.Tiles.PossibleColors;
 import it.polimi.it.model.Tiles.Tile;
 import it.polimi.it.model.User;
 import it.polimi.it.network.client.ClientInterface;
 import it.polimi.it.network.message.Message;
 import it.polimi.it.network.message.MessageType;
+import it.polimi.it.network.message.others.ThisNotTheDay;
 import it.polimi.it.network.message.responses.*;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 
 import java.io.Serializable;
-import java.net.Socket;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -468,23 +467,31 @@ public class VirtualView implements Serializable {
 
 
     //quando scommento questo metodo mi ricordo di mettere lo username al posto di user!!!!!!!!!!!!!
-    /*
-    public void resetAfterDisconnection(User user, int gameID) throws RemoteException {
+    //////////////////////////////////////////////
+    //////////////////////////////////////////////
+    ///////////////////////
+    ///////////////////////
+    ///////////////////////
+
+
+
+
+
+    public void resetAfterDisconnection(String user, int gameID, Tile[][] matrix, ArrayList<Tile[][]> shelfies, CommonGoalCard card1, CommonGoalCard card2, PersonalGoalCard personalGoalCard, ArrayList<Integer> points, List<String> playerList) throws RemoteException {
 
         if (typeOfConnection.get(user).equalsIgnoreCase("TCP")){
-            ThisNotTheDay recover = new ThisNotTheDay(game,gameID);
-            Message message = new Message(MessageType.THISISNOTTHEDAY, recover);
+            ThisNotTheDay recover = new ThisNotTheDay(game,gameID, matrix, shelfies, card1, card2, personalGoalCard, points, playerList);
+            Message message = new Message(MessageType.THISNOTTHEDAY, recover);
             sendTCPMessage(userTCP.get(user), message);
 
         }else if (typeOfConnection.get(user).equalsIgnoreCase("RMI")){
             ClientInterface clientRMI = userRMI.get(user);
-            clientRMI.recover(game, gameID);
+            clientRMI.recover(game,gameID, matrix, shelfies, card1, card2, personalGoalCard, points, playerList);
 
         }
     }
 
 
-     */
     public void setServerTCP(ServerTCP serverTCP) {
         this.serverTCP = serverTCP;
     }

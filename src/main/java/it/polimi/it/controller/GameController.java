@@ -306,7 +306,7 @@ public class GameController implements Serializable {
      * @throws RemoteException
      */
     public void resetGame(User user) throws RemoteException {
-        game.getVirtualView().removeDisconnection(user.getNickname());
+        //game.getVirtualView().removeDisconnection(user.getNickname());
         Tile[][] matrix = game.getBoard().getMatrix();
         ArrayList<Tile[][]> shelfies = new ArrayList<>();
         for(int i=0; i < game.getNumplayers(); i++){
@@ -319,8 +319,12 @@ public class GameController implements Serializable {
         for(int i=0; i < game.getNumplayers(); i++){
             points.add(game.getPoint(i));
         }
+        ArrayList<String> playersOrder = new ArrayList<>();
+        for(int i=0; i < game.getNumplayers(); i++){
+            playersOrder.add(playerList.get(i).getNickname());
+        }
         //devo mandare l'ordine dei giocatori se no  non capisce più un cazzo il client
-        //game.getVirtualView().resetAfterDisconnection(user.getNickname(), game.getGameid(), matrix, shelfies, card1, card2, personalGoalCard, points, playerList);
+        game.getVirtualView().resetAfterDisconnection(user.getNickname(), game.getGameid(), matrix, shelfies, card1, card2, personalGoalCard, points, playersOrder);
     }
 
 
@@ -371,8 +375,9 @@ public class GameController implements Serializable {
         return playerList.stream().filter(user -> user.getNickname().equals(nickname)).collect(Collectors.toList()).get(0);
     }
 
-    public void swapPlayers(User old, User newborn) {
+    public void swapPlayers(User old, User newborn) throws RemoteException {
         playerList.set(playerList.indexOf(old), newborn);
         game.swapPlaysers(old, newborn);
+        resetGame(newborn);
     }
 }
