@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class ChooseTilesController implements GuiInterface, Initializable {
@@ -29,7 +30,6 @@ public class ChooseTilesController implements GuiInterface, Initializable {
     private static GUIApplication  guiApp;
     private static GUIHandler guiHandler;
     private static Stage stage;
-    private Image tmp1,tmp2,tmp3;
 
     private int count = 0;
     private static ArrayList<Tile> Tiles;
@@ -82,49 +82,43 @@ public class ChooseTilesController implements GuiInterface, Initializable {
 
 
     public PossibleColors getColor(ImageView image){
-        tmp1 = new Image(getClass().getResource("/Images/Trofei1.1.png").toString());
-        tmp2 = new Image(getClass().getResource("/Images/Trofei1.2.png").toString());
-        tmp3 = new Image(getClass().getResource("/Images/Trofei1.3.png").toString());
-        if(image.getImage().equals(tmp1) || image.getImage().equals(tmp2) || image.getImage().equals(tmp3)){
+
+        if((image.getImage().getUrl().equals((getClass().getResource("/Images/Trofei1.1.png")).toString()) || (image.getImage().getUrl().equals((getClass().getResource("/Images/Trofei1.2.png")).toString()))
+            || (image.getImage().getUrl().equals((getClass().getResource("/Images/Trofei1.3.png")).toString())))){
             return PossibleColors.CYAN;
         }
 
-        tmp1 = new Image(getClass().getResource("/Images/Piante1.1.png").toString());
-        tmp2 = new Image(getClass().getResource("/Images/Piante1.2.png").toString());
-        tmp3 = new Image(getClass().getResource("/Images/Piante1.3.png").toString());
-        if(image.getImage().equals(tmp1) || image.getImage().equals(tmp2) || image.getImage().equals(tmp3)){
+
+        if((image.getImage().getUrl().equals((getClass().getResource("/Images/Piante1.1.png")).toString()) || (image.getImage().getUrl().equals((getClass().getResource("/Images/Piante1.2.png")).toString()))
+                || (image.getImage().getUrl().equals((getClass().getResource("/Images/Piante1.3.png")).toString())))){
             return PossibleColors.PINK;
         }
 
-        tmp1 = new Image(getClass().getResource("/Images/Giochi1.1.png").toString());
-        tmp2 = new Image(getClass().getResource("/Images/Giochi1.2.png").toString());
-        tmp3 = new Image(getClass().getResource("/Images/Giochi1.3.png").toString());
-        if(image.getImage().equals(tmp1) || image.getImage().equals(tmp2) || image.getImage().equals(tmp3)){
+
+        if((image.getImage().getUrl().equals((getClass().getResource("/Images/Giochi1.1.png")).toString()) || (image.getImage().getUrl().equals((getClass().getResource("/Images/Giochi1.2.png")).toString()))
+                || (image.getImage().getUrl().equals((getClass().getResource("/Images/Giochi1.3.png")).toString())))){
             return PossibleColors.YELLOW;
         }
 
-        tmp1 = new Image(getClass().getResource("/Images/Cornici1.png").toString());
-        tmp2 = new Image(getClass().getResource("/Images/Cornici1.2.png").toString());
-        tmp3 = new Image(getClass().getResource("/Images/Cornici1.3.png").toString());
-        if(image.getImage().equals(tmp1) || image.getImage().equals(tmp2) || image.getImage().equals(tmp3)){
+
+        if((image.getImage().getUrl().equals((getClass().getResource("/Images/Cornici1.png")).toString()) || (image.getImage().getUrl().equals((getClass().getResource("/Images/Cornici1.2.png")).toString()))
+                || (image.getImage().getUrl().equals((getClass().getResource("/Images/Cornici1.3.png")).toString())))){
             return PossibleColors.BLUE;
         }
 
-        tmp1 = new Image(getClass().getResource("/Images/Gatti1.1.png").toString());
-        tmp2 = new Image(getClass().getResource("/Images/Gatti1.2.png").toString());
-        tmp3 = new Image(getClass().getResource("/Images/Gatti1.3.png").toString());
-        if(image.getImage().equals(tmp1) || image.getImage().equals(tmp2) || image.getImage().equals(tmp3)){
+
+        if((image.getImage().getUrl().equals((getClass().getResource("/Images/Gatti1.1.png")).toString()) || (image.getImage().getUrl().equals((getClass().getResource("/Images/Gatti1.2.png")).toString()))
+                || (image.getImage().getUrl().equals((getClass().getResource("/Images/Gatti1.3.png")).toString())))){
             return PossibleColors.GREEN;
         }
 
-        tmp1 = new Image(getClass().getResource("/Images/Libri1.1.png").toString());
-        tmp2 = new Image(getClass().getResource("/Images/Libri1.2.png").toString());
-        tmp3 = new Image(getClass().getResource("/Images/Libri1.3.png").toString());
-        if(image.getImage().equals(tmp1) || image.getImage().equals(tmp2) || image.getImage().equals(tmp3)){
+        if((image.getImage().getUrl().equals((getClass().getResource("/Images/Libri1.1.png")).toString()) || (image.getImage().getUrl().equals((getClass().getResource("/Images/Libri1.2.png")).toString()))
+                || (image.getImage().getUrl().equals((getClass().getResource("/Images/Libri1.3.png")).toString())))){
             return PossibleColors.WHITE;
         }
 
         return null;
+
     }
 
 

@@ -37,6 +37,10 @@ public class ChooseColumnController implements GuiInterface, Initializable {
 
     }
 
+    public void ChooseColumn0(ActionEvent actionEvent) throws RemoteException {
+        client.chooseColumn(0);
+    }
+
     public void ChooseColumn1(ActionEvent actionEvent) throws RemoteException {
         client.chooseColumn(1);
     }
@@ -45,16 +49,12 @@ public class ChooseColumnController implements GuiInterface, Initializable {
         client.chooseColumn(2);
     }
 
-    public void ChooseColumn3(ActionEvent actionEvent) throws RemoteException {
+    public void ChooseButton3(ActionEvent actionEvent) throws RemoteException {
         client.chooseColumn(3);
     }
 
     public void ChooseButton4(ActionEvent actionEvent) throws RemoteException {
         client.chooseColumn(4);
-    }
-
-    public void ChooseButton5(ActionEvent actionEvent) throws RemoteException {
-        client.chooseColumn(5);
     }
 
     @Override
