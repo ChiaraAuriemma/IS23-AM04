@@ -409,8 +409,22 @@ public class View implements ViewInterface, Serializable {
     }
 
 
-    public void takeableTiles(List<List<Tile>> choosableTilesList) {
+    public void takeableTiles(List<List<Tile>> choosableTilesList, int num) {
         this.choosableTilesList = choosableTilesList;
+        switch (num){
+            case 1:
+                out.println("Please choose " + num + " tiles from the board... ( Use take_tiles>>(row,column) )\n");
+                break;
+            case 2:
+                out.println("Please choose " + num + " tiles from the board... ( Use take_tiles>>(row,column);(row,column) )\n");
+                break;
+            case 3:
+                out.println("Please choose " + num + " tiles from the board... ( Use take_tiles>>(row,column);(row,column);(row,column) )\n");
+                break;
+            default:
+                out.println("Wrong number");
+                break;
+        }
     }
 
 

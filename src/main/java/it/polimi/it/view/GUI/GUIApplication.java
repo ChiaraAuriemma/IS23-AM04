@@ -48,25 +48,6 @@ public class GUIApplication extends Application {
     }
 
     public static void changeScene() throws IOException {
-        /*
-        if(client.getGameStage().equals(TurnStages.LOGIN)){
-            return "/Login.fxml";
-        }
-        if(client.getGameStage().equals(TurnStages.CREATEorJOIN)){
-            if(createOrJoin.equals("JOIN"))
-                return "/JoinGame.fxml";
-            else return "/CreateGame.fxml";
-        }
-        if(client.getGameStage().equals(TurnStages.NOTHING)){
-            return "/WaitingRoom.fxml";
-        }
-        if(client.getGameStage().equals(TurnStages.NOTURN) || client.getGameStage().equals(TurnStages.TILESNUM) ||
-                client.getGameStage().equals(TurnStages.CHOOSETILES) || client.getGameStage().equals(TurnStages.CHOOSECOLUMN)){
-            return "/Game.fxml";
-        }
-
-         */
-
         if(client.getGameStage().equals(TurnStages.LOGIN)){
             FXMLLoader fxmlLoader = new FXMLLoader(GUIApplication.class.getResource("/Login.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
