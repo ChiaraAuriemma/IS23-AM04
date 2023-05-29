@@ -630,54 +630,54 @@ public class View implements ViewInterface, Serializable {
 
     private String setLine14() {
         String returnString = null;
-        returnString =  border + "   "+ common1 +"  " + sColorPicker(playersPersonalCard, 5, 0)
+        returnString =  border + "   "+ common1 +"  5" + sColorPicker(playersPersonalCard, 5, 0)
                 + sColorPicker(playersPersonalCard, 5, 1)+ sColorPicker(playersPersonalCard, 5, 2)+ sColorPicker(playersPersonalCard, 5, 3)
-                + sColorPicker(playersPersonalCard, 5, 4) + "\u001B[0m  " + border;
+                + sColorPicker(playersPersonalCard, 5, 4) + "\u001B[0m " + border;
         return returnString;
     }
 
 
     private String setLine15() {
         String returnString = null;
-        returnString =  border + "   "+ common1SecondPart +"  " + sColorPicker(playersPersonalCard, 4, 0)
+        returnString =  border + "   "+ common1SecondPart +"  4" + sColorPicker(playersPersonalCard, 4, 0)
                 + sColorPicker(playersPersonalCard, 4, 1)+ sColorPicker(playersPersonalCard, 4, 2)+ sColorPicker(playersPersonalCard, 4, 3)
-                + sColorPicker(playersPersonalCard, 4, 4) + "\u001B[0m  " + border;
+                + sColorPicker(playersPersonalCard, 4, 4) + "\u001B[0m " + border;
         return returnString;
     }
 
 
     private String setLine16() {
         String returnString = null;
-        returnString =  border + "                                                    "+ sColorPicker(playersPersonalCard, 3, 0)
+        returnString =  border + "                                                    3"+ sColorPicker(playersPersonalCard, 3, 0)
                 + sColorPicker(playersPersonalCard, 3, 1)+ sColorPicker(playersPersonalCard, 3, 2)+ sColorPicker(playersPersonalCard, 3, 3)
-                + sColorPicker(playersPersonalCard, 3, 4) + "\u001B[0m  " + border;
+                + sColorPicker(playersPersonalCard, 3, 4) + "\u001B[0m " + border;
         return returnString;
     }
 
 
     private String setLine17() {
         String returnString = null;
-        returnString =  border + "   Common Goal:                                     "+ sColorPicker(playersPersonalCard, 2, 0)
+        returnString =  border + "   Common Goal:                                     2"+ sColorPicker(playersPersonalCard, 2, 0)
                 + sColorPicker(playersPersonalCard, 2, 1)+ sColorPicker(playersPersonalCard, 2, 2)+ sColorPicker(playersPersonalCard, 2, 3)
-                + sColorPicker(playersPersonalCard, 2, 4) + "\u001B[0m  " + border;
+                + sColorPicker(playersPersonalCard, 2, 4) + "\u001B[0m " + border;
         return returnString;
     }
 
 
     private String setLine18() {
         String returnString = null;
-        returnString =  border + "   "+ common2 +"  " + sColorPicker(playersPersonalCard, 1, 0)
+        returnString =  border + "   "+ common2 +"  1" + sColorPicker(playersPersonalCard, 1, 0)
                 + sColorPicker(playersPersonalCard, 1, 1)+ sColorPicker(playersPersonalCard, 1, 2)+ sColorPicker(playersPersonalCard, 1, 3)
-                + sColorPicker(playersPersonalCard, 1, 4) + "\u001B[0m  " + border;
+                + sColorPicker(playersPersonalCard, 1, 4) + "\u001B[0m " + border;
         return returnString;
     }
 
 
     private String setLine19() {
         String returnString = null;
-        returnString =  border + "   "+ common2SecondPart +"  " + sColorPicker(playersPersonalCard, 0, 0)
+        returnString =  border + "   "+ common2SecondPart +"  0" + sColorPicker(playersPersonalCard, 0, 0)
                 + sColorPicker(playersPersonalCard, 0, 1)+ sColorPicker(playersPersonalCard, 0, 2)+ sColorPicker(playersPersonalCard, 0, 3)
-                + sColorPicker(playersPersonalCard, 0, 4) + "\u001B[0m  " + border;
+                + sColorPicker(playersPersonalCard, 0, 4) + "\u001B[0m " + border;
         return returnString;
     }
 

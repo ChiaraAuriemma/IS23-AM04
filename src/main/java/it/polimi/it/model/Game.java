@@ -334,4 +334,12 @@ public class Game implements Serializable {
     public PersonalGoalCard getPersonalCard(User user){
         return this.cards.get(players.indexOf(user));
     }
+
+    public void swapPlaysers(User old, User newborn) {
+        players.set(players.indexOf(old), newborn);
+       // playersOrder.set(playersOrder.indexOf(old), newborn);
+        newborn.setBoard(board);
+        newborn.setGame(this);
+        newborn.setInGame(true);
+    }
 }

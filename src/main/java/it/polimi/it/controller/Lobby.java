@@ -88,29 +88,59 @@ public class Lobby implements Serializable {
         if(nickname == null || nickname.length() ==0){
             throw new EmptyNicknameException("You have to write something");
         }else{
-            if(userList.stream()
+            if(userList.stream()    //controllo che nessun utente abbia già quel nick
                         .map(currentUser -> currentUser.getNickname())
                         .noneMatch(name -> name.equals(nickname)))
             {
                 user = new User(nickname);
                 userList.add(user);
-            }else{
-                Optional<User> user = userList.stream()
-                        .filter(name -> name.getNickname().equals(nickname))
-                        .findFirst();
-                if(!user.get().getInGame()) {
-                    /*Optional<Integer> disconnectedGameID = gameControllerList.stream()
-                            .filter(gc -> gc.getPlayerList().stream()
-                                    .anyMatch(u -> u.getNickname().equals(nickname)))
-                            .map(GameController::getGameID)
-                            .findFirst();*/
-                    user.get().setInGame(true);
+            }else{ //c'è qualcuno con quel nick
 
-                    int gameID = user.get().getGame().getGameid();
-                    List<GameController> findGameController = gameControllerList.stream().filter(gameController -> gameController.getGame().getGameid() == gameID).collect(Collectors.toList());
+                if(!userList.get(userList.indexOf(userList
+                        .stream().filter(u -> Objects.equals(u.getNickname(), nickname))
+                        .collect(Collectors.toList()).get(0))).getInGame()) {//caso in cui è disconnesso
+                                                                                //in una partita in corso
 
-                    GameController gc = findGameController.get(0);
-                    gc.resetGame(user.get());
+                    /**
+                     * 		-> crea nuova istanza di user, copiando personal e shelfie
+                     * 		-> sostituisci in game e gameController quell'utente
+                     */
+
+                    user = new User(nickname);
+                    user.setInGame(true);
+                    user.setShelfie(userList.get(userList.indexOf(userList
+                            .stream().filter(u -> Objects.equals(u.getNickname(), nickname))
+                            .collect(Collectors.toList()).get(0))).getShelfie());
+
+                    //la personal è salvata per posizione in game
+
+                    //in game e gamecontroller bisogna fare user.setgame e user.setboard
+
+
+
+
+
+
+                    int gameID = userList.get(userList.indexOf(userList
+                            .stream().filter(u -> Objects.equals(u.getNickname(), nickname))
+                            .collect(Collectors.toList()).get(0))).getGame().getGameid();
+
+                    gameControllerList.stream().filter(gameController -> gameController.getGame().getGameid() == gameID).collect(Collectors.toList()).get(0).swapPlayers(
+                            userList.stream().filter(u -> Objects.equals(u.getNickname(), nickname)).collect(Collectors.toList()).get(0), user);
+
+
+
+                    //ULTIMA OPERAZIONE DA FARE:
+                    userList.remove(userList.get(userList.indexOf(userList
+                            .stream().filter(u -> Objects.equals(u.getNickname(), nickname))
+                            .collect(Collectors.toList()).get(0))));
+
+                    userList.add(user);
+
+                    System.out.println(user.getNickname() + "reconnected!");
+
+                    //////////////////////////////////VECCHIE OPERAZIONI
+                   // gc.resetGame(user.get());
                 }else{
                     throw new ExistingNicknameException("This nickname already exists!");//mandare messaggio a view
                 }

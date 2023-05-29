@@ -172,7 +172,6 @@ public class GameController implements Serializable {
             }
             game.getVirtualView().notifyTurnStart(playerList.get(currentPlayer));
             game.getVirtualView().viewUpdate(chat.getCurrentChat());
-
         }
     }
 
@@ -370,5 +369,10 @@ public class GameController implements Serializable {
 
     public User getUser(String nickname){
         return playerList.stream().filter(user -> user.getNickname().equals(nickname)).collect(Collectors.toList()).get(0);
+    }
+
+    public void swapPlayers(User old, User newborn) {
+        playerList.set(playerList.indexOf(old), newborn);
+        game.swapPlaysers(old, newborn);
     }
 }
