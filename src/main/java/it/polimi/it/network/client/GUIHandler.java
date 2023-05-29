@@ -37,7 +37,7 @@ public class GUIHandler implements ViewInterface {
 
     @Override
     public void setOrderView(ArrayList<String> order) {
-
+        //metodo per i nomi dei giocatori
     }
 
     @Override

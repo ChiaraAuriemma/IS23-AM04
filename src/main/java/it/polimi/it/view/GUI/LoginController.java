@@ -33,8 +33,12 @@ public class LoginController implements GuiInterface{
     public void GotoJoinGame(ActionEvent actionEvent) throws IOException {
         GUIApplication.setCreateOrJoin("JOIN");
         if(UsernameField.getText().length() > 0 && UsernameField.getText().length() < 12){
-            client.login(UsernameField.getText());
-            GUIApplication.setNickname(UsernameField.getText());
+            String nickname = UsernameField.getText();
+            while(nickname.length() < 12){
+                nickname = nickname.concat(" ");
+            }
+            client.login(nickname);
+            GUIApplication.setNickname(nickname);
             /*
             FXMLLoader fxmlLoader = new FXMLLoader(GUIApplication.class.getResource(Objects.requireNonNull(GUIApplication.changeScene())));
             Scene scene = new Scene(fxmlLoader.load());
