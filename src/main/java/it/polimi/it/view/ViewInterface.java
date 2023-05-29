@@ -30,7 +30,7 @@ public interface ViewInterface {
 
     //Tiles della board che in un dato turno possono essere prese
         //al momento inutilizzato
-    public void takeableTiles(List<List<Tile>> choosableTilesList);
+    public void takeableTiles(List<List<Tile>> choosableTilesList, int num);
 
     //se volessi illuminare le colonne sceglibili, nella cli non lo uso
     public void setPossibleColumns(boolean[] choosableColumns);

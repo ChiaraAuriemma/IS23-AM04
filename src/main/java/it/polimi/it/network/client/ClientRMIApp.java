@@ -263,22 +263,9 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
     public void takeableTiles(List<List<Tile>> choosableTilesList, int num) throws IOException {
         //view : faccio vedere illuminate le tiles nella lista
         view.update();
-        switch (num){
-            case 1:
-                System.out.println("Please choose " + num + " tiles from the board... ( Use take_tiles>>(row,column) )\n");
-                break;
-            case 2:
-                System.out.println("Please choose " + num + " tiles from the board... ( Use take_tiles>>(row,column);(row,column) )\n");
-                break;
-            case 3:
-                System.out.println("Please choose " + num + " tiles from the board... ( Use take_tiles>>(row,column);(row,column);(row,column) )\n");
-                break;
-            default:
-                System.out.println("Wrong number");
-                break;
-        }
 
-        view.takeableTiles(choosableTilesList);
+
+        view.takeableTiles(choosableTilesList, num);
     }
 
     public void setGameStage(GameStage gameStage) throws RemoteException{

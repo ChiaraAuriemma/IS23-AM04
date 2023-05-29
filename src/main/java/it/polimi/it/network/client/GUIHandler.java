@@ -327,7 +327,7 @@ public class GUIHandler implements ViewInterface {
     }
 
     @Override
-    public void takeableTiles(List<List<Tile>> choosableTilesList) {
+    public void takeableTiles(List<List<Tile>> choosableTilesList, int num) {
 
     }
 
