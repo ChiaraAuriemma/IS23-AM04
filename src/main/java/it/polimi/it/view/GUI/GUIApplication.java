@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 
 public class GUIApplication extends Application {
 
@@ -32,6 +33,8 @@ public class GUIApplication extends Application {
     private static Stage stageRef;
 
     private static int numTiles;
+
+    private static ArrayList<String> players;
 
 
     @Override
@@ -128,7 +131,7 @@ public class GUIApplication extends Application {
             stageRef.show();
         }
         if(client.getGameStage().equals(TurnStages.NOTURN)){
-            FXMLLoader fxmlLoader = new FXMLLoader(GUIApplication.class.getResource("/Game.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(GUIApplication.class.getResource("/WaitingRoom.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
             setCurrentController(fxmlLoader.getController());
             currentController.setClient(client);
@@ -173,6 +176,14 @@ public class GUIApplication extends Application {
 
     public static String getNickname() {
         return nickname;
+    }
+
+    public static ArrayList<String> getPlayers() {
+        return players;
+    }
+
+    public static void setPlayers(ArrayList<String> playersRef) {
+        players = playersRef;
     }
 
     public static URL getPersonalCard() {

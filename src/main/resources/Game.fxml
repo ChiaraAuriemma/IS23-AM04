@@ -5,6 +5,9 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.it.view.GUI.GameViewController">
@@ -44,86 +47,10 @@
             <Image url="@Images/bookshelf.png" />
          </image>
       </ImageView>
-      <Label fx:id="Username" layoutX="590.0" layoutY="118.0" text="Label" />
-      <Label layoutX="875.0" layoutY="118.0" text="Label" />
-      <Label layoutX="591.0" layoutY="390.0" text="Label" />
-      <Label layoutX="875.0" layoutY="390.0" text="Label" />
-      <ImageView fitHeight="36.0" fitWidth="33.0" layoutX="214.0" layoutY="197.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="tile1LV" fitHeight="36.0" fitWidth="33.0" layoutX="168.0" layoutY="161.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="tile2LV" fitHeight="36.0" fitWidth="33.0" layoutX="209.0" layoutY="161.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="tile3LV" fitHeight="36.0" fitWidth="33.0" layoutX="168.0" layoutY="197.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="tile5LV" fitHeight="36.0" fitWidth="33.0" layoutX="247.0" layoutY="197.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="tile6LV" fitHeight="36.0" fitWidth="33.0" layoutX="128.0" layoutY="236.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="tile7LV" fitHeight="36.0" fitWidth="33.0" layoutX="168.0" layoutY="235.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="tile8LV" fitHeight="36.0" fitWidth="33.0" layoutX="211.0" layoutY="235.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="tile9LV" fitHeight="36.0" fitWidth="33.0" layoutX="247.0" layoutY="233.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="tile10LV" fitHeight="36.0" fitWidth="33.0" layoutX="286.0" layoutY="233.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="tile11LV" fitHeight="36.0" fitWidth="33.0" layoutX="95.0" layoutY="277.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="tile12LV" fitHeight="36.0" fitWidth="34.0" layoutX="128.0" layoutY="274.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="tile13LV" fitHeight="36.0" fitWidth="33.0" layoutX="174.0" layoutY="275.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="tile14LV" fitHeight="36.0" fitWidth="33.0" layoutX="209.0" layoutY="274.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="tile15LV" fitHeight="36.0" fitWidth="33.0" layoutX="248.0" layoutY="272.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="tile4LV" fitHeight="36.0" fitWidth="33.0" layoutX="209.0" layoutY="197.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="tile16LV" fitHeight="36.0" fitWidth="33.0" layoutX="286.0" layoutY="272.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="tile17LV" fitHeight="36.0" fitWidth="33.0" layoutX="319.0" layoutY="272.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="tile18LV" fitHeight="36.0" fitWidth="33.0" layoutX="361.0" layoutY="272.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="tile19LV" fitHeight="36.0" fitWidth="33.0" layoutX="55.0" layoutY="312.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="tile20LV" fitHeight="36.0" fitWidth="33.0" layoutX="95.0" layoutY="312.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="tile21LV" fitHeight="36.0" fitWidth="33.0" layoutX="128.0" layoutY="313.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="tile22LV" fitHeight="36.0" fitWidth="33.0" layoutX="168.0" layoutY="312.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="tile23LV" fitHeight="36.0" fitWidth="33.0" layoutX="209.0" layoutY="313.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="tile24LV" fitHeight="36.0" fitWidth="33.0" layoutX="247.0" layoutY="313.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="tile25LV" fitHeight="36.0" fitWidth="33.0" layoutX="286.0" layoutY="312.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="tile26LV" fitHeight="36.0" fitWidth="33.0" layoutX="319.0" layoutY="313.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="tile27LV" fitHeight="36.0" fitWidth="33.0" layoutX="361.0" layoutY="312.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="tile28LV" fitHeight="36.0" fitWidth="33.0" layoutX="55.0" layoutY="349.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="tile29LV" fitHeight="36.0" fitWidth="33.0" layoutX="95.0" layoutY="349.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="tile30LV" fitHeight="36.0" fitWidth="33.0" layoutX="129.0" layoutY="349.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="tile31LV" fitHeight="36.0" fitWidth="33.0" layoutX="168.0" layoutY="349.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="tile32LV" fitHeight="36.0" fitWidth="33.0" layoutX="209.0" layoutY="348.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="tile33LV" fitHeight="36.0" fitWidth="33.0" layoutX="247.0" layoutY="349.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="tile34LV" fitHeight="36.0" fitWidth="33.0" layoutX="286.0" layoutY="348.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="tile35LV" fitHeight="36.0" fitWidth="33.0" layoutX="319.0" layoutY="349.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="tile36LV" fitHeight="36.0" fitWidth="33.0" layoutX="129.0" layoutY="390.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="tile37LV" fitHeight="36.0" fitWidth="33.0" layoutX="168.0" layoutY="390.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="tile38LV" fitHeight="36.0" fitWidth="33.0" layoutX="209.0" layoutY="390.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="tile39LV" fitHeight="36.0" fitWidth="33.0" layoutX="242.0" layoutY="390.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="tile40LV" fitHeight="36.0" fitWidth="33.0" layoutX="286.0" layoutY="390.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="tile41LV" fitHeight="36.0" fitWidth="33.0" layoutX="168.0" layoutY="426.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="tile42LV" fitHeight="36.0" fitWidth="33.0" layoutX="209.0" layoutY="426.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="tile43LV" fitHeight="36.0" fitWidth="33.0" layoutX="247.0" layoutY="426.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="tile44LV" fitHeight="36.0" fitWidth="33.0" layoutX="209.0" layoutY="468.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="tile45LV" fitHeight="36.0" fitWidth="33.0" layoutX="247.0" layoutY="468.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="tile1BS" fitHeight="26.0" fitWidth="22.0" layoutX="535.0" layoutY="166.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="tile2BS" fitHeight="26.0" fitWidth="22.0" layoutX="568.0" layoutY="166.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="tile3BS" fitHeight="26.0" fitWidth="22.0" layoutX="600.0" layoutY="166.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="tile4BS" fitHeight="26.0" fitWidth="22.0" layoutX="635.0" layoutY="166.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="tile5BS" fitHeight="26.0" fitWidth="22.0" layoutX="667.0" layoutY="166.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="tile6BS" fitHeight="26.0" fitWidth="22.0" layoutX="535.0" layoutY="197.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="tile7BS" fitHeight="26.0" fitWidth="22.0" layoutX="568.0" layoutY="197.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="tile8BS" fitHeight="26.0" fitWidth="22.0" layoutX="600.0" layoutY="197.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="tile9BS" fitHeight="26.0" fitWidth="22.0" layoutX="635.0" layoutY="192.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="tile10BS" fitHeight="26.0" fitWidth="22.0" layoutX="667.0" layoutY="192.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="tile11BS" fitHeight="26.0" fitWidth="22.0" layoutX="535.0" layoutY="222.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="tile12BS" fitHeight="26.0" fitWidth="22.0" layoutX="568.0" layoutY="220.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="tile13BS" fitHeight="26.0" fitWidth="22.0" layoutX="600.0" layoutY="223.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="tile14BS" fitHeight="26.0" fitWidth="22.0" layoutX="635.0" layoutY="222.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="tile15BS" fitHeight="26.0" fitWidth="22.0" layoutX="667.0" layoutY="220.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="tile16BS" fitHeight="26.0" fitWidth="22.0" layoutX="535.0" layoutY="256.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="tile17BS" fitHeight="26.0" fitWidth="22.0" layoutX="568.0" layoutY="256.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="tile18BS" fitHeight="26.0" fitWidth="22.0" layoutX="600.0" layoutY="256.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="tile19BS" fitHeight="26.0" fitWidth="22.0" layoutX="635.0" layoutY="256.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="tile20BS" fitHeight="26.0" fitWidth="22.0" layoutX="667.0" layoutY="256.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="tile21BS" fitHeight="26.0" fitWidth="22.0" layoutX="535.0" layoutY="277.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="tile22BS" fitHeight="26.0" fitWidth="22.0" layoutX="568.0" layoutY="277.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="tile23BS" fitHeight="26.0" fitWidth="22.0" layoutX="600.0" layoutY="279.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="tile24BS" fitHeight="26.0" fitWidth="22.0" layoutX="635.0" layoutY="277.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="tile25BS" fitHeight="26.0" fitWidth="22.0" layoutX="667.0" layoutY="279.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="tile26BS" fitHeight="26.0" fitWidth="22.0" layoutX="535.0" layoutY="305.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="tile27BS" fitHeight="26.0" fitWidth="22.0" layoutX="568.0" layoutY="305.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="tile28BS" fitHeight="26.0" fitWidth="22.0" layoutX="600.0" layoutY="305.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="tile29BS" fitHeight="26.0" fitWidth="22.0" layoutX="635.0" layoutY="305.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="tile30BS" fitHeight="26.0" fitWidth="22.0" layoutX="667.0" layoutY="305.0" pickOnBounds="true" preserveRatio="true" />
+      <Label fx:id="Player1" layoutX="590.0" layoutY="118.0" text="Label" />
+      <Label fx:id="Player2" layoutX="875.0" layoutY="118.0" text="Label" />
+      <Label fx:id="Player3" layoutX="591.0" layoutY="390.0" text="Label" />
+      <Label fx:id="Player4" layoutX="875.0" layoutY="390.0" text="Label" />
       <Button fx:id="PersonalGoalButton" layoutX="56.0" layoutY="33.0" mnemonicParsing="false" onAction="#GotoPersonalGoalCard" prefHeight="40.0" prefWidth="237.0" text="Show Personal Goal Card">
          <font>
             <Font size="18.0" />
@@ -149,5 +76,29 @@
             <Image url="@Images/end game.jpg" />
          </image>
       </ImageView>
+      <GridPane fx:id="LivingRoom" layoutX="50.0" layoutY="156.0" prefHeight="350.0" prefWidth="348.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="66.0" minWidth="10.0" prefWidth="37.5333251953125" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="61.4" minWidth="0.0" prefWidth="32.333367919921876" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="47.800010681152344" minWidth="0.0" prefWidth="32.86663208007813" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="74.80001068115234" minWidth="0.0" prefWidth="32.866699218749986" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="83.80000305175781" minWidth="0.0" prefWidth="33.933306884765614" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="94.79995727539062" minWidth="10.0" prefWidth="31.5333251953125" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="70.19998779296876" minWidth="10.0" prefWidth="36.066674804687494" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="63.333343505859375" minWidth="10.0" prefWidth="34.46669311523439" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="68.13333129882812" minWidth="10.0" prefWidth="38.1333068847656" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints maxHeight="54.799993896484374" minHeight="10.0" prefHeight="36.59999389648438" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="60.66666259765625" minHeight="10.0" prefHeight="32.3333251953125" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="67.53333129882812" minHeight="10.0" prefHeight="33.933319091796875" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="74.4" minHeight="10.0" prefHeight="32.066680908203125" vgrow="SOMETIMES" />
+            <RowConstraints fx:id="LivingRoom" maxHeight="72.26666870117188" minHeight="10.0" prefHeight="37.4666748046875" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="72.73334960937501" minHeight="10.0" prefHeight="32.133331298828125" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="67.46668701171876" minHeight="10.0" prefHeight="35.13334960937499" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="50.733306884765625" minHeight="10.0" prefHeight="32.33336181640624" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="56.93332519531248" minHeight="10.0" prefHeight="41.66663818359376" vgrow="SOMETIMES" />
+         </rowConstraints>
+      </GridPane>
    </children>
 </AnchorPane>

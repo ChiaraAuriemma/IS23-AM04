@@ -32,7 +32,7 @@ public class ChooseTilesController implements GuiInterface, Initializable {
     private Image tmp1,tmp2,tmp3;
 
     private int count = 0;
-    private ArrayList<Tile> selectedTiles = new ArrayList<>();
+    private static ArrayList<Tile> Tiles;
 
 
 
@@ -41,6 +41,7 @@ public class ChooseTilesController implements GuiInterface, Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources){
+        Tiles = new ArrayList<>(0);
         Image[][] board;
         board = GUIApplication.getBoard();
         for(int i=0; i<9;i++){
@@ -50,28 +51,32 @@ public class ChooseTilesController implements GuiInterface, Initializable {
                     imageView.setFitHeight(31);
                     imageView.setFitWidth(32);
                     imageView.setImage(board[i][j]);
+                    LivingRoom.add(imageView,j,i);
                     int finalI = i;
                     int finalJ = j;
                     imageView.setOnMouseClicked(mouseEvent -> {
                         try {
                             chooseTiles(imageView, finalI, finalJ);
-                        } catch (RemoteException e) {
+                        } catch (IOException e) {
                             throw new RuntimeException(e);
                         }
                     });
-                    LivingRoom.add(imageView,j,i);
                 }
             }
         }
     }
 
 
-    public void chooseTiles(ImageView imageView, int i, int j) throws RemoteException {
+    public void chooseTiles(ImageView imageView, int i, int j) throws IOException {
         PossibleColors color = getColor(imageView);
         Tile t = new Tile(i,j,color);
-        selectedTiles.add(t);
-        if(GUIApplication.getNumTiles() == selectedTiles.size() ) {
-            client.selectedTiles(selectedTiles);
+        Tiles.add(t);
+        sendTiles();
+    }
+
+    public void sendTiles() throws IOException {
+        if(GUIApplication.getNumTiles() == Tiles.size()) {
+            client.selectedTiles(Tiles);
         }
     }
 

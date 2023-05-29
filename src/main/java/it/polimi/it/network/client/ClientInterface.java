@@ -47,7 +47,7 @@ public interface ClientInterface extends Remote, Serializable {
 
     public ViewInterface getView() throws RemoteException;
 
-    public void selectedTiles(List<Tile> choices) throws RemoteException;
+    public void selectedTiles(List<Tile> choices) throws IOException;
 
     public void chooseColumn(int column) throws RemoteException;
 

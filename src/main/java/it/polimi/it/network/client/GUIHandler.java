@@ -37,6 +37,7 @@ public class GUIHandler implements ViewInterface {
 
     @Override
     public void setOrderView(ArrayList<String> order) {
+        GUIApplication.setPlayers(order);
         //metodo per i nomi dei giocatori
     }
 
@@ -449,8 +450,9 @@ public class GUIHandler implements ViewInterface {
     }
 
     @Override
-    public void askTilesAgain() {
+    public void askTilesAgain() throws IOException {
         GUIApplication.showAlert(Alert.AlertType.WARNING, "Tiles error", "You can only take adjacent tiles with a free edge");
+        GUIApplication.changeScene();
     }
 
     @Override
