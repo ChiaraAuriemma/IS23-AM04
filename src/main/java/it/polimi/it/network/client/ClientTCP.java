@@ -91,8 +91,7 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
     @Override
     public void takeableTiles(List<List<Tile>> choosableTilesList, int num) throws RemoteException, IOException {
         view.update();
-        System.out.println("Please choose " + num + " tiles from the board...\n");
-        view.takeableTiles(choosableTilesList);
+        view.takeableTiles(choosableTilesList, num);
     }
 
     @Override
@@ -136,8 +135,8 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
     @Override
     public void askColumn(boolean[] choosableColumns) throws IOException {
         view.update();
-        view.askColumn();
-        //view.setPossibleColumns(choosableColumns);
+        //view.askColumn();
+        view.setPossibleColumns(choosableColumns);
     }
 
 

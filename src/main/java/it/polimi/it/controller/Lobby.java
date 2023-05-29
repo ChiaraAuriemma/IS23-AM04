@@ -112,7 +112,7 @@ public class Lobby implements Serializable {
                     GameController gc = findGameController.get(0);
                     gc.resetGame(user.get());
                 }else{
-                    throw  new ExistingNicknameException("This nickname already exists!");//mandare messaggio a view
+                    throw new ExistingNicknameException("This nickname already exists!");//mandare messaggio a view
                 }
             }
         }
