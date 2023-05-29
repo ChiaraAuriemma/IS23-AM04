@@ -133,4 +133,12 @@ public class User implements Serializable {
     public void setInGame(boolean state) {
         inGame=state;
     }
+
+    public void setShelfie(Shelfie shelfie) {
+        this.shelf = shelfie;
+    }
+
+    public void setBoard(Board board) {
+        this.board=board;
+    }
 }
