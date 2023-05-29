@@ -99,7 +99,7 @@ public interface ViewInterface {
 
     void askNumTilesAgain();
 
-    void askTilesAgain();
+    void askTilesAgain() throws IOException;
 
     void askColumnAgain();
 

@@ -10,6 +10,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import javafx.scene.control.TextField;
@@ -21,158 +23,17 @@ import java.util.ResourceBundle;
 public class GameViewController implements Initializable, GuiInterface {
 
     private static Stage stage;
+
     @FXML
-    ImageView tile1LV;
+    Label Player1;
     @FXML
-    ImageView tile2LV;
+    Label Player2;
     @FXML
-    ImageView tile3LV;
+    Label Player3;
     @FXML
-    ImageView tile4LV;
+    Label Player4;
     @FXML
-    ImageView tile5LV;
-    @FXML
-    ImageView tile6LV;
-    @FXML
-    ImageView tile7LV;
-    @FXML
-    ImageView tile8LV;
-    @FXML
-    ImageView tile9LV;
-    @FXML
-    ImageView tile10LV;
-    @FXML
-    ImageView tile11LV;
-    @FXML
-    ImageView tile12LV;
-    @FXML
-    ImageView tile13LV;
-    @FXML
-    ImageView tile14LV;
-    @FXML
-    ImageView tile15LV;
-    @FXML
-    ImageView tile16LV;
-    @FXML
-    ImageView tile17LV;
-    @FXML
-    ImageView tile18LV;
-    @FXML
-    ImageView tile19LV;
-    @FXML
-    ImageView tile20LV;
-    @FXML
-    ImageView tile21LV;
-    @FXML
-    ImageView tile22LV;
-    @FXML
-    ImageView tile23LV;
-    @FXML
-    ImageView tile24LV;
-    @FXML
-    ImageView tile25LV;
-    @FXML
-    ImageView tile26LV;
-    @FXML
-    ImageView tile27LV;
-    @FXML
-    ImageView tile28LV;
-    @FXML
-    ImageView tile29LV;
-    @FXML
-    ImageView tile30LV;
-    @FXML
-    ImageView tile31LV;
-    @FXML
-    ImageView tile32LV;
-    @FXML
-    ImageView tile33LV;
-    @FXML
-    ImageView tile34LV;
-    @FXML
-    ImageView tile35LV;
-    @FXML
-    ImageView tile36LV;
-    @FXML
-    ImageView tile37LV;
-    @FXML
-    ImageView tile38LV;
-    @FXML
-    ImageView tile39LV;
-    @FXML
-    ImageView tile40LV;
-    @FXML
-    ImageView tile41LV;
-    @FXML
-    ImageView tile42LV;
-    @FXML
-    ImageView tile43LV;
-    @FXML
-    ImageView tile44LV;
-    @FXML
-    ImageView tile45LV;
-    @FXML
-    ImageView tile1BS;
-    @FXML
-    ImageView tile2BS;
-    @FXML
-    ImageView tile3BS;
-    @FXML
-    ImageView tile4BS;
-    @FXML
-    ImageView tile5BS;
-    @FXML
-    ImageView tile6BS;
-    @FXML
-    ImageView tile7BS;
-    @FXML
-    ImageView tile8BS;
-    @FXML
-    ImageView tile9BS;
-    @FXML
-    ImageView tile10BS;
-    @FXML
-    ImageView tile11BS;
-    @FXML
-    ImageView tile12BS;
-    @FXML
-    ImageView tile13BS;
-    @FXML
-    ImageView tile14BS;
-    @FXML
-    ImageView tile15BS;
-    @FXML
-    ImageView tile16BS;
-    @FXML
-    ImageView tile17BS;
-    @FXML
-    ImageView tile18BS;
-    @FXML
-    ImageView tile19BS;
-    @FXML
-    ImageView tile20BS;
-    @FXML
-    ImageView tile21BS;
-    @FXML
-    ImageView tile22BS;
-    @FXML
-    ImageView tile23BS;
-    @FXML
-    ImageView tile24BS;
-    @FXML
-    ImageView tile25BS;
-    @FXML
-    ImageView tile26BS;
-    @FXML
-    ImageView tile27BS;
-    @FXML
-    ImageView tile28BS;
-    @FXML
-    ImageView tile29BS;
-    @FXML
-    ImageView tile30BS;
-    @FXML
-    Label Username;
+    GridPane LivingRoom;
 
 
     private double mouseAnchorX;
@@ -185,26 +46,40 @@ public class GameViewController implements Initializable, GuiInterface {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Username.setText(GUIApplication.getNickname());
-        URL imageUrl1 = getClass().getResource("/Images/Cornici1.png");
-        Image tile1 = new Image(imageUrl1.toString());
-        tile1LV.setImage(tile1);
-        makeDraggable(tile1LV);
-        URL imageUrl2 = getClass().getResource("/Images/Gatti1.1.png");
-        Image tile2 = new Image(imageUrl2.toString());
-        tile2LV.setImage(tile2);
-        URL imageUrl3 = getClass().getResource("/Images/Libri1.2.png");
-        Image tile3 = new Image(imageUrl3.toString());
-        tile3LV.setImage(tile3);
-        URL imageUrl12 = getClass().getResource("/Images/Piante1.3.png");
-        Image tile12 = new Image(imageUrl12.toString());
-        tile12LV.setImage(tile12);
-        URL imageUrl36 = getClass().getResource("/Images/Trofei1.1.png");
-        Image tile36 = new Image(imageUrl36.toString());
-        tile36LV.setImage(tile36);
-        URL imageUrl45 = getClass().getResource("/Images/Trofei1.2.png");
-        Image tile45 = new Image(imageUrl45.toString());
-        tile45LV.setImage(tile45);
+        if(GUIApplication.getPlayers().get(0) != null){
+            Player1.setText(GUIApplication.getPlayers().get(0));
+            if(Player1.getText().equals(GUIApplication.getNickname()))
+                Player1.setTextFill(Color.RED);
+        }
+        if(GUIApplication.getPlayers().get(1) != null){
+            Player2.setText(GUIApplication.getPlayers().get(1));
+            if(Player2.getText().equals(GUIApplication.getNickname()))
+                Player2.setTextFill(Color.RED);
+        }
+        if(GUIApplication.getPlayers().get(1) != null){
+            Player3.setText(GUIApplication.getPlayers().get(1));
+            if(Player3.getText().equals(GUIApplication.getNickname()))
+                Player3.setTextFill(Color.RED);
+        }
+        if(GUIApplication.getPlayers().get(1) != null){
+            Player4.setText(GUIApplication.getPlayers().get(1));
+            if(Player4.getText().equals(GUIApplication.getNickname()))
+                Player4.setTextFill(Color.RED);
+        }
+
+        Image[][] board;
+        board = GUIApplication.getBoard();
+        for(int i=0; i<9;i++){
+            for(int j=0; j<9;j++){
+                if(board[i][j] != null){
+                    ImageView imageView = new ImageView();
+                    imageView.setFitHeight(31);
+                    imageView.setFitWidth(32);
+                    imageView.setImage(board[i][j]);
+                    LivingRoom.add(imageView,j,i);
+                }
+            }
+        }
     }
 
 

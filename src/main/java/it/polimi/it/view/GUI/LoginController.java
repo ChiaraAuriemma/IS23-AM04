@@ -39,18 +39,6 @@ public class LoginController implements GuiInterface{
             }
             client.login(nickname);
             GUIApplication.setNickname(nickname);
-            /*
-            FXMLLoader fxmlLoader = new FXMLLoader(GUIApplication.class.getResource(Objects.requireNonNull(GUIApplication.changeScene())));
-            Scene scene = new Scene(fxmlLoader.load());
-            GuiInterface currentController = fxmlLoader.getController();
-            currentController.setClient(client);
-            GUIApplication.setCurrentController(currentController);
-            stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
-            stage.setTitle("My Shelfie");
-            stage.setScene(scene);
-            stage.show();
-
-             */
         }else{
             GUIApplication.showAlert(Alert.AlertType.WARNING, "Login error", "Invalid username, try again");
         }
@@ -59,20 +47,12 @@ public class LoginController implements GuiInterface{
     public void GotoCreateGame(ActionEvent actionEvent) throws IOException {
         GUIApplication.setCreateOrJoin("CREATE");
         if(UsernameField.getText().length() > 0 && UsernameField.getText().length() < 12){
-            client.login(UsernameField.getText());
-            GUIApplication.setNickname(UsernameField.getText());
-            /*
-            FXMLLoader fxmlLoader = new FXMLLoader(GUIApplication.class.getResource(Objects.requireNonNull(GUIApplication.changeScene())));
-            Scene scene = new Scene(fxmlLoader.load());
-            GuiInterface currentController = fxmlLoader.getController();
-            currentController.setClient(client);
-            GUIApplication.setCurrentController(currentController);
-            stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
-            stage.setTitle("My Shelfie");
-            stage.setScene(scene);
-            stage.show();
-
-             */
+            String nickname = UsernameField.getText();
+            while(nickname.length() < 12){
+                nickname = nickname.concat(" ");
+            }
+            client.login(nickname);
+            GUIApplication.setNickname(nickname);
         }else{
             GUIApplication.showAlert(Alert.AlertType.WARNING, "Login error", "Invalid username, try again");
         }

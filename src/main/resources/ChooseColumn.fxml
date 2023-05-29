@@ -35,10 +35,10 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Button fx:id="Button1" layoutX="698.0" layoutY="215.0" mnemonicParsing="false" onAction="#ChooseColumn1" text="1" />
-      <Button fx:id="Button2" layoutX="740.0" layoutY="216.0" mnemonicParsing="false" onAction="#ChooseColumn2" text="2" />
-      <Button fx:id="Button3" layoutX="787.0" layoutY="214.0" mnemonicParsing="false" onAction="#ChooseColumn3" text="3" />
-      <Button fx:id="Button4" layoutX="828.0" layoutY="215.0" mnemonicParsing="false" onAction="#ChooseButton4" text="4" />
-      <Button fx:id="Button5" layoutX="873.0" layoutY="215.0" mnemonicParsing="false" onAction="#ChooseButton5" text="5" />
+      <Button fx:id="Button1" layoutX="698.0" layoutY="215.0" mnemonicParsing="false" onAction="#ChooseColumn0" text="1" />
+      <Button fx:id="Button2" layoutX="740.0" layoutY="216.0" mnemonicParsing="false" onAction="#ChooseColumn1" text="2" />
+      <Button fx:id="Button3" layoutX="787.0" layoutY="214.0" mnemonicParsing="false" onAction="#ChooseColumn2" text="3" />
+      <Button fx:id="Button4" layoutX="828.0" layoutY="215.0" mnemonicParsing="false" onAction="#ChooseButton3" text="4" />
+      <Button fx:id="Button5" layoutX="873.0" layoutY="215.0" mnemonicParsing="false" onAction="#ChooseButton4" text="5" />
    </children>
 </AnchorPane>

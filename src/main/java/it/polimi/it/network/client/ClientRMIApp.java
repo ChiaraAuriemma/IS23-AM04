@@ -147,7 +147,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
     }
 
     @Override
-    public void selectedTiles(List<Tile> choosenTiles) throws RemoteException {
+    public void selectedTiles(List<Tile> choosenTiles) throws IOException {
         //mando le tiles a RMIImplementation
         try {
             sr.selectedTiles(this.nickname, choosenTiles);

@@ -30,18 +30,6 @@ public class CreateGameViewController implements GuiInterface{
         if(NumOfPlayers.getText().length() != 0) {
             int players = Integer.parseInt(NumOfPlayers.getText());
             client.createGame(players);
-            /*
-            FXMLLoader fxmlLoader = new FXMLLoader(GUIApplication.class.getResource(Objects.requireNonNull(GUIApplication.changeScene())));
-            Scene scene = new Scene(fxmlLoader.load());
-            GuiInterface currentController = fxmlLoader.getController();
-            currentController.setClient(client);
-            GUIApplication.setCurrentController(currentController);
-            stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-            stage.setTitle("My Shelfie");
-            stage.setScene(scene);
-            stage.show();
-
-             */
         }else {
             GUIApplication.showAlert(Alert.AlertType.WARNING, "Create Game error", "You must enter a number of players");
         }
