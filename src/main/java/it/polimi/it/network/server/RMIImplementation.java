@@ -68,6 +68,7 @@ public class RMIImplementation extends UnicastRemoteObject implements ServerInte
         }
         if(user.getInGame()){
             user.getGame().getVirtualView().setUserRMI(username, cr);
+            user.getGame().getVirtualView().removeDisconnection(user.getNickname());
             lobby.getGameController(user.getGame().getGameid()).resetGame(user);
         }
         userRMI.put(user.getNickname(), cr);
