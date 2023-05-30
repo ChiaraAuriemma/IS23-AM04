@@ -309,7 +309,7 @@ public class GameController implements Serializable {
      * @param user user and
      * @throws RemoteException
      */
-    public void resetGame(User user) throws RemoteException {
+     public void resetGame(User user) throws RemoteException {
         //game.getVirtualView().removeDisconnection(user.getNickname());
         Tile[][] matrix = game.getBoard().getMatrix();
         ArrayList<Tile[][]> shelfies = new ArrayList<>();
@@ -382,6 +382,6 @@ public class GameController implements Serializable {
     public void swapPlayers(User old, User newborn) throws RemoteException {
         playerList.set(playerList.indexOf(old), newborn);
         game.swapPlaysers(old, newborn);
-        resetGame(newborn);
+        //resetGame(newborn);
     }
 }

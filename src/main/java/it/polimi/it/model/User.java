@@ -25,7 +25,7 @@ public class User implements Serializable {
         this.nickname = nickname;
 
         this.shelf=new Shelfie(this);
-        this.inGame = true;
+        this.inGame = false;
     }
 
     public int maxValueOfTiles() throws IllegalValueException, IOException {
@@ -109,6 +109,7 @@ public class User implements Serializable {
 
     public void setGame(Game game){
         this.game = game;
+        this.inGame = true;
     }
 
     public Game getGame(){
