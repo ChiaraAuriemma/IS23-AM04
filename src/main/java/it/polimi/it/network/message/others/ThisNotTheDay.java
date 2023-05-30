@@ -12,7 +12,6 @@ import java.util.List;
 
 public class ThisNotTheDay extends Payload  implements Serializable {
     private static final long serialVersionUID = -3294233920082178659L;
-    private Game game;
     private int gameID;
     private Tile[][] matrix;
     private ArrayList<Tile[][]> shelfies = new ArrayList<>();
@@ -24,9 +23,8 @@ public class ThisNotTheDay extends Payload  implements Serializable {
 
     //Tile[][] matrix, ArrayList<Tile[][]> shelfies, it.polimi.it.model.Card.CommonGoalCards.CommonGoalCard card1, CommonGoalCard card2, PersonalGoalCard personalGoalCard, ArrayList<Integer> points, List<String> playerList
 
-    public ThisNotTheDay(Game game, int gameID, Tile[][] matrix, ArrayList<Tile[][]> shelfies, CommonGoalCard card1, CommonGoalCard card2, PersonalGoalCard personalGoalCard, ArrayList<Integer> points, List<String> playerList
+    public ThisNotTheDay(int gameID, Tile[][] matrix, ArrayList<Tile[][]> shelfies, CommonGoalCard card1, CommonGoalCard card2, PersonalGoalCard personalGoalCard, ArrayList<Integer> points, List<String> playerList
     ){
-        this.game=game;
         this.gameID=gameID;
         this.matrix=matrix;
         this.shelfies=shelfies;
@@ -37,9 +35,6 @@ public class ThisNotTheDay extends Payload  implements Serializable {
         this.playerList=playerList;
     }
 
-    public Game getGame() {
-        return game;
-    }
 
     public int getGameID() {
         return gameID;

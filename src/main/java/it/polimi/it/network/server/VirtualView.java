@@ -480,13 +480,13 @@ public class VirtualView implements Serializable {
     public void resetAfterDisconnection(String user, int gameID, Tile[][] matrix, ArrayList<Tile[][]> shelfies, CommonGoalCard card1, CommonGoalCard card2, PersonalGoalCard personalGoalCard, ArrayList<Integer> points, List<String> playerList) throws RemoteException {
 
         if (typeOfConnection.get(user).equalsIgnoreCase("TCP")){
-            ThisNotTheDay recover = new ThisNotTheDay(game,gameID, matrix, shelfies, card1, card2, personalGoalCard, points, playerList);
+            ThisNotTheDay recover = new ThisNotTheDay(gameID, matrix, shelfies, card1, card2, personalGoalCard, points, playerList);
             Message message = new Message(MessageType.THISNOTTHEDAY, recover);
             sendTCPMessage(userTCP.get(user), message);
 
         }else if (typeOfConnection.get(user).equalsIgnoreCase("RMI")){
             ClientInterface clientRMI = userRMI.get(user);
-            clientRMI.recover(game,gameID, matrix, shelfies, card1, card2, personalGoalCard, points, playerList);
+            clientRMI.recover(gameID, matrix, shelfies, card1, card2, personalGoalCard, points, playerList);
 
         }
     }
