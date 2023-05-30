@@ -209,6 +209,20 @@ public class ClientTCPHandler implements Runnable,Serializable{
                     }
                     break;
 
+                case PRIVATECHAT:
+                    SendPrivateChatMessage sendPrivateChatMessage = (SendPrivateChatMessage) request.getPayload();
+                    synchronized (gameController){
+                        try {
+                            this.gameController.pushChatPrivateMessage(sendPrivateChatMessage.getSender(),sendPrivateChatMessage.getChatMessage(), sendPrivateChatMessage.getReceiver());
+                        } catch (RemoteException e) {
+                            ErrorMessage errorMessage = new ErrorMessage(e.getMessage());
+                            response = new Message(MessageType.ERROR, errorMessage);
+                            send(response);
+                        }
+                    }
+
+                    break;
+
                 case PONG://risposta del ping del timer
                     System.out.println("Received pong from " );
                     pong = true;

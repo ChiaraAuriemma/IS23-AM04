@@ -78,13 +78,6 @@ public class GameController implements Serializable {
      */
     private int maxTile;
 
-
-    /**
-     * Instance of the game's chat
-     */
-    private Chat chat;
-
-
     /**
      * boolean array which represents the empty columns with true
      */
@@ -103,7 +96,6 @@ public class GameController implements Serializable {
         gameID = game.getGameid();
         lobby = lobbyIn;
         playerList = new ArrayList<>();
-        this.chat = new Chat();
         this.maxTile = 0;
     }
 
@@ -116,7 +108,8 @@ public class GameController implements Serializable {
     public void turnDealer() throws InvalidIDException, IllegalValueException, IOException {
 
         if(this.endGame && this.currentPlayer == game.getNumplayers() - 1){ //caso di fine partita
-            game.getVirtualView().viewUpdate(chat.getCurrentChat());
+
+            game.getVirtualView().viewUpdate();
             game.pointsFromAdjacent();
             lobby.notifyEndGame(gameID);
         }else{ //show must go on
@@ -171,7 +164,7 @@ public class GameController implements Serializable {
                 return;
             }
             game.getVirtualView().notifyTurnStart(playerList.get(currentPlayer));
-            game.getVirtualView().viewUpdate(chat.getCurrentChat());
+            game.getVirtualView().viewUpdate();
         }
     }
 
@@ -338,8 +331,10 @@ public class GameController implements Serializable {
      * @throws RemoteException Exception that might come from connection issues
      */
     public void pushChatMessage(String chatMessage) throws RemoteException {
-        chat.newMessage(chatMessage);
-        game.getVirtualView().sendChatUpdate(chat.getCurrentChat());
+        for(User user: playerList) {
+            user.newMessage(chatMessage);
+            game.getVirtualView().sendChatUpdate(user.getChatList(), user);
+        }
     }
 
 
@@ -383,5 +378,28 @@ public class GameController implements Serializable {
         playerList.set(playerList.indexOf(old), newborn);
         game.swapPlaysers(old, newborn);
         //resetGame(newborn);
+    }
+
+    public void pushChatPrivateMessage(String sender, String chatMessage, String receiver) throws RemoteException {
+        while (sender.length()<12){
+            sender = sender.concat(" ");
+        }
+        while (receiver.length()<12){
+            receiver = receiver.concat(" ");
+        }
+        for(User u : playerList){
+            if(u.getNickname().equals(sender)){
+                u.newMessage(chatMessage);
+                game.getVirtualView().sendChatUpdate(u.getChatList(), u);
+            }
+        }
+
+        for(User u : playerList){
+            if(u.getNickname().equals(receiver)){
+                u.newMessage(chatMessage);
+                game.getVirtualView().sendChatUpdate(u.getChatList(), u);
+            }
+        }
+
     }
 }

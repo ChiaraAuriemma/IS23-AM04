@@ -73,4 +73,6 @@ public interface ClientInterface extends Remote, Serializable {
     TurnStages getGameStage()throws RemoteException;
 
     void ping() throws RemoteException;
+
+    void sendChatPrivateMessage(String chatMessage, String receiver) throws RemoteException;
 }

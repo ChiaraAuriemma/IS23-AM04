@@ -80,6 +80,7 @@ public class ClientInputReader implements Runnable, Serializable{
         if(inp[1]!=null && inp[1].length() >= 0){
             String action = inp[1];
 
+
             command = command.toLowerCase();
 
             if(!command.equalsIgnoreCase("chat") && !command.equalsIgnoreCase("login")){ // se è un messaggio in chat non gli tolgo gli spazi
@@ -139,7 +140,34 @@ public class ClientInputReader implements Runnable, Serializable{
                         String chatMessage = action;
                         chatMessage = lastUsedNickname + ": " + chatMessage;
                         view.printError("Sending...\n");
+
                         client.sendChatMessage(chatMessage);
+                    }else {
+                        view.printError("There's a time and place for everything, but not now.");
+                    }
+                    break;
+
+                    case "private_chat": //chat>>Write here your message...
+
+                        if (stage.getStage() == TurnStages.NOTURN || stage.getStage() == TurnStages.TILESNUM || stage.getStage() == TurnStages.CHOOSETILES || stage.getStage() == TurnStages.CHOOSECOLUMN) {
+                        String chatMessage = action;
+
+                        String[] splittedMessage = chatMessage.split("<<");
+                        String receiver = splittedMessage[0];
+                        if (splittedMessage.length == 1){
+                            System.out.println("You didn't write the actual message...");
+                            return;
+                        }
+                        if(splittedMessage[1]!=null && splittedMessage[1].length() >= 0) {
+                            String message = splittedMessage[1];
+
+
+                            message = lastUsedNickname + ": " + message;
+                            view.printError("Sending to " + receiver + "...\n");
+
+                            client.sendChatPrivateMessage(message, receiver);
+                        }
+
                     }else {
                         view.printError("There's a time and place for everything, but not now.");
                     }
