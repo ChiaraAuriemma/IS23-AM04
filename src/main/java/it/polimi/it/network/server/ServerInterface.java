@@ -12,7 +12,7 @@ import java.util.List;
 
 public interface ServerInterface extends Remote, Serializable {
 
-    public String login(ClientInterface cr, String username) throws RemoteException, ExistingNicknameException, EmptyNicknameException;
+    public String login(ClientInterface cr, String username) throws RemoteException, ExistingNicknameException, EmptyNicknameException, InvalidIDException;
 
     public int createGame(String username, int playerNumber, ClientInterface client) throws RemoteException, WrongPlayerException;
 

@@ -81,13 +81,19 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
     public void login(String userName) throws RemoteException,IOException {
         try {
             this.nickname = sr.login(this, userName);
-            stage.setStage(TurnStages.CREATEorJOIN);
-            view.joinOrCreate(this.nickname);
+            if(!stage.getStage().equals(TurnStages.NOTURN)){
+                stage.setStage(TurnStages.CREATEorJOIN);
+                view.joinOrCreate(this.nickname);
+            }
+            else view.update();
+
 
             //view : passo alla schermata con create e join game
         } catch (ExistingNicknameException | EmptyNicknameException e) {
             //view : notifico la view che deve riproporre l'inserimento del nickname con l'errore in rosso
             view.askNicknameAgain(e.getMessage());
+        } catch (InvalidIDException e) {
+            throw new RuntimeException(e);
         }
 
     }
