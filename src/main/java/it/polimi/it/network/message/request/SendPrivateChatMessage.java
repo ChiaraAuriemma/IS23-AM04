@@ -6,6 +6,7 @@ import java.io.Serializable;
 
 public class SendPrivateChatMessage extends Payload implements Serializable {
 
+    private static final long serialVersionUID = -8355507561580485249L;
     private String message;
 
     private String receiver;
