@@ -451,6 +451,14 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
 
     }
 
+    @Override
+    public void sendChatPrivateMessage(String chatMessage, String receiver) {
+        SendPrivateChatMessage sendPrivateChatMessage = new SendPrivateChatMessage(this.username, chatMessage, receiver);
+        Message request = new Message(MessageType.PRIVATECHAT, sendPrivateChatMessage);
+        send(request);
+
+    }
+
 
     /*public void networkReader(){
         while(true){//sostituisco con while connected

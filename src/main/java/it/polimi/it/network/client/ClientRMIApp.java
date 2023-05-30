@@ -284,4 +284,9 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
     public void ping() throws RemoteException{
         return;
     }
+
+    @Override
+    public void sendChatPrivateMessage(String chatMessage, String receiver) throws RemoteException {
+        sr.chatPrivateMessage(this.nickname, chatMessage, receiver);
+    }
 }

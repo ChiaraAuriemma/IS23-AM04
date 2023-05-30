@@ -2,6 +2,7 @@ package it.polimi.it.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Chat implements Serializable {
@@ -10,7 +11,6 @@ public class Chat implements Serializable {
 
     private List<String> currentChat = new ArrayList<>(9);
     private final String blankChatLine = "                                 ";
-
 
 
     public Chat(){

@@ -9,6 +9,7 @@ import it.polimi.it.model.Tiles.Tile;
 import java.io.IOException;
 import java.io.Serializable;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class User implements Serializable {
@@ -20,12 +21,15 @@ public class User implements Serializable {
     private final String nickname;
     private boolean inGame;
 
+    private Chat chat;
+
     public User(String nickname){
 
         this.nickname = nickname;
 
         this.shelf=new Shelfie(this);
         this.inGame = true;
+        this.chat = new Chat();
     }
 
     public int maxValueOfTiles() throws IllegalValueException, IOException {
@@ -130,4 +134,13 @@ public class User implements Serializable {
     public void setBoard(Board board) {
         this.board=board;
     }
+
+    public List<String> getChatList() {
+        return chat.getCurrentChat();
+    }
+
+    public void newMessage(String message){
+        chat.newMessage(message);
+    }
+
 }

@@ -25,4 +25,6 @@ public interface ServerInterface extends Remote, Serializable {
     public void chooseColumn (String username,int columnNumber) throws IOException, InvalidIDException, IllegalValueException;
 
     void chatMessage(String chatMessage, String message) throws RemoteException;
+
+    void chatPrivateMessage(String sender, String chatMessage, String receiver) throws RemoteException;
 }

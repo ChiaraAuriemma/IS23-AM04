@@ -415,7 +415,7 @@ public class VirtualView implements Serializable {
         }
     }
 
-    public void viewUpdate(List<String> currentChat) throws RemoteException {
+    public void viewUpdate() throws RemoteException {
         for (int i=0; i < game.getNumplayers(); i++) {
             User  receiver = game.getPlayer(i);
             if(receiver.getInGame()){
@@ -424,7 +424,7 @@ public class VirtualView implements Serializable {
 
                 if (typeOfConnection.get(receiver.getNickname()).equals("TCP") && !disconn_users.contains(receiver.getNickname())) {
 
-                    sendChatUpdate(currentChat);
+                    sendChatUpdate(receiver.getChatList(), receiver);
                     /*ChatUpdate chatUpdate = new ChatUpdate(currentChat);
                     Message messageChat = new Message(MessageType.CHATUPDATE, chatUpdate);
                     sendTCPMessage(userTCP.get(receiver.getNickname()), messageChat);*/
@@ -439,7 +439,7 @@ public class VirtualView implements Serializable {
                         ClientInterface clientRMI = userRMI.get(receiver.getNickname());
 
                     ///////////////////////////////////////////////////////metodo su clientRMI e client Interface da  chiamare
-                        clientRMI.updateChat(currentChat);
+                        clientRMI.updateChat(receiver.getChatList());
                         clientRMI.updateView();
                     }catch(RemoteException e){
                         System.out.println(e.getMessage() + " user: " + receiver.getNickname() +"/n");
@@ -501,9 +501,8 @@ public class VirtualView implements Serializable {
     }
 
 
-    public void sendChatUpdate(List<String> currentChat) throws RemoteException {
-        for (int i=0; i < game.getNumplayers(); i++) {
-            User  receiver = game.getPlayer(i);
+    public void sendChatUpdate(List<String> currentChat, User receiver) throws RemoteException {
+
             if(receiver.getInGame()){
                 if (typeOfConnection.get(receiver.getNickname()).equals("TCP") && !disconn_users.contains(receiver.getNickname())) {
                     ChatUpdate chatUpdate = new ChatUpdate(currentChat);
@@ -523,8 +522,33 @@ public class VirtualView implements Serializable {
                     }
                 }
             }
+
+        for (int i=0; i < game.getNumplayers(); i++) {
+            User u = game.getPlayer(i);
+            if(u.getInGame()){
+                if (typeOfConnection.get(u.getNickname()).equals("TCP") && !disconn_users.contains(u.getNickname())) {
+                    ChatUpdate chatUpdate = new ChatUpdate(u.getChatList());
+                    Message messageChat = new Message(MessageType.CHATUPDATE, chatUpdate);
+                    sendTCPMessage(userTCP.get(u.getNickname()), messageChat);
+
+
+                } else if (typeOfConnection.get(u.getNickname()).equals("RMI")) {
+                    try{
+                        ClientInterface clientRMI = userRMI.get(u.getNickname());
+                        clientRMI.updateChat(u.getChatList());
+                    }catch(RemoteException e){
+                        System.out.println(e.getMessage() + " user: " + u.getNickname() +"/n");
+                        disconnect_user(u.getNickname());
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
         }
-    }
+
+
+
+        }
 
     public void boardRefill() throws RemoteException {
         for (int i=0; i < game.getNumplayers(); i++) {
