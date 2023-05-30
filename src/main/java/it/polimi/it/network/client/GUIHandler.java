@@ -2,6 +2,7 @@ package it.polimi.it.network.client;
 
 import it.polimi.it.model.Card.CommonGoalCards.CommonGoalCard;
 import it.polimi.it.model.Card.PersonalGoalCards.PersonalGoalCard;
+import it.polimi.it.model.Game;
 import it.polimi.it.model.Tiles.Tile;
 import it.polimi.it.view.GUI.*;
 import it.polimi.it.view.ViewInterface;
@@ -462,6 +463,24 @@ public class GUIHandler implements ViewInterface {
 
     @Override
     public void boardRefill() {
+
+    }
+
+
+
+    /////////////////////////////////////////////
+    /////////////////////////////////////////////
+    /////////////////////////////////////////////
+    /////////////////////////////////////////////
+    /////////////////////////////////////////////
+    //TE L'HO MESSO IO(FRA) OGGI PER FAR PARTIRE LA CLI
+    /////////////////////////////////////////////
+    /////////////////////////////////////////////
+    /////////////////////////////////////////////
+    /////////////////////////////////////////////
+
+    @Override
+    public void recover(Game game, int gameID, Tile[][] matrix, ArrayList<Tile[][]> shelfies, CommonGoalCard card1, CommonGoalCard card2, PersonalGoalCard personalGoalCard, ArrayList<Integer> points, List<String> playerList) {
 
     }
 

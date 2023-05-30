@@ -183,6 +183,8 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
     @Override
     public void recover(Game game, int gameID, Tile[][] matrix, ArrayList<Tile[][]> shelfies, CommonGoalCard card1, CommonGoalCard card2, PersonalGoalCard personalGoalCard, ArrayList<Integer> points, List<String> playerList) throws RemoteException {
 
+        view.recover(game,gameID, matrix, shelfies, card1, card2, personalGoalCard, points, playerList);
+        stage.setStage(TurnStages.NOTURN);
     }
 
 

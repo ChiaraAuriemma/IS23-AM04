@@ -2,6 +2,7 @@ package it.polimi.it.view;
 
 import it.polimi.it.model.Card.CommonGoalCards.CommonGoalCard;
 import it.polimi.it.model.Card.PersonalGoalCards.PersonalGoalCard;
+import it.polimi.it.model.Game;
 import it.polimi.it.model.Tiles.Tile;
 
 import java.io.IOException;
@@ -105,4 +106,5 @@ public interface ViewInterface {
 
     void boardRefill();
 
+    void recover(Game game, int gameID, Tile[][] matrix, ArrayList<Tile[][]> shelfies, CommonGoalCard card1, CommonGoalCard card2, PersonalGoalCard personalGoalCard, ArrayList<Integer> points, List<String> playerList);
 }
