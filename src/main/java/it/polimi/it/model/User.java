@@ -3,8 +3,7 @@ package it.polimi.it.model;
 import it.polimi.it.model.Board.Board;
 import it.polimi.it.Exceptions.IllegalValueException;
 import it.polimi.it.Exceptions.WrongTileException;
-import it.polimi.it.Exceptions.WrongListException;
-import it.polimi.it.model.Tiles.PossibleColors;
+
 import it.polimi.it.model.Tiles.Tile;
 
 import java.io.IOException;
@@ -31,7 +30,7 @@ public class User implements Serializable {
 
     public int maxValueOfTiles() throws IllegalValueException, IOException {
 
-        if(inGame==false){
+        if(!inGame){
             return -1;
         }
 
@@ -69,27 +68,17 @@ public class User implements Serializable {
             }
         }
 
-        //ho spostato questo metodo in insertTile per più ragioni:
-        //- più comodo in caso di disconnessione (la shelfie e la board si aggiornano dopo l'ultima operazione)
-        //- più comodo per inviare gli aggiornamenti su board e shelfie a tutti i giocatori a fine turno
-        //board.removeTiles(chosen);
-
         boolean [] columns = shelf.chooseColumn(tilesNumber);
         game.getVirtualView().possibleColumns(this.getNickname(),columns);
         return columns;
     }
 
-    public boolean insertTile(int column, List<Tile> chosen) throws IllegalValueException, RemoteException {
+    public boolean insertTile(int column, List<Tile> chosen) throws RemoteException {
 
         boolean isEnd;
-        if(column < 0 || column > 4){
 
-            throw new IllegalValueException("The given column value does not exist");
-
-        }else {
-            isEnd = this.getShelfie().addTile(column, chosen);
-            game.getVirtualView().shelfieUpdate(this);
-        }
+        isEnd = this.getShelfie().addTile(column, chosen);
+        game.getVirtualView().shelfieUpdate(this);
 
         board.removeTiles(chosen);
         boolean refill = board.refill();

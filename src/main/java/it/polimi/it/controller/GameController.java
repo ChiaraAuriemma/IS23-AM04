@@ -250,18 +250,22 @@ public class GameController implements Serializable {
      * @throws WrongTileException exception used when a wrong tile is selected
      */
     public void getColumnFromView(String user, int col) throws IllegalValueException, InvalidIDException, IOException {
-        if(!playerList.get(currentPlayer).getInGame()) {
-            turnDealer();
-        }else {
-            if (!possibleColumnArray[col]) {
-                throw new IllegalValueException("Invalid column choice");
+        if(col >= 0 && col <= 4) {
+            if (!playerList.get(currentPlayer).getInGame()) {
+                turnDealer();
+            } else {
+                if (!possibleColumnArray[col]) {
+                    throw new IllegalValueException("Invalid column choice");
+                }
+                endGame = playerList.stream().filter(curr -> Objects.equals(curr.getNickname(), user)).collect(Collectors.toList()).get(0).insertTile(col, currentTilesList);
+                game.pointCount(playerList.get(currentPlayer));
+                if (this.endGame) {
+                    game.endGame(playerList.get(currentPlayer));
+                }
+                turnDealer();
             }
-            endGame = playerList.stream().filter(curr -> Objects.equals(curr.getNickname(), user)).collect(Collectors.toList()).get(0).insertTile(col, currentTilesList);
-            game.pointCount(playerList.get(currentPlayer));
-            if (this.endGame) {
-                game.endGame(playerList.get(currentPlayer));
-            }
-            turnDealer();
+        }else{
+            throw new IllegalValueException("Invalid column choice");
         }
     }
 
