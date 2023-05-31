@@ -161,13 +161,21 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
                     username = loginResponse.getUsername();
                     //view : faccio passare la view alla schermata di selezione join o create game
                     //view : passo alla view lo user
-                    stage.setStage(TurnStages.CREATEorJOIN);
-
-                    try {
-                        view.joinOrCreate(username);
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
+                    if(!stage.getStage().equals(TurnStages.NOTURN)){
+                        stage.setStage(TurnStages.CREATEorJOIN);
+                        try {
+                            view.joinOrCreate(username);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }else {
+                        try {
+                            view.update();
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
                     }
+
                     break;
                 case CREATEGAMERESPONSE:
                     CreateGameResponse createGameResponse = (CreateGameResponse) response.getPayload();
@@ -178,7 +186,7 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
                 case JOINGAMERESPONSE:
                     JoinGameResponse joinGameResponse = (JoinGameResponse) response.getPayload();
 
-                    if(!stage.getStage().equals(TurnStages.TILESNUM)){
+                    if(!stage.getStage().equals(TurnStages.TILESNUM) && !stage.getStage().equals(TurnStages.NOTURN)){
                         stage.setStage(TurnStages.NOTHING);
                     }
                     view.setGameID(joinGameResponse.getGameId());
@@ -269,7 +277,7 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
                 case THISNOTTHEDAY:
                     ThisNotTheDay recover = (ThisNotTheDay) response.getPayload();
                     try {
-                        recover(recover.getGame(), recover.getGameID(), recover.getMatrix(), recover.getShelfies(), recover.getCard1(), recover.getCard2(), recover.getPersonalGoalCard(), recover.getPoints(), recover.getPlayerList());
+                        recover( recover.getGameID(), recover.getMatrix(), recover.getShelfies(), recover.getCard1(), recover.getCard2(), recover.getPersonalGoalCard(), recover.getPoints(), recover.getPlayerList());
                     } catch (RemoteException e) {
                         throw new RuntimeException(e);
                     }
@@ -304,13 +312,12 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
                     break;
 
                 case PING:
-                    System.out.println("ping received");
+
                     PingMessage pingMessage= (PingMessage) response.getPayload();
                     PongMessage pongMessage = new PongMessage(" ");
                     Message request = new Message(MessageType.PONG, pongMessage);
 
                     send(request);
-                    System.out.println("sent pong ");
 
                     break;
 
@@ -395,7 +402,10 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
     }
 
     @Override
-    public void recover(Game game, int gameID, Tile[][] matrix, ArrayList<Tile[][]> shelfies, CommonGoalCard card1, CommonGoalCard card2, PersonalGoalCard personalGoalCard, ArrayList<Integer> points, List<String> playerList) throws RemoteException {
+    public void recover( int gameID, Tile[][] matrix, ArrayList<Tile[][]> shelfies, CommonGoalCard card1, CommonGoalCard card2, PersonalGoalCard personalGoalCard, ArrayList<Integer> points, List<String> playerList) throws RemoteException {
+
+        view.recover(gameID, matrix, shelfies, card1, card2, personalGoalCard, points, playerList);
+        stage.setStage(TurnStages.NOTURN);
 
     }
 
@@ -445,6 +455,14 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
 
     @Override
     public void ping() throws RemoteException {
+
+    }
+
+    @Override
+    public void sendChatPrivateMessage(String chatMessage, String receiver) {
+        SendPrivateChatMessage sendPrivateChatMessage = new SendPrivateChatMessage(this.username, chatMessage, receiver);
+        Message request = new Message(MessageType.PRIVATECHAT, sendPrivateChatMessage);
+        send(request);
 
     }
 

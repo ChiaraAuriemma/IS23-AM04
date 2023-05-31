@@ -55,7 +55,7 @@ public interface ClientInterface extends Remote, Serializable {
 
     public void setFinalPoints(List<String> usernames, ArrayList<Integer> points) throws RemoteException;
 
-    public void recover(Game game, int gameID, Tile[][] matrix, ArrayList<Tile[][]> shelfies, CommonGoalCard card1, CommonGoalCard card2, PersonalGoalCard personalGoalCard, ArrayList<Integer> points, List<String> playerList) throws RemoteException;
+    public void recover( int gameID, Tile[][] matrix, ArrayList<Tile[][]> shelfies, CommonGoalCard card1, CommonGoalCard card2, PersonalGoalCard personalGoalCard, ArrayList<Integer> points, List<String> playerList) throws RemoteException;
 
     public void updateView() throws IOException;
 
@@ -73,4 +73,6 @@ public interface ClientInterface extends Remote, Serializable {
     TurnStages getGameStage()throws RemoteException;
 
     void ping() throws RemoteException;
+
+    void sendChatPrivateMessage(String chatMessage, String receiver) throws RemoteException;
 }

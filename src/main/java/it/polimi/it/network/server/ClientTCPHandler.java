@@ -84,10 +84,12 @@ public class ClientTCPHandler implements Runnable,Serializable{
                     synchronized (lobby){
                         try {
                             user = lobby.createUser(loginRequest.getNickname());
-                            /*if(user.getInGame()){// se il giocatore si riconnette devo passare il riferimento del socket alla virtualview
-                                                  // controllo se li tolgo dalla virtualview quando si disconnete
-                                user.getGame().getVirtualView().setUserTCP(user.getNickname(), this.out);
-                            }*/
+                            if(user.getInGame()){
+                                user.getGame().getVirtualView().setUserTCP(loginRequest.getNickname(),out);
+                                user.getGame().getVirtualView().removeDisconnection(user.getNickname());
+                                this.gameController = lobby.getGameController(user.getGame().getGameid());
+                                this.gameController.resetGame(user);
+                            }
                             serverTCP.setUserTCP(user,socket);
                             LoginResponse loginResponse = new LoginResponse(user.getNickname());
                             response = new Message(MessageType.CREATEPLAYERRESPONSE, loginResponse);
@@ -96,6 +98,8 @@ public class ClientTCPHandler implements Runnable,Serializable{
                             ErrorMessage errorMessage = new ErrorMessage(e.getMessage());
                             response = new Message(MessageType.ERROR, errorMessage);
 
+                        } catch (InvalidIDException e) {
+                            throw new RuntimeException(e);
                         }
                     }
 
@@ -204,6 +208,20 @@ public class ClientTCPHandler implements Runnable,Serializable{
                             send(response);
                         }
                     }
+                    break;
+
+                case PRIVATECHAT:
+                    SendPrivateChatMessage sendPrivateChatMessage = (SendPrivateChatMessage) request.getPayload();
+                    synchronized (gameController){
+                        try {
+                            this.gameController.pushChatPrivateMessage(sendPrivateChatMessage.getSender(),sendPrivateChatMessage.getChatMessage(), sendPrivateChatMessage.getReceiver());
+                        } catch (RemoteException e) {
+                            ErrorMessage errorMessage = new ErrorMessage(e.getMessage());
+                            response = new Message(MessageType.ERROR, errorMessage);
+                            send(response);
+                        }
+                    }
+
                     break;
 
                 case PONG://risposta del ping del timer

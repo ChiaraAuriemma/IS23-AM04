@@ -115,6 +115,20 @@ public class View implements ViewInterface, Serializable {
         shelfieInitializer();
     }
 
+    @Override
+    public void recover(int gameID, Tile[][] matrix, ArrayList<Tile[][]> shelfies, CommonGoalCard card1, CommonGoalCard card2, PersonalGoalCard personalGoalCard, ArrayList<Integer> points, List<String> playerList) {
+        setOrderView(new ArrayList<>(playerList));
+        setBoardView(matrix);
+        setCommon1View(card1);
+        setCommon2View(card2);
+        this.gameID=gameID;
+        setPlayersPersonalCardView(personalGoalCard);
+        for(int i=0; i<playerList.size(); i++){
+            setPlayersShelfiesView(playerList.get(i), shelfies.get(i));
+            setPlayersPointsView(playerList.get(i), points.get(i));
+        }
+        update();
+    }
 
     /**
      * Setter method for the nicknames in their padded version (fixed 12 chars length)
@@ -792,6 +806,7 @@ public class View implements ViewInterface, Serializable {
     public void boardRefill() {
         out.println("Refilling the board, please wait...\n");
     }
+
 
 
     public void leaderboardSet(){

@@ -12,7 +12,7 @@ import java.util.List;
 
 public interface ServerInterface extends Remote, Serializable {
 
-    public String login(ClientInterface cr, String username) throws RemoteException, ExistingNicknameException, EmptyNicknameException;
+    public String login(ClientInterface cr, String username) throws RemoteException, ExistingNicknameException, EmptyNicknameException, InvalidIDException;
 
     public int createGame(String username, int playerNumber, ClientInterface client) throws RemoteException, WrongPlayerException;
 
@@ -25,4 +25,6 @@ public interface ServerInterface extends Remote, Serializable {
     public void chooseColumn (String username,int columnNumber) throws IOException, InvalidIDException, IllegalValueException;
 
     void chatMessage(String chatMessage, String message) throws RemoteException;
+
+    void chatPrivateMessage(String sender, String chatMessage, String receiver) throws RemoteException;
 }

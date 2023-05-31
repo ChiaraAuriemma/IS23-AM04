@@ -61,10 +61,16 @@ public class RMIImplementation extends UnicastRemoteObject implements ServerInte
 
 
 
-    public String login(ClientInterface cr , String username) throws RemoteException, ExistingNicknameException, EmptyNicknameException {
+    public String login(ClientInterface cr , String username) throws RemoteException, ExistingNicknameException, EmptyNicknameException, InvalidIDException {
         User user;
         synchronized (lobby) {
             user = lobby.createUser(username);
+        }
+        if(user.getInGame()){
+            user.getGame().getVirtualView().setUserRMI(username, cr);
+            user.getGame().getVirtualView().removeDisconnection(user.getNickname());
+            userGame.put(user.getNickname(),lobby.getGameController(user.getGame().getGameid()));
+            userGame.get(user.getNickname()).resetGame(user);
         }
         userRMI.put(user.getNickname(), cr);
         pongs.put(user.getNickname(), true);
@@ -119,6 +125,14 @@ public class RMIImplementation extends UnicastRemoteObject implements ServerInte
         GameController gc = userGame.get(username);
         synchronized (gc) {
             gc.pushChatMessage(chatMessage);
+        }
+    }
+
+    @Override
+    public void chatPrivateMessage(String sender, String chatMessage, String receiver) throws RemoteException {
+        GameController gc = userGame.get(sender);
+        synchronized (gc) {
+            gc.pushChatPrivateMessage(sender, chatMessage, receiver);
         }
     }
 

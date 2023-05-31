@@ -81,13 +81,19 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
     public void login(String userName) throws RemoteException,IOException {
         try {
             this.nickname = sr.login(this, userName);
-            stage.setStage(TurnStages.CREATEorJOIN);
-            view.joinOrCreate(this.nickname);
+            if(!stage.getStage().equals(TurnStages.NOTURN)){
+                stage.setStage(TurnStages.CREATEorJOIN);
+                view.joinOrCreate(this.nickname);
+            }
+            else view.update();
+
 
             //view : passo alla schermata con create e join game
         } catch (ExistingNicknameException | EmptyNicknameException e) {
             //view : notifico la view che deve riproporre l'inserimento del nickname con l'errore in rosso
             view.askNicknameAgain(e.getMessage());
+        } catch (InvalidIDException e) {
+            throw new RuntimeException(e);
         }
 
     }
@@ -181,8 +187,10 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
     }
 
     @Override
-    public void recover(Game game, int gameID, Tile[][] matrix, ArrayList<Tile[][]> shelfies, CommonGoalCard card1, CommonGoalCard card2, PersonalGoalCard personalGoalCard, ArrayList<Integer> points, List<String> playerList) throws RemoteException {
+    public void recover(int gameID, Tile[][] matrix, ArrayList<Tile[][]> shelfies, CommonGoalCard card1, CommonGoalCard card2, PersonalGoalCard personalGoalCard, ArrayList<Integer> points, List<String> playerList) throws RemoteException {
 
+        view.recover(gameID, matrix, shelfies, card1, card2, personalGoalCard, points, playerList);
+        stage.setStage(TurnStages.NOTURN);
     }
 
 
@@ -281,5 +289,10 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
 
     public void ping() throws RemoteException{
         return;
+    }
+
+    @Override
+    public void sendChatPrivateMessage(String chatMessage, String receiver) throws RemoteException {
+        sr.chatPrivateMessage(this.nickname, chatMessage, receiver);
     }
 }
