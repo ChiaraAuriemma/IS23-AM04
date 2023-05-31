@@ -87,7 +87,8 @@ public class ClientTCPHandler implements Runnable,Serializable{
                             if(user.getInGame()){
                                 user.getGame().getVirtualView().setUserTCP(loginRequest.getNickname(),out);
                                 user.getGame().getVirtualView().removeDisconnection(user.getNickname());
-                                lobby.getGameController(user.getGame().getGameid()).resetGame(user);
+                                this.gameController = lobby.getGameController(user.getGame().getGameid());
+                                this.gameController.resetGame(user);
                             }
                             serverTCP.setUserTCP(user,socket);
                             LoginResponse loginResponse = new LoginResponse(user.getNickname());
