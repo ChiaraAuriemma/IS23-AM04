@@ -1,5 +1,6 @@
 package it.polimi.it.view.GUI;
 
+import it.polimi.it.model.Tiles.Tile;
 import it.polimi.it.network.client.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -15,6 +16,7 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class GUIApplication extends Application {
 
@@ -35,6 +37,9 @@ public class GUIApplication extends Application {
     private static int numTiles;
 
     private static ArrayList<String> players;
+    private static HashMap<String, Image[][]> shelfies = new HashMap<>();
+
+
 
 
     @Override
@@ -120,7 +125,7 @@ public class GUIApplication extends Application {
             stageRef.show();
         }
         if(client.getGameStage().equals(TurnStages.CHOOSETILES)){
-            FXMLLoader fxmlLoader = new FXMLLoader(GUIApplication.class.getResource("/ChooseTiles.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(GUIApplication.class.getResource("/ChooseTilesNum.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
             setCurrentController(fxmlLoader.getController());
             currentController.setClient(client);
@@ -234,6 +239,13 @@ public class GUIApplication extends Application {
         currentController = guiControllerRef;
     }
 
+    public static HashMap<String, Image[][]> getShelfies() {
+        return shelfies;
+    }
+
+    public static void setShelfies(String player, Image[][] shelfie) {
+        shelfies.put(player,shelfie);
+    }
 
     public static void setClient(ClientInterface clientint){
         client = clientint;

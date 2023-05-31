@@ -165,7 +165,15 @@ public class GUIHandler implements ViewInterface {
 
     @Override
     public void setPlayersShelfiesView(String player, Tile[][] shelfie) {
-
+        Image[][] shelfImage = new Image[6][5];
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 5; j++) {
+                String color = shelfie[i][j].getColor();
+                Image image = chooseAnImage(color);
+                shelfImage[i][j] = image;
+            }
+        }
+        GUIApplication.setShelfies(player,shelfImage);
     }
 
     @Override
@@ -354,7 +362,11 @@ public class GUIHandler implements ViewInterface {
 
     @Override
     public void setGameID(int gameId) {
-        GUIApplication.showAlert(Alert.AlertType.INFORMATION, "Create Game ID", "your game id is " + gameId);
+        Platform.runLater(new Thread(()-> {
+            if(GUIApplication.getCreateOrJoin().equals("CREATE"))
+                GUIApplication.showAlert(Alert.AlertType.INFORMATION, "Create Game ID", "Your game id is " + gameId);
+        }));
+
     }
 
     @Override
@@ -405,7 +417,13 @@ public class GUIHandler implements ViewInterface {
 
     @Override
     public void joinOrCreate(String username) throws IOException {
-        GUIApplication.changeScene();
+        Platform.runLater(new Thread(()-> {
+            try {
+                GUIApplication.changeScene();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }));
     }
 
     @Override
@@ -431,33 +449,57 @@ public class GUIHandler implements ViewInterface {
 
     @Override
     public void askNicknameAgain(String errorMessage) {
-        GUIApplication.showAlert(Alert.AlertType.WARNING, "Login error", errorMessage);
+        Platform.runLater(new Thread(()-> {
+            GUIApplication.showAlert(Alert.AlertType.WARNING, "Login error", errorMessage);
+        }));
     }
 
     @Override
     public void askNumPlayerAgain() {
-        GUIApplication.showAlert(Alert.AlertType.WARNING, "Create Game error", "The game is for 2 to 4 players");
+        Platform.runLater(new Thread(()-> {
+            GUIApplication.showAlert(Alert.AlertType.WARNING, "Create Game error", "The game is for 2 to 4 players");
+        }));
+
     }
 
     @Override
     public void askIDAgain() {
-        GUIApplication.showAlert(Alert.AlertType.WARNING, "Join Game error", "This game id is invalid");
+        Platform.runLater(new Thread(()-> {
+            GUIApplication.showAlert(Alert.AlertType.WARNING, "Join Game error", "This game id is invalid");;
+        }));
     }
 
     @Override
     public void askNumTilesAgain() {
-        GUIApplication.showAlert(Alert.AlertType.WARNING, "Tiles error", "you can choose from 1 to 3 tiles");
+        Platform.runLater(new Thread(()-> {
+            GUIApplication.showAlert(Alert.AlertType.WARNING, "Tiles error", "you can choose from 1 to 3 tiles");
+            try {
+                GUIApplication.changeScene();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }));
+
     }
 
     @Override
     public void askTilesAgain() throws IOException {
-        GUIApplication.showAlert(Alert.AlertType.WARNING, "Tiles error", "You can only take adjacent tiles with a free edge");
-        GUIApplication.changeScene();
+        Platform.runLater(new Thread(()-> {
+            GUIApplication.showAlert(Alert.AlertType.WARNING, "Tiles error", "You can only take adjacent tiles with a free edge");
+            try {
+                GUIApplication.changeScene();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }));
+
     }
 
     @Override
     public void askColumnAgain() {
-        GUIApplication.showAlert(Alert.AlertType.WARNING, "Tiles error", "The number of the column is invalid");
+        Platform.runLater(new Thread(()-> {
+            GUIApplication.showAlert(Alert.AlertType.WARNING, "Tiles error", "The number of the column is invalid");
+        }));
     }
 
     @Override
