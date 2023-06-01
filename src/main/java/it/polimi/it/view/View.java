@@ -464,9 +464,6 @@ public class View implements ViewInterface, Serializable {
     }
 
 
-    public void askNicknameAgain(String errorMessage) {
-        out.println(errorMessage);
-    }
 
 
     public void joinOrCreate(String clientInput) {
@@ -484,34 +481,13 @@ public class View implements ViewInterface, Serializable {
     }
 
 
-    public void askNumPlayerAgain() {
-        out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
-        Title();
-        out.println("\n\n\n");
-        out.println("Retry! You must insert a number between 2 and 4... ");
-    }
-
-
-    public void askIDAgain() {
-        out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
-        Title();
-        out.println("\n\n\n");
-        out.println("Retry! You must insert a valid GameID... ");
-    }
 
 
     public void NotifyTurnStart(int maxValueofTiles, String username) {//stampa tipo Bro è il tuo turno, chiedi di scegliere quante tile vuole; in input ho il max numero che posso prendere
         out.print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nHey " + unPad(username) +" it's your turn!\nChoose how many Tiles you want to take from the LivingRoom... ( Use num_tiles>>\"number of tiles\" ) \n\n");
     }
 
-    public void askNumTilesAgain() {
-        out.print("You can't take that number of tiles! Please retry...\n ");
 
-    }
-
-    public void askColumnAgain() {
-        out.print("You can't choose this column!\n");
-    }
 
 
     public void printCommands() {
@@ -802,10 +778,6 @@ public class View implements ViewInterface, Serializable {
         this.yourself = nickname;
     }
 
-
-    public void askTilesAgain(){
-        out.println("One or more of the tiles is not takeable! Retry...\n");
-    }
 
 
     public void boardRefill() {

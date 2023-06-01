@@ -89,11 +89,10 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
 
 
             //view : passo alla schermata con create e join game
-        } catch (ExistingNicknameException | EmptyNicknameException e) {
+        } catch (ExistingNicknameException | EmptyNicknameException | InvalidIDException e) {
             //view : notifico la view che deve riproporre l'inserimento del nickname con l'errore in rosso
-            view.askNicknameAgain(e.getMessage());
-        } catch (InvalidIDException e) {
-            throw new RuntimeException(e);
+            //view.askNicknameAgain(e.getMessage());
+            view.printError(e.getMessage());
         }
 
     }
@@ -112,7 +111,8 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
             view.setGameID(gameid);
         } catch (WrongPlayerException e) {
             //view : notifico alla view che il numero di giocatori inseriti non è corretto
-            view.askNumPlayerAgain();
+            //view.askNumPlayerAgain();
+            view.printError(e.getMessage());
         }
     }
 
@@ -132,10 +132,9 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
             }
 
             view.setGameID(gameid);
-        } catch (InvalidIDException | WrongPlayerException | IllegalValueException e) {
-            view.askIDAgain();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        } catch (InvalidIDException | WrongPlayerException | IllegalValueException | IOException e) {
+            //view.askIDAgain();
+            view.printError(e.getMessage());
         }
     }
 
@@ -144,11 +143,10 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
         try {   //comunico al server il numero scelto
             sr.tilesNumMessage(this.nickname, numOfTiles);
             stage.setStage(TurnStages.CHOOSETILES);
-        } catch (IllegalValueException | WrongPlayerException e) {
+        } catch (IllegalValueException | WrongPlayerException | InvalidIDException | IOException e) {
             //view : notifico alla view che il numero di tiles indicato non è valido
-            view.askNumTilesAgain();
-        } catch (InvalidIDException | IOException e) {
-            throw new RuntimeException(e);
+            //view.askNumTilesAgain();
+            view.printError(e.getMessage());
         }
     }
 
@@ -158,10 +156,9 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
         try {
             sr.selectedTiles(this.nickname, choosenTiles);
             stage.setStage(TurnStages.CHOOSECOLUMN);
-        } catch (WrongPlayerException | WrongListException e) {
-            view.askTilesAgain();
-        } catch (IllegalValueException | InvalidIDException | IOException e) {
-            throw new RuntimeException(e);
+        } catch (WrongPlayerException | WrongListException | IllegalValueException | InvalidIDException | IOException e) {
+            //view.askTilesAgain();
+            view.printError(e.getMessage());
         }
     }
 
@@ -171,7 +168,8 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
             sr.chooseColumn(this.nickname, numOfColum);
             System.out.println("End of your turn\n");
         } catch (InvalidIDException | IllegalValueException | IOException e) {
-            view.askColumnAgain();
+            //view.askColumnAgain();
+            view.printError(e.getMessage());
         }
 
     }
