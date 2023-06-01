@@ -161,8 +161,9 @@ public class ClientInputReader implements Runnable, Serializable{
                         if(splittedMessage[1]!=null && splittedMessage[1].length() >= 0) {
                             String message = splittedMessage[1];
 
+                            String colorizedNickname = "\u001B[33m" + lastUsedNickname + "\u001B[39m";
 
-                            message = lastUsedNickname + ": " + message;
+                            message = colorizedNickname + ": " + message;
                             view.printError("Sending to " + receiver + "...\n");
 
                             client.sendChatPrivateMessage(message, receiver);

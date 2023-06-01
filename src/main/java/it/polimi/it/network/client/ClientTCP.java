@@ -186,7 +186,7 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
                 case JOINGAMERESPONSE:
                     JoinGameResponse joinGameResponse = (JoinGameResponse) response.getPayload();
 
-                    if(!stage.getStage().equals(TurnStages.TILESNUM) && !stage.getStage().equals(TurnStages.NOTURN)){
+                    if(stage.getStage().equals(TurnStages.CREATEorJOIN)){
                         stage.setStage(TurnStages.NOTHING);
                     }
                     view.setGameID(joinGameResponse.getGameId());

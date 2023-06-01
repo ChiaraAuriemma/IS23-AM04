@@ -159,7 +159,7 @@ public class Lobby implements Serializable {
      */
     public GameController createGame(String username, int playerNumber) throws WrongPlayerException {
         if(playerNumber < 2 || playerNumber > 4){
-            throw new WrongPlayerException("Wrong number of players"); //mandare messaggio a view
+            throw new WrongPlayerException("\"Retry! You must insert a number between 2 and 4... \""); //mandare messaggio a view
         }
 
         VirtualView virtualView = new VirtualView();
@@ -207,7 +207,7 @@ public class Lobby implements Serializable {
                 throw new WrongPlayerException("There are already too many players in this game!");
             }
         }else{
-            throw new InvalidIDException("The given game ID does not exists");
+            throw new InvalidIDException("This ID does not exists");
         }
     }
 

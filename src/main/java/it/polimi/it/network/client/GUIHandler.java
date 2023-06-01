@@ -455,60 +455,10 @@ public class GUIHandler implements ViewInterface {
     }
 
 
-    @Override
-    public void askNicknameAgain(String errorMessage) {
-        Platform.runLater(new Thread(()-> {
-            GUIApplication.showAlert(Alert.AlertType.WARNING, "Login error", errorMessage);
-        }));
-    }
 
-    @Override
-    public void askNumPlayerAgain() {
-        Platform.runLater(new Thread(()-> {
-            GUIApplication.showAlert(Alert.AlertType.WARNING, "Create Game error", "The game is for 2 to 4 players");
-        }));
 
-    }
 
-    @Override
-    public void askIDAgain() {
-        Platform.runLater(new Thread(()-> {
-            GUIApplication.showAlert(Alert.AlertType.WARNING, "Join Game error", "This game id is invalid");;
-        }));
-    }
 
-    @Override
-    public void askNumTilesAgain() {
-        Platform.runLater(new Thread(()-> {
-            GUIApplication.showAlert(Alert.AlertType.WARNING, "Tiles error", "you can choose from 1 to 3 tiles");
-            try {
-                GUIApplication.changeScene();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }));
-
-    }
-
-    @Override
-    public void askTilesAgain() throws IOException {
-        Platform.runLater(new Thread(()-> {
-            GUIApplication.showAlert(Alert.AlertType.WARNING, "Tiles error", "You can only take adjacent tiles with a free edge");
-            try {
-                GUIApplication.changeScene();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }));
-
-    }
-
-    @Override
-    public void askColumnAgain() {
-        Platform.runLater(new Thread(()-> {
-            GUIApplication.showAlert(Alert.AlertType.WARNING, "Tiles error", "The number of the column is invalid");
-        }));
-    }
 
     @Override
     public void boardRefill() {

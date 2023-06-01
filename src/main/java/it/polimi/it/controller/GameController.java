@@ -164,6 +164,7 @@ public class GameController implements Serializable {
                 return;
             }
             game.getVirtualView().notifyTurnStart(playerList.get(currentPlayer));
+
             game.getVirtualView().viewUpdate();
         }
     }
@@ -268,6 +269,7 @@ public class GameController implements Serializable {
      * Calls the view in order to display the initial board and the cards that have been extracted randomly
      */
     public void firstTurnStarter() throws IllegalValueException, IOException, InvalidIDException {
+        game.getVirtualView().notifyTurnStart(null);
         playerList = game.randomPlayers();
         for(int i=0; i < game.getNumplayers(); i++){
             game.drawPersonalCard();
@@ -389,14 +391,14 @@ public class GameController implements Serializable {
         }
         for(User u : playerList){
             if(u.getNickname().equals(sender)){
-                u.newMessage(chatMessage);
+                u.newPrivateMessage(chatMessage);
                 game.getVirtualView().sendChatUpdate(u.getChatList(), u);
             }
         }
 
         for(User u : playerList){
             if(u.getNickname().equals(receiver)){
-                u.newMessage(chatMessage);
+                u.newPrivateMessage(chatMessage);
                 game.getVirtualView().sendChatUpdate(u.getChatList(), u);
             }
         }

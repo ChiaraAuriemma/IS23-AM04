@@ -61,4 +61,45 @@ public class Chat implements Serializable {
         updateChatDisplayer();
         return currentChat;
     }
+
+    public void newPrivateMessage(String chatMessage) {
+        String temp;
+
+        if(chatMessage.length()>=43){
+            temp = chatMessage.substring(0, 42);
+            temp = padTo43(temp);
+            chatList.add(temp);
+            temp=null;
+            chatMessage = chatMessage.substring(43);
+
+
+            while(chatMessage!=null){
+                if(chatMessage.length()>=33){
+                    temp = chatMessage.substring(0, 32);
+                    temp = padTo33(temp);
+                    chatList.add(temp);
+                    temp=null;
+                    chatMessage = chatMessage.substring(33);
+                }
+                else {
+                    temp = padTo33(chatMessage);
+                    chatList.add(temp);
+                    chatMessage=null;
+                }
+            }
+        }else{
+            temp = padTo43(chatMessage);
+            chatList.add(temp);
+            chatMessage=null;
+        }
+
+        updateChatDisplayer();
+    }
+
+    private String padTo43(String message) {
+        while(message.length()<43){
+            message = message + " ";
+        }
+        return message;
+    }
 }

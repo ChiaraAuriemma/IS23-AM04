@@ -92,17 +92,6 @@ public interface ViewInterface {
 
     void askColumn() throws IOException;
 
-    void askNicknameAgain(String errorMessage);
-
-    void askNumPlayerAgain();
-
-    void askIDAgain();
-
-    void askNumTilesAgain();
-
-    void askTilesAgain() throws IOException;
-
-    void askColumnAgain();
 
     void boardRefill();
 

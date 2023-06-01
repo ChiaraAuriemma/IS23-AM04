@@ -42,7 +42,8 @@ public class View implements ViewInterface, Serializable {
     private ArrayList<String> names = new ArrayList<>();
     private List<List<Tile>> choosableTilesList = new ArrayList<>();
     private int gameID;
-    private String endToken;
+    private String endToken = null;
+
 
 
     private String Line1;    private String Line2;    private String Line3;
@@ -359,6 +360,13 @@ public class View implements ViewInterface, Serializable {
                 pointsLine = border + "    " + "Points: " + playersPoints.get(order.get(0)) + "     " + "Points: " + playersPoints.get(order.get(1)) + "     " + "Points: " + playersPoints.get(order.get(2)) + "     " + "Points: " + playersPoints.get(order.get(3)) + "     " + border;
                 break;
         }
+
+        if(endToken!=null){
+            int index = order.indexOf(endToken);
+            StringBuilder sb = new StringBuilder(pointsLine);
+            sb.setCharAt(2 + index*15, '#');
+            pointsLine = sb.toString();
+        }
     }
 
 
@@ -456,57 +464,38 @@ public class View implements ViewInterface, Serializable {
 
 
     public void Title() {
-        String title = " \u001B[33m    ▒█▀▄▀█ █▒ █ 　 ▒█▀▀▀█ █░ █ █▀▀ █▒░ █▀▀ ░▀░ █▀▀\n" +
+        String title = "\n\n\n\n\n\n\n\n\n\n" +
+                        " \u001B[33m    ▒█▀▄▀█ █▒ █ 　 ▒█▀▀▀█ █░ █ █▀▀ █▒░ █▀▀ ░▀░ █▀▀\n" +
                                  "     ▒█▒█░█ █▄▄█ 　 ░▀▀▀▄▄ █▀▀█ █▀▀ █▒░ █▀▀ ▀█▀ █▀▀\n" +
-                                 "     ▒█░░░█ ▄▄▄█ 　 ▒█▄▄▄█ ▀░ ▀ ▀▀▀ ▀▀▀ ▀░  ▀▀▀ ▀▀▀\n \u001B[39m";
+                                 "     ▒█░░░█ ▄▄▄█ 　 ▒█▄▄▄█ ▀░ ▀ ▀▀▀ ▀▀▀ ▀░  ▀▀▀ ▀▀▀\n \u001B[39m \n\n\n\n";
         out.println(title);
     }
 
 
-    public void askNicknameAgain(String errorMessage) {
-        out.println(errorMessage);
-    }
 
 
     public void joinOrCreate(String clientInput) {
         out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
         Title();
         out.println("\n");
-        out.println("Welcome to My Shelfie, " + clientInput + "!");
+        out.println("Welcome to My Shelfie, " + unPad(clientInput) + "!");
         out.println("\n\n\n");
         out.println("Do you want to join or create a new Game? ( Use create_game>>\"number of player\" or join_game>>\"gameID\" )");
         out.println("\n");
     }
 
-
-    public void askNumPlayerAgain() {
-        out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
-        Title();
-        out.println("\n\n\n");
-        out.println("Retry! You must insert a number between 2 and 4... ");
+    private String unPad(String s) {
+        return s.trim();
     }
 
 
-    public void askIDAgain() {
-        out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
-        Title();
-        out.println("\n\n\n");
-        out.println("Retry! You must insert a valid GameID... ");
-    }
 
 
     public void NotifyTurnStart(int maxValueofTiles, String username) {//stampa tipo Bro è il tuo turno, chiedi di scegliere quante tile vuole; in input ho il max numero che posso prendere
-        out.print("Hey " + username + " it's your turn!\nChoose how many Tiles you want to take from the LivingRoom... ( Use num_tiles>>\"number of tiles\" ) \n\n");
+        out.print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nHey " + unPad(username) +" it's your turn!\nChoose how many Tiles you want to take from the LivingRoom... ( Use num_tiles>>\"number of tiles\" ) \n\n");
     }
 
-    public void askNumTilesAgain() {
-        out.print("You can't take that number of tiles! Please retry...\n ");
 
-    }
-
-    public void askColumnAgain() {
-        out.print("You can't choose this column!\n");
-    }
 
 
     public void printCommands() {
@@ -518,6 +507,8 @@ public class View implements ViewInterface, Serializable {
                     "│ num_tiles>>        │\n" +
                     "│ take_tiles>>       │\n" +
                     "│ choose_column>>    │\n" +
+                    "│ chat>>             │\n" +
+                    "│ private_chat>>     │\n" +
                     "│ help>>             │\n" +
                     "└────────────────────┘\n");
     }
@@ -532,6 +523,15 @@ public class View implements ViewInterface, Serializable {
     public void setEndToken(String user) {
         user=nickPadder(user);
         this.endToken = user;
+
+        String u = nickPadder(user);
+        int index = order.indexOf(u);
+
+       // pointsLine[2 + index*15]='X';
+        StringBuilder sb = new StringBuilder(pointsLine);
+        sb.setCharAt(2 + index*15, '#');
+        pointsLine = sb.toString();
+        update();
     }
 
 
@@ -797,10 +797,6 @@ public class View implements ViewInterface, Serializable {
         this.yourself = nickname;
     }
 
-
-    public void askTilesAgain(){
-        out.println("One or more of the tiles is not takeable! Retry...\n");
-    }
 
 
     public void boardRefill() {
