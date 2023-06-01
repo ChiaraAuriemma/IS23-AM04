@@ -73,7 +73,7 @@ public class ClientInputReader implements Runnable, Serializable{
 
         String[] inp = input.split(">>");
         String command = inp[0];
-        if (inp.length == 1){
+        if (inp.length == 1 && !input.contains("help")){
             System.out.println("You didn't write anything");
             return;
         }
