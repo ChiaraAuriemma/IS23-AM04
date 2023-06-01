@@ -11,10 +11,7 @@ import it.polimi.it.model.User;
 import java.io.IOException;
 import java.io.Serializable;
 import java.rmi.RemoteException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class GameController implements Serializable {
@@ -83,6 +80,9 @@ public class GameController implements Serializable {
      */
     private boolean[] possibleColumnArray;
 
+    Timer timer;
+
+
 
     /**
      * Constructor method
@@ -125,7 +125,16 @@ public class GameController implements Serializable {
                     //chiudi il game
                     lobby.notifyEndGame(gameID);
                     return;
-                }else{
+                } else if (numDisconnected()==playerList.size()-1) {//è rimasto un solo giocatore online
+                    /**
+                     *  Se rimane attivo un solo giocatore, il gioco viene sospeso
+                     * no a che non si ricollega almeno un altro giocatore oppure scade un
+                     * timeout che decreta la vittoria
+                     * dell'unico giocatore rimasto connesso.
+                     */
+                    freezeGame();
+                    return;
+                } else{
 
                     while(!playerList.get(currentPlayer).getInGame()){
                         currentPlayer= (currentPlayer + 1) % game.getNumplayers();
@@ -136,6 +145,59 @@ public class GameController implements Serializable {
 
             firstOperation();
         }
+    }
+
+    private void freezeGame() throws InvalidIDException, IllegalValueException, IOException {
+        //faccio un timer di un minuto
+        System.out.println("freeze game");
+        new Thread(this::controlTimer).start();
+        //timer.cancel();
+    }
+
+
+    private void controlTimer() {
+        timer = new Timer();
+        TimerTask task = new TimerTask() {
+            public void run() {
+                System.out.println("One minute has passed for Game" + gameID);
+
+                if (numDisconnected()==playerList.size()-1){
+                    try {
+                        System.out.println("Closing game " + gameID + " due to lack of online players");
+                        game.getVirtualView().notifyEndGameDisconnection();
+                        lobby.notifyEndGame(gameID);
+
+                        //notificare ai giocatori la fine della partita
+
+                        return;
+                    } catch (InvalidIDException | RemoteException e) {
+                        throw new RuntimeException(e);
+                    }
+                }else{
+                    try {
+                        System.out.println("There are enough players in game " + gameID + " to continue");
+                        turnDealer();
+                        return;
+                    } catch (InvalidIDException | IllegalValueException | IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+        };
+        long delay = 60000; // Delay in milliseconds (1 minute = 60,000 milliseconds)
+        timer.schedule(task, delay);
+
+    }
+
+
+    private int numDisconnected() {
+        int num=0;
+        for (User u: playerList){
+            if (u.getInGame()){
+                num++;
+            }
+        }
+        return num;
     }
 
     private boolean checkIfEverybodyIsDisconnected() {//se c'è ancora qualcuno online metto false

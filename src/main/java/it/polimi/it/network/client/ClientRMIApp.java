@@ -97,6 +97,11 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
 
     }
 
+    @Override
+    public void printError(String e)  throws RemoteException{
+        view.printError(e);
+    }
+
     /**
      * Communicates the server the number of people that the user wants in his new game
      *

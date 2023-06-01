@@ -7,6 +7,7 @@ import it.polimi.it.model.Tiles.PossibleColors;
 import it.polimi.it.model.Tiles.Tile;
 import it.polimi.it.model.User;
 import it.polimi.it.network.client.ClientInterface;
+import it.polimi.it.network.message.ErrorMessage;
 import it.polimi.it.network.message.Message;
 import it.polimi.it.network.message.MessageType;
 import it.polimi.it.network.message.others.ThisNotTheDay;
@@ -574,4 +575,22 @@ public class VirtualView implements Serializable {
         }
     }
 
+    public void notifyEndGameDisconnection() throws RemoteException {
+        for (int i=0; i < game.getNumplayers(); i++) {
+            User receiver = game.getPlayer(i);
+            if (receiver.getInGame()) {
+
+                if (typeOfConnection.get(receiver.getNickname()).equals("TCP") && !disconn_users.contains(receiver.getNickname())) {
+                    ErrorMessage errorMessage = new ErrorMessage("This game was closed due to the lack of players! :(\n");
+                    Message message = new Message(MessageType.ERROR, errorMessage);
+                    sendTCPMessage(userTCP.get(receiver.getNickname()), message);
+
+
+                } else if (typeOfConnection.get(receiver.getNickname()).equals("RMI")) {
+                    ClientInterface clientRMI = userRMI.get(receiver.getNickname());
+                    clientRMI.printError("This game was closed due to the lack of players! :(\n");
+                }
+            }
+        }
+    }
 }
