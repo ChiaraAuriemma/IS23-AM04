@@ -499,6 +499,8 @@ public class View implements ViewInterface, Serializable {
                     "│ num_tiles>>        │\n" +
                     "│ take_tiles>>       │\n" +
                     "│ choose_column>>    │\n" +
+                    "│ chat>>             │\n" +
+                    "│ private_chat>>     │\n" +
                     "│ help>>             │\n" +
                     "└────────────────────┘\n");
     }
