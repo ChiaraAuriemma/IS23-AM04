@@ -456,9 +456,10 @@ public class View implements ViewInterface, Serializable {
 
 
     public void Title() {
-        String title = " \u001B[33m    ▒█▀▄▀█ █▒ █ 　 ▒█▀▀▀█ █░ █ █▀▀ █▒░ █▀▀ ░▀░ █▀▀\n" +
+        String title = "\n\n\n\n\n\n\n\n\n\n" +
+                        " \u001B[33m    ▒█▀▄▀█ █▒ █ 　 ▒█▀▀▀█ █░ █ █▀▀ █▒░ █▀▀ ░▀░ █▀▀\n" +
                                  "     ▒█▒█░█ █▄▄█ 　 ░▀▀▀▄▄ █▀▀█ █▀▀ █▒░ █▀▀ ▀█▀ █▀▀\n" +
-                                 "     ▒█░░░█ ▄▄▄█ 　 ▒█▄▄▄█ ▀░ ▀ ▀▀▀ ▀▀▀ ▀░  ▀▀▀ ▀▀▀\n \u001B[39m";
+                                 "     ▒█░░░█ ▄▄▄█ 　 ▒█▄▄▄█ ▀░ ▀ ▀▀▀ ▀▀▀ ▀░  ▀▀▀ ▀▀▀\n \u001B[39m \n\n\n\n";
         out.println(title);
     }
 
@@ -472,10 +473,14 @@ public class View implements ViewInterface, Serializable {
         out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
         Title();
         out.println("\n");
-        out.println("Welcome to My Shelfie, " + clientInput + "!");
+        out.println("Welcome to My Shelfie, " + unPad(clientInput) + "!");
         out.println("\n\n\n");
         out.println("Do you want to join or create a new Game? ( Use create_game>>\"number of player\" or join_game>>\"gameID\" )");
         out.println("\n");
+    }
+
+    private String unPad(String s) {
+        return s.trim();
     }
 
 
@@ -496,7 +501,7 @@ public class View implements ViewInterface, Serializable {
 
 
     public void NotifyTurnStart(int maxValueofTiles, String username) {//stampa tipo Bro è il tuo turno, chiedi di scegliere quante tile vuole; in input ho il max numero che posso prendere
-        out.print("Hey " + username + " it's your turn!\nChoose how many Tiles you want to take from the LivingRoom... ( Use num_tiles>>\"number of tiles\" ) \n\n");
+        out.print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nHey " + unPad(username) +" it's your turn!\nChoose how many Tiles you want to take from the LivingRoom... ( Use num_tiles>>\"number of tiles\" ) \n\n");
     }
 
     public void askNumTilesAgain() {
