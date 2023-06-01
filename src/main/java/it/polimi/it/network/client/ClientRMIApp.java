@@ -295,4 +295,8 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
     public void sendChatPrivateMessage(String chatMessage, String receiver) throws RemoteException {
         sr.chatPrivateMessage(this.nickname, chatMessage, receiver);
     }
+
+    public GameStage getStage() {
+        return stage;
+    }
 }
