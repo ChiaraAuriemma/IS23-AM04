@@ -127,7 +127,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
         try {
             int gameid = sr.joinGame(this.nickname, gameID, this);
 
-            if(!stage.getStage().equals(TurnStages.TILESNUM)){
+            if(stage.getStage().equals(TurnStages.CREATEorJOIN)){
                 stage.setStage(TurnStages.NOTHING);
             }
 
