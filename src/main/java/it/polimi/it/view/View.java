@@ -45,6 +45,7 @@ public class View implements ViewInterface, Serializable {
     private String endToken;
 
 
+
     private String Line1;    private String Line2;    private String Line3;
     private String Line4;    private String Line5;    private String Line6;
     private String Line7;    private String Line8;    private String Line9;

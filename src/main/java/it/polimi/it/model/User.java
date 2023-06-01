@@ -143,4 +143,7 @@ public class User implements Serializable {
         chat.newMessage(message);
     }
 
+    public void newPrivateMessage(String chatMessage) {
+        chat.newPrivateMessage(chatMessage);
+    }
 }

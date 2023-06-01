@@ -391,14 +391,14 @@ public class GameController implements Serializable {
         }
         for(User u : playerList){
             if(u.getNickname().equals(sender)){
-                u.newMessage(chatMessage);
+                u.newPrivateMessage(chatMessage);
                 game.getVirtualView().sendChatUpdate(u.getChatList(), u);
             }
         }
 
         for(User u : playerList){
             if(u.getNickname().equals(receiver)){
-                u.newMessage(chatMessage);
+                u.newPrivateMessage(chatMessage);
                 game.getVirtualView().sendChatUpdate(u.getChatList(), u);
             }
         }
