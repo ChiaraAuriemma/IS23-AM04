@@ -42,7 +42,7 @@ public class View implements ViewInterface, Serializable {
     private ArrayList<String> names = new ArrayList<>();
     private List<List<Tile>> choosableTilesList = new ArrayList<>();
     private int gameID;
-    private String endToken;
+    private String endToken = null;
 
 
 
@@ -360,6 +360,13 @@ public class View implements ViewInterface, Serializable {
                 pointsLine = border + "    " + "Points: " + playersPoints.get(order.get(0)) + "     " + "Points: " + playersPoints.get(order.get(1)) + "     " + "Points: " + playersPoints.get(order.get(2)) + "     " + "Points: " + playersPoints.get(order.get(3)) + "     " + border;
                 break;
         }
+
+        if(endToken!=null){
+            int index = order.indexOf(endToken);
+            StringBuilder sb = new StringBuilder(pointsLine);
+            sb.setCharAt(2 + index*15, '#');
+            pointsLine = sb.toString();
+        }
     }
 
 
@@ -516,6 +523,15 @@ public class View implements ViewInterface, Serializable {
     public void setEndToken(String user) {
         user=nickPadder(user);
         this.endToken = user;
+
+        String u = nickPadder(user);
+        int index = order.indexOf(u);
+
+       // pointsLine[2 + index*15]='X';
+        StringBuilder sb = new StringBuilder(pointsLine);
+        sb.setCharAt(2 + index*15, '#');
+        pointsLine = sb.toString();
+        update();
     }
 
 
