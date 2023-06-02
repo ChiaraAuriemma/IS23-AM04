@@ -70,13 +70,17 @@ public class ClientInputReader implements Runnable, Serializable{
             System.out.println("No valid commands found, please retry... ");
             return ;
         }
-
+        if(input.equalsIgnoreCase("help>>")){
+            view.printCommands();
+            return;
+        }
         String[] inp = input.split(">>");
         String command = inp[0];
-        if (inp.length == 1){
+        if (inp.length == 1 && !input.contains("help")){
             System.out.println("You didn't write anything");
             return;
         }
+
         if(inp[1]!=null && inp[1].length() >= 0){
             String action = inp[1];
 

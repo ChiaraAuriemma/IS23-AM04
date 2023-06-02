@@ -75,4 +75,6 @@ public interface ClientInterface extends Remote, Serializable {
     void ping() throws RemoteException;
 
     void sendChatPrivateMessage(String chatMessage, String receiver) throws RemoteException;
+
+    void printError(String s)  throws RemoteException;
 }

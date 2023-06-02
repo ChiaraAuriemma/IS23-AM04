@@ -323,7 +323,7 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
 
                 case ERROR:
                     ErrorMessage errorMessage = (ErrorMessage) response.getPayload();
-                    view.printError(errorMessage.getError());
+                    printError(errorMessage.getError());
                     // il messaggio d'errore contiene la stringa error implementare la gestione dei vari errori
                     break;
             }
@@ -464,6 +464,11 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
         Message request = new Message(MessageType.PRIVATECHAT, sendPrivateChatMessage);
         send(request);
 
+    }
+
+    @Override
+    public void printError(String s) {
+        view.printError(s);
     }
 
 
