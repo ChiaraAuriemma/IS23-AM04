@@ -22,7 +22,6 @@ public class GUIApplication extends Application {
 
     private static GUIHandler guiHandler;
     private static GuiInterface currentController;
-
     private static ClientInterface client;
 
     private static String createOrJoin;
@@ -136,7 +135,7 @@ public class GUIApplication extends Application {
             stageRef.show();
         }
         if(client.getGameStage().equals(TurnStages.NOTURN)){
-            FXMLLoader fxmlLoader = new FXMLLoader(GUIApplication.class.getResource("/WaitingRoom.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(GUIApplication.class.getResource("/EndTurn.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
             setCurrentController(fxmlLoader.getController());
             currentController.setClient(client);
