@@ -34,6 +34,25 @@ public class EndTurnController implements GuiInterface, Initializable {
     @FXML
     Label Player1;
     @FXML
+    Label Player2;
+
+    @FXML
+    Label Player3;
+    @FXML
+    Label Player4;
+
+    @FXML
+    GridPane Player1Grid;
+
+    @FXML
+    GridPane Player2Grid;
+
+    @FXML
+    GridPane Player3Grid;
+
+    @FXML
+    GridPane Player4Grid;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -70,16 +89,16 @@ public class EndTurnController implements GuiInterface, Initializable {
 
 
 
-        Image[][] shelfImage;
+        Image[][] shelfImage1;
         if(GUIApplication.getShelfies() != null && GUIApplication.getShelfies().get(Player1.getText()) != null){
-            shelfImage = GUIApplication.getShelfies().get(Player1.getText());
+            shelfImage1 = GUIApplication.getShelfies().get(Player1.getText());
             for(i=0; i < 6 ;i++){
                 for(int j=0; j<5;j++){
-                    if(shelfImage[i][j] != null){
+                    if(shelfImage1[i][j] != null){
                         ImageView imageView = new ImageView();
                         imageView.setFitHeight(36);
                         imageView.setFitWidth(41);
-                        imageView.setImage(shelfImage[i][j]);
+                        imageView.setImage(shelfImage1[i][j]);
                         Player1Grid.add(imageView,j,5-i);
                     }
                 }
@@ -98,6 +117,38 @@ public class EndTurnController implements GuiInterface, Initializable {
                         imageView.setFitWidth(41);
                         imageView.setImage(shelfImage2[i][j]);
                         Player2Grid.add(imageView, j, 5-i);
+                    }
+                }
+            }
+        }
+
+        Image[][] shelfImage3;
+        if(GUIApplication.getShelfies() != null && GUIApplication.getShelfies().get(Player2.getText()) != null) {
+            shelfImage3 = GUIApplication.getShelfies().get(Player2.getText());
+            for (i = 0; i < 6; i++) {
+                for (int j = 0; j < 5; j++) {
+                    if (shelfImage3[i][j] != null) {
+                        ImageView imageView = new ImageView();
+                        imageView.setFitHeight(36);
+                        imageView.setFitWidth(41);
+                        imageView.setImage(shelfImage3[i][j]);
+                        Player3Grid.add(imageView, j, 5-i);
+                    }
+                }
+            }
+        }
+
+        Image[][] shelfImage4;
+        if(GUIApplication.getShelfies() != null && GUIApplication.getShelfies().get(Player2.getText()) != null) {
+            shelfImage4 = GUIApplication.getShelfies().get(Player2.getText());
+            for (i = 0; i < 6; i++) {
+                for (int j = 0; j < 5; j++) {
+                    if (shelfImage4[i][j] != null) {
+                        ImageView imageView = new ImageView();
+                        imageView.setFitHeight(36);
+                        imageView.setFitWidth(41);
+                        imageView.setImage(shelfImage4[i][j]);
+                        Player4Grid.add(imageView, j, 5-i);
                     }
                 }
             }
