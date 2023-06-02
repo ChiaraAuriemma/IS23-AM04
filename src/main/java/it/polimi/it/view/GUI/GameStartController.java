@@ -1,3 +1,4 @@
+/*
 package it.polimi.it.view.GUI;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -19,10 +20,9 @@ import javafx.scene.control.TextField;
 import java.io.*;
 import java.rmi.NotBoundException;
 
+/*
+public class GameStartController implements GuiInterface {
 
-//public class GameStartController implements GuiInterface {
-
-    /*
     private static Stage stage;
     private ClientInterface client;
     private GUIApplication guiApp;
@@ -41,6 +41,9 @@ import java.rmi.NotBoundException;
         stage.show();
     }
 
+
+ */
+/*
     public void GotoLoginRMI(ActionEvent actionEvent) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(GUIApplication.class.getResource("/Login.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
@@ -88,7 +91,8 @@ import java.rmi.NotBoundException;
         return "start";
     }
 
-     */
 
 
-//}
+}
+
+ */
