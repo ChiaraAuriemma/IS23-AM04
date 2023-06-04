@@ -3,7 +3,6 @@ package it.polimi.it.network.client;
 import it.polimi.it.Exceptions.*;
 import it.polimi.it.model.Card.CommonGoalCards.CommonGoalCard;
 import it.polimi.it.model.Card.PersonalGoalCards.PersonalGoalCard;
-import it.polimi.it.model.Game;
 import it.polimi.it.model.Tiles.Tile;
 import it.polimi.it.network.server.ServerInterface;
 import it.polimi.it.view.View;
@@ -19,7 +18,7 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface {
+public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface, RemoteInterface {
     //private static final long serialVersionUID = 5072588874360370885L;
     private int port;
     private String ip;
@@ -190,15 +189,15 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
     }
 
     @Override
-    public void recover(int gameID, Tile[][] matrix, ArrayList<Tile[][]> shelfies, CommonGoalCard card1, CommonGoalCard card2, PersonalGoalCard personalGoalCard, ArrayList<Integer> points, List<String> playerList) throws RemoteException {
+    public void recover(int gameID, Tile[][] matrix, ArrayList<Tile[][]> shelfies, int id1, int id2, PersonalGoalCard personalGoalCard, ArrayList<Integer> points, List<String> playerList) throws RemoteException {
 
-        view.recover(gameID, matrix, shelfies, card1, card2, personalGoalCard, points, playerList);
+        view.recover(gameID, matrix, shelfies, id1, id2, personalGoalCard, points, playerList);
         stage.setStage(TurnStages.NOTURN);
     }
 
 
     @Override
-    public void updateView() throws IOException {
+    public void updateView() {
         view.update();
     }
 
@@ -208,7 +207,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
     }
 
     @Override
-    public void updateChat(List<String> currentChat) throws IOException {
+    public void updateChat(List<String> currentChat) {
         view.updateChat(currentChat);
         if(stage.getStage() == TurnStages.NOTURN){
             view.update();
@@ -236,18 +235,20 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
     }
 
     @Override
-    public void setNewPoints(String username, Integer points) {
+    public void setNewPoints(String username, Integer points, List<Integer> commonToken1, List<Integer> commonToken2) {
         view.setPlayersPointsView(username, points);
+
+        //chiamo i metodi della view per settare i commontoken
     }
 
     @Override
-    public void notifyTurnStart(int maxValueOfTiles) throws IOException {
+    public void notifyTurnStart(int maxValueOfTiles){
         view.NotifyTurnStart(maxValueOfTiles,this.nickname);
         stage.setStage(TurnStages.TILESNUM);
     }
 
     @Override
-    public void askColumn(boolean[] choosableColumns) throws IOException {
+    public void askColumn(boolean[] choosableColumns) {
         view.update();
         view.setPossibleColumns(choosableColumns);
     }
@@ -259,9 +260,11 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
     }
 
     @Override
-    public void setNewCommon(CommonGoalCard card1, CommonGoalCard card2) {
-        view.setCommon1View(card1);
-        view.setCommon2View(card2);
+    public void setNewCommon(int id1, int id2, List<Integer> commonToken1, List<Integer> commonToken2) {
+        view.setCommon1View(id1);
+        view.setCommon2View(id2);
+
+        //chiamo i metodi della view per settare i commontoken
     }
 
 
@@ -272,11 +275,9 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
 
 
     @Override
-    public void takeableTiles(List<List<Tile>> choosableTilesList, int num) throws IOException {
+    public void takeableTiles(List<List<Tile>> choosableTilesList, int num) {
         //view : faccio vedere illuminate le tiles nella lista
         view.update();
-
-
         view.takeableTiles(choosableTilesList, num);
     }
 

@@ -125,7 +125,7 @@ public class GameController implements Serializable {
                     //chiudi il game
                     lobby.notifyEndGame(gameID);
                     return;
-                } else if (numDisconnected()==playerList.size()-1) {//è rimasto un solo giocatore online
+                } else if (numDisconnected() == 1) {//è rimasto un solo giocatore online
                     /**
                      *  Se rimane attivo un solo giocatore, il gioco viene sospeso
                      * no a che non si ricollega almeno un altro giocatore oppure scade un
@@ -161,7 +161,7 @@ public class GameController implements Serializable {
             public void run() {
                 System.out.println("One minute has passed for Game" + gameID);
 
-                if (numDisconnected()==playerList.size()-1){
+                if (numDisconnected() == 1){
                     try {
                         System.out.println("Closing game " + gameID + " due to lack of online players");
                         game.getVirtualView().notifyEndGameDisconnection();
@@ -170,7 +170,7 @@ public class GameController implements Serializable {
                         //notificare ai giocatori la fine della partita
 
                         return;
-                    } catch (InvalidIDException | RemoteException e) {
+                    } catch (InvalidIDException  e) {
                         throw new RuntimeException(e);
                     }
                 }else{
@@ -378,7 +378,7 @@ public class GameController implements Serializable {
         PersonalGoalCard personalGoalCard = game.getPersonalCard(user);
         ArrayList<Integer> points = new ArrayList<>();
         for(int i=0; i < game.getNumplayers(); i++){
-            points.add(game.getPoint(i));
+            points.add(game.getPoint(playerList.get(i)));
         }
         ArrayList<String> playersOrder = new ArrayList<>();
         for(int i=0; i < game.getNumplayers(); i++){

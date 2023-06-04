@@ -4,7 +4,6 @@ import it.polimi.it.model.Tiles.Tile;
 import it.polimi.it.network.message.Payload;
 
 import java.io.Serializable;
-import java.util.List;
 
 public class InitialMatrixMessage extends Payload  implements Serializable {
 

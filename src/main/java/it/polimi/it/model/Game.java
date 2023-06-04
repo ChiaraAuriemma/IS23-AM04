@@ -303,6 +303,11 @@ public class Game implements Serializable {
         return this.points.get(i);
     }
 
+    public Integer getPoint(User user){
+        int index = this.players.indexOf(user);
+        return this.points.get(index);
+    }
+
     public Integer getCheckPersonalScore (int i){
         return this.checkPersonalScore.get(i);
     }

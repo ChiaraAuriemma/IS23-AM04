@@ -1,7 +1,6 @@
 package it.polimi.it.network.message;
 
 import java.io.Serializable;
-import java.util.Optional;
 
 public enum MessageType  implements Serializable {
     CONNECTIONMESSAGE("CONNECTIONMESSAGE"),
@@ -26,7 +25,6 @@ public enum MessageType  implements Serializable {
 
     //per lo start del game
     STARTORDERPLAYER("STARTORDERPLAYER"),
-    INITIALMATRIX("INITIALMATRIX"),
     DRAWNCOMMONCARDS("DRAWNCOMMONCARDS"),
     DRAWNPERSONALCARD("DRAWNPERSONALCARD"),
 

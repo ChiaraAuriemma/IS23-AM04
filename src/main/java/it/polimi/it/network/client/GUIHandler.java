@@ -231,8 +231,7 @@ public class GUIHandler implements ViewInterface {
     }
 
     @Override
-    public void setCommon1View(CommonGoalCard card1) {
-        int id = card1.getID();
+    public void setCommon1View(int id) {
         if(id == 1){
             URL imageUrl = getClass().getResource("/Images/1.jpg");
             GUIApplication.setCommonCard1(imageUrl);
@@ -284,8 +283,7 @@ public class GUIHandler implements ViewInterface {
     }
 
     @Override
-    public void setCommon2View(CommonGoalCard card2) {
-        int id = card2.getID();
+    public void setCommon2View(int id) {
         if(id == 1){
             URL imageUrl = getClass().getResource("/Images/1.jpg");
             GUIApplication.setCommonCard2(imageUrl);
@@ -388,18 +386,18 @@ public class GUIHandler implements ViewInterface {
             try {
                 GUIApplication.changeScene();
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                System.out.println(e.getMessage());
             }
         }));
     }
 
     @Override
-    public void update() throws IOException {
+    public void update() {
         Platform.runLater(new Thread(()-> {
             try {
                 GUIApplication.changeScene();
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                System.out.println(e.getMessage());
             }
         }));
     }
@@ -479,7 +477,7 @@ public class GUIHandler implements ViewInterface {
     /////////////////////////////////////////////
 
     @Override
-    public void recover(int gameID, Tile[][] matrix, ArrayList<Tile[][]> shelfies, CommonGoalCard card1, CommonGoalCard card2, PersonalGoalCard personalGoalCard, ArrayList<Integer> points, List<String> playerList) {
+    public void recover(int gameID, Tile[][] matrix, ArrayList<Tile[][]> shelfies, int id1, int id2, PersonalGoalCard personalGoalCard, ArrayList<Integer> points, List<String> playerList) {
 
     }
 

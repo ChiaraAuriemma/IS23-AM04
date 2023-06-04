@@ -24,8 +24,8 @@ public interface ViewInterface {
 
     //setter carte
     public void setPlayersPersonalCardView(PersonalGoalCard card);
-    public void setCommon1View(CommonGoalCard card1);
-    public void setCommon2View(CommonGoalCard card2);
+    public void setCommon1View(int id);
+    public void setCommon2View(int id);
 
 
 
@@ -63,12 +63,12 @@ public interface ViewInterface {
 
 
     //"tocca a te"; maxValueofTiles è il num max di tile che può prendere dalla board
-    public void NotifyTurnStart(int maxValueofTiles, String username) throws IOException;
+    public void NotifyTurnStart(int maxValueofTiles, String username) ;
 
 
 
     //io lo uso per stampare la nuova cli da capo, a te potrebbe non servire
-    public void update() throws IOException;
+    public void update() ;
 
 
 
@@ -95,5 +95,5 @@ public interface ViewInterface {
 
     void boardRefill();
 
-    void recover(int gameID, Tile[][] matrix, ArrayList<Tile[][]> shelfies, CommonGoalCard card1, CommonGoalCard card2, PersonalGoalCard personalGoalCard, ArrayList<Integer> points, List<String> playerList);
+    void recover(int gameID, Tile[][] matrix, ArrayList<Tile[][]> shelfies, int id1, int id2, PersonalGoalCard personalGoalCard, ArrayList<Integer> points, List<String> playerList);
 }

@@ -15,21 +15,21 @@ public class ThisNotTheDay extends Payload  implements Serializable {
     private int gameID;
     private Tile[][] matrix;
     private ArrayList<Tile[][]> shelfies = new ArrayList<>();
-    private CommonGoalCard card1;
-    private CommonGoalCard card2;
+    private int id1;
+    private int id2;
     private PersonalGoalCard personalGoalCard;
     private ArrayList<Integer> points;
     private List<String> playerList = new ArrayList<>();
 
     //Tile[][] matrix, ArrayList<Tile[][]> shelfies, it.polimi.it.model.Card.CommonGoalCards.CommonGoalCard card1, CommonGoalCard card2, PersonalGoalCard personalGoalCard, ArrayList<Integer> points, List<String> playerList
 
-    public ThisNotTheDay(int gameID, Tile[][] matrix, ArrayList<Tile[][]> shelfies, CommonGoalCard card1, CommonGoalCard card2, PersonalGoalCard personalGoalCard, ArrayList<Integer> points, List<String> playerList
+    public ThisNotTheDay(int gameID, Tile[][] matrix, ArrayList<Tile[][]> shelfies, int id1, int id2, PersonalGoalCard personalGoalCard, ArrayList<Integer> points, List<String> playerList
     ){
         this.gameID=gameID;
         this.matrix=matrix;
         this.shelfies=shelfies;
-        this.card1=card1;
-        this.card2=card2;
+        this.id1 = id1;
+        this.id2 = id2;
         this.personalGoalCard=personalGoalCard;
         this.points=points;
         this.playerList=playerList;
@@ -50,13 +50,12 @@ public class ThisNotTheDay extends Payload  implements Serializable {
     }
 
 
-    public CommonGoalCard getCard1() {
-        return card1;
+    public int getId1() {
+        return id1;
     }
 
-
-    public CommonGoalCard getCard2() {
-        return card2;
+    public int getId2() {
+        return id2;
     }
 
     public PersonalGoalCard getPersonalGoalCard() {

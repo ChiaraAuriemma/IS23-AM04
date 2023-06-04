@@ -131,11 +131,15 @@ public class Lobby implements Serializable {
 
 
                     //ULTIMA OPERAZIONE DA FARE:
-                    userList.remove(userList.get(userList.indexOf(userList
+                    /*userList.remove(userList.get(userList.indexOf(userList
                             .stream().filter(u -> Objects.equals(u.getNickname(), nickname))
-                            .collect(Collectors.toList()).get(0))));
+                            .collect(Collectors.toList()).get(0))));*/
 
-                    userList.add(user);
+                    userList.set(userList.indexOf(userList
+                            .stream().filter(u -> Objects.equals(u.getNickname(), nickname))
+                            .collect(Collectors.toList()).get(0)), user);
+
+                    //userList.add(user);
 
                     System.out.println(user.getNickname() + "reconnected!");
 

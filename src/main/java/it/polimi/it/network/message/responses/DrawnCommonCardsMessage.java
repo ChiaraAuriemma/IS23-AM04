@@ -9,24 +9,24 @@ import java.util.List;
 public class DrawnCommonCardsMessage extends Payload  implements Serializable {
 
     private static final long serialVersionUID = 8895460901257459083L;
-    private CommonGoalCard card1;
-    private CommonGoalCard card2;
+    private int id1;
+    private int id2;
     private List<Integer> commonToken1;
     private List<Integer> commonToken2;
 
-    public DrawnCommonCardsMessage(CommonGoalCard card1, CommonGoalCard card2, List<Integer> commonToken1, List<Integer> commonToken2){
-        this.card1 = card1;
-        this.card2 = card2;
+    public DrawnCommonCardsMessage(int id1, int id2, List<Integer> commonToken1, List<Integer> commonToken2){
+        this.id1 = id1;
+        this.id2 = id2;
         this.commonToken1 = commonToken1;
         this.commonToken2 = commonToken2;
     }
 
-    public CommonGoalCard getCard1() {
-        return card1;
+    public int getId1() {
+        return id1;
     }
 
-    public CommonGoalCard getCard2() {
-        return card2;
+    public int getId2() {
+        return id2;
     }
 
     public List<Integer> getCommonToken1() {

@@ -7,6 +7,7 @@ import it.polimi.it.Exceptions.WrongListException;
 import it.polimi.it.model.Tiles.Tile;
 import it.polimi.it.model.User;
 import it.polimi.it.network.client.ClientInterface;
+import it.polimi.it.network.client.RemoteInterface;
 import it.polimi.it.network.message.Message;
 import it.polimi.it.network.message.MessageType;
 import it.polimi.it.network.message.others.PingMessage;
@@ -28,7 +29,7 @@ public class RMIImplementation extends UnicastRemoteObject implements ServerInte
     private Timer timer;
 
     private HashMap<String, Boolean> pongs;
-    private HashMap<String, ClientInterface> userRMI;
+    private HashMap<String, RemoteInterface> userRMI;
 
     private boolean first = false;
 
@@ -54,20 +55,20 @@ public class RMIImplementation extends UnicastRemoteObject implements ServerInte
        // new Thread(this::disconnectionTimer).start();
     }
 
-    public ClientInterface getUserRMI (User user){
+    public RemoteInterface getUserRMI (User user){
         return userRMI.get(user.getNickname());
     }
 
 
 
 
-    public String login(ClientInterface cr , String username) throws RemoteException, ExistingNicknameException, EmptyNicknameException, InvalidIDException {
+    public String login(RemoteInterface cr , String username) throws RemoteException, ExistingNicknameException, EmptyNicknameException, InvalidIDException {
         User user;
         synchronized (lobby) {
             user = lobby.createUser(username);
         }
         if(user.getInGame()){
-            user.getGame().getVirtualView().setUserRMI(username, cr);
+            user.getGame().getVirtualView().setUser(username, cr);
             user.getGame().getVirtualView().removeDisconnection(user.getNickname());
             userGame.put(user.getNickname(),lobby.getGameController(user.getGame().getGameid()));
             userGame.get(user.getNickname()).resetGame(user);
@@ -77,20 +78,20 @@ public class RMIImplementation extends UnicastRemoteObject implements ServerInte
         return user.getNickname();
     }
 
-    public int createGame(String username,int playerNumber, ClientInterface client) throws RemoteException, WrongPlayerException {
+    public int createGame(String username,int playerNumber, RemoteInterface client) throws RemoteException, WrongPlayerException {
         GameController gc;
         synchronized (lobby){
             gc = lobby.createGame(username,playerNumber);
-            gc.getGame().getVirtualView().setUserRMI(username, client);
+            gc.getGame().getVirtualView().setUser(username, client);
         }
         userGame.put(username,gc);
         return gc.getGameID();
     }
 
-    public int joinGame(String username,int id, ClientInterface client) throws IOException, InvalidIDException, WrongPlayerException, IllegalValueException {
+    public int joinGame(String username,int id, RemoteInterface client) throws IOException, InvalidIDException, WrongPlayerException, IllegalValueException {
         GameController gc;
         synchronized (lobby) {
-            lobby.getGameController(id).getGame().getVirtualView().setUserRMI(username , client);
+            lobby.getGameController(id).getGame().getVirtualView().setUser(username , client);
             gc = lobby.joinGame(username, id);
         }
         userGame.put(username, gc);
@@ -207,7 +208,7 @@ public class RMIImplementation extends UnicastRemoteObject implements ServerInte
 
                     if(pongs.get(user)){
                         try{
-                            ClientInterface clientRMI = userRMI.get(user);
+                            RemoteInterface clientRMI = userRMI.get(user);
                             clientRMI.ping();
                             System.out.println(" is still connected, SADLY");
                         } catch (RemoteException e) {

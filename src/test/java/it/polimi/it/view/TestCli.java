@@ -48,8 +48,8 @@ public class TestCli {
 
 
         testView.setGameID(12);
-        testView.setCommon1View(card1);
-        testView.setCommon2View(card2);
+        testView.setCommon1View(card1.getID());
+        testView.setCommon2View(card2.getID());
         //testView.setPlayersPersonalCardView(pgc);
 
         testView.fakePersonal();
@@ -131,8 +131,8 @@ public class TestCli {
 
 
         testView.setGameID(12);
-        testView.setCommon1View(card1);
-        testView.setCommon2View(card2);
+        testView.setCommon1View(card1.getID());
+        testView.setCommon2View(card2.getID());
         //testView.setPlayersPersonalCardView(pgc);
 
         testView.fakePersonal();
@@ -196,8 +196,8 @@ public class TestCli {
 
 
         testView.setGameID(12);
-        testView.setCommon1View(card1);
-        testView.setCommon2View(card2);
+        testView.setCommon1View(card1.getID());
+        testView.setCommon2View(card2.getID());
         //testView.setPlayersPersonalCardView(pgc);
 
         testView.fakePersonal();
@@ -270,8 +270,8 @@ public class TestCli {
 
 
         testView.setGameID(12);
-        testView.setCommon1View(card1);
-        testView.setCommon2View(card2);
+        testView.setCommon1View(card1.getID());
+        testView.setCommon2View(card2.getID());
         testView.setPlayersPersonalCardView(pgc);
 
         testView.fakePersonal();

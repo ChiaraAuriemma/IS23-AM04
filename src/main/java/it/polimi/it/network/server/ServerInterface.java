@@ -3,6 +3,7 @@ package it.polimi.it.network.server;
 import it.polimi.it.Exceptions.*;
 import it.polimi.it.model.Tiles.Tile;
 import it.polimi.it.network.client.ClientInterface;
+import it.polimi.it.network.client.RemoteInterface;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -12,11 +13,11 @@ import java.util.List;
 
 public interface ServerInterface extends Remote, Serializable {
 
-    public String login(ClientInterface cr, String username) throws RemoteException, ExistingNicknameException, EmptyNicknameException, InvalidIDException;
+    public String login(RemoteInterface cr, String username) throws RemoteException, ExistingNicknameException, EmptyNicknameException, InvalidIDException;
 
-    public int createGame(String username, int playerNumber, ClientInterface client) throws RemoteException, WrongPlayerException;
+    public int createGame(String username, int playerNumber, RemoteInterface client) throws RemoteException, WrongPlayerException;
 
-    public int joinGame(String username,int id, ClientInterface client) throws IOException, InvalidIDException, WrongPlayerException, IllegalValueException;
+    public int joinGame(String username,int id, RemoteInterface client) throws IOException, InvalidIDException, WrongPlayerException, IllegalValueException;
 
     public void tilesNumMessage(String username,int numTiles) throws IOException, WrongPlayerException, IllegalValueException, InvalidIDException;
 

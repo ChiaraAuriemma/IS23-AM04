@@ -117,11 +117,11 @@ public class View implements ViewInterface, Serializable {
     }
 
     @Override
-    public void recover(int gameID, Tile[][] matrix, ArrayList<Tile[][]> shelfies, CommonGoalCard card1, CommonGoalCard card2, PersonalGoalCard personalGoalCard, ArrayList<Integer> points, List<String> playerList) {
+    public void recover(int gameID, Tile[][] matrix, ArrayList<Tile[][]> shelfies, int id1, int id2, PersonalGoalCard personalGoalCard, ArrayList<Integer> points, List<String> playerList) {
         setOrderView(new ArrayList<>(playerList));
         setBoardView(matrix);
-        setCommon1View(card1);
-        setCommon2View(card2);
+        setCommon1View(id1);
+        setCommon2View(id2);
         this.gameID=gameID;
         setPlayersPersonalCardView(personalGoalCard);
         for(int i=0; i<playerList.size(); i++){
@@ -277,24 +277,22 @@ public class View implements ViewInterface, Serializable {
     /**
      * Setter method
      *
-     * @param card1 given the card, chooses the output messages
+     * @param id given the card id, chooses the output messages
      */
-    public void setCommon1View(CommonGoalCard card1) {
-        int id1 = card1.getID();
-        common1 = commonDescription(id1);
-        common1SecondPart = commonDescriptionSecondPart(id1);
+    public void setCommon1View(int id) {
+        common1 = commonDescription(id);
+        common1SecondPart = commonDescriptionSecondPart(id);
     }
 
 
     /**
      * Setter method
      *
-     * @param card2 given the card, chooses the output messages
+     * @param id given the card id, chooses the output messages
      */
-    public void setCommon2View(CommonGoalCard card2) {
-        int id2 = card2.getID();
-        common2 = commonDescription(id2);
-        common2SecondPart = commonDescriptionSecondPart(id2);
+    public void setCommon2View(int id) {
+        common2 = commonDescription(id);
+        common2SecondPart = commonDescriptionSecondPart(id);
     }
 
 

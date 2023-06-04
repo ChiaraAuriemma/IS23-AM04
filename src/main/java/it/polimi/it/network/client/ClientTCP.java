@@ -1,14 +1,9 @@
 package it.polimi.it.network.client;
 
-import it.polimi.it.model.Card.CommonGoalCards.CommonGoalCard;
-import it.polimi.it.model.Card.PersonalGoalCards.PersonalGoalCard;
-import it.polimi.it.model.Game;
 import it.polimi.it.model.Tiles.Tile;
-import it.polimi.it.model.User;
 import it.polimi.it.network.message.ErrorMessage;
 import it.polimi.it.network.message.Message;
 import it.polimi.it.network.message.MessageType;
-import it.polimi.it.network.message.Payload;
 import it.polimi.it.network.message.others.PingMessage;
 import it.polimi.it.network.message.others.PongMessage;
 import it.polimi.it.network.message.others.ThisNotTheDay;
@@ -21,9 +16,6 @@ import it.polimi.it.view.ViewInterface;
 import java.io.*;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.rmi.RemoteException;
-import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 public class ClientTCP implements ClientInterface, Serializable, Runnable {
@@ -86,60 +78,6 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
     }
 
 
-
-
-    @Override
-    public void takeableTiles(List<List<Tile>> choosableTilesList, int num) throws RemoteException, IOException {
-        view.update();
-        view.takeableTiles(choosableTilesList, num);
-    }
-
-    @Override
-    public void setStartOrder(ArrayList<String> order) {
-        view.setOrderView(order);
-    }
-
-    @Override
-    public void setNewBoard(Tile[][] matrix) {
-        view.setBoardView(matrix);
-    }
-
-    @Override
-    public void setNewCommon(CommonGoalCard card1, CommonGoalCard card2) {
-        view.setCommon1View(card1);
-        view.setCommon2View(card2);
-    }
-
-    @Override
-    public void setNewPersonal(PersonalGoalCard card) {
-        view.setPlayersPersonalCardView(card);
-    }
-
-    @Override
-    public void setNewShelfie(String username, Tile[][] shelfie) {
-        view.setPlayersShelfiesView(username, shelfie);
-    }
-
-    @Override
-    public void setNewPoints(String username, Integer points) {
-        view.setPlayersPointsView(username, points);
-    }
-
-    @Override
-    public void notifyTurnStart(int maxValueofTiles) throws IOException {
-        view.update();
-        view.NotifyTurnStart(maxValueofTiles,this.username);
-        stage.setStage(TurnStages.TILESNUM);
-    }
-
-    @Override
-    public void askColumn(boolean[] choosableColumns) throws IOException {
-        view.update();
-        //view.askColumn();
-        view.setPossibleColumns(choosableColumns);
-    }
-
-
     //IMPORTANTE : gestisco anche l'arrivo di messaggi d'errore da parte del server
     public void run()  {
         Message response;
@@ -169,11 +107,7 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
                             throw new RuntimeException(e);
                         }
                     }else {
-                        try {
-                            view.update();
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        }
+                        view.update();
                     }
 
                     break;
@@ -194,62 +128,51 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
                 case STARTORDERPLAYER:
                     StartOrderMessage startOrderMessage = (StartOrderMessage) response.getPayload();
                     //view : passo l'ordine dei giocatori in modo che può disporli
-                    setStartOrder(startOrderMessage.getOrder());
+                    view.setOrderView(startOrderMessage.getOrder());
                     stage.setStage(TurnStages.NOTURN);
                     break;
-                case INITIALMATRIX:
-                    InitialMatrixMessage initialMatrixMessage = (InitialMatrixMessage) response.getPayload();
-                    //view : passo la matrice in modo da visualizzare la board
-                    setNewBoard(initialMatrixMessage.getMatrix());
-                    break;
+
                 case DRAWNCOMMONCARDS:
                     DrawnCommonCardsMessage drawnCommonCardsMessage = (DrawnCommonCardsMessage) response.getPayload();
                     //view : passo le common cards e la lista dei token delle common cards
-                    setNewCommon(drawnCommonCardsMessage.getCard1() , drawnCommonCardsMessage.getCard2());
+                    view.setCommon1View(drawnCommonCardsMessage.getId1());
+                    view.setCommon2View(drawnCommonCardsMessage.getId2());
                     break;
 
                 case DRAWNPERSONALCARD:
                     DrawnPersonalCardMessage drawnPersonalCardMessage = (DrawnPersonalCardMessage) response.getPayload();
                     //view : passo la personal card del giocatore
-                    setNewPersonal(drawnPersonalCardMessage.getCard());
+                    view.setPlayersPersonalCardView(drawnPersonalCardMessage.getCard());
                     break;
 
                 case STARTTURN:
                     StartTurnMessage startTurnMessage = (StartTurnMessage) response.getPayload();
-                    try {
-                        notifyTurnStart(startTurnMessage.getMaxValueofTiles());
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
+                    view.update();
+                    view.NotifyTurnStart(startTurnMessage.getMaxValueofTiles(),this.username);
+
                     stage.setStage(TurnStages.TILESNUM);
                     break;
 
                 case TAKEABLETILES:
                     TakeableTilesResponse takeableTilesResponse = (TakeableTilesResponse) response.getPayload();
-                    try {
-                        takeableTiles(takeableTilesResponse.getChoosableTilesList(), takeableTilesResponse.getChoosableTilesList().get(0).size());
-                    } catch (RemoteException e) { //trovo un modo migliore per gestirla
-                        throw new RuntimeException(e);
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
+                    view.update();
+                    view.takeableTiles(takeableTilesResponse.getChoosableTilesList(), takeableTilesResponse.getChoosableTilesList().get(0).size());
+
                     //view : passo choosableTilesList per "illuminare" sulla board le tiles prendibili
                     stage.setStage(TurnStages.CHOOSETILES);
                     break;
 
                 case POSSIBLECOLUMNS:
                     PossibleColumnsResponse possibleColumnsResponse = (PossibleColumnsResponse) response.getPayload();
-                    try {
-                        askColumn(possibleColumnsResponse.getChoosableColumns());
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
+                    view.update();
+                    view.setPossibleColumns(possibleColumnsResponse.getChoosableColumns());
+
                     //view : passo il booleano con true e false sulle varie colonne della shelfie
                     stage.setStage(TurnStages.CHOOSECOLUMN);
                     break;
                 case SHELFIEUPDATE:
                     ShelfieUpdateMessage shelfieUpdateMessage = (ShelfieUpdateMessage) response.getPayload();
-                    setNewShelfie(shelfieUpdateMessage.getUsername(), shelfieUpdateMessage.getShelfie());
+                    view.setPlayersShelfiesView(shelfieUpdateMessage.getUsername(), shelfieUpdateMessage.getShelfie());
                     stage.setStage(TurnStages.NOTURN);
                     //view : passo lo user,la colonna e la lista ordinata di tiles scelte per aggiornare la shelfie dello user corrispondente
                     break;
@@ -260,46 +183,39 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
                     break;
                 case POINTSUPDATE:
                     PointsUpdateMessage pointsUpdateMessage = (PointsUpdateMessage) response.getPayload();
-                    setNewPoints(pointsUpdateMessage.getUsername(), pointsUpdateMessage.getPoint());
+                    view.setPlayersPointsView(pointsUpdateMessage.getUsername(), pointsUpdateMessage.getPoint());
                     //view : passo lo user,il nuovo punteggio e se questo ha preso qualche common token
                     break;
                 case ENDTOKEN:
                     EndTokenTakenMessage endTokenTakenMessage = (EndTokenTakenMessage) response.getPayload();
-                    setEndToken(endTokenTakenMessage.getUsername());
+                    view.setEndToken(endTokenTakenMessage.getUsername());
                     //view : passo lo user che ha preso l'endToken
                     break;
                 case FINALPOINTS:
                     FinalPointsMessage finalPointsMessage = (FinalPointsMessage) response.getPayload();
-                    setFinalPoints(finalPointsMessage.getUsernames(),finalPointsMessage.getPoints());
+                    view.setFinalPoints(finalPointsMessage.getUsernames(),finalPointsMessage.getPoints());
 
                     //view : passo la lista degli utenti e la lista dei loro punteggi
                     break;
                 case THISNOTTHEDAY:
                     ThisNotTheDay recover = (ThisNotTheDay) response.getPayload();
                     try {
-                        recover( recover.getGameID(), recover.getMatrix(), recover.getShelfies(), recover.getCard1(), recover.getCard2(), recover.getPersonalGoalCard(), recover.getPoints(), recover.getPlayerList());
-                    } catch (RemoteException e) {
+                        view.recover( recover.getGameID(), recover.getMatrix(), recover.getShelfies(), recover.getId1(), recover.getId2(), recover.getPersonalGoalCard(), recover.getPoints(), recover.getPlayerList());
+                        stage.setStage(TurnStages.NOTURN);
+                    } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
                     break;
 
                 case UPDATEVIEW:
-                    try {
-                        updateView();
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
+                    view.update();
                     break;
 
                 case CHATUPDATE:
                     ChatUpdate chatUpdate = (ChatUpdate) response.getPayload();
                     view.updateChat(chatUpdate.getChatUpdate());
                     if(stage.getStage() == TurnStages.NOTURN){
-                        try {
-                            view.update();
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        }
+                        view.update();
                     }
                     break;
 
@@ -308,7 +224,7 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
                     break;
 
                 case BOARDREFILL:
-                    boardRefill();
+                    view.boardRefill();
                     break;
 
                 case PING:
@@ -323,7 +239,7 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
 
                 case ERROR:
                     ErrorMessage errorMessage = (ErrorMessage) response.getPayload();
-                    printError(errorMessage.getError());
+                    view.printError(errorMessage.getError());
                     // il messaggio d'errore contiene la stringa error implementare la gestione dei vari errori
                     break;
             }
@@ -391,56 +307,12 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
         }
 
     }
-    @Override
-    public void setEndToken(String username) {
-        view.setEndToken(username);
-    }
-
-    @Override
-    public void setFinalPoints(List<String> usernames, ArrayList<Integer> points) {
-        view.setFinalPoints(usernames, points);
-    }
-
-    @Override
-    public void recover( int gameID, Tile[][] matrix, ArrayList<Tile[][]> shelfies, CommonGoalCard card1, CommonGoalCard card2, PersonalGoalCard personalGoalCard, ArrayList<Integer> points, List<String> playerList) throws RemoteException {
-
-        view.recover(gameID, matrix, shelfies, card1, card2, personalGoalCard, points, playerList);
-        stage.setStage(TurnStages.NOTURN);
-
-    }
-
-    @Override
-    public void updateView() throws IOException {
-        view.update();
-    }
 
     @Override
     public void sendChatMessage(String chatMessage) {
         SendChatMessage sendChatMessage = new SendChatMessage(chatMessage);
         Message request = new Message(MessageType.CHAT, sendChatMessage);
         send(request);
-    }
-
-    @Override
-    public void updateChat(List<String> currentChat) throws RemoteException{
-        view.updateChat(currentChat);
-        if(stage.getStage() == TurnStages.NOTURN){
-            try {
-                view.update();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
-
-    @Override
-    public void setStageToNoTurn() throws RemoteException {
-        stage.setStage(TurnStages.NOTURN);
-    }
-
-    @Override
-    public void boardRefill(){
-        view.boardRefill();
     }
 
     public void setGameStage(GameStage gameStage) {
@@ -454,11 +326,6 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
     }
 
     @Override
-    public void ping() throws RemoteException {
-
-    }
-
-    @Override
     public void sendChatPrivateMessage(String chatMessage, String receiver) {
         SendPrivateChatMessage sendPrivateChatMessage = new SendPrivateChatMessage(this.username, chatMessage, receiver);
         Message request = new Message(MessageType.PRIVATECHAT, sendPrivateChatMessage);
@@ -466,19 +333,4 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
 
     }
 
-    @Override
-    public void printError(String s) {
-        view.printError(s);
-    }
-
-
-    /*public void networkReader(){
-        while(true){//sostituisco con while connected
-            try {
-                messages.push((Message) in.readObject());
-            } catch (IOException | ClassNotFoundException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }*/
 }
