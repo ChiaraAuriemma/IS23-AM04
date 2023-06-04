@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
 public class EndTurnController implements GuiInterface, Initializable {
@@ -29,13 +30,16 @@ public class EndTurnController implements GuiInterface, Initializable {
     private GUIApplication guiApp;
 
     private GUIHandler guiHandler;
+
+    private HashMap<Integer,GridPane> gridOfPlayers;
+    private HashMap<Integer,Label> nicknames;
+
     @FXML
     GridPane LivingRoom;
     @FXML
     Label Player1;
     @FXML
     Label Player2;
-
     @FXML
     Label Player3;
     @FXML
@@ -63,96 +67,57 @@ public class EndTurnController implements GuiInterface, Initializable {
             for(int j=0; j<9;j++){
                 if(board[i][j] != null){
                     ImageView imageView = new ImageView();
-                    imageView.setFitHeight(31);
-                    imageView.setFitWidth(32);
+                    imageView.setFitHeight(45);
+                    imageView.setFitWidth(47);
                     imageView.setImage(board[i][j]);
                     LivingRoom.add(imageView,j,i);
                 }
             }
         }
 
+        gridOfPlayers = new HashMap<>();
+        nicknames = new HashMap<>();
+        nicknames.put(0,Player1);
+        gridOfPlayers.put(0,Player1Grid);
+        nicknames.put(1,Player2);
+        gridOfPlayers.put(1,Player2Grid);
+        nicknames.put(2,Player3);
+        gridOfPlayers.put(2,Player3Grid);
+        nicknames.put(3,Player4);
+        gridOfPlayers.put(3,Player4Grid);
 
-        Player1.setText(GUIApplication.getNickname());
+        nicknames.forEach((k,v)->{
+            if(GUIApplication.getPlayers().get(k) != null)
+                v.setText(GUIApplication.getPlayers().get(k));
+            else v.setVisible(false);
+        });
         Player1.setTextFill(Color.BLUE);
 
-        int i=0;
-        while(!GUIApplication.getNickname().equals(GUIApplication.getPlayers().get(i))){
-            i++;
-        }
-
-        //tentativo di array circolare-->> da migliorare e estendere fino a 4 giocatori
-        if(i==0){
-            Player2.setText(GUIApplication.getPlayers().get(1));
-        }else if(i==1){
-            Player2.setText(GUIApplication.getPlayers().get(0));
-        }
-
-
-
-        Image[][] shelfImage1;
-        if(GUIApplication.getShelfies() != null && GUIApplication.getShelfies().get(Player1.getText()) != null){
-            shelfImage1 = GUIApplication.getShelfies().get(Player1.getText());
-            for(i=0; i < 6 ;i++){
-                for(int j=0; j<5;j++){
-                    if(shelfImage1[i][j] != null){
-                        ImageView imageView = new ImageView();
-                        imageView.setFitHeight(36);
-                        imageView.setFitWidth(41);
-                        imageView.setImage(shelfImage1[i][j]);
-                        Player1Grid.add(imageView,j,5-i);
+        gridOfPlayers.forEach((k,v)->{
+            if(GUIApplication.getPlayers().get(k) != null){
+                Image[][] shelfImage1;
+                if(GUIApplication.getShelfies() != null && GUIApplication.getShelfies().get(GUIApplication.getPlayers().get(k)) != null){
+                    shelfImage1 = GUIApplication.getShelfies().get(GUIApplication.getPlayers().get(k));
+                    for(int i=0; i < 6 ;i++){
+                        for(int j=0; j<5;j++){
+                            if(shelfImage1[i][j] != null){
+                                ImageView imageView = new ImageView();
+                                if(k == 0){
+                                    imageView.setFitWidth(43);
+                                    imageView.setFitHeight(40);
+                                }else {
+                                    imageView.setFitHeight(20);
+                                    imageView.setFitWidth(19);
+                                }
+                                imageView.setImage(shelfImage1[i][j]);
+                                v.add(imageView,j,5-i);
+                            }
+                        }
                     }
                 }
             }
-        }
+        });
 
-
-        Image[][] shelfImage2;
-        if(GUIApplication.getShelfies() != null && GUIApplication.getShelfies().get(Player2.getText()) != null) {
-            shelfImage2 = GUIApplication.getShelfies().get(Player2.getText());
-            for (i = 0; i < 6; i++) {
-                for (int j = 0; j < 5; j++) {
-                    if (shelfImage2[i][j] != null) {
-                        ImageView imageView = new ImageView();
-                        imageView.setFitHeight(36);
-                        imageView.setFitWidth(41);
-                        imageView.setImage(shelfImage2[i][j]);
-                        Player2Grid.add(imageView, j, 5-i);
-                    }
-                }
-            }
-        }
-
-        Image[][] shelfImage3;
-        if(GUIApplication.getShelfies() != null && GUIApplication.getShelfies().get(Player2.getText()) != null) {
-            shelfImage3 = GUIApplication.getShelfies().get(Player2.getText());
-            for (i = 0; i < 6; i++) {
-                for (int j = 0; j < 5; j++) {
-                    if (shelfImage3[i][j] != null) {
-                        ImageView imageView = new ImageView();
-                        imageView.setFitHeight(36);
-                        imageView.setFitWidth(41);
-                        imageView.setImage(shelfImage3[i][j]);
-                        Player3Grid.add(imageView, j, 5-i);
-                    }
-                }
-            }
-        }
-
-        Image[][] shelfImage4;
-        if(GUIApplication.getShelfies() != null && GUIApplication.getShelfies().get(Player2.getText()) != null) {
-            shelfImage4 = GUIApplication.getShelfies().get(Player2.getText());
-            for (i = 0; i < 6; i++) {
-                for (int j = 0; j < 5; j++) {
-                    if (shelfImage4[i][j] != null) {
-                        ImageView imageView = new ImageView();
-                        imageView.setFitHeight(36);
-                        imageView.setFitWidth(41);
-                        imageView.setImage(shelfImage4[i][j]);
-                        Player4Grid.add(imageView, j, 5-i);
-                    }
-                }
-            }
-        }
 
     }
     public void GoToPersonalGoalCard(ActionEvent actionEvent) throws IOException {

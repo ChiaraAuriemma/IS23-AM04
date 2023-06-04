@@ -35,7 +35,7 @@ public class GUIApplication extends Application {
 
     private static int numTiles;
 
-    private static ArrayList<String> players;
+    private static ArrayList<String> players = new ArrayList<>(4);
     private static HashMap<String, Image[][]> shelfies = new HashMap<>();
 
 
@@ -52,6 +52,26 @@ public class GUIApplication extends Application {
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
+    }
+
+    public static void setPlayers(ArrayList<String> order){
+        int i=0;
+        int j=1;
+
+        players.add(0,nickname);
+        while(!nickname.equals(order.get(i))){
+            i++;
+        }
+        i++;
+        while(i<order.size()){
+            players.add(j,order.get(i));
+            i++;
+            j++;
+        }
+        for(i=0; !order.get(i).equals(nickname); i++){
+            players.add(j,order.get(i));
+            j++;
+        }
     }
 
     public static void changeScene() throws IOException {
@@ -186,9 +206,6 @@ public class GUIApplication extends Application {
         return players;
     }
 
-    public static void setPlayers(ArrayList<String> playersRef) {
-        players = playersRef;
-    }
 
     public static URL getPersonalCard() {
         return PersonalCard;
