@@ -19,7 +19,6 @@ public enum MessageType  implements Serializable {
     CHOOSEORDER("CHOOSEORDER"),
     ENDGAME("ENDGAME"),
     ERROR("ERROR"),
-    INFO("INFO"),
     CREATEGAMERESPONSE("CREATEGAMERESPONSE"),
 
 

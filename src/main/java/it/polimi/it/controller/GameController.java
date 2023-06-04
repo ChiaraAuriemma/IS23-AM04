@@ -3,7 +3,6 @@ package it.polimi.it.controller;
 import it.polimi.it.Exceptions.*;
 import it.polimi.it.model.Card.CommonGoalCards.CommonGoalCard;
 import it.polimi.it.model.Card.PersonalGoalCards.PersonalGoalCard;
-import it.polimi.it.model.Chat;
 import it.polimi.it.model.Game;
 import it.polimi.it.model.Tiles.Tile;
 import it.polimi.it.model.User;
@@ -263,7 +262,7 @@ public class GameController implements Serializable {
      * @param chosenList is the list of selected tiles
      * @throws WrongTileException exception used when a wrong tile is selected
      */
-    public void getTilesListFromView(String user, List<Tile> chosenList) throws WrongPlayerException, WrongListException, IllegalValueException, InvalidIDException, IOException {
+    public void getTilesListFromView(String user, List<Tile> chosenList) throws WrongPlayerException, WrongListException, IllegalValueException, InvalidIDException, IOException, WrongTileException {
 
         if(!playerList.get(currentPlayer).getInGame()) {
             turnDealer();
@@ -272,11 +271,8 @@ public class GameController implements Serializable {
                 if (validTilesCheck(chosenList)) {
                     currentTilesList.clear();
                     currentTilesList = new ArrayList<>(chosenList);
-                    try {
-                        possibleColumnArray = playerList.stream().filter(curr -> Objects.equals(curr.getNickname(), user)).collect(Collectors.toList()).get(0).chooseSelectedTiles(currentTilesList);
-                    } catch (RemoteException | WrongTileException e) {
-                        System.out.println(e.getMessage());
-                    }
+
+                    possibleColumnArray = playerList.stream().filter(curr -> Objects.equals(curr.getNickname(), user)).collect(Collectors.toList()).get(0).chooseSelectedTiles(currentTilesList);
                 } else {
                     throw new WrongListException("You chose badly");
                 }

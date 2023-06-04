@@ -3,19 +3,9 @@ package it.polimi.it.network.server;
 import it.polimi.it.model.Card.CommonGoalCards.CommonGoalCard;
 import it.polimi.it.model.Card.PersonalGoalCards.PersonalGoalCard;
 import it.polimi.it.model.Game;
-import it.polimi.it.model.Tiles.PossibleColors;
 import it.polimi.it.model.Tiles.Tile;
 import it.polimi.it.model.User;
-import it.polimi.it.network.client.ClientInterface;
 import it.polimi.it.network.client.RemoteInterface;
-import it.polimi.it.network.message.ErrorMessage;
-import it.polimi.it.network.message.Message;
-import it.polimi.it.network.message.MessageType;
-import it.polimi.it.network.message.others.ThisNotTheDay;
-import it.polimi.it.network.message.responses.*;
-
-import java.io.IOException;
-import java.io.ObjectOutputStream;
 
 import java.io.Serializable;
 import java.rmi.RemoteException;

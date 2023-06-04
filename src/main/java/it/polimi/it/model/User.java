@@ -63,7 +63,11 @@ public class User implements Serializable {
         return choosableList;
     }
 
-    public boolean[] chooseSelectedTiles(List<Tile> chosen) throws WrongTileException, IOException {
+    public boolean[] chooseSelectedTiles(List<Tile> chosen) throws WrongTileException {
+
+        if(chosen.size() != tilesNumber){
+            throw  new WrongTileException("you have to select " + tilesNumber + " tiles\n");
+        }
 
         for(Tile t : chosen){
             if(t.getColor().equals("XTILE") || t.getColor().equals("DEFAULT")){
