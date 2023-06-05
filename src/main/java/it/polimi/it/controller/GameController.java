@@ -440,7 +440,7 @@ public class GameController implements Serializable {
         //resetGame(newborn);
     }
 
-    public void pushChatPrivateMessage(String sender, String chatMessage, String receiver) throws RemoteException {
+    public void pushChatPrivateMessage(String sender, String chatMessage, String receiver) throws RemoteException, IllegalValueException {
         while (sender.length()<12){
             sender = sender.concat(" ");
         }
@@ -458,6 +458,8 @@ public class GameController implements Serializable {
             if(u.getNickname().equals(receiver)){
                 u.newPrivateMessage(chatMessage);
                 game.getVirtualView().sendChatUpdate(u.getChatList(), u);
+            }else{
+                throw new IllegalValueException("There is no-one with this nickname!");
             }
         }
 

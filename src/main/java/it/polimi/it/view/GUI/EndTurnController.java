@@ -8,7 +8,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -56,6 +58,10 @@ public class EndTurnController implements GuiInterface, Initializable {
 
     @FXML
     GridPane Player4Grid;
+
+    @FXML
+    TextField chatMessage;
+
 
 
     @Override
@@ -142,6 +148,25 @@ public class EndTurnController implements GuiInterface, Initializable {
         stage.setTitle("My Shelfie");
         stage.setScene(scene);
         stage.show();
+    }
+
+    public void sendMessage(ActionEvent actionEvent) throws IOException{
+        if(chatMessage.getText().length()!=0){
+            if(chatMessage.getText().contains(">>")){
+                String[] splittedMessage = chatMessage.getText().split("<<");
+                if(splittedMessage.length == 1){
+                    GUIApplication.showAlert(Alert.AlertType.WARNING, "Empty message error", "You didn't write anything");
+                }else{
+                    String message = splittedMessage[1];
+                    String receiver = splittedMessage[0];
+                    client.sendChatPrivateMessage(message, receiver);
+                }
+            }else{
+                client.sendChatMessage(chatMessage.getText());
+            }
+        }else{
+            GUIApplication.showAlert(Alert.AlertType.WARNING, "Empty message error", "You didn't write anything");
+        }
     }
 
     public void setClient(ClientInterface clientRef){

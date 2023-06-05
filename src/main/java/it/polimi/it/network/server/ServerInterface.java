@@ -26,5 +26,5 @@ public interface ServerInterface extends Remote, Serializable {
 
     void chatMessage(String chatMessage, String message) throws RemoteException;
 
-    void chatPrivateMessage(String sender, String chatMessage, String receiver) throws RemoteException;
+    void chatPrivateMessage(String sender, String chatMessage, String receiver) throws RemoteException, IllegalValueException;
 }
