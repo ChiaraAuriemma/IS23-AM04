@@ -295,7 +295,12 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
 
     @Override
     public void sendChatPrivateMessage(String chatMessage, String receiver) throws RemoteException {
-        sr.chatPrivateMessage(this.nickname, chatMessage, receiver);
+        try {
+            sr.chatPrivateMessage(this.nickname, chatMessage, receiver);
+        }catch (IllegalValueException e){
+            view.printError(e.getMessage());
+        }
+
     }
 
     public GameStage getStage() {

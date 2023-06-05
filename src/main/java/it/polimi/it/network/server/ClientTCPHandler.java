@@ -220,7 +220,7 @@ public class ClientTCPHandler implements Runnable,Serializable, RemoteInterface 
                     synchronized (gameController){
                         try {
                             this.gameController.pushChatPrivateMessage(sendPrivateChatMessage.getSender(),sendPrivateChatMessage.getChatMessage(), sendPrivateChatMessage.getReceiver());
-                        } catch (RemoteException e) {
+                        } catch (RemoteException | IllegalValueException e) {
                             ErrorMessage errorMessage = new ErrorMessage(e.getMessage());
                             response = new Message(MessageType.ERROR, errorMessage);
                             send(response);

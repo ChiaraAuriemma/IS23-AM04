@@ -440,12 +440,22 @@ public class GameController implements Serializable {
         //resetGame(newborn);
     }
 
-    public void pushChatPrivateMessage(String sender, String chatMessage, String receiver) throws RemoteException {
+    public void pushChatPrivateMessage(String sender, String chatMessage, String receiver) throws RemoteException, IllegalValueException {
         while (sender.length()<12){
             sender = sender.concat(" ");
         }
         while (receiver.length()<12){
             receiver = receiver.concat(" ");
+        }
+        String finalReceiver = receiver;
+        if(playerList.stream().noneMatch(user -> user.getNickname().equals(finalReceiver))){
+            throw new IllegalValueException("There is no player with this nickname!");
+        }
+        for(User u : playerList){
+            if(u.getNickname().equals(receiver)){
+                u.newPrivateMessage(chatMessage);
+                game.getVirtualView().sendChatUpdate(u.getChatList(), u);
+            }
         }
         for(User u : playerList){
             if(u.getNickname().equals(sender)){
@@ -454,12 +464,7 @@ public class GameController implements Serializable {
             }
         }
 
-        for(User u : playerList){
-            if(u.getNickname().equals(receiver)){
-                u.newPrivateMessage(chatMessage);
-                game.getVirtualView().sendChatUpdate(u.getChatList(), u);
-            }
-        }
+
 
     }
 }

@@ -130,7 +130,7 @@ public class RMIImplementation extends UnicastRemoteObject implements ServerInte
     }
 
     @Override
-    public void chatPrivateMessage(String sender, String chatMessage, String receiver) throws RemoteException {
+    public void chatPrivateMessage(String sender, String chatMessage, String receiver) throws RemoteException, IllegalValueException {
         GameController gc = userGame.get(sender);
         synchronized (gc) {
             gc.pushChatPrivateMessage(sender, chatMessage, receiver);
