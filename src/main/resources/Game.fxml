@@ -24,7 +24,7 @@
             <Image url="@Images/Title 2000x618px.png" />
          </image>
       </ImageView>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="398.0" layoutY="130.0" text="Choose the tiles you want from the board!" textAlignment="CENTER">
+      <Label fx:id="Text" alignment="CENTER" contentDisplay="CENTER" layoutX="398.0" layoutY="130.0" text="Choose the tiles you want from the board!" textAlignment="CENTER">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>

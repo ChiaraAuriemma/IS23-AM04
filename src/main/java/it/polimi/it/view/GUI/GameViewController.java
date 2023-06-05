@@ -4,6 +4,7 @@ import it.polimi.it.model.Tiles.PossibleColors;
 import it.polimi.it.model.Tiles.Tile;
 import it.polimi.it.network.client.ClientInterface;
 import it.polimi.it.network.client.GUIHandler;
+import it.polimi.it.network.client.TurnStages;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -59,21 +60,23 @@ public class GameViewController implements GuiInterface, Initializable {
     Label Player3;
     @FXML
     Label Player4;
+    @FXML
+    Label Text;
 
 
     @Override
-    public void initialize(URL location, ResourceBundle resources){
+    public void initialize(URL location, ResourceBundle resources) {
         Tiles = new ArrayList<>(0);
         Image[][] board;
         board = GUIApplication.getBoard();
-        for(int i=0; i<9;i++){
-            for(int j=0; j<9;j++){
-                if(board[i][j] != null){
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                if (board[i][j] != null) {
                     ImageView imageView = new ImageView();
                     imageView.setFitHeight(45);
                     imageView.setFitWidth(47);
                     imageView.setImage(board[i][j]);
-                    LivingRoom.add(imageView,j,i);
+                    LivingRoom.add(imageView, j, i);
                     int finalI = i;
                     int finalJ = j;
                     imageView.setOnMouseClicked(mouseEvent -> {
@@ -90,48 +93,72 @@ public class GameViewController implements GuiInterface, Initializable {
 
         gridOfPlayers = new HashMap<>();
         nicknames = new HashMap<>();
-        nicknames.put(0,Player1);
-        gridOfPlayers.put(0,Player1Grid);
-        nicknames.put(1,Player2);
-        gridOfPlayers.put(1,Player2Grid);
-        nicknames.put(2,Player3);
-        gridOfPlayers.put(2,Player3Grid);
-        nicknames.put(3,Player4);
-        gridOfPlayers.put(3,Player4Grid);
+        nicknames.put(0, Player1);
+        gridOfPlayers.put(0, Player1Grid);
+        nicknames.put(1, Player2);
+        gridOfPlayers.put(1, Player2Grid);
+        nicknames.put(2, Player3);
+        gridOfPlayers.put(2, Player3Grid);
+        nicknames.put(3, Player4);
+        gridOfPlayers.put(3, Player4Grid);
 
-        nicknames.forEach((k,v)->{
-            if(k<GUIApplication.getPlayers().size() && GUIApplication.getPlayers().get(k) != null)
+        nicknames.forEach((k, v) -> {
+            if (k < GUIApplication.getPlayers().size() && GUIApplication.getPlayers().get(k) != null)
                 v.setText(GUIApplication.getPlayers().get(k));
             else v.setVisible(false);
         });
         Player1.setTextFill(Color.BLUE);
 
-        gridOfPlayers.forEach((k,v)->{
-            if(k<GUIApplication.getPlayers().size() && GUIApplication.getPlayers().get(k) != null){
+        gridOfPlayers.forEach((k, v) -> {
+            if (k < GUIApplication.getPlayers().size() && GUIApplication.getPlayers().get(k) != null) {
                 Image[][] shelfImage1;
-                if(GUIApplication.getShelfies() != null && GUIApplication.getShelfies().get(GUIApplication.getPlayers().get(k)) != null){
+                if (GUIApplication.getShelfies() != null && GUIApplication.getShelfies().get(GUIApplication.getPlayers().get(k)) != null) {
                     shelfImage1 = GUIApplication.getShelfies().get(GUIApplication.getPlayers().get(k));
-                    for(int i=0; i < 6 ;i++){
-                        for(int j=0; j<5;j++){
-                            if(shelfImage1[i][j] != null){
+                    for (int i = 0; i < 6; i++) {
+                        for (int j = 0; j < 5; j++) {
+                            if (shelfImage1[i][j] != null) {
                                 ImageView imageView = new ImageView();
-                                if(k == 0){
+                                if (k == 0) {
                                     imageView.setFitWidth(43);
                                     imageView.setFitHeight(40);
-                                }else {
+                                } else {
                                     imageView.setFitHeight(20);
                                     imageView.setFitWidth(19);
                                 }
                                 imageView.setImage(shelfImage1[i][j]);
-                                v.add(imageView,j,5-i);
+                                v.add(imageView, j, 5 - i);
                             }
                         }
                     }
-                }else v.setVisible(false);
-            }else v.setVisible(false);
+                } else v.setVisible(false);
+            } else v.setVisible(false);
         });
 
+        /*
+        try {
+            if (client.getGameStage().equals(TurnStages.TILESNUM))
+                Text.setText("Choose how many tiles you want by clicking on the board");
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
 
+        try {
+            if (client.getGameStage().equals(TurnStages.CHOOSETILES))
+                Text.setText("You have already chosen number of tiles, now choose the tiles");
+
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+
+        try {
+            if (client.getGameStage().equals(TurnStages.CHOOSECOLUMN))
+                Text.setText("You have already chosen number of tiles and tiles , you just have to choose the column!");
+
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+
+         */
     }
 
     @Override
@@ -189,18 +216,29 @@ public class GameViewController implements GuiInterface, Initializable {
     }
 
     public void ChooseTiles(ActionEvent actionEvent) throws IOException {
-        if(Tiles.size() == 0){
-            GUIApplication.showAlert(Alert.AlertType.WARNING, "Tiles error", "Invalid number, try again");
-            GUIApplication.changeScene();
-        }else{
-            int num = Tiles.size();
-            client.tilesNumMessage(num);
-            client.selectedTiles(Tiles);
-            int id = Integer.parseInt(((Button)(actionEvent.getSource())).getId());
+        if (client.getGameStage().equals(TurnStages.TILESNUM)) {
+            if(Tiles.size() == 0){
+                GUIApplication.showAlert(Alert.AlertType.WARNING, "Tiles error", "Invalid number, try again");
+                GUIApplication.changeScene();
+            }else {
+                int num = Tiles.size();
+                client.tilesNumMessage(num);
+                GUIApplication.showAlert(Alert.AlertType.INFORMATION, "Game rules", "You have chosen"+num + "tiles");
+            }
+
+        }else if(client.getGameStage().equals(TurnStages.CHOOSETILES)){
+            if(Tiles.size() == 0){
+                GUIApplication.showAlert(Alert.AlertType.WARNING, "Tiles error", "Invalid number, try again");
+                GUIApplication.changeScene();
+            }else {
+                client.selectedTiles(Tiles);
+                GUIApplication.showAlert(Alert.AlertType.INFORMATION, "Game rules", "You have chosen the tiles");
+            }
+
+        }else if(client.getGameStage().equals(TurnStages.CHOOSECOLUMN)){
+            int id = Integer.parseInt(((Button) (actionEvent.getSource())).getId());
             client.chooseColumn(id);
         }
-
-
 
     }
 
