@@ -447,6 +447,16 @@ public class GameController implements Serializable {
         while (receiver.length()<12){
             receiver = receiver.concat(" ");
         }
+        String finalReceiver = receiver;
+        if(playerList.stream().noneMatch(user -> user.getNickname().equals(finalReceiver))){
+            throw new IllegalValueException("There is no player with this nickname!");
+        }
+        for(User u : playerList){
+            if(u.getNickname().equals(receiver)){
+                u.newPrivateMessage(chatMessage);
+                game.getVirtualView().sendChatUpdate(u.getChatList(), u);
+            }
+        }
         for(User u : playerList){
             if(u.getNickname().equals(sender)){
                 u.newPrivateMessage(chatMessage);
@@ -454,14 +464,7 @@ public class GameController implements Serializable {
             }
         }
 
-        for(User u : playerList){
-            if(u.getNickname().equals(receiver)){
-                u.newPrivateMessage(chatMessage);
-                game.getVirtualView().sendChatUpdate(u.getChatList(), u);
-            }else{
-                throw new IllegalValueException("There is no-one with this nickname!");
-            }
-        }
+
 
     }
 }
