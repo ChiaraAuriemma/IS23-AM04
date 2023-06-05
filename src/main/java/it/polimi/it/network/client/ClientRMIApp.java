@@ -1,7 +1,6 @@
 package it.polimi.it.network.client;
 
 import it.polimi.it.Exceptions.*;
-import it.polimi.it.model.Card.CommonGoalCards.CommonGoalCard;
 import it.polimi.it.model.Card.PersonalGoalCards.PersonalGoalCard;
 import it.polimi.it.model.Tiles.Tile;
 import it.polimi.it.network.server.ServerInterface;
@@ -24,7 +23,6 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
     private String ip;
     private Registry registry;
     private ServerInterface sr;
-    private boolean nickOK = false;
 
     private String nickname;
     ViewInterface view;
@@ -160,7 +158,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
         try {
             sr.selectedTiles(this.nickname, choosenTiles);
             stage.setStage(TurnStages.CHOOSECOLUMN);
-        } catch (WrongPlayerException | WrongListException | IllegalValueException | InvalidIDException | IOException e) {
+        } catch (WrongTileException | WrongPlayerException | WrongListException | IllegalValueException | InvalidIDException | IOException e) {
             //view.askTilesAgain();
             view.printError(e.getMessage());
         }
@@ -292,7 +290,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
     }
 
     public void ping() throws RemoteException{
-        return;
+
     }
 
     @Override

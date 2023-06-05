@@ -156,7 +156,7 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
                 case TAKEABLETILES:
                     TakeableTilesResponse takeableTilesResponse = (TakeableTilesResponse) response.getPayload();
                     view.update();
-                    view.takeableTiles(takeableTilesResponse.getChoosableTilesList(), takeableTilesResponse.getChoosableTilesList().get(0).size());
+                    view.takeableTiles(takeableTilesResponse.getChoosableTilesList(), takeableTilesResponse.getNum());
 
                     //view : passo choosableTilesList per "illuminare" sulla board le tiles prendibili
                     stage.setStage(TurnStages.CHOOSETILES);
@@ -285,7 +285,6 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
         SelectedTilesRequest selectedTilesRequest = new SelectedTilesRequest(choices);
         Message request = new Message(MessageType.SELECTEDTILES, selectedTilesRequest);
         send(request);
-        stage.setStage(TurnStages.CHOOSECOLUMN);
     }
     @Override
     public void chooseColumn (int column){

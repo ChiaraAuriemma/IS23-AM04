@@ -4,7 +4,6 @@ package it.polimi.it.network.server;
 import it.polimi.it.Exceptions.*;
 import it.polimi.it.controller.GameController;
 import it.polimi.it.controller.Lobby;
-import it.polimi.it.model.Card.CommonGoalCards.CommonGoalCard;
 import it.polimi.it.model.Card.PersonalGoalCards.PersonalGoalCard;
 import it.polimi.it.model.Tiles.PossibleColors;
 import it.polimi.it.model.Tiles.Tile;
@@ -176,7 +175,7 @@ public class ClientTCPHandler implements Runnable,Serializable, RemoteInterface 
                         try {
                             this.gameController.getTilesListFromView(this.user.getNickname(), selectedTilesRequest.getChoosenTiles());
 
-                        } catch (WrongPlayerException | WrongListException | RemoteException | IllegalValueException | InvalidIDException e) {
+                        } catch (WrongTileException | WrongPlayerException | WrongListException | RemoteException | IllegalValueException | InvalidIDException e) {
 
                             ErrorMessage errorMessage = new ErrorMessage(e.getMessage());
                             response = new Message(MessageType.ERROR, errorMessage);
@@ -255,10 +254,8 @@ public class ClientTCPHandler implements Runnable,Serializable, RemoteInterface 
             public void run() {
                 if(pong){
                     pong = false;
-                    PingMessage pingMessage = new PingMessage(" ");
-                    ping = new Message(MessageType.PING, pingMessage);
                     System.out.println(" is still connected, SADLY");
-                    send(ping);
+                    ping();
                 }else{
                     //se il player è già in partita chiamo lo disconnetto
                     if(gameController != null && user.getInGame()){
@@ -349,7 +346,7 @@ public class ClientTCPHandler implements Runnable,Serializable, RemoteInterface 
     }
 
     @Override
-    public void notifyTurnStart(int maxValueofTiles) {
+    public void notifyTurnStart(int maxValueofTiles) throws RemoteException{
         StartTurnMessage startTurnMessage = new StartTurnMessage(maxValueofTiles);
         Message message = new Message(MessageType.STARTTURN,startTurnMessage);
         send(message);
@@ -364,13 +361,13 @@ public class ClientTCPHandler implements Runnable,Serializable, RemoteInterface 
 
     @Override
     public void takeableTiles(List<List<Tile>> choosableTilesList, int num) throws RemoteException{
-        TakeableTilesResponse takeableTilesResponse = new TakeableTilesResponse(choosableTilesList);
+        TakeableTilesResponse takeableTilesResponse = new TakeableTilesResponse(choosableTilesList, num);
         Message response = new Message(MessageType.TAKEABLETILES , takeableTilesResponse);
         send(response);
     }
 
     @Override
-    public void askColumn(boolean[] choosableColumns) {
+    public void askColumn(boolean[] choosableColumns) throws RemoteException{
         PossibleColumnsResponse possibleColumnsResponse = new PossibleColumnsResponse(choosableColumns);
         Message response = new Message(MessageType.POSSIBLECOLUMNS , possibleColumnsResponse);
         send(response);
@@ -412,7 +409,7 @@ public class ClientTCPHandler implements Runnable,Serializable, RemoteInterface 
     }
 
     @Override
-    public void updateView() {
+    public void updateView() throws RemoteException{
         ViewUpdate viewUpdate = new ViewUpdate();
         Message message = new Message(MessageType.UPDATEVIEW,viewUpdate);
         send(message);
@@ -440,14 +437,16 @@ public class ClientTCPHandler implements Runnable,Serializable, RemoteInterface 
     }
 
     @Override
-    public void updateChat(List<String> currentChat) {
+    public void updateChat(List<String> currentChat) throws RemoteException{
         ChatUpdate chatUpdate = new ChatUpdate(currentChat);
         Message messageChat = new Message(MessageType.CHATUPDATE, chatUpdate);
         send(messageChat);
     }
 
     @Override
-    public void ping() throws RemoteException{
-
+    public void ping(){
+        PingMessage pingMessage = new PingMessage(" ");
+        ping = new Message(MessageType.PING, pingMessage);
+        send(ping);
     }
 }
