@@ -38,8 +38,15 @@ public class GUIHandler implements ViewInterface {
 
     @Override
     public void setOrderView(ArrayList<String> order) {
-        GUIApplication.setPlayers(order);
-        //metodo per i nomi dei giocatori
+        Platform.runLater(new Thread(()-> {
+            try {
+                GUIApplication.setPlayers(order);
+                GUIApplication.changeScene();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }));
+
     }
 
     @Override
@@ -449,7 +456,13 @@ public class GUIHandler implements ViewInterface {
 
     @Override
     public void askColumn() throws IOException {
-        GUIApplication.changeScene();
+        Platform.runLater(new Thread(()-> {
+            try {
+                GUIApplication.changeScene();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }));
     }
 
 

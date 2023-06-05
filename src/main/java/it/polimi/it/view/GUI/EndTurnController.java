@@ -87,14 +87,14 @@ public class EndTurnController implements GuiInterface, Initializable {
         gridOfPlayers.put(3,Player4Grid);
 
         nicknames.forEach((k,v)->{
-            if(GUIApplication.getPlayers().get(k) != null)
+            if(k<GUIApplication.getPlayers().size() && GUIApplication.getPlayers().get(k) != null)
                 v.setText(GUIApplication.getPlayers().get(k));
             else v.setVisible(false);
         });
         Player1.setTextFill(Color.BLUE);
 
         gridOfPlayers.forEach((k,v)->{
-            if(GUIApplication.getPlayers().get(k) != null){
+            if(k<GUIApplication.getPlayers().size() && GUIApplication.getPlayers().get(k) != null){
                 Image[][] shelfImage1;
                 if(GUIApplication.getShelfies() != null && GUIApplication.getShelfies().get(GUIApplication.getPlayers().get(k)) != null){
                     shelfImage1 = GUIApplication.getShelfies().get(GUIApplication.getPlayers().get(k));
@@ -114,8 +114,8 @@ public class EndTurnController implements GuiInterface, Initializable {
                             }
                         }
                     }
-                }
-            }
+                }else v.setVisible(false);
+            }else v.setVisible(false);
         });
 
 
