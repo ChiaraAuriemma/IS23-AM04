@@ -18,13 +18,13 @@
 | UML            | 🟢 |
 | Model          | 🟢 |
 | Controller     | 🟢 |
-| Socket TCP     | 🟡 |
-| RMI            | 🟡 |
+| Socket TCP     | 🟢 |
+| RMI            | 🟢 |
 | TUI            | 🟢 |
 | GUI            | 🟡 |
 | Multiple games | 🟢 |
-| Chat           | 🟡 |
-| Disconnection  | 🟡 |
+| Chat           | 🟢 |
+| Disconnection  | 🟢 |
 
 
 # Legend: 
