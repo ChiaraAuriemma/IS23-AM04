@@ -259,5 +259,3 @@ public class Shelfie implements Serializable {
         return commonToken2;
     }
 }
-
-
