@@ -23,8 +23,8 @@
 | TUI            | 🟢 |
 | GUI            | 🟡 |
 | Multiple games | 🟢 |
-| Chat           | 🟡 |
-| Disconnection  | 🟡 |
+| Chat           | 🟢 |
+| Disconnection  | 🟢 |
 
 
 # Legend: 
