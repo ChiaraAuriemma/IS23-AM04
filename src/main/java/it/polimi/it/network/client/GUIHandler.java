@@ -46,6 +46,7 @@ public class GUIHandler implements ViewInterface {
                 throw new RuntimeException(e);
             }
         }));
+        Thread.interrupted();
 
     }
 
@@ -361,6 +362,7 @@ public class GUIHandler implements ViewInterface {
                 throw new RuntimeException(e);
             }
         }));
+        Thread.interrupted();
     }
 
     @Override
@@ -379,6 +381,8 @@ public class GUIHandler implements ViewInterface {
             if(GUIApplication.getCreateOrJoin().equals("CREATE"))
                 GUIApplication.showAlert(Alert.AlertType.INFORMATION, "Create Game ID", "Your game id is " + gameId);
         }));
+        Thread.interrupted();
+
 
     }
 
@@ -396,6 +400,7 @@ public class GUIHandler implements ViewInterface {
                 System.out.println(e.getMessage());
             }
         }));
+        Thread.interrupted();
     }
 
     @Override
@@ -407,6 +412,7 @@ public class GUIHandler implements ViewInterface {
                 System.out.println(e.getMessage());
             }
         }));
+        Thread.interrupted();
     }
 
     @Override
@@ -437,6 +443,7 @@ public class GUIHandler implements ViewInterface {
                 throw new RuntimeException(e);
             }
         }));
+        Thread.interrupted();
     }
 
     @Override
@@ -463,6 +470,7 @@ public class GUIHandler implements ViewInterface {
                 throw new RuntimeException(e);
             }
         }));
+        Thread.interrupted();
     }
 
 
