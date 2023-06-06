@@ -20,6 +20,7 @@ import javafx.stage.Stage;
 
 import java.awt.*;
 import javafx.scene.control.TextField;
+
 import javafx.scene.paint.Color;
 import javafx.scene.control.Label;
 
@@ -62,6 +63,8 @@ public class GameViewController implements GuiInterface, Initializable {
     Label Player4;
     @FXML
     Label Text;
+    @FXML
+    TextField num;
 
 
     @Override
@@ -216,6 +219,34 @@ public class GameViewController implements GuiInterface, Initializable {
     }
 
     public void ChooseTiles(ActionEvent actionEvent) throws IOException {
+        if(!client.getGameStage().equals(TurnStages.CHOOSETILES)){
+            GUIApplication.showAlert(Alert.AlertType.INFORMATION, "Game rules", "It's not time to choose the tiles");
+            GUIApplication.changeScene();
+        }else {
+            if(Tiles.size() == 0){
+                GUIApplication.showAlert(Alert.AlertType.WARNING, "Tiles error", "Invalid number, try again");
+                GUIApplication.changeScene();
+            }else {
+                client.selectedTiles(Tiles);
+            }
+        }
+
+        /*
+        if(Tiles.size() == 0){
+            GUIApplication.showAlert(Alert.AlertType.WARNING, "Tiles error", "Invalid number, try again");
+            GUIApplication.changeScene();
+        }else {
+            int num = Tiles.size();
+            client.tilesNumMessage(num);
+            //wait...
+            client.selectedTiles(Tiles);
+            int id = Integer.parseInt(((Button) (actionEvent.getSource())).getId());
+            client.chooseColumn(id);
+        }
+
+         */
+
+        /*
         if (client.getGameStage().equals(TurnStages.TILESNUM)) {
             if(Tiles.size() == 0){
                 GUIApplication.showAlert(Alert.AlertType.WARNING, "Tiles error", "Invalid number, try again");
@@ -240,7 +271,39 @@ public class GameViewController implements GuiInterface, Initializable {
             client.chooseColumn(id);
         }
 
+         */
+
+
+
     }
+
+    public void ChooseColumn(ActionEvent actionEvent) throws IOException {
+        if(!client.getGameStage().equals(TurnStages.CHOOSECOLUMN)) {
+            GUIApplication.showAlert(Alert.AlertType.INFORMATION, "Game rules", "It's not time to choose the column");
+            GUIApplication.changeScene();
+        }else {
+            int id = Integer.parseInt(((Button) (actionEvent.getSource())).getId());
+            client.chooseColumn(id);
+        }
+
+    }
+
+    public void ChooseNumberOfTiles(ActionEvent actionEvent) throws IOException {
+        if(!client.getGameStage().equals(TurnStages.TILESNUM)) {
+            GUIApplication.showAlert(Alert.AlertType.INFORMATION, "Game rules", "It's not time to choose the number of tiles");
+            GUIApplication.changeScene();
+        }else {
+            if(num.getText().length() == 0){
+                GUIApplication.showAlert(Alert.AlertType.WARNING, "Tiles error", "Invalid number, try again");
+                GUIApplication.changeScene();
+            }else {
+                String tmp = num.getText();
+                int num = Integer.parseInt(tmp);
+                client.tilesNumMessage(num);
+            }
+        }
+    }
+
 
     public PossibleColors getColor(ImageView image){
 

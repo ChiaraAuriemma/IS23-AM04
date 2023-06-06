@@ -24,7 +24,7 @@
             <Image url="@Images/Title 2000x618px.png" />
          </image>
       </ImageView>
-      <Label fx:id="Text" alignment="CENTER" contentDisplay="CENTER" layoutX="398.0" layoutY="130.0" text="Choose the tiles you want from the board!" textAlignment="CENTER">
+      <Label fx:id="Text" alignment="CENTER" contentDisplay="CENTER" layoutX="380.0" layoutY="130.0" text="Choose number of tiles, tiles and shelf column" textAlignment="CENTER">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
@@ -91,11 +91,11 @@
             <Image url="@Images/bookshelf.png" />
          </image>
       </ImageView>
-      <Button fx:id="0" layoutX="592.5" layoutY="497.0" mnemonicParsing="false" onAction="#ChooseTiles" prefHeight="19.0" prefWidth="32.0" text="1" />
-      <Button fx:id="1" layoutX="642.0" layoutY="497.0" mnemonicParsing="false" onAction="#ChooseTiles" prefHeight="19.0" prefWidth="32.0" text="2" />
-      <Button fx:id="2" layoutX="689.0" layoutY="497.0" mnemonicParsing="false" onAction="#ChooseTiles" prefHeight="19.0" prefWidth="32.0" text="3" />
-      <Button fx:id="3" layoutX="737.0" layoutY="497.0" mnemonicParsing="false" onAction="#ChooseTiles" prefHeight="19.0" prefWidth="32.0" text="4" />
-      <Button fx:id="4" layoutX="785.0" layoutY="497.0" mnemonicParsing="false" onAction="#ChooseTiles" prefHeight="19.0" prefWidth="32.0" text="5" />
+      <Button fx:id="0" layoutX="592.5" layoutY="497.0" mnemonicParsing="false" onAction="#ChooseColumn" prefHeight="19.0" prefWidth="32.0" text="1" />
+      <Button fx:id="1" layoutX="642.0" layoutY="497.0" mnemonicParsing="false" onAction="#ChooseColumn" prefHeight="19.0" prefWidth="32.0" text="2" />
+      <Button fx:id="2" layoutX="689.0" layoutY="497.0" mnemonicParsing="false" onAction="#ChooseColumn" prefHeight="19.0" prefWidth="32.0" text="3" />
+      <Button fx:id="3" layoutX="737.0" layoutY="497.0" mnemonicParsing="false" onAction="#ChooseColumn" prefHeight="19.0" prefWidth="32.0" text="4" />
+      <Button fx:id="4" layoutX="785.0" layoutY="497.0" mnemonicParsing="false" onAction="#ChooseColumn" prefHeight="19.0" prefWidth="32.0" text="5" />
       <GridPane fx:id="Player1Grid" hgap="2.0" layoutX="585.0" layoutY="234.0" prefHeight="253.0" prefWidth="238.0" vgap="2.0">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -192,5 +192,17 @@
       <Label fx:id="Points3" layoutX="1030.0" layoutY="358.0" text="00" />
       <Label fx:id="Player2" layoutX="959.0" layoutY="15.0" text="Label" />
       <Label fx:id="Player3" layoutX="959.0" layoutY="197.0" text="Label" />
+      <Label layoutX="29.0" layoutY="180.0" text="Number of tiles:">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Button fx:id="ConfirmButton" layoutX="355.0" layoutY="181.0" mnemonicParsing="false" onAction="#ChooseNumberOfTiles" text="Confirm" />
+      <TextField fx:id="num" layoutX="179.0" layoutY="180.0" />
+      <Button fx:id="TilesButton" layoutX="175.0" layoutY="704.0" mnemonicParsing="false" onAction="#ChooseTiles" text="Choose the tiles from the board">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>
