@@ -6,26 +6,22 @@ import it.polimi.it.model.User;
 import it.polimi.it.network.server.RMIImplementation;
 import it.polimi.it.network.server.ServerTCP;
 import it.polimi.it.network.server.VirtualView;
-
 import java.io.IOException;
 import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class Lobby implements Serializable {
 
     private static final long serialVersionUID = 2013868577459101390L;
 
-
     /**
      * List of all the Users connected to the application
      */
     private ArrayList<User> userList;
-
 
     /**
      * List of all the instances of the Games
@@ -33,31 +29,26 @@ public class Lobby implements Serializable {
      */
     private ArrayList<Game> gameList;
 
-
     /**
      * List of all the instances of the Games' Controllers
      * [Multiple games can be started simultaneously]
      */
     private ArrayList<GameController> gameControllerList;
 
-
     /**
      * Counter, used to know how many games in total have been started since the launch of the server
      */
     private int gameCounterID;
-
 
     /**
      * Instance of a User
      */
     private User user;
 
-
     /**
      * Instance of the TCP Server
      */
     private ServerTCP serverTCP;
-
 
     /**
      * Instance of the TCP Server
@@ -88,63 +79,31 @@ public class Lobby implements Serializable {
         if(nickname == null || nickname.length() ==0){
             throw new EmptyNicknameException("You have to write something");
         }else{
-            if(userList.stream()    //controllo che nessun utente abbia già quel nick
+            if(userList.stream()
                         .map(currentUser -> currentUser.getNickname())
                         .noneMatch(name -> name.equals(nickname)))
             {
                 user = new User(nickname);
                 userList.add(user);
-            }else{ //c'è qualcuno con quel nick
-
+            }else{
                 if(!userList.get(userList.indexOf(userList
                         .stream().filter(u -> Objects.equals(u.getNickname(), nickname))
-                        .collect(Collectors.toList()).get(0))).getInGame()) {//caso in cui è disconnesso
-                                                                                //in una partita in corso
-
-                    /**
-                     * 		-> crea nuova istanza di user, copiando personal e shelfie
-                     * 		-> sostituisci in game e gameController quell'utente
-                     */
-
+                        .collect(Collectors.toList()).get(0))).getInGame()) {
                     user = new User(nickname);
                     user.setInGame(true);
                     user.setShelfie(userList.get(userList.indexOf(userList
                             .stream().filter(u -> Objects.equals(u.getNickname(), nickname))
                             .collect(Collectors.toList()).get(0))).getShelfie());
-
-                    //la personal è salvata per posizione in game
-
-                    //in game e gamecontroller bisogna fare user.setgame e user.setboard
-
-
-
-
-
-
                     int gameID = userList.get(userList.indexOf(userList
                             .stream().filter(u -> Objects.equals(u.getNickname(), nickname))
                             .collect(Collectors.toList()).get(0))).getGame().getGameid();
-
                     gameControllerList.stream().filter(gameController -> gameController.getGame().getGameid() == gameID).collect(Collectors.toList()).get(0).swapPlayers(
                             userList.stream().filter(u -> Objects.equals(u.getNickname(), nickname)).collect(Collectors.toList()).get(0), user);
-
-
-
-                    //ULTIMA OPERAZIONE DA FARE:
-                    /*userList.remove(userList.get(userList.indexOf(userList
-                            .stream().filter(u -> Objects.equals(u.getNickname(), nickname))
-                            .collect(Collectors.toList()).get(0))));*/
-
                     userList.set(userList.indexOf(userList
                             .stream().filter(u -> Objects.equals(u.getNickname(), nickname))
                             .collect(Collectors.toList()).get(0)), user);
-
-                    //userList.add(user);
-
                     System.out.println(user.getNickname() + "reconnected!");
 
-                    //////////////////////////////////VECCHIE OPERAZIONI
-                   // gc.resetGame(user.get());
                 }else{
                     throw new ExistingNicknameException("This nickname already exists!");//mandare messaggio a view
                 }
@@ -165,18 +124,15 @@ public class Lobby implements Serializable {
         if(playerNumber < 2 || playerNumber > 4){
             throw new WrongPlayerException("\"Retry! You must insert a number between 2 and 4... \""); //mandare messaggio a view
         }
-
         VirtualView virtualView = new VirtualView();
         virtualView.setServerRMI(this.serverRMI);
         virtualView.setServerTCP(this.serverTCP);
-
         Game game = new Game(playerNumber, userList.get(userList.indexOf(userList.stream().filter(user -> Objects.equals(user.getNickname(), username)).collect(Collectors.toList()).get(0))), this.gameCounterID,virtualView);
         user.setInGame(true);
         gameList.add(game);
         GameController gameContr = new GameController(game, this);
         gameControllerList.add(gameContr);
         this.gameCounterID++;
-
         return gameContr;
     }
 
@@ -193,16 +149,13 @@ public class Lobby implements Serializable {
      */
     public GameController
     joinGame(String username, int gameID) throws InvalidIDException, WrongPlayerException, IllegalValueException, IOException {
-
         List<Game> findGame = gameList.stream().filter(game -> game.getGameid() == gameID).collect(Collectors.toList());
         if(gameID<gameCounterID && !findGame.isEmpty()){
             if(findGame.get(0).getCurrentPlayersNum()<findGame.get(0).getNumplayers()){
                 findGame.get(0).joinGame(userList.get(userList.indexOf(userList.stream().filter(u -> Objects.equals(u.getNickname(), username)).collect(Collectors.toList()).get(0))));
-
                 if(!userList.get(userList.indexOf(userList.stream().filter(u -> Objects.equals(u.getNickname(), username)).collect(Collectors.toList()).get(0))).getInGame()){
                     userList.get(userList.indexOf(userList.stream().filter(u -> Objects.equals(u.getNickname(), username)).collect(Collectors.toList()).get(0))).setInGame(true);
                 }
-
                 if (findGame.get(0).getNumplayers()==findGame.get(0).getCurrentPlayersNum()){
                     gameControllerList.get(gameList.indexOf(findGame.get(0))).firstTurnStarter();
                 }
@@ -214,6 +167,7 @@ public class Lobby implements Serializable {
             throw new InvalidIDException("This ID does not exists");
         }
     }
+
 
     /**
      * Getter method that given the
@@ -275,26 +229,20 @@ public class Lobby implements Serializable {
         this.serverTCP = serverTCP;
     }
 
+
+    /**
+     * Given a
+     * @param username string, finds the User instance of that player, then disconnects him from the game.
+     */
     public void disconnect_user(String username) {
-
-        //trovare l'istanza dell'utente e mettergli
-        //il bool della connessione a false
-
-
-        //se il player è già in partita chiamo il turndealer???
-
        userList.get(userList.indexOf(userList
                         .stream().filter(u -> Objects.equals(u.getNickname(), username))
                         .collect(Collectors.toList()).get(0)))
                         .setInGame(false);
-
         userList.get(userList.indexOf(userList
                 .stream().filter(u -> Objects.equals(u.getNickname(), username))
                 .collect(Collectors.toList()).get(0)))
                 .getGame().getVirtualView().insertDisconnection(username);
-
        System.out.println("Player " + username + " got disconnected - lobby \n");
-
     }
-
 }
