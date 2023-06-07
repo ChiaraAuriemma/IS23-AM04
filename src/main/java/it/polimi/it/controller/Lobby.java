@@ -118,7 +118,7 @@ public class Lobby implements Serializable {
      * @param username is the nickname of the user who wants to create a game
      * @param playerNumber is the number of player that have to join to start the game
      * @return the game controller of the game
-     * @throws WrongPlayerException if the user write a player number <2 or >4
+     * @throws WrongPlayerException if the user write a player number which is less than 2 or more than 4.
      */
     public GameController createGame(String username, int playerNumber) throws WrongPlayerException {
         if(playerNumber < 2 || playerNumber > 4){

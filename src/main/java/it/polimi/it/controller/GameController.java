@@ -282,7 +282,6 @@ public class GameController implements Serializable {
      *  in which order he wants the tiles to be.
      *  The method also calls the view to display the new points acquired by the player
      * @param col is the column of the shelfie where to put the tiles in
-     * @throws WrongTileException exception used when a wrong tile is selected
      */
     public void getColumnFromView(String user, int col) throws IllegalValueException, InvalidIDException, IOException {
         if(col >= 0 && col <= 4) {
