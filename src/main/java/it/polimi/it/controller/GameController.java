@@ -6,7 +6,6 @@ import it.polimi.it.model.Card.PersonalGoalCards.PersonalGoalCard;
 import it.polimi.it.model.Game;
 import it.polimi.it.model.Tiles.Tile;
 import it.polimi.it.model.User;
-
 import java.io.IOException;
 import java.io.Serializable;
 import java.rmi.RemoteException;
@@ -17,19 +16,15 @@ public class GameController implements Serializable {
 
     private static final long serialVersionUID = 9016415749066492223L;
 
-
     /**
      * Is the total number of players in the game
      */
     private int numOfPlayers;
 
-
     /**
      * Univocal ID for the current game
      */
     private int gameID;
-
-
 
     /**
      * Index of the playerList, represents the player who is able
@@ -37,12 +32,10 @@ public class GameController implements Serializable {
      */
     private int currentPlayer=0;
 
-
     /**
      * Flag to avoid continuing the game if somebody has already finished
      */
     private boolean endGame;
-
 
     /**
      * List of the players, with a maximum size of 4
@@ -50,24 +43,20 @@ public class GameController implements Serializable {
      */
     private List<User> playerList;
 
-
     /**
      * Reference to the Lobby, used to destroy the game, when this ends
      */
     private Lobby lobby;
-
 
     /**
      * Reference to the Game
      */
     private Game game;
 
-
     /**
      * List of tiles chosen in the current turn by the current player
      */
     private List<Tile> currentTilesList = new ArrayList<>();
-
 
     /**
      * Max number of tiles take-able in a certain turn
@@ -80,7 +69,6 @@ public class GameController implements Serializable {
     private boolean[] possibleColumnArray;
 
     Timer timer;
-
 
 
     /**
@@ -106,89 +94,83 @@ public class GameController implements Serializable {
      */
     public void turnDealer() throws InvalidIDException, IllegalValueException, IOException {
 
-        if(this.endGame && this.currentPlayer == game.getNumplayers() - 1){ //caso di fine partita
-
+        if(this.endGame && this.currentPlayer == game.getNumplayers() - 1){
             game.getVirtualView().viewUpdate();
             game.pointsFromAdjacent();
             lobby.notifyEndGame(gameID);
-        }else{ //show must go on
-
+        }else{
             System.out.println("turndealer");
             currentPlayer= (currentPlayer + 1) % game.getNumplayers();
             System.out.println("turndealer: player " + currentPlayer + "\n");
-
-
-            if(!playerList.get(currentPlayer).getInGame()){ //==false
-
-                if(checkIfEverybodyIsDisconnected()){//-> gli dai false se c'è ancora qualcuno
-                    //chiudi il game
+            if(!playerList.get(currentPlayer).getInGame()){
+                if(checkIfEverybodyIsDisconnected()){
                     lobby.notifyEndGame(gameID);
                     return;
-                } else if (numDisconnected() == 1) {//è rimasto un solo giocatore online
-                    /**
-                     *  Se rimane attivo un solo giocatore, il gioco viene sospeso
-                     * no a che non si ricollega almeno un altro giocatore oppure scade un
-                     * timeout che decreta la vittoria
-                     * dell'unico giocatore rimasto connesso.
-                     */
+                } else if (numDisconnected() == 1) {
                     freezeGame();
                     return;
                 } else{
-
                     while(!playerList.get(currentPlayer).getInGame()){
                         currentPlayer= (currentPlayer + 1) % game.getNumplayers();
                         System.out.println("turndealer - while: player " + currentPlayer + "\n");
                     }
                 }
             }
-
             firstOperation();
         }
     }
 
+    /**
+     * Method that freezes the game if there aren't enough people online
+     * @throws InvalidIDException .
+     * @throws IllegalValueException .
+     * @throws IOException .
+     */
     private void freezeGame() throws InvalidIDException, IllegalValueException, IOException {
-        //faccio un timer di un minuto
         System.out.println("freeze game");
         new Thread(this::controlTimer).start();
-        //timer.cancel();
     }
 
 
+    /**
+     * controlTimer:
+     * Gives every player 1 minute to reconnect to the game, otherwise, the next player will make his turn
+     *  and the player who disconnected will be skipped.
+     */
     private void controlTimer() {
         timer = new Timer();
         TimerTask task = new TimerTask() {
             public void run() {
-                System.out.println("One minute has passed for Game" + gameID);
-
-                if (numDisconnected() == 1){
-                    try {
-                        System.out.println("Closing game " + gameID + " due to lack of online players");
-                        game.getVirtualView().notifyEndGameDisconnection();
-                        lobby.notifyEndGame(gameID);
-
-                        //notificare ai giocatori la fine della partita
-
-                        return;
-                    } catch (InvalidIDException  e) {
-                        throw new RuntimeException(e);
-                    }
-                }else{
-                    try {
-                        System.out.println("There are enough players in game " + gameID + " to continue");
-                        turnDealer();
-                        return;
-                    } catch (InvalidIDException | IllegalValueException | IOException e) {
-                        throw new RuntimeException(e);
-                    }
+            System.out.println("One minute has passed for Game" + gameID);
+            if (numDisconnected() == 1){
+                try {
+                    System.out.println("Closing game " + gameID + " due to lack of online players");
+                    game.getVirtualView().notifyEndGameDisconnection();
+                    lobby.notifyEndGame(gameID);
+                    return;
+                } catch (InvalidIDException  e) {
+                    throw new RuntimeException(e);
+                }
+            }else{
+                try {
+                    System.out.println("There are enough players in game " + gameID + " to continue");
+                    turnDealer();
+                    return;
+                } catch (InvalidIDException | IllegalValueException | IOException e) {
+                    throw new RuntimeException(e);
                 }
             }
+            }
         };
-        long delay = 60000; // Delay in milliseconds (1 minute = 60,000 milliseconds)
+        long delay = 60000;
         timer.schedule(task, delay);
-
     }
 
 
+    /**
+     * Method that
+     * @return the number of players of this game that disconnected.
+     */
     private int numDisconnected() {
         int num=0;
         for (User u: playerList){
@@ -199,7 +181,13 @@ public class GameController implements Serializable {
         return num;
     }
 
-    private boolean checkIfEverybodyIsDisconnected() {//se c'è ancora qualcuno online metto false
+
+    /**
+     * Method that checks if any participant of the game is still online
+     * @return a boolean value: true->somebody is still online
+     *                          false->everybody is offline or disconnected.
+     */
+    private boolean checkIfEverybodyIsDisconnected() {
         for (User u: playerList){
             if (u.getInGame()){
                 return false;
@@ -217,7 +205,6 @@ public class GameController implements Serializable {
         if(!playerList.get(currentPlayer).getInGame()) {
             turnDealer();
         }else{
-
             this.maxTile = playerList.get(currentPlayer).maxValueOfTiles();
             if(maxTile==-1){
                 System.out.println("ed è qui l'ultimo momento per cambiare giocatore, ma se non lo fai sei un babbo");
@@ -225,7 +212,6 @@ public class GameController implements Serializable {
                 return;
             }
             game.getVirtualView().notifyTurnStart(playerList.get(currentPlayer));
-
             game.getVirtualView().viewUpdate();
         }
     }
@@ -238,7 +224,6 @@ public class GameController implements Serializable {
      * @param chosenNumber is the input from the user
      */
     public void getFromViewNTiles(String user, int chosenNumber) throws WrongPlayerException, IOException, IllegalValueException, InvalidIDException {
-
         if(!playerList.get(currentPlayer).getInGame()) {
             turnDealer();
         }else {
@@ -263,7 +248,6 @@ public class GameController implements Serializable {
      * @throws WrongTileException exception used when a wrong tile is selected
      */
     public void getTilesListFromView(String user, List<Tile> chosenList) throws WrongPlayerException, WrongListException, IllegalValueException, InvalidIDException, IOException, WrongTileException {
-
         if(!playerList.get(currentPlayer).getInGame()) {
             turnDealer();
         }else {
@@ -271,7 +255,6 @@ public class GameController implements Serializable {
                 if (validTilesCheck(chosenList)) {
                     currentTilesList.clear();
                     currentTilesList = new ArrayList<>(chosenList);
-
                     possibleColumnArray = playerList.stream().filter(curr -> Objects.equals(curr.getNickname(), user)).collect(Collectors.toList()).get(0).chooseSelectedTiles(currentTilesList);
                 } else {
                     throw new WrongListException("You chose badly");
@@ -360,10 +343,9 @@ public class GameController implements Serializable {
     /**
      * Method to reset the instances of
      * @param user user and
-     * @throws RemoteException
+     * @throws RemoteException .
      */
      public void resetGame(User user) throws RemoteException {
-        //game.getVirtualView().removeDisconnection(user.getNickname());
         Tile[][] matrix = game.getBoard().getMatrix();
         ArrayList<Tile[][]> shelfies = new ArrayList<>();
         for(int i=0; i < game.getNumplayers(); i++){
@@ -380,7 +362,6 @@ public class GameController implements Serializable {
         for(int i=0; i < game.getNumplayers(); i++){
             playersOrder.add(playerList.get(i).getNickname());
         }
-        //devo mandare l'ordine dei giocatori se no  non capisce più un cazzo il client
         game.getVirtualView().resetAfterDisconnection(user.getNickname(), game.getGameid(), matrix, shelfies, card1, card2, personalGoalCard, points, playersOrder);
     }
 
@@ -398,11 +379,56 @@ public class GameController implements Serializable {
     }
 
 
+    /**
+     * Method that swaps an old instance
+     * @param old of a User class with its newer
+     * @param newborn reconnected version.
+     * @throws RemoteException
+     */
+    public void swapPlayers(User old, User newborn) throws RemoteException {
+        playerList.set(playerList.indexOf(old), newborn);
+        game.swapPlayers(old, newborn);
+    }
+
+
+    /**
+     * Given
+     * @param sender ,
+     * @param chatMessage and
+     * @param receiver inserts in the right data structures the private messages that were sent
+     * @throws RemoteException .
+     * @throws IllegalValueException .
+     */
+    public void pushChatPrivateMessage(String sender, String chatMessage, String receiver) throws RemoteException, IllegalValueException {
+        while (sender.length()<12){
+            sender = sender.concat(" ");
+        }
+        while (receiver.length()<12){
+            receiver = receiver.concat(" ");
+        }
+        String finalReceiver = receiver;
+        if(playerList.stream().noneMatch(user -> user.getNickname().equals(finalReceiver))){
+            throw new IllegalValueException("There is no player with this nickname!");
+        }
+        for(User u : playerList){
+            if(u.getNickname().equals(receiver)){
+                u.newPrivateMessage(chatMessage);
+                game.getVirtualView().sendChatUpdate(u.getChatList(), u);
+            }
+        }
+        for(User u : playerList){
+            if(u.getNickname().equals(sender)){
+                u.newPrivateMessage(chatMessage);
+                game.getVirtualView().sendChatUpdate(u.getChatList(), u);
+            }
+        }
+    }
+
 
     /****************************************************
      *                                                  *
      *                                                  *
-     * Methods inserted just to test purposes           *
+     * Methods inserted just for test purposes          *
      *                                                  *
      *                                                  *
      ****************************************************/
@@ -434,34 +460,4 @@ public class GameController implements Serializable {
         return playerList.stream().filter(user -> user.getNickname().equals(nickname)).collect(Collectors.toList()).get(0);
     }
 
-    public void swapPlayers(User old, User newborn) throws RemoteException {
-        playerList.set(playerList.indexOf(old), newborn);
-        game.swapPlaysers(old, newborn);
-        //resetGame(newborn);
-    }
-
-    public void pushChatPrivateMessage(String sender, String chatMessage, String receiver) throws RemoteException, IllegalValueException {
-        while (sender.length()<12){
-            sender = sender.concat(" ");
-        }
-        while (receiver.length()<12){
-            receiver = receiver.concat(" ");
-        }
-        String finalReceiver = receiver;
-        if(playerList.stream().noneMatch(user -> user.getNickname().equals(finalReceiver))){
-            throw new IllegalValueException("There is no player with this nickname!");
-        }
-        for(User u : playerList){
-            if(u.getNickname().equals(receiver)){
-                u.newPrivateMessage(chatMessage);
-                game.getVirtualView().sendChatUpdate(u.getChatList(), u);
-            }
-        }
-        for(User u : playerList){
-            if(u.getNickname().equals(sender)){
-                u.newPrivateMessage(chatMessage);
-                game.getVirtualView().sendChatUpdate(u.getChatList(), u);
-            }
-        }
-    }
 }

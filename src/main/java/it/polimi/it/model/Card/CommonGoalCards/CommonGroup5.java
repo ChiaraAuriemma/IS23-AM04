@@ -1,7 +1,6 @@
 package it.polimi.it.model.Card.CommonGoalCards;
 
 import it.polimi.it.model.Shelfie;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +9,7 @@ public class CommonGroup5 extends CommonGoalCard  implements Serializable {
 
     private static final long serialVersionUID = -7822537206787354297L;
     private List<Integer> numColor;
+
 
     /**
      * constructor of the CommonGroup5.
@@ -23,6 +23,7 @@ public class CommonGroup5 extends CommonGoalCard  implements Serializable {
             this.numColor.add(i, 0);
         }
     }
+
 
     /**
      * Method that check the goal of the CommonGoalCard
@@ -73,7 +74,6 @@ public class CommonGroup5 extends CommonGoalCard  implements Serializable {
                     if(numColor.get(i) == 8)
                         return true;
                 }
-
             }
         }
         return false;

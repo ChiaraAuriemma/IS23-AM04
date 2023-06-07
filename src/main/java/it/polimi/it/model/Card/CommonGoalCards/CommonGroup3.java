@@ -6,7 +6,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonReader;
 import it.polimi.it.model.Shelfie;
 import it.polimi.it.model.Tiles.Tile;
-
 import java.io.FileReader;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -16,6 +15,7 @@ public class CommonGroup3 extends CommonGoalCard  implements Serializable {
     private static final long serialVersionUID = -7419756574191643439L;
     ArrayList<Tile> checked = new ArrayList<>();
 
+
     /**
      * constructor of the CommonGroup3.
      * @param id is the identification code of the CommonGoalCard, in this group the option for the ids are 3,4
@@ -23,6 +23,7 @@ public class CommonGroup3 extends CommonGoalCard  implements Serializable {
     public CommonGroup3(int id){ //carte 3 e 4
         super(id);
     }
+
 
     /**
      * method that find the adjacent tiles of a given tile
@@ -48,6 +49,7 @@ public class CommonGroup3 extends CommonGoalCard  implements Serializable {
         return adjacent;
     }
 
+
     /**
      * the method that find only the adjacent tiles that are usefully for the common goal
      * @param shelfie that we need to check
@@ -68,7 +70,6 @@ public class CommonGroup3 extends CommonGoalCard  implements Serializable {
                 }
                 return toVisit;
             }
-
             ArrayList<Tile> adjacent = adjacent(shelfie, x, y);
             checked.add(shelfie.getCell(x,y));
             for (Tile tile : adjacent) {
@@ -81,7 +82,6 @@ public class CommonGroup3 extends CommonGoalCard  implements Serializable {
                     tmp.add(tile);
                 }
             }
-
             for (Tile tile : tmp) {
                 recursiveAdjacent(shelfie, tile.getColumn(), tile.getRow(), toVisit, jsonObject);
             }
@@ -90,6 +90,7 @@ public class CommonGroup3 extends CommonGoalCard  implements Serializable {
            throw new RuntimeException(e);
         }
     }
+
 
     /**
      * Method that check the goal of the CommonGoalCard
@@ -123,7 +124,6 @@ public class CommonGroup3 extends CommonGoalCard  implements Serializable {
         }catch (Exception e){
             throw new RuntimeException(e);
         }
-
     }
 }
 

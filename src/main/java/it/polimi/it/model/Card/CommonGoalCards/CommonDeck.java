@@ -1,5 +1,4 @@
 package it.polimi.it.model.Card.CommonGoalCards;
-
 import java.io.Serializable;
 
 public class CommonDeck implements Serializable {
@@ -7,6 +6,7 @@ public class CommonDeck implements Serializable {
     private static final long serialVersionUID = -7413912141803144939L;
     private  CommonGoalCard commonCard1;
     private CommonGoalCard commonCard2;
+
 
     /**
      * createCards instantiates the two commonGoalCards that we need for the game.
@@ -52,6 +52,7 @@ public class CommonDeck implements Serializable {
         }
     }
 
+
     /**
      * Getter method for the first CommonGoalCard of the game
      * @return CommonGoalCard1
@@ -59,6 +60,7 @@ public class CommonDeck implements Serializable {
     public CommonGoalCard getCommonCard1(){
         return commonCard1;
     }
+
 
     /**
      * Getter method for the second CommonGoalCard of the game

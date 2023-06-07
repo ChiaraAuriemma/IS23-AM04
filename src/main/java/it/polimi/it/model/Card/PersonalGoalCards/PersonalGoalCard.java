@@ -5,12 +5,12 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonReader;
 import it.polimi.it.model.Shelfie;
-
 import java.io.FileReader;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 
 public class PersonalGoalCard implements Serializable {
 
@@ -18,13 +18,6 @@ public class PersonalGoalCard implements Serializable {
     private int numCompletedTasks;
     private int id;
     private List<Integer> checkColor;
-    /*private transient JsonArray pinkPos;
-    private transient JsonArray cyanPos;
-    private transient JsonArray yellowPos;
-    private transient JsonArray bluePos;
-    private transient JsonArray whitePos;
-    private transient JsonArray greenPos;
-    */
 
     private transient JsonArray jsonArray;
     private ArrayList<Integer> pinkPos;
@@ -33,33 +26,26 @@ public class PersonalGoalCard implements Serializable {
     private ArrayList<Integer> bluePos;
     private ArrayList<Integer> whitePos;
     private ArrayList<Integer> greenPos;
+
+
     /**
      * constructor for the PersonalCards
      * @param id is the identification code of the card we need to instantiate
      */
     public PersonalGoalCard(int id){
         this.id = id;
-
         pinkPos = new ArrayList<>(Arrays.asList(0, 0));
         cyanPos = new ArrayList<>(Arrays.asList(0, 0));
         yellowPos = new ArrayList<>(Arrays.asList(0, 0));
         bluePos = new ArrayList<>(Arrays.asList(0, 0));
         whitePos = new ArrayList<>(Arrays.asList(0, 0));
         greenPos = new ArrayList<>(Arrays.asList(0, 0));
-
         Gson gson = new Gson();
         try {
             JsonReader reader = new JsonReader(new FileReader("src/main/resources/PersonalGoalCards.json"));
             JsonArray jsonArray = gson.fromJson(reader, JsonArray.class);
             JsonObject jsonObject = jsonArray.get(id-1).getAsJsonObject();
-            /*
-            pinkPos = jsonObject.getAsJsonArray("pinkPos");
-            cyanPos = jsonObject.getAsJsonArray("cyanPos");
-            yellowPos = jsonObject.getAsJsonArray("yellowPos");
-            bluePos = jsonObject.getAsJsonArray("bluePos");
-            whitePos = jsonObject.getAsJsonArray("whitePos");
-            greenPos = jsonObject.getAsJsonArray("greenPos");
-            */
+
             jsonArray = jsonObject.getAsJsonArray("pinkPos");
             pinkPos.set(0, jsonArray.get(0).getAsInt());
             pinkPos.set(1, jsonArray.get(1).getAsInt());
@@ -96,6 +82,7 @@ public class PersonalGoalCard implements Serializable {
         }
     }
 
+
     /**
      * getter method
      * @return the column of the pink tile of the goal
@@ -103,6 +90,7 @@ public class PersonalGoalCard implements Serializable {
     public int getPinkposColumn(){
         return pinkPos.get(0);//.getAsInt();
     }
+
 
     /**
      * getter method
@@ -112,6 +100,7 @@ public class PersonalGoalCard implements Serializable {
         return pinkPos.get(1);//.getAsInt();
     }
 
+
     /**
      * getter method
      * @return the column of the cyan tile of the goal
@@ -119,6 +108,7 @@ public class PersonalGoalCard implements Serializable {
     public int getCyanposColumn(){
         return cyanPos.get(0);//.getAsInt();
     }
+
 
     /**
      * getter method
@@ -128,6 +118,7 @@ public class PersonalGoalCard implements Serializable {
         return cyanPos.get(1);//.getAsInt();
     }
 
+
     /**
      * getter method
      * @return the column of the yellow tile of the goal
@@ -135,6 +126,7 @@ public class PersonalGoalCard implements Serializable {
     public int getYellowposColumn(){
         return yellowPos.get(0);//.getAsInt();
     }
+
 
     /**
      * getter method
@@ -144,6 +136,7 @@ public class PersonalGoalCard implements Serializable {
         return yellowPos.get(1);//.getAsInt();
     }
 
+
     /**
      * getter method
      * @return the column of the blue tile of the goal
@@ -151,6 +144,7 @@ public class PersonalGoalCard implements Serializable {
     public int getBlueposColumn(){
         return bluePos.get(0);//.getAsInt();
     }
+
 
     /**
      * getter method
@@ -160,6 +154,7 @@ public class PersonalGoalCard implements Serializable {
         return bluePos.get(1);//.getAsInt();
     }
 
+
     /**
      * getter method
      * @return the column of the white tile of the goal
@@ -167,6 +162,7 @@ public class PersonalGoalCard implements Serializable {
     public int getWhiteposColumn(){
         return whitePos.get(0);//.getAsInt();
     }
+
 
     /**
      * getter method
@@ -176,6 +172,7 @@ public class PersonalGoalCard implements Serializable {
         return whitePos.get(1);//.getAsInt();
     }
 
+
     /**
      * getter method
      * @return the column of the green tile of the goal
@@ -183,6 +180,7 @@ public class PersonalGoalCard implements Serializable {
     public int getGreenposColumn(){
         return greenPos.get(0);//.getAsInt();
     }
+
 
     /**
      * getter method
@@ -192,40 +190,12 @@ public class PersonalGoalCard implements Serializable {
         return greenPos.get(1);//.getAsInt();
     }
 
+
     /**
      * Method that check the goal of the PersonalGoalCard
      * @param shelfie is the shelfie that we need to check
      * @return the number of the color of the goal achieved by the player
      */
-    /*public int checkScore(Shelfie shelfie) {
-        if(checkColor.get(0) == 0 && shelfie.getCell(pinkPos.get(0).getAsInt(), pinkPos.get(1).getAsInt()).getColor().equals("PINK")){
-            numCompletedTasks++;
-            checkColor.add(0,1);
-        }
-        if(checkColor.get(1) == 0 && shelfie.getCell(cyanPos.get(0).getAsInt(), cyanPos.get(1).getAsInt()).getColor().equals("CYAN")){
-            numCompletedTasks++;
-            checkColor.add(1,1);
-        }
-        if(checkColor.get(2)== 0 && shelfie.getCell(yellowPos.get(0).getAsInt(), yellowPos.get(1).getAsInt()).getColor().equals("YELLOW")){
-            numCompletedTasks++;
-            checkColor.add(2,1);
-        }
-        if(checkColor.get(3) == 0 && shelfie.getCell(bluePos.get(0).getAsInt(), bluePos.get(1).getAsInt()).getColor().equals("BLUE")){
-            numCompletedTasks++;
-            checkColor.add(3,1);
-        }
-        if(checkColor.get(4) == 0 && shelfie.getCell(whitePos.get(0).getAsInt(), whitePos.get(1).getAsInt()).getColor().equals("WHITE")){
-            numCompletedTasks++;
-            checkColor.add(4,1);
-        }
-        if(checkColor.get(5) == 0 && shelfie.getCell(greenPos.get(0).getAsInt(), greenPos.get(1).getAsInt()).getColor().equals("GREEN")){
-            numCompletedTasks++;
-            checkColor.add(5,1);
-        }
-
-        return numCompletedTasks;
-    }*/
-
     public int checkScore(Shelfie shelfie) {
         if(checkColor.get(0) == 0 && shelfie.getCell(pinkPos.get(0), pinkPos.get(1)).getColor().equals("PINK")){
             numCompletedTasks++;
@@ -251,10 +221,14 @@ public class PersonalGoalCard implements Serializable {
             numCompletedTasks++;
             checkColor.set(5,1);
         }
-
         return numCompletedTasks;
     }
 
+
+    /**
+     * Getter method
+     * @return the id of this Card.
+     */
     public int getId() {
         return id;
     }

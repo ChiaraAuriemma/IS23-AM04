@@ -5,7 +5,6 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonReader;
 import it.polimi.it.model.Shelfie;
-
 import java.io.FileReader;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -15,6 +14,7 @@ public class CommonGroup2 extends CommonGoalCard implements Serializable {
 
     private static final long serialVersionUID = -1456905443935696667L;
 
+
     /**
      * constructor of the CommonGroup2.
      * @param id is the identification code of the CommonGoalCard, in this group the option for the ids are 2,5,6,7
@@ -22,6 +22,7 @@ public class CommonGroup2 extends CommonGoalCard implements Serializable {
     public CommonGroup2(int id){ //carte 2,6,5,7
         super(id);
     }
+
 
     /**
      * Method that check the goal of the CommonGoalCard
@@ -41,8 +42,6 @@ public class CommonGroup2 extends CommonGoalCard implements Serializable {
             JsonArray jsonArray = gson.fromJson(reader, JsonArray.class);
             for(j=0; jsonArray.get(j).getAsJsonObject().get("id").getAsInt() != id ; j++);
             JsonObject jsonObject = jsonArray.get(j).getAsJsonObject();
-
-
             for(i=0; i<jsonObject.get("i").getAsInt() && numRight<jsonObject.get("numRight").getAsInt(); i++) {
                 stop = 0;
                 colorToSave = new ArrayList<>();
@@ -54,12 +53,10 @@ public class CommonGroup2 extends CommonGoalCard implements Serializable {
                         cell1 = shelfie.getCell(j,i).getColor();
                         cell2 = shelfie.getCell(j+jsonObject.get("addToColumn").getAsInt(),i+jsonObject.get("addToRow").getAsInt()).getColor();
                     }
-
                     if(cell1.equals("DEFAULT"))
                         stop=1;
                     if(!colorToSave.contains(cell1))
                         colorToSave.add(cell1);
-
                     if(jsonObject.get("type").getAsString().equals("mustBeDifferent")) {
                         if (cell1.equals(cell2) || colorToSave.contains(cell2)) {
                             stop = 1;
@@ -70,20 +67,15 @@ public class CommonGroup2 extends CommonGoalCard implements Serializable {
                         if(colorToSave.size() > jsonObject.get("maxDifferentColors").getAsInt())
                             stop = 1;
                     }
-
                 }
                 if(stop==0)
                     numRight++;
             }
-
-
             if(numRight == jsonObject.get("numRight").getAsInt())
                 return true;
             else return false;
-
         }catch (Exception e){
             throw new RuntimeException(e);
         }
-
     }
 }

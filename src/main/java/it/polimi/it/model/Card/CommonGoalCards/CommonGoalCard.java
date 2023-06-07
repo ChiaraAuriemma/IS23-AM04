@@ -1,13 +1,13 @@
 package it.polimi.it.model.Card.CommonGoalCards;
 
 import it.polimi.it.model.Shelfie;
-
 import java.io.Serializable;
 
 public abstract class CommonGoalCard implements Serializable {
 
     private static final long serialVersionUID = -3433170783937394388L;
     protected int id;
+
 
     /**
      * constructor of the CommonGoalCard
@@ -16,6 +16,7 @@ public abstract class CommonGoalCard implements Serializable {
     public CommonGoalCard(int id){
         this.id = id;
     }
+
 
     /**
      * abstract method that will be implemented in the CommonGroups. Check the goals in the shelfie

@@ -6,7 +6,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonReader;
 import it.polimi.it.model.Shelfie;
 import it.polimi.it.model.Tiles.Tile;
-
 import java.io.FileReader;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -22,6 +21,7 @@ public class CommonGroup1 extends CommonGoalCard  implements Serializable {
     private List<Tile> white;
     private List<Tile> green;
 
+
     /**
      * constructor of the CommonGroup1. We use the ArrayLists to save the tiles that are useful to reach the goal
      * @param id is the identification code of the CommonGoalCard, in this group the option for the ids are 1 and 10
@@ -36,6 +36,7 @@ public class CommonGroup1 extends CommonGoalCard  implements Serializable {
         this.green = new ArrayList<Tile>(8);
     }
 
+
     /**
      * Method that check the goal of the CommonGoalCard
      * @param shelfie is the shelfie that we need to check
@@ -44,7 +45,6 @@ public class CommonGroup1 extends CommonGoalCard  implements Serializable {
     public Boolean checkGoal(Shelfie shelfie){
         int column,row,i;
         Gson gson = new Gson();
-
         try{
             JsonReader reader = new JsonReader(new FileReader("src/main/resources/CommonGroup1.json"));
             JsonArray jsonArray = gson.fromJson(reader, JsonArray.class);
@@ -67,7 +67,6 @@ public class CommonGroup1 extends CommonGoalCard  implements Serializable {
                                         tile4.getColor().equals(tile5.getColor()))
                                     return true;
                             }
-
                         }else{
                             if(tile1.getColor().equals(tile2.getColor()) && tile2.getColor().equals(tile3.getColor()) && tile3.getColor().equals(tile4.getColor())){
 
@@ -128,12 +127,9 @@ public class CommonGroup1 extends CommonGoalCard  implements Serializable {
                     }
                 }
             }
-
             return false;
-
         }catch (Exception e){
             throw new RuntimeException(e);
         }
-
     }
 }
