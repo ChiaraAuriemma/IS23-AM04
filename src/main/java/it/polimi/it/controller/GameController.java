@@ -463,8 +463,5 @@ public class GameController implements Serializable {
                 game.getVirtualView().sendChatUpdate(u.getChatList(), u);
             }
         }
-
-
-
     }
 }

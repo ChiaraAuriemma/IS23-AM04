@@ -2,20 +2,15 @@ package it.polimi.it.model.Board;
 
 import it.polimi.it.model.Tiles.PossibleColors;
 import it.polimi.it.model.Tiles.Tile;
-import it.polimi.it.model.Tiles.TilesBag;
-
 import java.io.Serializable;
 
 
+/**
+ * 9x9 Tiles matrix that represents the configuration of the Board when there are 2 players
+ */
 public class B2P extends Board implements Serializable {
 
     private static final long serialVersionUID = 3553776396475547822L;
-
-    /**
-     * 9x9 Tiles matrix that represents the configuration of the Board when there are 2 players
-     */
-    //public Tile[][] matrix;
-    //public TilesBag bag = new TilesBag();
 
 
     /**

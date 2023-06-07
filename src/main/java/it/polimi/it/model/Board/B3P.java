@@ -2,11 +2,12 @@ package it.polimi.it.model.Board;
 
 import it.polimi.it.model.Tiles.PossibleColors;
 import it.polimi.it.model.Tiles.Tile;
-import it.polimi.it.model.Tiles.TilesBag;
-
 import java.io.Serializable;
 
 
+/**
+ * 9x9 Tiles matrix that represents the configuration of the Board when there are 3 players
+ */
 public class B3P extends Board implements Serializable {
 
     private static final long serialVersionUID = 4432391130262015233L;

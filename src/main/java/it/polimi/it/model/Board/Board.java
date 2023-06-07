@@ -7,13 +7,16 @@ import java.io.Serializable;
 import java.util.*;
 
 
+/**
+ *  Matrix that represents the LivingRoom of the game.
+ * Abstract class, gets extended by B2P, B3P and B4P, according to the number of players.
+ * Contains various methods to check, fill and take tiles from the 'LivingRoom'.
+ */
 public abstract class Board implements Serializable {
 
 
     private static final long serialVersionUID = -8544590988740975278L;
-    /**
-     * Matrix that represents the LivingRoom of the game
-     */
+
     protected Tile[][] matrix;
     protected TilesBag bag = new TilesBag();
 
@@ -23,12 +26,17 @@ public abstract class Board implements Serializable {
      * Gets specified in the classes: B2P, B3P and B4P
      */
     public Board() {
-
     }
 
+
+    /**
+     * Getter method
+     * @return the LivingRoom's tiles matrix.
+     */
     public Tile[][] getMatrix() {
         return matrix;
     }
+
 
     /**
      * Checks if a refill of the board is needed calling method checkRefill
@@ -110,12 +118,10 @@ public abstract class Board implements Serializable {
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
                 if (!matrix[i][j].getColor().equals("DEFAULT") && !matrix[i][j].getColor().equals("XTILE")) {
-
                     List<Tile> currentGroup = new ArrayList<>();
                     groupComposer(i, j, currentGroup, maxFromShelfie);
                     tempSize = currentGroup.size();
                     currentGroup.clear();
-
                     if(tempSize>=maxFromShelfie){
                         return maxFromShelfie;
                     }
@@ -139,7 +145,10 @@ public abstract class Board implements Serializable {
     private void groupComposer(int i, int j, List<Tile> currentGroup, int maxFromShelfie) {
         int ok = 0;
 
-        if (i < 0 || i > 8 || j < 0 || j > 8 || matrix[i][j].getColor().equals("DEFAULT") || matrix[i][j].getColor().equals("XTILE")) {
+        if (i < 0 || i > 8 || j < 0 || j > 8){
+            return;
+        }
+        if(matrix[i][j].getColor().equals("DEFAULT") || matrix[i][j].getColor().equals("XTILE")) {
             return;
         }
         if(currentGroup.contains(matrix[i][j])){
@@ -163,7 +172,6 @@ public abstract class Board implements Serializable {
                 }
             }
         }
-
         if (ok == 0) {
             return;
         }
@@ -201,64 +209,51 @@ public abstract class Board implements Serializable {
     public List<List<Tile>> choosableTiles(int size) {
         List<List<Tile>> choosableTilesList = new ArrayList<>();
         boolean tripletAlreadyIn;
-
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
                 if (!matrix[i][j].getColor().equals("DEFAULT") && !matrix[i][j].getColor().equals("XTILE")) {
-
                     List<Tile> tripletDD = new ArrayList<>();
                     addTilesTotripletDD(i, j, tripletDD, size);
-
                     tripletAlreadyIn = choosableTilesList.stream().anyMatch(list -> new HashSet<>(list).containsAll(tripletDD));
                     if(!tripletAlreadyIn){
                         if (tripletDD.size() == size) {
                             choosableTilesList.add(tripletDD);
                         }
                     }
-
                     List<Tile> tripletRR = new ArrayList<>();
                     addTilesTotripletRR(i, j, tripletRR, size);
-
                     tripletAlreadyIn = choosableTilesList.stream().anyMatch(list -> new HashSet<>(list).containsAll(tripletRR));
                     if(!tripletAlreadyIn){
                         if (tripletRR.size() == size) {
                             choosableTilesList.add(tripletRR);
                         }
                     }
-
                     List<Tile> tripletDR = new ArrayList<>();
                     addTilesTotripletDR(i, j, tripletDR, size);
-
                     tripletAlreadyIn = choosableTilesList.stream().anyMatch(list -> new HashSet<>(list).containsAll(tripletDR));
                     if(!tripletAlreadyIn){
                         if (tripletDR.size() == size) {
                             choosableTilesList.add(tripletDR);
                         }
                     }
-
                     List<Tile> tripletRD = new ArrayList<>();
                     addTilesTotripletRD(i, j, tripletRD, size);
-
                     tripletAlreadyIn = choosableTilesList.stream().anyMatch(list -> new HashSet<>(list).containsAll(tripletRD));
                     if(!tripletAlreadyIn){
                         if (tripletRD.size() == size) {
                             choosableTilesList.add(tripletRD);
                         }
                     }
-
                     List<Tile> tripletLD = new ArrayList<>();
                     addTilesTotripletLD(i, j, tripletLD, size);
-
                     tripletAlreadyIn = choosableTilesList.stream().anyMatch(list -> new HashSet<>(list).containsAll(tripletLD));
                     if(!tripletAlreadyIn){
                         if (tripletLD.size() == size) {
                             choosableTilesList.add(tripletLD);
                         }
                     }
-
                     List<Tile> tripletDL = new ArrayList<>();
                     addTilesTotripletDL(i, j, tripletDL, size);
-
                     tripletAlreadyIn = choosableTilesList.stream().anyMatch(list -> new HashSet<>(list).containsAll(tripletDL));
                     if(!tripletAlreadyIn){
                         if (tripletDL.size() == size) {
@@ -270,6 +265,7 @@ public abstract class Board implements Serializable {
         }
         return choosableTilesList;
     }
+
 
     /**
      * Checks if the Tile at the given row and column is take-able, if so, the tile is added to the list
@@ -288,7 +284,7 @@ public abstract class Board implements Serializable {
         }
         if (row == 0 || column == 0 || row == 8 || column == 8) {
             return true;
-        } //else{
+        }
         if (matrix[row - 1][column].getColor().equals("DEFAULT") || matrix[row - 1][column].getColor().equals("XTILE")) {
             return true;
         }
@@ -301,7 +297,6 @@ public abstract class Board implements Serializable {
         if (matrix[row][column + 1].getColor().equals("DEFAULT") || matrix[row][column + 1].getColor().equals("XTILE")) {
             return true;
         }
-        //}
         return false;
     }
 
@@ -336,6 +331,14 @@ public abstract class Board implements Serializable {
     }
 
 
+    /**
+     * Method that finds the successive tile to be added to the triplet,
+     * traversing the board with a Down->Down movement, starting from
+     * @param i row
+     * @param j column
+     * @param triplet list of tiles in which the new tile is added
+     * @param size maximum size of the list.
+     */
     private void addTilesTotripletDD(int i, int j, List<Tile> triplet, int size) {
         if(tileChecker(i, j, triplet) && triplet.size()<size){
             addToTriplet(i, j, triplet);
@@ -346,6 +349,14 @@ public abstract class Board implements Serializable {
     }
 
 
+    /**
+     * Method that finds the successive tile to be added to the triplet,
+     * traversing the board with a Right->Right movement, starting from
+     * @param i row
+     * @param j column
+     * @param triplet list of tiles in which the new tile is added
+     * @param size maximum size of the list.
+     */
     private void addTilesTotripletRR(int i, int j, List<Tile> triplet, int size) {
         if(tileChecker(i, j, triplet) && triplet.size()<size){
             addToTriplet(i, j, triplet);
@@ -356,16 +367,21 @@ public abstract class Board implements Serializable {
     }
 
 
+    /**
+     * Method that finds the successive tile to be added to the triplet,
+     * traversing the board with a Right->Down movement, starting from
+     * @param i row
+     * @param j column
+     * @param triplet list of tiles in which the new tile is added
+     * @param size maximum size of the list.
+     */
     private void addTilesTotripletRD(int i, int j, List<Tile> triplet, int size) {
-
         if(tileChecker(i, j, triplet) && triplet.size()<size){
             addToTriplet(i, j, triplet);
-
             if (triplet.size() < size) {
                 j=j+1;
                 if(tileChecker(i, j, triplet) && triplet.size()<size){
                     addToTriplet(i, j, triplet);
-
                     if (triplet.size() < size) {
                         i=i+1;
                         if(tileChecker(i, j, triplet) && triplet.size()<size){
@@ -378,16 +394,21 @@ public abstract class Board implements Serializable {
     }
 
 
+    /**
+     * Method that finds the successive tile to be added to the triplet,
+     * traversing the board with a Down->Right movement, starting from
+     * @param i row
+     * @param j column
+     * @param triplet list of tiles in which the new tile is added
+     * @param size maximum size of the list.
+     */
     private void addTilesTotripletDR(int i, int j, List<Tile> triplet, int size) {
-
         if(tileChecker(i, j, triplet) && triplet.size()<size){
             addToTriplet(i, j, triplet);
-
             if (triplet.size() < size) {
                 i=i+1;
                 if(tileChecker(i, j, triplet) && triplet.size()<size){
                     addToTriplet(i, j, triplet);
-
                     if (triplet.size() < size) {
                         j=j+1;
                         if(tileChecker(i, j, triplet) && triplet.size()<size){
@@ -400,16 +421,21 @@ public abstract class Board implements Serializable {
     }
 
 
+    /**
+     * Method that finds the successive tile to be added to the triplet,
+     * traversing the board with a Left->Down movement, starting from
+     * @param i row
+     * @param j column
+     * @param triplet list of tiles in which the new tile is added
+     * @param size maximum size of the list.
+     */
     private void addTilesTotripletLD(int i, int j, List<Tile> triplet, int size) {
-
         if(tileChecker(i, j, triplet) && triplet.size()<size){
             addToTriplet(i, j, triplet);
-
             if (triplet.size() < size) {
                 i=i-1;
                 if(tileChecker(i, j, triplet) && triplet.size()<size){
                     addToTriplet(i, j, triplet);
-
                     if (triplet.size() < size) {
                         j=j+1;
                         if(tileChecker(i, j, triplet) && triplet.size()<size){
@@ -422,16 +448,21 @@ public abstract class Board implements Serializable {
     }
 
 
+    /**
+     * Method that finds the successive tile to be added to the triplet,
+     * traversing the board with a Down->Left movement, starting from
+     * @param i row
+     * @param j column
+     * @param triplet list of tiles in which the new tile is added
+     * @param size maximum size of the list.
+     */
     private void addTilesTotripletDL(int i, int j, List<Tile> triplet, int size) {
-
         if(tileChecker(i, j, triplet) && triplet.size()<size){
             addToTriplet(i, j, triplet);
-
             if (triplet.size() < size) {
                 i=i+1;
                 if(tileChecker(i, j, triplet) && triplet.size()<size){
                     addToTriplet(i, j, triplet);
-
                     if (triplet.size() < size) {
                         j=j-1;
                         if(tileChecker(i, j, triplet) && triplet.size()<size){

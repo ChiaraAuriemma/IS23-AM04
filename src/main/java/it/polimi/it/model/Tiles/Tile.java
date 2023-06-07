@@ -83,6 +83,12 @@ public class Tile implements Serializable {
     }
 
 
+    /**
+     * @see  java.lang.Object 's equals method
+     * The equals method is overrided in order to, given
+     * @param o Object, but used as a Tile
+     * @return true if the given Tile is equal to the selected Object.
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

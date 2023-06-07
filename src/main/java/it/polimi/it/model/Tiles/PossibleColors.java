@@ -1,5 +1,6 @@
 package it.polimi.it.model.Tiles;
 
+
 public enum PossibleColors {
     BLUE("BLUE"),
     CYAN("CYAN"),
@@ -13,7 +14,6 @@ public enum PossibleColors {
     private final String color;
 
 
-    //bro è un costruttore
     PossibleColors(String color) {
         this.color = color;
     }
@@ -26,5 +26,4 @@ public enum PossibleColors {
     public String getColor() {
         return color;
     }
-}// si potrebbe usare tis.name(); che dovrebbe ritornare la stessa stringa col nome del colore
-    // così potrebbe non servire il parametro stringa!
+}
