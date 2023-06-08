@@ -122,7 +122,7 @@ public class GUIApplication extends Application {
             stageRef.show();
         }
         if(client.getGameStage().equals(TurnStages.CHOOSECOLUMN)){
-            FXMLLoader fxmlLoader = new FXMLLoader(GUIApplication.class.getResource("/Game.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(GUIApplication.class.getResource("/ProvaVBox.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
             setCurrentController(fxmlLoader.getController());
             currentController.setClient(client);
@@ -133,7 +133,7 @@ public class GUIApplication extends Application {
             stageRef.show();
         }
         if(client.getGameStage().equals(TurnStages.TILESNUM)){
-            FXMLLoader fxmlLoader = new FXMLLoader(GUIApplication.class.getResource("/Game.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(GUIApplication.class.getResource("/ProvaVBox.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
             setCurrentController(fxmlLoader.getController());
             currentController.setClient(client);
@@ -144,7 +144,7 @@ public class GUIApplication extends Application {
             stageRef.show();
         }
         if(client.getGameStage().equals(TurnStages.CHOOSETILES)){
-            FXMLLoader fxmlLoader = new FXMLLoader(GUIApplication.class.getResource("/Game.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(GUIApplication.class.getResource("/ProvaVBox.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
             setCurrentController(fxmlLoader.getController());
             currentController.setClient(client);

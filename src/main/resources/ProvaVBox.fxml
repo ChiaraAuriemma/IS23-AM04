@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.it.view.GUI.GameViewController">
+    <children>
+        <ImageView fitHeight="743.0" fitWidth="1162.0" pickOnBounds="true">
+            <image>
+                <Image url="@Images/sfondo_parquet.jpg" />
+            </image>
+        </ImageView>
+        <ImageView fitHeight="150.0" fitWidth="350.0" layoutX="406.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@Images/Title 2000x618px.png" />
+            </image>
+        </ImageView>
+        <Label fx:id="Text" alignment="CENTER" contentDisplay="CENTER" layoutX="380.0" layoutY="130.0" text="Choose number of tiles, tiles and shelf column" textAlignment="CENTER">
+            <font>
+                <Font name="System Bold" size="18.0" />
+            </font>
+        </Label>
+        <Button fx:id="PersonalButton" layoutX="34.0" layoutY="40.0" mnemonicParsing="false" onAction="#GoToPersonalGoalCard" prefHeight="40.0" prefWidth="235.0" text="Show Personal Goal Card">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Button>
+        <Button fx:id="CommonButton" layoutX="34.0" layoutY="100.0" mnemonicParsing="false" onAction="#GoToCommonGoalCards" text="Show Common Goal Cards">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Button>
+        <ImageView fitHeight="472.0" fitWidth="474.0" layoutX="28.0" layoutY="215.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@Images/livingroom.png" />
+            </image>
+        </ImageView>
+        <GridPane fx:id="LivingRoom" hgap="2.0" layoutX="44.0" layoutY="236.0" prefHeight="433.0" prefWidth="438.0" vgap="2.0">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="66.0" minWidth="10.0" prefWidth="37.5333251953125" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="61.4" minWidth="0.0" prefWidth="32.333367919921876" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="47.800010681152344" minWidth="0.0" prefWidth="32.86663208007813" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="74.80001068115234" minWidth="0.0" prefWidth="32.866699218749986" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="83.80000305175781" minWidth="0.0" prefWidth="33.933306884765614" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="94.79995727539062" minWidth="10.0" prefWidth="31.5333251953125" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="70.19998779296876" minWidth="10.0" prefWidth="36.066674804687494" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="63.333343505859375" minWidth="10.0" prefWidth="34.46669311523439" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="68.13333129882812" minWidth="10.0" prefWidth="38.1333068847656" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints maxHeight="54.799993896484374" minHeight="10.0" prefHeight="36.59999389648438" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="60.66666259765625" minHeight="10.0" prefHeight="32.3333251953125" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="67.53333129882812" minHeight="10.0" prefHeight="33.933319091796875" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="74.4" minHeight="10.0" prefHeight="32.066680908203125" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="72.26666870117188" minHeight="10.0" prefHeight="37.4666748046875" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="72.73334960937501" minHeight="10.0" prefHeight="32.133331298828125" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="67.46668701171876" minHeight="10.0" prefHeight="35.13334960937499" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="50.733306884765625" minHeight="10.0" prefHeight="32.33336181640624" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="56.93332519531248" minHeight="10.0" prefHeight="41.66663818359376" vgrow="SOMETIMES" />
+            </rowConstraints>
+        </GridPane>
+        <Label fx:id="Player1" layoutX="569.0" layoutY="180.0" text="Label">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Label>
+        <Label fx:id="labelPoints1" layoutX="665.0" layoutY="530.0" text="Points:">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Label>
+        <Label fx:id="Points1" layoutX="725.0" layoutY="530.0" text="00">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Label>
+        <ImageView fx:id="ShelfieP1" fitHeight="320.0" fitWidth="310.0" layoutX="550.0" layoutY="215.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@Images/bookshelf.png" />
+            </image>
+        </ImageView>
+        <Button fx:id="0" layoutX="592.5" layoutY="497.0" mnemonicParsing="false" onAction="#ChooseColumn" prefHeight="19.0" prefWidth="32.0" text="1" />
+        <Button fx:id="1" layoutX="642.0" layoutY="497.0" mnemonicParsing="false" onAction="#ChooseColumn" prefHeight="19.0" prefWidth="32.0" text="2" />
+        <Button fx:id="2" layoutX="689.0" layoutY="497.0" mnemonicParsing="false" onAction="#ChooseColumn" prefHeight="19.0" prefWidth="32.0" text="3" />
+        <Button fx:id="3" layoutX="737.0" layoutY="497.0" mnemonicParsing="false" onAction="#ChooseColumn" prefHeight="19.0" prefWidth="32.0" text="4" />
+        <Button fx:id="4" layoutX="785.0" layoutY="497.0" mnemonicParsing="false" onAction="#ChooseColumn" prefHeight="19.0" prefWidth="32.0" text="5" />
+        <GridPane fx:id="Player1Grid" hgap="2.0" layoutX="585.0" layoutY="234.0" prefHeight="253.0" prefWidth="238.0" vgap="2.0">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="0.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            </rowConstraints>
+        </GridPane>
+        <TextArea layoutX="550.0" layoutY="570.0" prefHeight="120.0" prefWidth="584.0" />
+        <TextField layoutX="550.0" layoutY="689.0" prefHeight="30.0" prefWidth="509.0" />
+        <Button layoutX="1059.0" layoutY="679.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="75.0" text="Send">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Button>
+      <VBox fx:id="vBoxShelfie" alignment="CENTER" layoutX="950.0" layoutY="31.0" prefHeight="200.0" prefWidth="100.0" spacing="42.0">
+         <children>
+              <ImageView fx:id="shelfieP2" fitHeight="150.0" fitWidth="140.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                      <Image url="@Images/bookshelf.png" />
+                  </image>
+              </ImageView>
+              <ImageView fx:id="shelfieP3" fitHeight="150.0" fitWidth="140.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                      <Image url="@Images/bookshelf.png" />
+                  </image>
+              </ImageView>
+              <ImageView fx:id="shelfieP4" fitHeight="150.0" fitWidth="140.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                      <Image url="@Images/bookshelf.png" />
+                  </image>
+              </ImageView>
+         </children>
+      </VBox>
+      <VBox fx:id="vBoxGrid" alignment="CENTER" layoutX="966.0" layoutY="39.0" prefHeight="116.0" prefWidth="107.0" spacing="69.0">
+         <children>
+              <GridPane fx:id="Player2Grid" hgap="2.0" maxHeight="116.0" maxWidth="107.0" minHeight="116.0" minWidth="107.0" prefHeight="116.0" prefWidth="107.0" vgap="2.0">
+                  <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  </columnConstraints>
+                  <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="0.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  </rowConstraints>
+              </GridPane>
+              <GridPane fx:id="Player3Grid" hgap="2.0" maxHeight="116.0" maxWidth="107.0" minHeight="116.0" minWidth="107.0" prefHeight="116.0" prefWidth="107.0" vgap="2.0">
+                  <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  </columnConstraints>
+                  <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="0.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  </rowConstraints>
+              </GridPane>
+              <GridPane fx:id="Player4Grid" hgap="2.0" maxHeight="116.0" maxWidth="107.0" minHeight="116.0" minWidth="107.0" prefHeight="116.0" prefWidth="107.0" vgap="2.0">
+                  <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  </columnConstraints>
+                  <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="0.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  </rowConstraints>
+              </GridPane>
+         </children>
+      </VBox>
+      <VBox fx:id="vBoxNicknames" alignment="CENTER" layoutX="923.0" layoutY="15.0" prefHeight="200.0" prefWidth="100.0" spacing="167.0">
+         <children>
+              <Label fx:id="Player2" layoutX="1010.0" layoutY="174.0" text="Label" />
+              <Label fx:id="Player3" text="Label" />
+              <Label fx:id="Player4" text="Label" />
+         </children>
+      </VBox>
+      <VBox fx:id="vBoxLabelPoints" alignment="CENTER" layoutX="960.0" layoutY="174.0" prefHeight="200.0" prefWidth="100.0" spacing="167.0">
+         <children>
+              <Label fx:id="labelPoints2" text="Points:" />
+              <Label fx:id="labelPoints3" text="Points:" />
+              <Label fx:id="labelPoints4" text="Points:" />
+         </children>
+      </VBox>
+      <VBox fx:id="vBoxPoints" alignment="CENTER" layoutX="986.0" layoutY="175.0" prefHeight="200.0" prefWidth="100.0" spacing="167.0">
+         <children>
+              <Label fx:id="Points2" text="00" />
+              <Label fx:id="Points3" alignment="CENTER" text="00" />
+              <Label fx:id="Points4" text="00" />
+         </children>
+      </VBox>
+        <Label layoutX="29.0" layoutY="180.0" text="Number of tiles:">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Label>
+        <Button fx:id="ConfirmButton" layoutX="355.0" layoutY="181.0" mnemonicParsing="false" onAction="#ChooseNumberOfTiles" text="Confirm" />
+        <TextField fx:id="num" layoutX="179.0" layoutY="180.0" />
+        <Button fx:id="TilesButton" layoutX="175.0" layoutY="704.0" mnemonicParsing="false" onAction="#ChooseTiles" text="Choose the tiles from the board">
+            <font>
+                <Font size="14.0" />
+            </font>
+        </Button>
+    </children>
+</AnchorPane>

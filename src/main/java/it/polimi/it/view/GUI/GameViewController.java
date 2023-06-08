@@ -16,6 +16,7 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.awt.*;
@@ -41,26 +42,71 @@ public class GameViewController implements GuiInterface, Initializable {
 
     private HashMap<Integer,GridPane> gridOfPlayers;
     private HashMap<Integer,Label> nicknames;
-
+    private HashMap<Integer, ImageView> playersShelfie;
+    private HashMap<Integer, Label> labelPoints;
+    private HashMap<Integer, Label> points;
 
     @FXML
     GridPane LivingRoom;
+
+    @FXML
+    Label Player1;
     @FXML
     GridPane Player1Grid;
+    @FXML
+    Label Points1;
+    @FXML
+    ImageView shelfieP1;
+
+    @FXML
+    Label labelPoints1;
+
+    @FXML
+    VBox vBoxGrid;
     @FXML
     GridPane Player2Grid;
     @FXML
     GridPane Player3Grid;
     @FXML
     GridPane Player4Grid;
+
     @FXML
-    Label Player1;
+    VBox vBoxNicknames;
     @FXML
     Label Player2;
     @FXML
     Label Player3;
     @FXML
     Label Player4;
+
+    @FXML
+    VBox vBoxShelfie;
+    @FXML
+    ImageView shelfieP2;
+    @FXML
+    ImageView shelfieP3;
+    @FXML
+    ImageView shelfieP4;
+
+    @FXML
+    VBox vBoxLabelPoints;
+    @FXML
+    Label labelPoints2;
+    @FXML
+    Label labelPoints3;
+    @FXML
+    Label labelPoints4;
+
+    @FXML
+    VBox vBoxPoints;
+    @FXML
+    Label Points2;
+    @FXML
+    Label Points3;
+    @FXML
+    Label Points4;
+
+
     @FXML
     Label Text;
     @FXML
@@ -94,21 +140,63 @@ public class GameViewController implements GuiInterface, Initializable {
         }
 
 
-        gridOfPlayers = new HashMap<>();
-        nicknames = new HashMap<>();
+        gridOfPlayers = new HashMap<>(4);
+        nicknames = new HashMap<>(4);
+        playersShelfie = new HashMap<>(4);
+        labelPoints = new HashMap<>(4);
+        points = new HashMap<>(4);
+
         nicknames.put(0, Player1);
         gridOfPlayers.put(0, Player1Grid);
+        playersShelfie.put(0, shelfieP1);
+        labelPoints.put(0,labelPoints1);
+        points.put(0,Points1);
+        
         nicknames.put(1, Player2);
         gridOfPlayers.put(1, Player2Grid);
+        playersShelfie.put(1, shelfieP2);
+        labelPoints.put(1,labelPoints2);
+        points.put(1,Points2);
+        
         nicknames.put(2, Player3);
         gridOfPlayers.put(2, Player3Grid);
+        playersShelfie.put(2, shelfieP3);
+        labelPoints.put(2,labelPoints3);
+        points.put(2,Points3);
+        
         nicknames.put(3, Player4);
         gridOfPlayers.put(3, Player4Grid);
+        playersShelfie.put(3, shelfieP4);
+        labelPoints.put(3,labelPoints4);
+        points.put(3,Points4);
+
+        int numPlayer = GUIApplication.getPlayers().size();
+        switch (numPlayer){
+            case 2:
+                shelfieP3.setVisible(false);
+                labelPoints3.setVisible(false);
+                Points3.setVisible(false);
+                shelfieP4.setVisible(false);
+                labelPoints4.setVisible(false);
+                Points4.setVisible(false);
+                break;
+            case 3:
+                shelfieP4.setVisible(false);
+                labelPoints4.setVisible(false);
+                Points4.setVisible(false);
+                break;
+            default:
+                break;
+        }
+
+
 
         nicknames.forEach((k, v) -> {
             if (k < GUIApplication.getPlayers().size() && GUIApplication.getPlayers().get(k) != null)
                 v.setText(GUIApplication.getPlayers().get(k));
-            else v.setVisible(false);
+            else {
+                v.setVisible(false);
+            }
         });
         Player1.setTextFill(Color.BLUE);
 
@@ -133,8 +221,12 @@ public class GameViewController implements GuiInterface, Initializable {
                             }
                         }
                     }
-                } else v.setVisible(false);
-            } else v.setVisible(false);
+                } else {
+                    v.setVisible(false);
+                }
+            } else {
+                v.setVisible(false);
+            }
         });
 
         /*
