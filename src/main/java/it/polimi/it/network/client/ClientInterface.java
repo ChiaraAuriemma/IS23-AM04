@@ -1,18 +1,20 @@
 package it.polimi.it.network.client;
 
-import it.polimi.it.model.Card.CommonGoalCards.CommonGoalCard;
-import it.polimi.it.model.Card.PersonalGoalCards.PersonalGoalCard;
 import it.polimi.it.model.Tiles.Tile;
 import it.polimi.it.view.ViewInterface;
-
 import java.io.IOException;
 import java.io.Serializable;
-import java.rmi.Remote;
 import java.rmi.RemoteException;
-import java.util.ArrayList;
 import java.util.List;
 
 public interface ClientInterface extends Serializable {
+
+    /**
+     *
+     * @param userName
+     * @throws RemoteException
+     * @throws IOException
+     */
     public void login(String userName) throws RemoteException, IOException;
 
     public void createGame(int playerNumber) throws RemoteException;

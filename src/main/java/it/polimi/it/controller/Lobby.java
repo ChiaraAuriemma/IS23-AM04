@@ -105,7 +105,7 @@ public class Lobby implements Serializable {
                     System.out.println(user.getNickname() + "reconnected!");
 
                 }else{
-                    throw new ExistingNicknameException("This nickname already exists!");//mandare messaggio a view
+                    throw new ExistingNicknameException("This nickname already exists!");
                 }
             }
         }
@@ -122,7 +122,7 @@ public class Lobby implements Serializable {
      */
     public GameController createGame(String username, int playerNumber) throws WrongPlayerException {
         if(playerNumber < 2 || playerNumber > 4){
-            throw new WrongPlayerException("\"Retry! You must insert a number between 2 and 4... \""); //mandare messaggio a view
+            throw new WrongPlayerException("\"Retry! You must insert a number between 2 and 4... \"");
         }
         VirtualView virtualView = new VirtualView();
         virtualView.setServerRMI(this.serverRMI);
