@@ -10,6 +10,7 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.it.view.GUI.GameViewController">
@@ -73,19 +74,16 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <Label fx:id="Player4" layoutX="959.0" layoutY="382.0" text="Label" />
       <Label layoutX="665.0" layoutY="530.0" text="Points:">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label layoutX="993.0" layoutY="543.0" text="Points:" />
       <Label fx:id="Points1" layoutX="725.0" layoutY="530.0" text="00">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label fx:id="Points4" layoutX="1030.0" layoutY="543.0" text="00" />
       <ImageView fitHeight="320.0" fitWidth="310.0" layoutX="550.0" layoutY="215.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@Images/bookshelf.png" />
@@ -120,12 +118,26 @@
             <Font size="18.0" />
          </font>
       </Button>
-      <ImageView fitHeight="150.0" fitWidth="140.0" layoutX="950.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@Images/bookshelf.png" />
-         </image>
-      </ImageView>
-      <GridPane fx:id="Player2Grid" hgap="2.0" layoutX="966.0" layoutY="39.0" prefHeight="116.0" prefWidth="107.0" vgap="2.0">
+      <VBox fx:id="ShelfieContainer" alignment="CENTER" layoutX="936.0" layoutY="5.0" prefHeight="562.0" prefWidth="162.0" spacing="35.0">
+         <children>
+            <ImageView fitHeight="150.0" fitWidth="140.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Images/bookshelf.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="Shelfie3" fitHeight="142.0" fitWidth="144.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Images/bookshelf.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="Shelfie4" fitHeight="150.0" fitWidth="140.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Images/bookshelf.png" />
+               </image>
+            </ImageView>
+         </children>
+      </VBox>
+      <GridPane fx:id="Player2Grid" hgap="2.0" prefHeight="112.0" prefWidth="107.0" vgap="2.0">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -142,12 +154,7 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
       </GridPane>
-      <ImageView fitHeight="150.0" fitWidth="140.0" layoutX="950.0" layoutY="215.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@Images/bookshelf.png" />
-         </image>
-      </ImageView>
-      <GridPane fx:id="Player3Grid" hgap="2.0" layoutX="966.0" layoutY="223.0" prefHeight="116.0" prefWidth="107.0" vgap="2.0">
+      <GridPane fx:id="Player3Grid" hgap="2.0" prefHeight="116.0" prefWidth="107.0" vgap="2.0">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -164,12 +171,7 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
       </GridPane>
-      <ImageView fitHeight="150.0" fitWidth="140.0" layoutX="950.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@Images/bookshelf.png" />
-         </image>
-      </ImageView>
-      <GridPane fx:id="Player4Grid" hgap="2.0" layoutX="966.0" layoutY="408.0" prefHeight="116.0" prefWidth="107.0" vgap="2.0">
+      <GridPane fx:id="Player4Grid" hgap="2.0" prefHeight="116.0" prefWidth="107.0" vgap="2.0">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -186,17 +188,16 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
       </GridPane>
-      <Label layoutX="993.0" layoutY="358.0" text="Points:" />
-      <Label layoutX="993.0" layoutY="174.0" text="Points:" />
-      <Label fx:id="Points2" layoutX="1030.0" layoutY="174.0" text="00" />
-      <Label fx:id="Points3" layoutX="1030.0" layoutY="358.0" text="00" />
-      <Label fx:id="Player2" layoutX="959.0" layoutY="15.0" text="Label" />
-      <Label fx:id="Player3" layoutX="959.0" layoutY="197.0" text="Label" />
+      <Label layoutX="880.0" layoutY="247.0" text="Points:" />
+      <Label fx:id="Points2" layoutX="909.0" layoutY="215.0" text="00" />
+      <Label fx:id="Points3" layoutX="877.0" layoutY="343.0" text="00" />
+      <Label layoutX="880.0" layoutY="461.0" text="Points:" />
       <Label layoutX="29.0" layoutY="180.0" text="Number of tiles:">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
+      <Label fx:id="Points4" layoutX="891.0" layoutY="501.0" text="00" />
       <Button fx:id="ConfirmButton" layoutX="355.0" layoutY="181.0" mnemonicParsing="false" onAction="#ChooseNumberOfTiles" text="Confirm" />
       <TextField fx:id="num" layoutX="179.0" layoutY="180.0" />
       <Button fx:id="TilesButton" layoutX="175.0" layoutY="704.0" mnemonicParsing="false" onAction="#ChooseTiles" text="Choose the tiles from the board">
@@ -204,5 +205,9 @@
             <Font size="14.0" />
          </font>
       </Button>
+      <Label fx:id="Player2" layoutX="902.0" layoutY="422.0" text="Label" />
+      <Label fx:id="Player3" layoutX="898.0" layoutY="397.0" prefHeight="0.0" prefWidth="28.0" text="Label" />
+      <Label fx:id="Player4" layoutX="857.0" layoutY="185.0" text="Label" />
+      <Label layoutX="880.0" layoutY="290.0" text="Points:" />
    </children>
 </AnchorPane>

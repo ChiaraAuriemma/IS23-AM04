@@ -130,6 +130,7 @@ public class GameViewController implements GuiInterface, Initializable {
                     int finalJ = j;
                     imageView.setOnMouseClicked(mouseEvent -> {
                         try {
+                            imageView.setOpacity(0.5);
                             chooseTiles(imageView, finalI, finalJ);
                         } catch (IOException e) {
                             throw new RuntimeException(e);
@@ -199,6 +200,14 @@ public class GameViewController implements GuiInterface, Initializable {
             }
         });
         Player1.setTextFill(Color.BLUE);
+
+        points.forEach((k,v) -> {
+            if (k < GUIApplication.getPoints().size() && GUIApplication.getPoints().get(k) != null)
+                v.setText(GUIApplication.getPoints().get(k).toString());
+            else {
+                v.setVisible(false);
+            }
+        });
 
         gridOfPlayers.forEach((k, v) -> {
             if (k < GUIApplication.getPlayers().size() && GUIApplication.getPlayers().get(k) != null) {
@@ -308,6 +317,21 @@ public class GameViewController implements GuiInterface, Initializable {
         PossibleColors color = getColor(imageView);
         Tile t = new Tile(i,j,color);
         Tiles.add(t);
+        imageView.setOnMouseClicked(mouseEvent -> {
+            imageView.setOpacity(1);
+            try {
+                removeTiles(imageView,i,j);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
+
+    public void removeTiles(ImageView imageView, int i, int j) throws IOException {
+        PossibleColors color = getColor(imageView);
+        Tile t = new Tile(i,j,color);
+        Tiles.remove(t);
+        GUIApplication.changeScene(); //--->meglio aggiornare o poter tornare indietro solo una volta??
     }
 
     public void ChooseTiles(ActionEvent actionEvent) throws IOException {

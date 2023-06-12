@@ -29,6 +29,7 @@ public class JoinGameController implements GuiInterface {
         if(GameID.getText().length() != 0) {
             int id = Integer.parseInt(GameID.getText());
             client.joinGame(id);
+            GUIApplication.changeScene();
         }else {
             GUIApplication.showAlert(Alert.AlertType.WARNING, "Join Game error", "You must enter a game id");
         }

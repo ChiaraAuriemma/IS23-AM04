@@ -35,6 +35,8 @@ public class GUIApplication extends Application {
 
     private static int numTiles;
 
+    private static ArrayList<Integer> points = new ArrayList<>(4);
+
     private static ArrayList<String> players = new ArrayList<>(4);
     private static HashMap<String, Image[][]> shelfies = new HashMap<>();
 
@@ -48,6 +50,9 @@ public class GUIApplication extends Application {
         setCurrentController(fxmlLoader.getController());
         currentController.setClient(client);
         stageRef = stage;
+        for(int i=0;i<4 ;i++){
+            points.add(i,0);
+        }
         stage.setTitle("My Shelfie");
         stage.setScene(scene);
         stage.setResizable(false);
@@ -206,6 +211,13 @@ public class GUIApplication extends Application {
         return players;
     }
 
+    public static ArrayList<Integer> getPoints() {
+        return points;
+    }
+
+    public static void setPoints(int i,int p) {
+        points.set(i,p);
+    }
 
     public static URL getPersonalCard() {
         return PersonalCard;

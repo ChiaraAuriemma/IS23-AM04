@@ -79,7 +79,7 @@
                 <Font size="18.0" />
             </font>
         </Label>
-        <Label layoutX="993.0" layoutY="543.0" text="Points:" />
+        <Label fx:id="labelPoints4" layoutX="993.0" layoutY="543.0" text="Points:" />
         <Label fx:id="Points1" layoutX="725.0" layoutY="530.0" text="00">
             <font>
                 <Font size="18.0" />
@@ -120,7 +120,7 @@
                 <Font size="18.0" />
             </font>
         </Button>
-        <ImageView fitHeight="150.0" fitWidth="140.0" layoutX="950.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true">
+        <ImageView fx:id="shelfieP2" fitHeight="150.0" fitWidth="140.0" layoutX="950.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true">
             <image>
                 <Image url="@Images/bookshelf.png" />
             </image>
@@ -142,7 +142,7 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
       </GridPane>
-      <ImageView fitHeight="150.0" fitWidth="140.0" layoutX="950.0" layoutY="215.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="shelfieP3" fitHeight="150.0" fitWidth="140.0" layoutX="950.0" layoutY="215.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@Images/bookshelf.png" />
          </image>
@@ -164,7 +164,7 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
       </GridPane>
-      <ImageView fitHeight="150.0" fitWidth="140.0" layoutX="950.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="shelfieP4" fitHeight="150.0" fitWidth="140.0" layoutX="950.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@Images/bookshelf.png" />
          </image>
@@ -186,8 +186,8 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
       </GridPane>
-      <Label layoutX="993.0" layoutY="358.0" text="Points:" />
-      <Label layoutX="993.0" layoutY="174.0" text="Points:" />
+      <Label fx:id="labelPoints3" layoutX="993.0" layoutY="358.0" text="Points:" />
+      <Label fx:id="labelPoints2" layoutX="993.0" layoutY="174.0" text="Points:" />
       <Label fx:id="Points2" layoutX="1030.0" layoutY="174.0" text="00" />
       <Label fx:id="Points3" layoutX="1030.0" layoutY="358.0" text="00" />
       <Label fx:id="Player2" layoutX="959.0" layoutY="15.0" text="Label" />

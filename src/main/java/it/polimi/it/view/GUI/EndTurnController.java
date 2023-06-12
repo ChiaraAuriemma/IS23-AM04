@@ -62,6 +62,31 @@ public class EndTurnController implements GuiInterface, Initializable {
     @FXML
     TextField chatMessage;
 
+    @FXML
+    ImageView shelfieP2;
+    @FXML
+    ImageView shelfieP3;
+    @FXML
+    ImageView shelfieP4;
+
+    @FXML
+    Label labelPoints2;
+    @FXML
+    Label labelPoints3;
+    @FXML
+    Label labelPoints4;
+
+    @FXML
+    Label Points2;
+    @FXML
+    Label Points3;
+    @FXML
+    Label Points4;
+    @FXML
+    Label Points1;
+
+    private HashMap<Integer, Label> points;
+
 
 
     @Override
@@ -81,16 +106,45 @@ public class EndTurnController implements GuiInterface, Initializable {
             }
         }
 
-        gridOfPlayers = new HashMap<>();
-        nicknames = new HashMap<>();
-        nicknames.put(0,Player1);
-        gridOfPlayers.put(0,Player1Grid);
-        nicknames.put(1,Player2);
-        gridOfPlayers.put(1,Player2Grid);
-        nicknames.put(2,Player3);
-        gridOfPlayers.put(2,Player3Grid);
-        nicknames.put(3,Player4);
-        gridOfPlayers.put(3,Player4Grid);
+        gridOfPlayers = new HashMap<>(4);
+        nicknames = new HashMap<>(4);
+        points = new HashMap<>(4);
+
+        nicknames.put(0, Player1);
+        gridOfPlayers.put(0, Player1Grid);
+        points.put(0,Points1);
+
+        nicknames.put(1, Player2);
+        gridOfPlayers.put(1, Player2Grid);
+        points.put(1,Points2);
+
+        nicknames.put(2, Player3);
+        gridOfPlayers.put(2, Player3Grid);
+        points.put(2,Points3);
+
+        nicknames.put(3, Player4);
+        gridOfPlayers.put(3, Player4Grid);
+        points.put(3,Points4);
+
+
+        int numPlayer = GUIApplication.getPlayers().size();
+        switch (numPlayer){
+            case 2:
+                shelfieP3.setVisible(false);
+                labelPoints3.setVisible(false);
+                Points3.setVisible(false);
+                shelfieP4.setVisible(false);
+                labelPoints4.setVisible(false);
+                Points4.setVisible(false);
+                break;
+            case 3:
+                shelfieP4.setVisible(false);
+                labelPoints4.setVisible(false);
+                Points4.setVisible(false);
+                break;
+            default:
+                break;
+        }
 
         nicknames.forEach((k,v)->{
             if(k<GUIApplication.getPlayers().size() && GUIApplication.getPlayers().get(k) != null)
@@ -98,6 +152,14 @@ public class EndTurnController implements GuiInterface, Initializable {
             else v.setVisible(false);
         });
         Player1.setTextFill(Color.BLUE);
+
+        points.forEach((k,v) -> {
+            if (k < GUIApplication.getPoints().size() && GUIApplication.getPoints().get(k) != null)
+                v.setText(GUIApplication.getPoints().get(k).toString());
+            else {
+                v.setVisible(false);
+            }
+        });
 
         gridOfPlayers.forEach((k,v)->{
             if(k<GUIApplication.getPlayers().size() && GUIApplication.getPlayers().get(k) != null){

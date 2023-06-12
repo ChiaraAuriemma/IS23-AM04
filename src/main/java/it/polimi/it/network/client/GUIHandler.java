@@ -367,7 +367,11 @@ public class GUIHandler implements ViewInterface {
 
     @Override
     public void setPlayersPointsView(String player, int points) {
-
+        int i = 0;
+        while (!GUIApplication.getPlayers().get(i).equals(player)){
+            i++;
+        }
+        GUIApplication.setPoints(i,points);
     }
 
     @Override
