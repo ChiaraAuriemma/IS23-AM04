@@ -171,6 +171,17 @@ public class GUIApplication extends Application {
             stageRef.setResizable(false);
             stageRef.show();
         }
+        if(client.getGameStage().equals(TurnStages.ENDGAME)){
+            FXMLLoader fxmlLoader = new FXMLLoader(GUIApplication.class.getResource("/EndGame.fxml"));
+            Scene scene = new Scene(fxmlLoader.load());
+            setCurrentController(fxmlLoader.getController());
+            currentController.setClient(client);
+            GUIApplication.setCurrentController(currentController);
+            stageRef.setTitle("My Shelfie");
+            stageRef.setScene(scene);
+            stageRef.setResizable(false);
+            stageRef.show();
+        }
 
 
     }

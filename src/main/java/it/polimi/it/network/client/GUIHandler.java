@@ -380,6 +380,19 @@ public class GUIHandler implements ViewInterface {
 
     @Override
     public void setFinalPoints(List<String> users, ArrayList<Integer> points) throws IOException {
+        /*
+        Platform.runLater(new Thread(()-> {
+            try {
+                client.ser
+                GUIApplication.changeScene();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }));
+        Thread.interrupted();
+
+         */
+
         //devo cambiare scena per mostrare l'End GAME
     }
 
