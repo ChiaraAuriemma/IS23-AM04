@@ -111,9 +111,9 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
         </GridPane>
-        <TextArea layoutX="550.0" layoutY="570.0" prefHeight="120.0" prefWidth="584.0" />
-        <TextField layoutX="550.0" layoutY="689.0" prefHeight="30.0" prefWidth="509.0" />
-        <Button layoutX="1059.0" layoutY="679.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="75.0" text="Send">
+        <TextArea fx:id="textMessage" layoutX="550.0" layoutY="570.0" prefHeight="120.0" prefWidth="584.0" />
+        <TextField fx:id="chatMessage" layoutX="550.0" layoutY="689.0" prefHeight="30.0" prefWidth="509.0" />
+        <Button layoutX="1059.0" layoutY="679.0" mnemonicParsing="false" onAction="#sendMessage" prefHeight="30.0" prefWidth="75.0" text="Send">
             <font>
                 <Font size="18.0" />
             </font>
@@ -125,12 +125,12 @@
                       <Image url="@Images/bookshelf.png" />
                   </image>
               </ImageView>
-              <ImageView fx:id="shelfieP3" fitHeight="150.0" fitWidth="140.0" focusTraversable="true" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+              <ImageView fx:id="shelfieP3" fitHeight="150.0" fitWidth="140.0" focusTraversable="true" nodeOrientation="INHERIT" opacity="0.0" pickOnBounds="true" preserveRatio="true">
                   <image>
                       <Image url="@Images/bookshelf.png" />
                   </image>
               </ImageView>
-              <ImageView fx:id="shelfieP4" fitHeight="150.0" fitWidth="140.0" focusTraversable="true" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+              <ImageView fx:id="shelfieP4" fitHeight="150.0" fitWidth="140.0" focusTraversable="true" nodeOrientation="INHERIT" opacity="0.0" pickOnBounds="true" preserveRatio="true">
                   <image>
                       <Image url="@Images/bookshelf.png" />
                   </image>
@@ -195,22 +195,22 @@
       <VBox fx:id="vBoxNicknames" alignment="CENTER" layoutX="923.0" layoutY="15.0" prefHeight="200.0" prefWidth="100.0" spacing="167.0">
          <children>
               <Label fx:id="Player2" layoutX="1010.0" layoutY="174.0" text="Label" />
-              <Label fx:id="Player3" text="Label" />
-              <Label fx:id="Player4" text="Label" />
+              <Label fx:id="Player3" opacity="0.0" text="Label" />
+              <Label fx:id="Player4" opacity="0.0" text="Label" />
          </children>
       </VBox>
       <VBox fx:id="vBoxLabelPoints" alignment="CENTER" layoutX="960.0" layoutY="174.0" prefHeight="200.0" prefWidth="100.0" spacing="167.0">
          <children>
               <Label fx:id="labelPoints2" text="Points:" />
-              <Label fx:id="labelPoints3" text="Points:" />
-              <Label fx:id="labelPoints4" text="Points:" />
+              <Label fx:id="labelPoints3" opacity="0.0" text="Points:" />
+              <Label fx:id="labelPoints4" opacity="0.0" text="Points:" />
          </children>
       </VBox>
       <VBox fx:id="vBoxPoints" alignment="CENTER" layoutX="986.0" layoutY="175.0" prefHeight="200.0" prefWidth="100.0" spacing="167.0">
          <children>
               <Label fx:id="Points2" text="00" />
-              <Label fx:id="Points3" alignment="CENTER" text="00" />
-              <Label fx:id="Points4" text="00" />
+              <Label fx:id="Points3" alignment="CENTER" opacity="0.0" text="00" />
+              <Label fx:id="Points4" opacity="0.0" text="00" />
          </children>
       </VBox>
         <Label layoutX="29.0" layoutY="180.0" text="Number of tiles:">

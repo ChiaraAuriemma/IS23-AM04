@@ -21,6 +21,7 @@ import javafx.stage.Stage;
 
 import java.awt.*;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextArea;
 
 import javafx.scene.paint.Color;
 import javafx.scene.control.Label;
@@ -112,6 +113,11 @@ public class GameViewController implements GuiInterface, Initializable {
     @FXML
     TextField num;
 
+    @FXML
+    TextField chatMessage;
+    @FXML
+    TextArea textMessage;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -173,18 +179,18 @@ public class GameViewController implements GuiInterface, Initializable {
 
         int numPlayer = GUIApplication.getPlayers().size();
         switch (numPlayer){
-            case 2:
-                shelfieP3.setVisible(false);
-                labelPoints3.setVisible(false);
-                Points3.setVisible(false);
-                shelfieP4.setVisible(false);
-                labelPoints4.setVisible(false);
-                Points4.setVisible(false);
-                break;
             case 3:
-                shelfieP4.setVisible(false);
-                labelPoints4.setVisible(false);
-                Points4.setVisible(false);
+                shelfieP3.setOpacity(1);
+                labelPoints3.setOpacity(1);
+                Points3.setOpacity(1);
+                break;
+            case 4:
+                shelfieP3.setOpacity(1);
+                labelPoints3.setOpacity(1);
+                Points3.setOpacity(1);
+                shelfieP4.setOpacity(1);
+                labelPoints4.setOpacity(1);
+                Points4.setOpacity(1);
                 break;
             default:
                 break;
@@ -193,19 +199,17 @@ public class GameViewController implements GuiInterface, Initializable {
 
 
         nicknames.forEach((k, v) -> {
-            if (k < GUIApplication.getPlayers().size() && GUIApplication.getPlayers().get(k) != null)
+            if (k < GUIApplication.getPlayers().size() && GUIApplication.getPlayers().get(k) != null){
                 v.setText(GUIApplication.getPlayers().get(k));
-            else {
-                v.setVisible(false);
+                v.setOpacity(1);
             }
         });
         Player1.setTextFill(Color.BLUE);
 
         points.forEach((k,v) -> {
-            if (k < GUIApplication.getPoints().size() && GUIApplication.getPoints().get(k) != null)
+            if (k < GUIApplication.getPlayers().size() && GUIApplication.getPoints().get(k) != null){
                 v.setText(GUIApplication.getPoints().get(k).toString());
-            else {
-                v.setVisible(false);
+                v.setOpacity(1);
             }
         });
 
@@ -230,12 +234,9 @@ public class GameViewController implements GuiInterface, Initializable {
                             }
                         }
                     }
-                } else {
-                    v.setVisible(false);
                 }
-            } else {
-                v.setVisible(false);
             }
+
         });
 
         /*
@@ -263,6 +264,9 @@ public class GameViewController implements GuiInterface, Initializable {
         }
 
          */
+
+        if(GUIApplication.getCurrentChat() != null && GUIApplication.getCurrentChat().size() > 0)
+            textMessage.setText(GUIApplication.getCurrentChat().get(GUIApplication.getCurrentChat().size()-1));
     }
 
     @Override
@@ -459,6 +463,25 @@ public class GameViewController implements GuiInterface, Initializable {
 
         return null;
 
+    }
+
+    public void sendMessage(ActionEvent actionEvent) throws IOException{
+        if(chatMessage.getText().length()!=0){
+            if(chatMessage.getText().contains(">>")){
+                String[] splittedMessage = chatMessage.getText().split("<<");
+                if(splittedMessage.length == 1){
+                    GUIApplication.showAlert(Alert.AlertType.WARNING, "Empty message error", "You didn't write anything");
+                }else{
+                    String message = splittedMessage[1];
+                    String receiver = splittedMessage[0];
+                    client.sendChatPrivateMessage(message, receiver);
+                }
+            }else{
+                client.sendChatMessage(chatMessage.getText());
+            }
+        }else{
+            GUIApplication.showAlert(Alert.AlertType.WARNING, "Empty message error", "You didn't write anything");
+        }
     }
 
 }

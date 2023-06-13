@@ -16,7 +16,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.scene.control.TextArea;
 
+
+import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -84,6 +87,8 @@ public class EndTurnController implements GuiInterface, Initializable {
     Label Points4;
     @FXML
     Label Points1;
+    @FXML
+    TextArea textMessage;
 
     private HashMap<Integer, Label> points;
 
@@ -129,63 +134,66 @@ public class EndTurnController implements GuiInterface, Initializable {
 
         int numPlayer = GUIApplication.getPlayers().size();
         switch (numPlayer){
-            case 2:
-                shelfieP3.setVisible(false);
-                labelPoints3.setVisible(false);
-                Points3.setVisible(false);
-                shelfieP4.setVisible(false);
-                labelPoints4.setVisible(false);
-                Points4.setVisible(false);
-                break;
             case 3:
-                shelfieP4.setVisible(false);
-                labelPoints4.setVisible(false);
-                Points4.setVisible(false);
+                shelfieP3.setOpacity(1);
+                labelPoints3.setOpacity(1);
+                Points3.setOpacity(1);
+                break;
+            case 4:
+                shelfieP3.setOpacity(1);
+                labelPoints3.setOpacity(1);
+                Points3.setOpacity(1);
+                shelfieP4.setOpacity(1);
+                labelPoints4.setOpacity(1);
+                Points4.setOpacity(1);
                 break;
             default:
                 break;
         }
 
-        nicknames.forEach((k,v)->{
-            if(k<GUIApplication.getPlayers().size() && GUIApplication.getPlayers().get(k) != null)
+        nicknames.forEach((k, v) -> {
+            if (k < GUIApplication.getPlayers().size() && GUIApplication.getPlayers().get(k) != null){
                 v.setText(GUIApplication.getPlayers().get(k));
-            else v.setVisible(false);
+                v.setOpacity(1);
+            }
         });
         Player1.setTextFill(Color.BLUE);
 
         points.forEach((k,v) -> {
-            if (k < GUIApplication.getPoints().size() && GUIApplication.getPoints().get(k) != null)
+            if (k < GUIApplication.getPlayers().size() && GUIApplication.getPoints().get(k) != null){
                 v.setText(GUIApplication.getPoints().get(k).toString());
-            else {
-                v.setVisible(false);
+                v.setOpacity(1);
             }
         });
 
-        gridOfPlayers.forEach((k,v)->{
-            if(k<GUIApplication.getPlayers().size() && GUIApplication.getPlayers().get(k) != null){
+        gridOfPlayers.forEach((k, v) -> {
+            if (k < GUIApplication.getPlayers().size() && GUIApplication.getPlayers().get(k) != null) {
                 Image[][] shelfImage1;
-                if(GUIApplication.getShelfies() != null && GUIApplication.getShelfies().get(GUIApplication.getPlayers().get(k)) != null){
+                if (GUIApplication.getShelfies() != null && GUIApplication.getShelfies().get(GUIApplication.getPlayers().get(k)) != null) {
                     shelfImage1 = GUIApplication.getShelfies().get(GUIApplication.getPlayers().get(k));
-                    for(int i=0; i < 6 ;i++){
-                        for(int j=0; j<5;j++){
-                            if(shelfImage1[i][j] != null){
+                    for (int i = 0; i < 6; i++) {
+                        for (int j = 0; j < 5; j++) {
+                            if (shelfImage1[i][j] != null) {
                                 ImageView imageView = new ImageView();
-                                if(k == 0){
+                                if (k == 0) {
                                     imageView.setFitWidth(43);
                                     imageView.setFitHeight(40);
-                                }else {
+                                } else {
                                     imageView.setFitHeight(20);
                                     imageView.setFitWidth(19);
                                 }
                                 imageView.setImage(shelfImage1[i][j]);
-                                v.add(imageView,j,5-i);
+                                v.add(imageView, j, 5 - i);
                             }
                         }
                     }
-                }else v.setVisible(false);
-            }else v.setVisible(false);
+                }
+            }
+
         });
 
+        if(GUIApplication.getCurrentChat() != null && GUIApplication.getCurrentChat().size() > 0)
+            textMessage.setText(GUIApplication.getCurrentChat().get(GUIApplication.getCurrentChat().size()-1));
 
     }
     public void GoToPersonalGoalCard(ActionEvent actionEvent) throws IOException {

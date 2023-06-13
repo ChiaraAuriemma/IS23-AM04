@@ -182,7 +182,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
     }
 
     @Override
-    public void setFinalPoints(List<String> usernames, ArrayList<Integer> points) {
+    public void setFinalPoints(List<String> usernames, ArrayList<Integer> points) throws IOException {
         view.setFinalPoints(usernames, points);
     }
 
@@ -205,7 +205,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
     }
 
     @Override
-    public void updateChat(List<String> currentChat) {
+    public void updateChat(List<String> currentChat) throws IOException {
         view.updateChat(currentChat);
         if(stage.getStage() == TurnStages.NOTURN){
             view.update();

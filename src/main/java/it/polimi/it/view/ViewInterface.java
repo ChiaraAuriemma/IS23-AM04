@@ -45,7 +45,7 @@ public interface ViewInterface {
 
     //setter punti
     public void setPlayersPointsView(String player, int points);
-    public void setFinalPoints(List<String> users, ArrayList<Integer> points);
+    public void setFinalPoints(List<String> users, ArrayList<Integer> points) throws IOException;
 
 
 
@@ -72,7 +72,7 @@ public interface ViewInterface {
 
 
 
-    public void updateChat(List<String> currentChat);
+    public void updateChat(List<String> currentChat) throws IOException;
 
 
     //setter per il nickname del giocatore che ha aperto l'app

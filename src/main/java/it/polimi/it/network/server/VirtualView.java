@@ -7,6 +7,7 @@ import it.polimi.it.model.Tiles.Tile;
 import it.polimi.it.model.User;
 import it.polimi.it.network.client.RemoteInterface;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -257,6 +258,8 @@ public class VirtualView implements Serializable {
                 } catch (RemoteException e) {
                     System.out.println(e.getMessage() + " user: " + receiver.getNickname() + "/n");
                     disconnect_user(receiver.getNickname());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
                 }
             }
         }
@@ -310,6 +313,8 @@ public class VirtualView implements Serializable {
             }catch(RemoteException e){
                 System.out.println(e.getMessage() + " user: " + receiver.getNickname() +"/n");
                 disconnect_user(receiver.getNickname());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
         }
 
@@ -323,6 +328,8 @@ public class VirtualView implements Serializable {
                 }catch(RemoteException e){
                     System.out.println(e.getMessage() + " user: " + u.getNickname() +"/n");
                     disconnect_user(u.getNickname());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
                 }
 
             }

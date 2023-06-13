@@ -193,7 +193,11 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
                     break;
                 case FINALPOINTS:
                     FinalPointsMessage finalPointsMessage = (FinalPointsMessage) response.getPayload();
-                    view.setFinalPoints(finalPointsMessage.getUsernames(),finalPointsMessage.getPoints());
+                    try {
+                        view.setFinalPoints(finalPointsMessage.getUsernames(),finalPointsMessage.getPoints());
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
 
                     //view : passo la lista degli utenti e la lista dei loro punteggi
                     break;
@@ -213,7 +217,11 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
 
                 case CHATUPDATE:
                     ChatUpdate chatUpdate = (ChatUpdate) response.getPayload();
-                    view.updateChat(chatUpdate.getChatUpdate());
+                    try {
+                        view.updateChat(chatUpdate.getChatUpdate());
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                     if(stage.getStage() == TurnStages.NOTURN){
                         view.update();
                     }

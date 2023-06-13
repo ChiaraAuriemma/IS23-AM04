@@ -7,8 +7,12 @@ import it.polimi.it.model.Tiles.Tile;
 import it.polimi.it.view.GUI.*;
 import it.polimi.it.view.ViewInterface;
 import javafx.application.Platform;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
@@ -375,8 +379,8 @@ public class GUIHandler implements ViewInterface {
     }
 
     @Override
-    public void setFinalPoints(List<String> users, ArrayList<Integer> points) {
-
+    public void setFinalPoints(List<String> users, ArrayList<Integer> points) throws IOException {
+        //devo cambiare scena per mostrare l'End GAME
     }
 
     @Override
@@ -420,8 +424,16 @@ public class GUIHandler implements ViewInterface {
     }
 
     @Override
-    public void updateChat(List<String> currentChat) {
-
+    public void updateChat(List<String> currentChat) throws IOException {
+        Platform.runLater(new Thread(()-> {
+            try {
+                GUIApplication.setCurrentChat((ArrayList<String>) currentChat);
+                GUIApplication.changeScene();
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+        }));
+        Thread.interrupted();
     }
 
     @Override

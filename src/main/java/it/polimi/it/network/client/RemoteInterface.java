@@ -2,6 +2,8 @@ package it.polimi.it.network.client;
 
 import it.polimi.it.model.Card.PersonalGoalCards.PersonalGoalCard;
 import it.polimi.it.model.Tiles.Tile;
+
+import java.io.IOException;
 import java.io.Serializable;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
@@ -33,7 +35,7 @@ public interface RemoteInterface extends Remote, Serializable {
      * @param points list.
      * @throws RemoteException .
      */
-    void setFinalPoints(List<String> usernames, ArrayList<Integer> points) throws RemoteException;
+    void setFinalPoints(List<String> usernames, ArrayList<Integer> points) throws IOException;
 
 
     /**
@@ -64,7 +66,7 @@ public interface RemoteInterface extends Remote, Serializable {
      * @param currentChat is the list of messages.
      * @throws RemoteException .
      */
-    void updateChat(List<String> currentChat) throws RemoteException;
+    void updateChat(List<String> currentChat) throws IOException;
 
 
     /**

@@ -73,19 +73,19 @@
                 <Font size="18.0" />
             </font>
         </Label>
-        <Label fx:id="Player4" layoutX="959.0" layoutY="382.0" text="Label" />
+        <Label fx:id="Player4" layoutX="959.0" layoutY="382.0" opacity="0.0" text="Label" />
         <Label layoutX="665.0" layoutY="530.0" text="Points:">
             <font>
                 <Font size="18.0" />
             </font>
         </Label>
-        <Label fx:id="labelPoints4" layoutX="993.0" layoutY="543.0" text="Points:" />
+        <Label fx:id="labelPoints4" layoutX="993.0" layoutY="543.0" opacity="0.0" text="Points:" />
         <Label fx:id="Points1" layoutX="725.0" layoutY="530.0" text="00">
             <font>
                 <Font size="18.0" />
             </font>
         </Label>
-        <Label fx:id="Points4" layoutX="1030.0" layoutY="543.0" text="00" />
+        <Label fx:id="Points4" layoutX="1030.0" layoutY="543.0" opacity="0.0" text="00" />
         <ImageView fitHeight="320.0" fitWidth="310.0" layoutX="550.0" layoutY="215.0" pickOnBounds="true" preserveRatio="true">
             <image>
                 <Image url="@Images/bookshelf.png" />
@@ -113,7 +113,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
         </GridPane>
-        <TextArea layoutX="550.0" layoutY="570.0" prefHeight="120.0" prefWidth="584.0" />
+        <TextArea fx:id="textMessage" layoutX="550.0" layoutY="570.0" prefHeight="120.0" prefWidth="584.0" />
         <TextField fx:id="chatMessage" layoutX="550.0" layoutY="689.0" prefHeight="30.0" prefWidth="509.0" />
         <Button fx:id="sendMessageButton" layoutX="1059.0" layoutY="679.0" mnemonicParsing="false" onAction="#sendMessage" prefHeight="30.0" prefWidth="75.0" text="Send">
             <font>
@@ -142,7 +142,7 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
       </GridPane>
-      <ImageView fx:id="shelfieP3" fitHeight="150.0" fitWidth="140.0" layoutX="950.0" layoutY="215.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="shelfieP3" fitHeight="150.0" fitWidth="140.0" layoutX="950.0" layoutY="215.0" opacity="0.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@Images/bookshelf.png" />
          </image>
@@ -164,7 +164,7 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
       </GridPane>
-      <ImageView fx:id="shelfieP4" fitHeight="150.0" fitWidth="140.0" layoutX="950.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="shelfieP4" fitHeight="150.0" fitWidth="140.0" layoutX="950.0" layoutY="400.0" opacity="0.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@Images/bookshelf.png" />
          </image>
@@ -186,11 +186,11 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
       </GridPane>
-      <Label fx:id="labelPoints3" layoutX="993.0" layoutY="358.0" text="Points:" />
+      <Label fx:id="labelPoints3" layoutX="993.0" layoutY="358.0" opacity="0.0" text="Points:" />
       <Label fx:id="labelPoints2" layoutX="993.0" layoutY="174.0" text="Points:" />
       <Label fx:id="Points2" layoutX="1030.0" layoutY="174.0" text="00" />
-      <Label fx:id="Points3" layoutX="1030.0" layoutY="358.0" text="00" />
+      <Label fx:id="Points3" layoutX="1030.0" layoutY="358.0" opacity="0.0" text="00" />
       <Label fx:id="Player2" layoutX="959.0" layoutY="15.0" text="Label" />
-      <Label fx:id="Player3" layoutX="959.0" layoutY="197.0" text="Label" />
+      <Label fx:id="Player3" layoutX="959.0" layoutY="197.0" opacity="0.0" text="Label" />
     </children>
 </AnchorPane>
