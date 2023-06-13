@@ -27,6 +27,12 @@ public enum TurnStages implements Serializable {
     CREATEorJOIN,
 
 
+    /*
+    * User's latest game ended, the player has now to choose if he wants to play again. 
+    */
+    ENDGAME, 
+
+    
     /**
      * User must choose the number of tiles he wants to take from the board.
      */
