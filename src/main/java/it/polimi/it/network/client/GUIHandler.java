@@ -534,7 +534,17 @@ public class GUIHandler implements ViewInterface {
 
     @Override
     public void recover(int gameID, Tile[][] matrix, ArrayList<Tile[][]> shelfies, int id1, int id2, PersonalGoalCard personalGoalCard, ArrayList<Integer> points, List<String> playerList) {
-
+        setOrderView(new ArrayList<>(playerList));
+        setBoardView(matrix);
+        setCommon1View(id1);
+        setCommon2View(id2);
+        //this.gameID=gameID;
+        setPlayersPersonalCardView(personalGoalCard);
+        for(int i=0; i<playerList.size(); i++){
+            setPlayersShelfiesView(playerList.get(i), shelfies.get(i));
+            setPlayersPointsView(playerList.get(i), points.get(i));
+        }
+        update();
     }
 
 
