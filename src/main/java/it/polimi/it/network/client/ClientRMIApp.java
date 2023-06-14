@@ -6,8 +6,6 @@ import it.polimi.it.model.Tiles.Tile;
 import it.polimi.it.network.server.ServerInterface;
 import it.polimi.it.view.Cli;
 import it.polimi.it.view.ViewInterface;
-
-
 import java.io.IOException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -23,19 +21,27 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
     private String ip;
     private Registry registry;
     private ServerInterface sr;
-
     private String nickname;
     ViewInterface view;
     private List<Tile> lastChosen = new ArrayList<>();
-
     private GameStage stage;
 
 
+    /**
+     * Constructor method of the ClientRMIApp class
+     * @param port and
+     * @param ip are the port and ip address necessary for the RMI communication protocol.
+     */
     public ClientRMIApp(int port, String ip) throws RemoteException {
         this.port = port;
         this.ip = ip;
     }
 
+
+    /**
+     * Setter method: given a
+     * @param viewChoice string, instances either a CLI or a GUI
+     */
     public void setView(String viewChoice) throws RemoteException{
        if(viewChoice.equalsIgnoreCase("CLI")){
            this.view = new Cli();
@@ -45,6 +51,12 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
         view.askNickname();
     }
 
+
+    /**
+     * Getter method
+     * @return the view instance
+     * @throws RemoteException .
+     */
     public ViewInterface getView() throws RemoteException{
         return this.view;
     }
@@ -83,25 +95,25 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
                 view.joinOrCreate(this.nickname);
             }
             else view.update();
-
-
-            //view : passo alla schermata con create e join game
         } catch (ExistingNicknameException | EmptyNicknameException | InvalidIDException e) {
-            //view : notifico la view che deve riproporre l'inserimento del nickname con l'errore in rosso
-            //view.askNicknameAgain(e.getMessage());
             view.printError(e.getMessage());
         }
-
     }
 
+
+    /**
+     * Method that prints an error message
+     * @param e that contains an error message.
+     * @throws RemoteException .
+     */
     @Override
     public void printError(String e)  throws RemoteException{
         view.printError(e);
     }
 
+
     /**
      * Communicates the server the number of people that the user wants in his new game
-     *
      * @param playerNumber .
      * @throws RemoteException .
      */
@@ -112,8 +124,6 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
             stage.setStage(TurnStages.NOTHING);
             view.setGameID(gameid);
         } catch (WrongPlayerException e) {
-            //view : notifico alla view che il numero di giocatori inseriti non è corretto
-            //view.askNumPlayerAgain();
             view.printError(e.getMessage());
         }
     }
@@ -121,7 +131,6 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
 
     /**
      * Method that communicates to the server the ID of the game that the user wants to join
-     *
      * @param gameID .
      * @throws RemoteException .
      */
@@ -132,72 +141,108 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
             if(stage.getStage().equals(TurnStages.CREATEorJOIN)){
                 stage.setStage(TurnStages.NOTHING);
             }
-
             view.setGameID(gameid);
         } catch (InvalidIDException | WrongPlayerException | IllegalValueException | IOException e) {
-            //view.askIDAgain();
             view.printError(e.getMessage());
         }
     }
 
+
+    /**
+     * Communicates to the server the
+     * @param numOfTiles number of tiles that the user wants to take from the LivingRoom.
+     * @throws RemoteException .
+     */
     @Override
     public void tilesNumMessage(int numOfTiles) throws RemoteException {
-        try {   //comunico al server il numero scelto
+        try {
             sr.tilesNumMessage(this.nickname, numOfTiles);
             stage.setStage(TurnStages.CHOOSETILES);
         } catch (IllegalValueException | WrongPlayerException | InvalidIDException | IOException e) {
-            //view : notifico alla view che il numero di tiles indicato non è valido
-            //view.askNumTilesAgain();
             view.printError(e.getMessage());
         }
     }
 
+
+    /**
+     * Communicates to the server the
+     * @param choosenTiles list of tiles that the user wants to take from the LivingRoom.
+     * @throws RemoteException .
+     */
     @Override
     public void selectedTiles(List<Tile> choosenTiles) throws IOException {
-        //mando le tiles a RMIImplementation
         try {
             sr.selectedTiles(this.nickname, choosenTiles);
             stage.setStage(TurnStages.CHOOSECOLUMN);
         } catch (WrongTileException | WrongPlayerException | WrongListException | IllegalValueException | InvalidIDException | IOException e) {
-            //view.askTilesAgain();
             view.printError(e.getMessage());
         }
     }
 
+
+    /**
+     * Communicates to the server the
+     * @param numOfColum column in which the user wants to put the tiles that he took from the LivingRoom.
+     * @throws RemoteException .
+     */
     @Override
     public void chooseColumn(int numOfColum) throws RemoteException {
         try {
             sr.chooseColumn(this.nickname, numOfColum);
             System.out.println("End of your turn\n");
         } catch (InvalidIDException | IllegalValueException | IOException e) {
-            //view.askColumnAgain();
             view.printError(e.getMessage());
         }
-
     }
 
+
+    /**
+     * Setter method for the EndToken
+     * @param username is the player who won the endToken.
+     */
     @Override
     public void setEndToken(String username) {
         view.setEndToken(username);
     }
 
+
+    /**
+     * Setter method for the match's final points in order to print a leaderboard given
+     * @param usernames list of the players' usernames and a
+     * @param points list of the players' scored points.
+     * @throws IOException .
+     */
     @Override
     public void setFinalPoints(List<String> usernames, ArrayList<Integer> points) throws IOException {
         view.setFinalPoints(usernames, points);
-
         if(view instanceof Cli){
             setStageToEndGame();
         }
     }
 
+
+    /**
+     * Method that restores all the game informations after a reconnections.
+     * @param gameID ,
+     * @param matrix is the LivingRoom,
+     * @param shelfies is a list of the players' shelves,
+     * @param id1 is the ID of the first CommonGoalCard,
+     * @param id2 is the ID of the second CommonGoalCard,
+     * @param personalGoalCard is the player's PersonalGoalCard,
+     * @param points a list of the players' current points,
+     * @param playerList is the list of the players' nicknames.
+     * @throws RemoteException .
+     */
     @Override
     public void recover(int gameID, Tile[][] matrix, ArrayList<Tile[][]> shelfies, int id1, int id2, PersonalGoalCard personalGoalCard, ArrayList<Integer> points, List<String> playerList) throws RemoteException {
-
         view.recover(gameID, matrix, shelfies, id1, id2, personalGoalCard, points, playerList);
         stage.setStage(TurnStages.NOTURN);
     }
 
 
+    /**
+     * Method that forces the view to update.
+     */
     @Override
     public void updateView() {
         view.update();

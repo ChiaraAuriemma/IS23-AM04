@@ -17,20 +17,53 @@ public interface ClientInterface extends Serializable {
      */
     void login(String userName) throws RemoteException, IOException;
 
+
+    /**
+     * Communicates the server the number of people that the user wants in his new game
+     * @param playerNumber .
+     * @throws RemoteException .
+     */
     void createGame(int playerNumber) throws RemoteException;
 
+
+    /**
+     * Method that communicates to the server the ID of the game that the user wants to join
+     * @param gameId .
+     * @throws RemoteException .
+     */
     void joinGame(int gameId) throws RemoteException;
 
+
+    /**
+     * Communicates to the server the
+     * @param numOfTiles number of tiles that the user wants to take from the LivingRoom.
+     * @throws RemoteException .
+     */
     void tilesNumMessage(int numOfTiles) throws RemoteException;
 
-    ViewInterface getView() throws RemoteException;
 
+    /**
+     * Communicates to the server the
+     * @param choices list of tiles that the user wants to take from the LivingRoom.
+     * @throws RemoteException .
+     */
     void selectedTiles(List<Tile> choices) throws IOException;
 
+
+    /**
+     * Communicates to the server the
+     * @param column column in which the user wants to put the tiles that he took from the LivingRoom.
+     * @throws RemoteException .
+     */
     void chooseColumn(int column) throws RemoteException;
 
     void sendChatMessage(String chatMessage) throws RemoteException;
 
+
+    /**
+     * Setter method: given a
+     * @param viewChoice string, instances either a CLI or a GUI
+     */
     void setView(String viewChoice) throws RemoteException;
 
     void setGameStage(GameStage gameStage) throws RemoteException;
@@ -40,4 +73,11 @@ public interface ClientInterface extends Serializable {
 
     void sendChatPrivateMessage(String chatMessage, String receiver) throws RemoteException;
 
+
+    /**
+     * Getter method
+     * @return the view instance
+     * @throws RemoteException .
+     */
+    ViewInterface getView() throws RemoteException;
 }
