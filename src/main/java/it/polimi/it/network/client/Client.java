@@ -12,6 +12,11 @@ import java.io.Serializable;
 import java.rmi.NotBoundException;
 
 
+/**
+ * Main class for the Client,
+ * Instances either ClientTCP or ClientRMIApp
+ * Instances either GUI classes or CLI.
+ */
 public class Client implements Serializable {
 
     private static final long serialVersionUID = 749383786771428581L;
@@ -58,6 +63,5 @@ public class Client implements Serializable {
             GUIApplication.setGuiHandler(guiHandler);
             GUIApplication.main(args);
         }
-
     }
 }
