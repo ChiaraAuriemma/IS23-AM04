@@ -440,7 +440,13 @@ public class GUIHandler implements ViewInterface {
     public void updateChat(List<String> currentChat) throws IOException {
         Platform.runLater(new Thread(()-> {
             try {
-                GUIApplication.setCurrentChat((ArrayList<String>) currentChat);
+                StringBuilder stringBuilder = new StringBuilder();
+                for (String str : currentChat) {
+                    stringBuilder.append(str).append("\n");
+                }
+                String joinedString = stringBuilder.toString().trim();
+                //String joinedString = String.join("\n", currentChat);
+                GUIApplication.setCurrentChat(joinedString);
                 GUIApplication.changeScene();
             } catch (IOException e) {
                 System.out.println(e.getMessage());

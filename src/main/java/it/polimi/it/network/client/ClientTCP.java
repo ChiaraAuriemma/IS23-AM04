@@ -16,6 +16,7 @@ import it.polimi.it.view.ViewInterface;
 import java.io.*;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.rmi.RemoteException;
 import java.util.List;
 
 public class ClientTCP implements ClientInterface, Serializable, Runnable {
@@ -347,6 +348,11 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
         Message request = new Message(MessageType.PRIVATECHAT, sendPrivateChatMessage);
         send(request);
 
+    }
+
+    @Override
+    public String getNickname(){
+        return this.username;
     }
 
 }

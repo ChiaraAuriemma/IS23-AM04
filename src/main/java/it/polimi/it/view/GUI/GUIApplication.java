@@ -40,7 +40,7 @@ public class GUIApplication extends Application {
     private static ArrayList<String> players = new ArrayList<>(4);
     private static HashMap<String, Image[][]> shelfies = new HashMap<>();
 
-    private static ArrayList<String> currentChat = new ArrayList<>(0);
+    private static String currentChat;
 
 
 
@@ -194,11 +194,11 @@ public class GUIApplication extends Application {
         alert.showAndWait();
     }
 
-    public static ArrayList<String> getCurrentChat() {
+    public static String getCurrentChat() {
         return currentChat;
     }
 
-    public static void setCurrentChat(ArrayList<String> currentChat) {
+    public static void setCurrentChat(String currentChat) {
         GUIApplication.currentChat = currentChat;
     }
 

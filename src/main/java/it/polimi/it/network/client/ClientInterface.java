@@ -36,8 +36,10 @@ public interface ClientInterface extends Serializable {
     void setGameStage(GameStage gameStage) throws RemoteException;
     TurnStages getGameStage()throws RemoteException;
 
-    void setStageToEndGame();
+    void setStageToEndGame() throws RemoteException;
 
     void sendChatPrivateMessage(String chatMessage, String receiver) throws RemoteException;
+
+    String getNickname()throws RemoteException;
 
 }

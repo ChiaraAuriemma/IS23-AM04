@@ -192,8 +192,8 @@ public class EndTurnController implements GuiInterface, Initializable {
 
         });
 
-        if(GUIApplication.getCurrentChat() != null && GUIApplication.getCurrentChat().size() > 0)
-            textMessage.setText(GUIApplication.getCurrentChat().get(GUIApplication.getCurrentChat().size()-1));
+        if(GUIApplication.getCurrentChat() != null)
+            textMessage.setText(GUIApplication.getCurrentChat());
 
     }
     public void GoToPersonalGoalCard(ActionEvent actionEvent) throws IOException {
@@ -222,22 +222,24 @@ public class EndTurnController implements GuiInterface, Initializable {
 
     public void sendMessage(ActionEvent actionEvent) throws IOException{
         if(chatMessage.getText().length()!=0){
-            if(chatMessage.getText().contains(">>")){
+            String sender = client.getNickname().trim();
+            if(chatMessage.getText().contains("<<")){
                 String[] splittedMessage = chatMessage.getText().split("<<");
                 if(splittedMessage.length == 1){
                     GUIApplication.showAlert(Alert.AlertType.WARNING, "Empty message error", "You didn't write anything");
                 }else{
-                    String message = splittedMessage[1];
+                    String message = sender + ": " + splittedMessage[1];
                     String receiver = splittedMessage[0];
                     client.sendChatPrivateMessage(message, receiver);
                 }
             }else{
-                client.sendChatMessage(chatMessage.getText());
+                client.sendChatMessage(sender + ": " + chatMessage.getText());
             }
         }else{
             GUIApplication.showAlert(Alert.AlertType.WARNING, "Empty message error", "You didn't write anything");
         }
     }
+
 
     public void setClient(ClientInterface clientRef){
         client = clientRef;
