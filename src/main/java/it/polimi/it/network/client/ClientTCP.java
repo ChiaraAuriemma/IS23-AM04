@@ -195,6 +195,10 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
                     FinalPointsMessage finalPointsMessage = (FinalPointsMessage) response.getPayload();
                     try {
                         view.setFinalPoints(finalPointsMessage.getUsernames(),finalPointsMessage.getPoints());
+
+                        if(view instanceof View){
+                            setStageToEndGame();
+                        }
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
@@ -325,6 +329,11 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
     public void setGameStage(GameStage gameStage) {
         this.stage = gameStage;
         stage.setStage(TurnStages.LOGIN);
+    }
+
+    @Override
+    public void setStageToEndGame() {
+        stage.setStage(TurnStages.ENDGAME);
     }
 
     @Override

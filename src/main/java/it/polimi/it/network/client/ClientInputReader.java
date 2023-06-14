@@ -100,7 +100,7 @@ public class ClientInputReader implements Runnable, Serializable{
                     } break;
 
                 case "create_game":
-                    if (stage.getStage() == TurnStages.CREATEorJOIN) {
+                    if (stage.getStage() == TurnStages.CREATEorJOIN || stage.getStage() == TurnStages.ENDGAME) {
                         if(!action.matches("-?\\d+")){
                             System.out.println("Invalid number");
                             return;
@@ -117,7 +117,7 @@ public class ClientInputReader implements Runnable, Serializable{
                         System.out.println("Invalid number");
                         return;
                     }
-                    if (stage.getStage() == TurnStages.CREATEorJOIN) {
+                    if (stage.getStage() == TurnStages.CREATEorJOIN || stage.getStage() == TurnStages.ENDGAME) {
                         int gameID = Integer.parseInt(action);
                         client.joinGame(gameID);
                     } else {

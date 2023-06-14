@@ -184,6 +184,10 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
     @Override
     public void setFinalPoints(List<String> usernames, ArrayList<Integer> points) throws IOException {
         view.setFinalPoints(usernames, points);
+
+        if(view instanceof View){
+            setStageToEndGame();
+        }
     }
 
     @Override
@@ -287,6 +291,11 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
     @Override
     public TurnStages getGameStage() {
         return stage.getStage();
+    }
+
+    @Override
+    public void setStageToEndGame() {
+        stage.setStage(TurnStages.ENDGAME);
     }
 
     public void ping() throws RemoteException{

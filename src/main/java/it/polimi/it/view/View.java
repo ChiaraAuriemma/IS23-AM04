@@ -1,16 +1,11 @@
 package it.polimi.it.view;
 
-import it.polimi.it.model.Card.CommonGoalCards.CommonGoalCard;
 import it.polimi.it.model.Card.PersonalGoalCards.PersonalGoalCard;
-import it.polimi.it.model.Game;
-import it.polimi.it.model.Shelfie;
 import it.polimi.it.model.Tiles.PossibleColors;
 import it.polimi.it.model.Tiles.Tile;
 import it.polimi.it.model.User;
 
-import java.io.IOException;
 import java.io.Serializable;
-import java.rmi.RemoteException;
 import java.util.*;
 
 import static java.lang.System.out;
@@ -27,9 +22,9 @@ public class View implements ViewInterface, Serializable {
     private String common2;
     private String common2SecondPart;
 
-    public final String firstLine = "╔════════════════════════════════════════════════════════════════╗";//1
-    private final String blankLine = "║                                                                ║"; //2, 3, 5, 20, 54
-    private final String lastLine = "╚════════════════════════════════════════════════════════════════╝";//55
+    public final String firstLine = "╔════════════════════════════════════════════════════════════════╗";
+    private final String blankLine = "║                                                                ║";
+    private final String lastLine = "╚════════════════════════════════════════════════════════════════╝";
     private final String border = "║";
     private final String chatBorder = "│";
 
@@ -833,5 +828,6 @@ public class View implements ViewInterface, Serializable {
         out.println(bl);
         out.println(bl);
         out.println(down);
+
     }
 }

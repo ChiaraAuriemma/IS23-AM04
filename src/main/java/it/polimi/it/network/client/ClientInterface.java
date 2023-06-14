@@ -15,19 +15,19 @@ public interface ClientInterface extends Serializable {
      * @throws RemoteException
      * @throws IOException
      */
-    public void login(String userName) throws RemoteException, IOException;
+    void login(String userName) throws RemoteException, IOException;
 
-    public void createGame(int playerNumber) throws RemoteException;
+    void createGame(int playerNumber) throws RemoteException;
 
-    public void joinGame(int gameId) throws RemoteException;
+    void joinGame(int gameId) throws RemoteException;
 
-    public void tilesNumMessage(int numOfTiles) throws RemoteException;
+    void tilesNumMessage(int numOfTiles) throws RemoteException;
 
-    public ViewInterface getView() throws RemoteException;
+    ViewInterface getView() throws RemoteException;
 
-    public void selectedTiles(List<Tile> choices) throws IOException;
+    void selectedTiles(List<Tile> choices) throws IOException;
 
-    public void chooseColumn(int column) throws RemoteException;
+    void chooseColumn(int column) throws RemoteException;
 
     void sendChatMessage(String chatMessage) throws RemoteException;
 
@@ -35,6 +35,8 @@ public interface ClientInterface extends Serializable {
 
     void setGameStage(GameStage gameStage) throws RemoteException;
     TurnStages getGameStage()throws RemoteException;
+
+    void setStageToEndGame();
 
     void sendChatPrivateMessage(String chatMessage, String receiver) throws RemoteException;
 
