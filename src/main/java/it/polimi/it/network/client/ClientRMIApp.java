@@ -239,69 +239,124 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
     @Override
     public void setNewPoints(String username, Integer points, List<Integer> commonToken1, List<Integer> commonToken2) {
         view.setPlayersPointsView(username, points);
-
-        //chiamo i metodi della view per settare i commontoken
     }
 
+
+    /**
+     * Method that notifies the start of a turn.
+     * @param maxValueOfTiles is the maximum number of tiles that the player might choose to take from the LivingRoom.
+     */
     @Override
     public void notifyTurnStart(int maxValueOfTiles){
         view.NotifyTurnStart(maxValueOfTiles,this.nickname);
         stage.setStage(TurnStages.TILESNUM);
     }
 
+
+    /**
+     * Method invoked by the server, asks the user to choose a column of his shelf.
+     * @param choosableColumns is a boolean array,
+     *                         the true indexes represent the columns where the player may put the tiles.
+     */
     @Override
     public void askColumn(boolean[] choosableColumns) {
         view.update();
         view.setPossibleColumns(choosableColumns);
     }
 
+
+    /**
+     * Setter method for:
+     * @param order players' order.
+     */
     @Override
     public void setStartOrder(ArrayList<String> order) {
         view.setOrderView(order);
         stage.setStage(TurnStages.NOTURN);
     }
 
+
+    /**
+     * Setter method for the following parameters:
+     * @param id1 CommonGoalCard's ID 1,
+     * @param id2 CommonGoalCard's ID 2,
+     * @param commonToken1 CommonGoalCard's token 1,
+     * @param commonToken2 CommonGoalCard's token 2,
+     */
     @Override
     public void setNewCommon(int id1, int id2, List<Integer> commonToken1, List<Integer> commonToken2) {
         view.setCommon1View(id1);
         view.setCommon2View(id2);
-
-        //chiamo i metodi della view per settare i commontoken
     }
 
 
+    /**
+     * Setter method.
+     * @param card PersonalGoalCard
+     */
     @Override
     public void setNewPersonal(PersonalGoalCard card) {
         view.setPlayersPersonalCardView(card);
     }
 
 
+    /**
+     * Method that sends from the server to the client the following parameters:
+     * @param choosableTilesList is a list of groups of tiles
+     *                           which are all the possible groups of tiles that the player might choose.
+     * @param num is the exact number of tiles that the player has to take.
+     */
     @Override
     public void takeableTiles(List<List<Tile>> choosableTilesList, int num) {
-        //view : faccio vedere illuminate le tiles nella lista
         view.update();
         view.takeableTiles(choosableTilesList, num);
     }
 
+
+    /**
+     * Setter method
+     * @param gameStage is the new GameStage instance, also sets the stage to LOGIN
+     * @throws RemoteException .
+     */
     public void setGameStage(GameStage gameStage) throws RemoteException{
         this.stage = gameStage;
         stage.setStage(TurnStages.LOGIN);
     }
 
+
+    /**
+     * Getter method
+     * @return the current GameStage.
+     */
     @Override
     public TurnStages getGameStage() {
         return stage.getStage();
     }
 
+
+    /**
+     * Setter method for the stage to ENDGAME.
+     */
     @Override
     public void setStageToEndGame() {
         stage.setStage(TurnStages.ENDGAME);
     }
 
-    public void ping() throws RemoteException{
 
+    /**
+     * Ping method.
+     * @throws RemoteException : if this exception is invoked, the server gets to know that this client disconnected
+     */
+    public void ping() throws RemoteException{
     }
 
+
+    /**
+     * Method that sends the private
+     * @param chatMessage written by this player to the
+     * @param receiver of the message
+     * @throws RemoteException .
+     */
     @Override
     public void sendChatPrivateMessage(String chatMessage, String receiver) throws RemoteException {
         try {
@@ -309,9 +364,13 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
         }catch (IllegalValueException e){
             view.printError(e.getMessage());
         }
-
     }
 
+
+    /**
+     * Getter method
+     * @return the current GameStage.
+     */
     public GameStage getStage() {
         return stage;
     }
