@@ -69,7 +69,7 @@ public interface ClientInterface extends Serializable {
     void setGameStage(GameStage gameStage) throws RemoteException;
     TurnStages getGameStage()throws RemoteException;
 
-    void setStageToEndGame();
+    void setStageToEndGame() throws RemoteException;
 
     void sendChatPrivateMessage(String chatMessage, String receiver) throws RemoteException;
 
@@ -80,4 +80,7 @@ public interface ClientInterface extends Serializable {
      * @throws RemoteException .
      */
     ViewInterface getView() throws RemoteException;
+
+    String getNickname()throws RemoteException;
+
 }

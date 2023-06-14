@@ -411,6 +411,11 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
         }
     }
 
+    @Override
+    public String getNickname() throws RemoteException {
+        return this.nickname;
+    }
+
 
     /**
      * Getter method

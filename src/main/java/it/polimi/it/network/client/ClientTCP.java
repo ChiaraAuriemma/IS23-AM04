@@ -367,4 +367,9 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
         send(request);
     }
 
+    @Override
+    public String getNickname(){
+        return this.username;
+    }
+
 }
