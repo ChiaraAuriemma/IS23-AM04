@@ -10,10 +10,10 @@ import java.util.List;
 public interface ClientInterface extends Serializable {
 
     /**
-     *
-     * @param userName
-     * @throws RemoteException
-     * @throws IOException
+     * Sends to the Server the
+     * @param userName String chosen by the player
+     * @throws RemoteException .
+     * @throws IOException .
      */
     void login(String userName) throws RemoteException, IOException;
 
@@ -57,6 +57,12 @@ public interface ClientInterface extends Serializable {
      */
     void chooseColumn(int column) throws RemoteException;
 
+
+    /**
+     * Sends to the server the latest
+     * @param chatMessage that the user wrote in the chat
+     * @throws RemoteException .
+     */
     void sendChatMessage(String chatMessage) throws RemoteException;
 
 
@@ -66,11 +72,37 @@ public interface ClientInterface extends Serializable {
      */
     void setView(String viewChoice) throws RemoteException;
 
+
+    /**
+     * Setter and initializer method
+     * @param gameStage is the new GameStage instance that will be linked to the client.
+     *                  The stage is set to LOGIN.
+     * @throws RemoteException .
+     */
     void setGameStage(GameStage gameStage) throws RemoteException;
+
+
+    /**
+     * Getter method
+     * @return the current turn Stage.
+     * @throws RemoteException .
+     */
     TurnStages getGameStage()throws RemoteException;
 
+
+    /**
+     * Forces the GameStage to be ENDGAME
+     * @throws RemoteException .
+     */
     void setStageToEndGame() throws RemoteException;
 
+
+    /**
+     * Method that sends the private
+     * @param chatMessage written by this player to the
+     * @param receiver of the message
+     * @throws RemoteException .
+     */
     void sendChatPrivateMessage(String chatMessage, String receiver) throws RemoteException;
 
 
@@ -81,6 +113,11 @@ public interface ClientInterface extends Serializable {
      */
     ViewInterface getView() throws RemoteException;
 
-    String getNickname()throws RemoteException;
 
+    /**
+     * Getter method
+     * @return the nickname String
+     * @throws RemoteException .
+     */
+    String getNickname()throws RemoteException;
 }

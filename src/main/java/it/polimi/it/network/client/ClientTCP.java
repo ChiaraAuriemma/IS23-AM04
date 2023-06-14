@@ -244,6 +244,11 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
         }
     }
 
+
+    /**
+     * Sends to the server a
+     * @param nickname String.
+     */
     @Override
     public void login(String nickname) {
         LoginRequest loginRequest = new LoginRequest(nickname);
@@ -338,6 +343,11 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
         }
     }
 
+
+    /**
+     * Sends to the server the latest
+     * @param chatMessage that the user wrote in the chat
+     */
     @Override
     public void sendChatMessage(String chatMessage) {
         SendChatMessage sendChatMessage = new SendChatMessage(chatMessage);
@@ -345,21 +355,42 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
         send(request);
     }
 
+
+    /**
+     * Setter and initializer method
+     * @param gameStage is the new GameStage instance that will be linked to the client.
+     *                  The stage is set to LOGIN.
+     */
     public void setGameStage(GameStage gameStage) {
         this.stage = gameStage;
         stage.setStage(TurnStages.LOGIN);
     }
 
+
+    /**
+     * Forces the GameStage to be ENDGAME
+     */
     @Override
     public void setStageToEndGame() {
         stage.setStage(TurnStages.ENDGAME);
     }
 
+
+    /**
+     * Getter method
+     * @return the current turn Stage.
+     */
     @Override
     public TurnStages getGameStage() {
         return stage.getStage();
     }
 
+
+    /**
+     * Method that sends the private
+     * @param chatMessage written by this player to the
+     * @param receiver of the message
+     */
     @Override
     public void sendChatPrivateMessage(String chatMessage, String receiver) {
         SendPrivateChatMessage sendPrivateChatMessage = new SendPrivateChatMessage(this.username, chatMessage, receiver);
@@ -367,6 +398,11 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
         send(request);
     }
 
+
+    /**
+     * Getter method
+     * @return the nickname String
+     */
     @Override
     public String getNickname(){
         return this.username;

@@ -61,6 +61,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
         return this.view;
     }
 
+
     /**
      * First method used by the client, communicates with the view in order to let him choose his nickname,
      * then communicates it to the serverRMI to create an actual User instance.
@@ -83,7 +84,6 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
 
     /**
      * Method called by startClient, sends the server the chosen username
-     *
      * @param userName .
      * @throws RemoteException .
      */
@@ -248,11 +248,23 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
         view.update();
     }
 
+
+    /**
+     * Sends to the server the latest
+     * @param chatMessage that the user wrote in the chat
+     * @throws RemoteException .
+     */
     @Override
     public void sendChatMessage(String chatMessage) throws RemoteException {
         sr.chatMessage(this.nickname, chatMessage);
     }
 
+
+    /**
+     * Setter method for the user's latest chat messages that will be displayed in the view.
+     * @param currentChat is the list of messages.
+     * @throws IOException .
+     */
     @Override
     public void updateChat(List<String> currentChat) throws IOException {
         view.updateChat(currentChat);
@@ -261,26 +273,55 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
         }
     }
 
+
+    /**
+     * Setter method. Forces the gameStage to be NOTURN
+     * @throws RemoteException .
+     */
     @Override
     public void setStageToNoTurn() throws RemoteException {
         stage.setStage(TurnStages.NOTURN);
     }
 
+
+    /**
+     * Notifies the LivingRoom's refill
+     * @throws RemoteException .
+     */
     @Override
     public void boardRefill() throws RemoteException {
         view.boardRefill();
     }
 
+
+    /**
+     * Setter method for a player's shelfie.
+     * @param username is the player's nickname,
+     * @param shelfie is the player's Shelfie.
+     */
     @Override
     public void setNewShelfie(String username, Tile[][] shelfie) {
         view.setPlayersShelfiesView(username, shelfie);
     }
 
+
+    /**
+     * Setter method for the view's LivingRoom.
+     * @param matrix LivingRoom's disposition.
+     */
     @Override
     public void setNewBoard(Tile[][] matrix) {
         view.setBoardView(matrix);
     }
 
+
+    /**
+     * Setter method for the points of a given user.
+     * @param username ,
+     * @param points ,
+     * @param commonToken1 is the list of the player's tokens for the first CommonGoalCard,
+     * @param commonToken2 is the list of the player's tokens for the second CommonGoalCard,
+     */
     @Override
     public void setNewPoints(String username, Integer points, List<Integer> commonToken1, List<Integer> commonToken2) {
         view.setPlayersPointsView(username, points);
@@ -411,6 +452,12 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
         }
     }
 
+
+    /**
+     * Getter method
+     * @return the nickname String
+     * @throws RemoteException .
+     */
     @Override
     public String getNickname() throws RemoteException {
         return this.nickname;
