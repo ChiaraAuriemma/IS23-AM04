@@ -9,8 +9,8 @@ import it.polimi.it.network.message.others.PongMessage;
 import it.polimi.it.network.message.others.ThisNotTheDay;
 import it.polimi.it.network.message.request.*;
 import it.polimi.it.network.message.responses.*;
+import it.polimi.it.view.Cli;
 import it.polimi.it.view.GUI.GUIApplication;
-import it.polimi.it.view.View;
 import it.polimi.it.view.ViewInterface;
 
 import java.io.*;
@@ -69,7 +69,7 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
 
     public void setView(String viewChoice) {
         if(viewChoice.equalsIgnoreCase("CLI")){
-            this.view = new View();
+            this.view = new Cli();
         }else if (viewChoice.equalsIgnoreCase("GUI")){
             this.view = new GUIHandler();
         }
@@ -196,7 +196,7 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
                     try {
                         view.setFinalPoints(finalPointsMessage.getUsernames(),finalPointsMessage.getPoints());
 
-                        if(view instanceof View){
+                        if(view instanceof Cli){
                             setStageToEndGame();
                         }
                     } catch (IOException e) {

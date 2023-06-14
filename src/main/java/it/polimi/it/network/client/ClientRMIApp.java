@@ -4,7 +4,7 @@ import it.polimi.it.Exceptions.*;
 import it.polimi.it.model.Card.PersonalGoalCards.PersonalGoalCard;
 import it.polimi.it.model.Tiles.Tile;
 import it.polimi.it.network.server.ServerInterface;
-import it.polimi.it.view.View;
+import it.polimi.it.view.Cli;
 import it.polimi.it.view.ViewInterface;
 
 
@@ -38,7 +38,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
 
     public void setView(String viewChoice) throws RemoteException{
        if(viewChoice.equalsIgnoreCase("CLI")){
-           this.view = new View();
+           this.view = new Cli();
        }else if (viewChoice.equalsIgnoreCase("GUI")){
            this.view = new GUIHandler();
        }
@@ -185,7 +185,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
     public void setFinalPoints(List<String> usernames, ArrayList<Integer> points) throws IOException {
         view.setFinalPoints(usernames, points);
 
-        if(view instanceof View){
+        if(view instanceof Cli){
             setStageToEndGame();
         }
     }
