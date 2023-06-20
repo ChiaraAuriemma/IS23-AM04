@@ -2,7 +2,6 @@ package it.polimi.it.network.server;
 
 import it.polimi.it.controller.Lobby;
 import it.polimi.it.model.User;
-import it.polimi.it.network.server.ClientTCPHandler;
 import it.polimi.it.network.server.Exceptions.NotTcpUserException;
 
 import java.io.IOException;
@@ -45,10 +44,10 @@ public class ServerTCP implements Runnable, Serializable{
                 clientSocket = serverSocket.accept(); //aspetta che qualcuno si colleghi
                 executor.submit(new ClientTCPHandler( lobby, this)); //l'oggetto all'interno deve essere Runnable
             } catch(IOException e) {
-                e.printStackTrace();
+                break; //entro nel caso il server socket venisse chiuso
             }
         }
-        //executor.shutdown();  TOLTO PER MOTIVI DI TEST
+        executor.shutdown();
     }
 
     public Socket getUserTCP(User user) throws NotTcpUserException {

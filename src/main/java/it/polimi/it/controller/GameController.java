@@ -100,7 +100,7 @@ public class GameController implements Serializable {
             lobby.notifyEndGame(gameID);
         }else{
             System.out.println("turndealer");
-            currentPlayer= (currentPlayer + 1) % game.getNumplayers();
+            currentPlayer = (currentPlayer + 1) % game.getNumplayers();
             System.out.println("turndealer: player " + currentPlayer + "\n");
             if(!playerList.get(currentPlayer).getInGame()){
                 if(checkIfEverybodyIsDisconnected()){
@@ -155,7 +155,6 @@ public class GameController implements Serializable {
                 try {
                     System.out.println("There are enough players in game " + gameID + " to continue");
                     turnDealer();
-                    return;
                 } catch (InvalidIDException | IllegalValueException | IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -291,7 +290,12 @@ public class GameController implements Serializable {
                 if (!possibleColumnArray[col]) {
                     throw new IllegalValueException("Invalid column choice");
                 }
-                endGame = playerList.stream().filter(curr -> Objects.equals(curr.getNickname(), user)).collect(Collectors.toList()).get(0).insertTile(col, currentTilesList);
+
+                boolean firstEnder = playerList.stream().filter(curr -> Objects.equals(curr.getNickname(), user)).collect(Collectors.toList()).get(0).insertTile(col, currentTilesList);
+                if(!this.endGame && firstEnder){
+                    this.endGame = true;
+                }
+
                 game.pointCount(playerList.get(currentPlayer));
                 if (this.endGame) {
                     game.endGame(playerList.get(currentPlayer));

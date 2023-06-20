@@ -32,7 +32,7 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
     private Socket serverSocket;
     private GameStage stage;
 
-
+    private boolean isConnected;
     /**
      * Constructor method of the ClientTCP class
      * @param port and
@@ -60,6 +60,7 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
             System.out.println("Couldn't get I/O for the connection to " + ip);
             System.exit(1);
         }
+
     }
 
 
@@ -84,7 +85,9 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
     public void run()  {
         Message response;
         MessageType messType;
-        while(true){
+
+        this.isConnected = true;
+        while(isConnected){
             try {
                 response = (Message) in.readObject();
             } catch (IOException | ClassNotFoundException e) {
@@ -242,6 +245,15 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
                     break;
             }
         }
+
+        try {
+            in.close();
+            out.close();
+            serverSocket.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
 
