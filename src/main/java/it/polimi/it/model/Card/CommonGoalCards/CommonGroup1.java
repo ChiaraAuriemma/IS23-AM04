@@ -28,12 +28,6 @@ public class CommonGroup1 extends CommonGoalCard  implements Serializable {
      */
     public CommonGroup1(int id){
         super(id);
-        this.pink = new ArrayList<Tile>(8);
-        this.cyan = new ArrayList<Tile>(8);
-        this.yellow = new ArrayList<Tile>(8);
-        this.blue = new ArrayList<Tile>(8);
-        this.white = new ArrayList<Tile>(8);
-        this.green = new ArrayList<Tile>(8);
     }
 
 
@@ -50,6 +44,12 @@ public class CommonGroup1 extends CommonGoalCard  implements Serializable {
             JsonArray jsonArray = gson.fromJson(reader, JsonArray.class);
             for(i=0; jsonArray.get(i).getAsJsonObject().get("id").getAsInt() != id ; i++);
             JsonObject jsonObject= jsonArray.get(i).getAsJsonObject();
+            pink = new ArrayList<Tile>(0);
+            cyan = new ArrayList<Tile>(0);
+            yellow = new ArrayList<Tile>(0);
+            blue = new ArrayList<Tile>(0);
+            white = new ArrayList<Tile>(0);
+            green = new ArrayList<Tile>(0);
             for(column=0;column<5;column++){
                 for(row=0; row<6; row++){
                     if(column+jsonObject.get("tile2Column").getAsInt() < 5 && row+jsonObject.get("tile2Row").getAsInt()<6 &&
@@ -68,7 +68,7 @@ public class CommonGroup1 extends CommonGoalCard  implements Serializable {
                                     return true;
                             }
                         }else{
-                            if(tile1.getColor().equals(tile2.getColor()) && tile2.getColor().equals(tile3.getColor()) && tile3.getColor().equals(tile4.getColor())){
+                            if(!tile1.getColor().equals("DEFAULT") && tile1.getColor().equals(tile2.getColor()) && tile2.getColor().equals(tile3.getColor()) && tile3.getColor().equals(tile4.getColor())){
 
                                 if(tile1.getColor().equals("PINK")){
                                     if(!pink.contains(tile1) && !pink.contains(tile2) && !pink.contains(tile3) && !pink.contains(tile4)){

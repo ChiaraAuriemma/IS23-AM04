@@ -57,12 +57,13 @@ public class Game implements Serializable {
         this.checkPersonalScore = new ArrayList<>(Collections.nCopies(numplayers,0));
         this.cards = new ArrayList<>(numplayers);
 
-        this.commonToken1 = new ArrayList<>(numplayers);
-        this.commonToken2 = new ArrayList<>(numplayers);
+        this.commonToken1 = new ArrayList<>();
+        this.commonToken2 = new ArrayList<>();
         this.commonToken1.add(0,8);
         this.commonToken1.add(1,0);
         this.commonToken1.add(2,4);
         this.commonToken1.add(3,0);
+
         this.commonToken2.add(0,8);
         this.commonToken2.add(1,0);
         this.commonToken2.add(2,4);
@@ -215,6 +216,7 @@ public class Game implements Serializable {
                 this.points.set(i, tmp_point + 3);
             }
         }
+
 
         if(player.getShelfie().getCommonToken1() == 0 && card1.checkGoal(shelfie) ){
             int j=0;
