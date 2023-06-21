@@ -8,8 +8,10 @@ import it.polimi.it.view.GUI.GUIApplication;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.rmi.NotBoundException;
+import java.util.Objects;
 
 
 /**
@@ -31,17 +33,20 @@ public class Client implements Serializable {
         }
 
         Gson gson = new Gson();
-        JsonReader jsonReader = new JsonReader(new FileReader("src/main/resources/ServerConfig.json"));
+        JsonReader jsonReader = new JsonReader(new InputStreamReader(Objects.requireNonNull(ClassLoader.getSystemResourceAsStream("ServerConfig.json"))));
         JsonObject jsonObject = gson.fromJson(jsonReader, JsonObject.class);
         if (args[0].equalsIgnoreCase("tcp")) {
             ClientTCP clientTCP = new ClientTCP(jsonObject.get("portTCP").getAsInt(), jsonObject.get("ip").getAsString());
             Thread thread = new Thread(clientTCP);
             client = clientTCP;
             thread.start();
-        } else{
+        } else if(args[0].equalsIgnoreCase("rmi")){
             ClientRMIApp clientRMI = new ClientRMIApp(jsonObject.get("portRMI").getAsInt(), jsonObject.get("ip").getAsString());
             clientRMI.startClient();
             client = clientRMI;
+        }else{
+            System.out.println("Invalid number of parameter: write RMI or TCP and CLI or GUI");
+            return;
         }
 
         if (args[1].equalsIgnoreCase("CLI")) {
@@ -62,6 +67,9 @@ public class Client implements Serializable {
             GUIHandler guiHandler = (GUIHandler) client.getView();
             GUIApplication.setGuiHandler(guiHandler);
             GUIApplication.main(args);
+        }else{
+            System.out.println("Invalid number of parameter: write RMI or TCP and CLI or GUI");
+            return;
         }
     }
 }

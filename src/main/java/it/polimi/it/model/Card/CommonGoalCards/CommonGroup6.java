@@ -6,7 +6,9 @@ import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonReader;
 import it.polimi.it.model.Shelfie;
 import java.io.FileReader;
+import java.io.InputStreamReader;
 import java.io.Serializable;
+import java.util.Objects;
 
 public class CommonGroup6 extends CommonGoalCard  implements Serializable {
 
@@ -31,7 +33,7 @@ public class CommonGroup6 extends CommonGoalCard  implements Serializable {
         int i;
         Gson gson = new Gson();
         try {
-            JsonReader reader = new JsonReader(new FileReader("src/main/resources/CommonGroup6.json"));
+            JsonReader reader = new JsonReader((new InputStreamReader(Objects.requireNonNull(ClassLoader.getSystemResourceAsStream("CommonGroup6.json")))));
             JsonArray jsonArray = gson.fromJson(reader, JsonArray.class);
             for(i=0;i<jsonArray.size();i++){
                 JsonObject jsonObject = jsonArray.get(i).getAsJsonObject();

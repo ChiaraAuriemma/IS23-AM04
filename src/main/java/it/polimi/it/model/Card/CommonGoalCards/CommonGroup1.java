@@ -7,9 +7,11 @@ import com.google.gson.stream.JsonReader;
 import it.polimi.it.model.Shelfie;
 import it.polimi.it.model.Tiles.Tile;
 import java.io.FileReader;
+import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class CommonGroup1 extends CommonGoalCard  implements Serializable {
 
@@ -28,12 +30,6 @@ public class CommonGroup1 extends CommonGoalCard  implements Serializable {
      */
     public CommonGroup1(int id){
         super(id);
-        this.pink = new ArrayList<Tile>(8);
-        this.cyan = new ArrayList<Tile>(8);
-        this.yellow = new ArrayList<Tile>(8);
-        this.blue = new ArrayList<Tile>(8);
-        this.white = new ArrayList<Tile>(8);
-        this.green = new ArrayList<Tile>(8);
     }
 
 
@@ -46,15 +42,21 @@ public class CommonGroup1 extends CommonGoalCard  implements Serializable {
         int column,row,i;
         Gson gson = new Gson();
         try{
-            JsonReader reader = new JsonReader(new FileReader("src/main/resources/CommonGroup1.json"));
+            JsonReader reader = new JsonReader(new InputStreamReader(Objects.requireNonNull(ClassLoader.getSystemResourceAsStream("CommonGroup1.json"))));
             JsonArray jsonArray = gson.fromJson(reader, JsonArray.class);
             for(i=0; jsonArray.get(i).getAsJsonObject().get("id").getAsInt() != id ; i++);
             JsonObject jsonObject= jsonArray.get(i).getAsJsonObject();
+            pink = new ArrayList<Tile>(0);
+            cyan = new ArrayList<Tile>(0);
+            yellow = new ArrayList<Tile>(0);
+            blue = new ArrayList<Tile>(0);
+            white = new ArrayList<Tile>(0);
+            green = new ArrayList<Tile>(0);
             for(column=0;column<5;column++){
                 for(row=0; row<6; row++){
                     if(column+jsonObject.get("tile2Column").getAsInt() < 5 && row+jsonObject.get("tile2Row").getAsInt()<6 &&
-                        column+jsonObject.get("tile3Column").getAsInt()<5 && row+jsonObject.get("tile3Row").getAsInt()<6 &&
-                        column+jsonObject.get("tile4Column").getAsInt()<5 && row+jsonObject.get("tile4Row").getAsInt()<6){
+                            column+jsonObject.get("tile3Column").getAsInt()<5 && row+jsonObject.get("tile3Row").getAsInt()<6 &&
+                            column+jsonObject.get("tile4Column").getAsInt()<5 && row+jsonObject.get("tile4Row").getAsInt()<6){
                         Tile tile1 = shelfie.getCell(column,row);
                         Tile tile2 = shelfie.getCell(column+jsonObject.get("tile2Column").getAsInt(),row + jsonObject.get("tile2Row").getAsInt());
                         Tile tile3 = shelfie.getCell(column +jsonObject.get("tile3Column").getAsInt(),row +jsonObject.get("tile3Row").getAsInt());
@@ -68,7 +70,7 @@ public class CommonGroup1 extends CommonGoalCard  implements Serializable {
                                     return true;
                             }
                         }else{
-                            if(tile1.getColor().equals(tile2.getColor()) && tile2.getColor().equals(tile3.getColor()) && tile3.getColor().equals(tile4.getColor())){
+                            if(!tile1.getColor().equals("DEFAULT") && tile1.getColor().equals(tile2.getColor()) && tile2.getColor().equals(tile3.getColor()) && tile3.getColor().equals(tile4.getColor())){
 
                                 if(tile1.getColor().equals("PINK")){
                                     if(!pink.contains(tile1) && !pink.contains(tile2) && !pink.contains(tile3) && !pink.contains(tile4)){

@@ -94,7 +94,7 @@ public class GameController implements Serializable {
      */
     public void turnDealer() throws InvalidIDException, IllegalValueException, IOException {
 
-        if(this.endGame && this.currentPlayer == game.getNumplayers() - 1){
+        if(this.endGame && this.currentPlayer == game.getNumplayers()-1){
             game.getVirtualView().viewUpdate();
             game.pointsFromAdjacent();
             lobby.notifyEndGame(gameID);

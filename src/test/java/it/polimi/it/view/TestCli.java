@@ -13,14 +13,14 @@ import org.junit.Test;
 import java.util.ArrayList;
 
 public class TestCli {
-    private View testView;
+    private Cli testView;
     private final String border = "║";
     private final String noPlayer = "           ";
 
 
     @Before
     public void View(){
-        this.testView = new View();
+        this.testView = new Cli();
     }
 
     @Test

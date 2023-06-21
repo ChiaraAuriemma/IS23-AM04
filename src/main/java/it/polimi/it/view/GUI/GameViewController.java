@@ -158,19 +158,19 @@ public class GameViewController implements GuiInterface, Initializable {
         playersShelfie.put(0, shelfieP1);
         labelPoints.put(0,labelPoints1);
         points.put(0,Points1);
-        
+
         nicknames.put(1, Player2);
         gridOfPlayers.put(1, Player2Grid);
         playersShelfie.put(1, shelfieP2);
         labelPoints.put(1,labelPoints2);
         points.put(1,Points2);
-        
+
         nicknames.put(2, Player3);
         gridOfPlayers.put(2, Player3Grid);
         playersShelfie.put(2, shelfieP3);
         labelPoints.put(2,labelPoints3);
         points.put(2,Points3);
-        
+
         nicknames.put(3, Player4);
         gridOfPlayers.put(3, Player4Grid);
         playersShelfie.put(3, shelfieP4);

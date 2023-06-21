@@ -7,8 +7,10 @@ import com.google.gson.stream.JsonReader;
 import it.polimi.it.model.Shelfie;
 import it.polimi.it.model.Tiles.Tile;
 import java.io.FileReader;
+import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class CommonGroup3 extends CommonGoalCard  implements Serializable {
 
@@ -87,7 +89,7 @@ public class CommonGroup3 extends CommonGoalCard  implements Serializable {
             }
             return toVisit;
         }catch (Exception e){
-           throw new RuntimeException(e);
+            throw new RuntimeException(e);
         }
     }
 
@@ -103,14 +105,14 @@ public class CommonGroup3 extends CommonGoalCard  implements Serializable {
         int i,row, column;
         int count=0;
         try{
-            JsonReader reader = new JsonReader(new FileReader("src/main/resources/CommonGroup3.json"));
+            JsonReader reader = new JsonReader(new InputStreamReader(Objects.requireNonNull(ClassLoader.getSystemResourceAsStream("CommonGroup3.json"))));
             JsonArray jsonArray = gson.fromJson(reader, JsonArray.class);
             for(i=0; jsonArray.get(i).getAsJsonObject().get("type").getAsInt() != id ; i++);
             JsonObject jsonObject= jsonArray.get(i).getAsJsonObject();
             for(row=0; row< 6; row++){
                 for(column=0; column<5; column++){
                     ArrayList<Tile> toVisit = new ArrayList<>();
-                    if((checked.isEmpty() || !checked.contains(shelfie.getCell(column,row))&& !shelfie.getCell(column,row).getColor().equals("DEFAULT"))){
+                    if((checked.isEmpty() || (!checked.contains(shelfie.getCell(column,row))&& !shelfie.getCell(column,row).getColor().equals("DEFAULT")))){
                         tmp= recursiveAdjacent(shelfie, column, row,toVisit, jsonObject);
                         if(tmp.size() == jsonObject.get("numOfTile").getAsInt()){
                             count++;
@@ -126,4 +128,3 @@ public class CommonGroup3 extends CommonGoalCard  implements Serializable {
         }
     }
 }
-

@@ -17,47 +17,70 @@ import static org.junit.Assert.fail;
 
 public class PersonalGoalCardsTest {
 
-    private PersonalGoalCard personalGoalCard;
+    private PersonalGoalCard personalGoalCard1;
+    private PersonalGoalCard personalGoalCard2;
+    private PersonalGoalCard personalGoalCard3;
+    private PersonalGoalCard personalGoalCard4;
+    private PersonalGoalCard personalGoalCard5;
+    private PersonalGoalCard personalGoalCard6;
+    private PersonalGoalCard personalGoalCard7;
+    private PersonalGoalCard personalGoalCard8;
+    private PersonalGoalCard personalGoalCard9;
+    private PersonalGoalCard personalGoalCard10;
+    private PersonalGoalCard personalGoalCard11;
+    private PersonalGoalCard personalGoalCard12;
+
     private Shelfie shelfie;
     private TilesBag bag;
     private User u = new User(" ");
 
     @Before
     public void card(){
-        this.personalGoalCard = new PersonalGoalCard(6);
+        this.personalGoalCard1 = new PersonalGoalCard(1);
+        this.personalGoalCard2 = new PersonalGoalCard(2);
+        this.personalGoalCard3 = new PersonalGoalCard(3);
+        this.personalGoalCard4 = new PersonalGoalCard(4);
+        this.personalGoalCard5 = new PersonalGoalCard(5);
+        this.personalGoalCard6 = new PersonalGoalCard(6);
+        this.personalGoalCard7 = new PersonalGoalCard(7);
+        this.personalGoalCard8 = new PersonalGoalCard(8);
+        this.personalGoalCard9 = new PersonalGoalCard(9);
+        this.personalGoalCard10 = new PersonalGoalCard(10);
+        this.personalGoalCard11 = new PersonalGoalCard(11);
+        this.personalGoalCard12 = new PersonalGoalCard(12);
         this.shelfie = new Shelfie(u);
         this.bag = new TilesBag();
     }
 
     @Test
     public void personalCard1initialization(){  //card 1
-        assertEquals(personalGoalCard.getPinkposColumn(),0);
-        assertEquals(personalGoalCard.getPinkposRow(),5);
-        assertEquals(personalGoalCard.getCyanposColumn(),2);
-        assertEquals(personalGoalCard.getCyanposRow(),0);
-        assertEquals(personalGoalCard.getYellowposColumn(),1);
-        assertEquals(personalGoalCard.getYellowposRow(),2);
-        assertEquals(personalGoalCard.getBlueposColumn(),2);
-        assertEquals(personalGoalCard.getBlueposRow(),5);
-        assertEquals(personalGoalCard.getWhiteposColumn(),3);
-        assertEquals(personalGoalCard.getWhiteposRow(),3);
-        assertEquals(personalGoalCard.getGreenposColumn(),4);
-        assertEquals(personalGoalCard.getGreenposRow(),4);
+        assertEquals(personalGoalCard1.getPinkposColumn(),0);
+        assertEquals(personalGoalCard1.getPinkposRow(),5);
+        assertEquals(personalGoalCard1.getCyanposColumn(),2);
+        assertEquals(personalGoalCard1.getCyanposRow(),0);
+        assertEquals(personalGoalCard1.getYellowposColumn(),1);
+        assertEquals(personalGoalCard1.getYellowposRow(),2);
+        assertEquals(personalGoalCard1.getBlueposColumn(),2);
+        assertEquals(personalGoalCard1.getBlueposRow(),5);
+        assertEquals(personalGoalCard1.getWhiteposColumn(),3);
+        assertEquals(personalGoalCard1.getWhiteposRow(),3);
+        assertEquals(personalGoalCard1.getGreenposColumn(),4);
+        assertEquals(personalGoalCard1.getGreenposRow(),4);
     }
     @Test
     public void personalCard12initialization(){ //card12
-        assertEquals(personalGoalCard.getPinkposColumn(),1);
-        assertEquals(personalGoalCard.getPinkposRow(),4);
-        assertEquals(personalGoalCard.getCyanposColumn(),3);
-        assertEquals(personalGoalCard.getCyanposRow(),2);
-        assertEquals(personalGoalCard.getYellowposColumn(),4);
-        assertEquals(personalGoalCard.getYellowposRow(),1);
-        assertEquals(personalGoalCard.getBlueposColumn(),2);
-        assertEquals(personalGoalCard.getBlueposRow(),3);
-        assertEquals(personalGoalCard.getWhiteposColumn(),2);
-        assertEquals(personalGoalCard.getWhiteposRow(),5);
-        assertEquals(personalGoalCard.getGreenposColumn(),0);
-        assertEquals(personalGoalCard.getGreenposRow(),0);
+        assertEquals(personalGoalCard12.getPinkposColumn(),1);
+        assertEquals(personalGoalCard12.getPinkposRow(),4);
+        assertEquals(personalGoalCard12.getCyanposColumn(),3);
+        assertEquals(personalGoalCard12.getCyanposRow(),2);
+        assertEquals(personalGoalCard12.getYellowposColumn(),4);
+        assertEquals(personalGoalCard12.getYellowposRow(),1);
+        assertEquals(personalGoalCard12.getBlueposColumn(),2);
+        assertEquals(personalGoalCard12.getBlueposRow(),3);
+        assertEquals(personalGoalCard12.getWhiteposColumn(),2);
+        assertEquals(personalGoalCard12.getWhiteposRow(),5);
+        assertEquals(personalGoalCard12.getGreenposColumn(),0);
+        assertEquals(personalGoalCard12.getGreenposRow(),0);
     }
 
     @Test
@@ -79,7 +102,7 @@ public class PersonalGoalCardsTest {
 
         shelfie.setShelf(matrix);
 
-        if(personalGoalCard.checkScore(shelfie) != 6)
+        if(personalGoalCard1.checkScore(shelfie) != 6)
             fail("Test failed");
     }
 
@@ -102,7 +125,7 @@ public class PersonalGoalCardsTest {
 
         shelfie.setShelf(matrix);
 
-        if(personalGoalCard.checkScore(shelfie) != 0)
+        if(personalGoalCard1.checkScore(shelfie) != 0)
             fail("Test failed");
     }
 
@@ -125,7 +148,7 @@ public class PersonalGoalCardsTest {
 
         shelfie.setShelf(matrix);
 
-        if(personalGoalCard.checkScore(shelfie) != 3)
+        if(personalGoalCard1.checkScore(shelfie) != 3)
             fail("Test failed");
     }
 
@@ -148,7 +171,7 @@ public class PersonalGoalCardsTest {
 
         shelfie.setShelf(matrix);
 
-        if(personalGoalCard.checkScore(shelfie) != 6)
+        if(personalGoalCard12.checkScore(shelfie) != 6)
             fail("Test failed");
     }
 
@@ -171,7 +194,7 @@ public class PersonalGoalCardsTest {
 
         shelfie.setShelf(matrix);
 
-        if(personalGoalCard.checkScore(shelfie) != 6)
+        if(personalGoalCard6.checkScore(shelfie) != 6)
             fail("Test failed");
     }
 
@@ -217,7 +240,7 @@ public class PersonalGoalCardsTest {
 
         shelfie.setShelf(matrix);
 
-        if(personalGoalCard.checkScore(shelfie) != 0)
+        if(personalGoalCard6.checkScore(shelfie) != 0)
             fail("Test failed");
     }
 }
