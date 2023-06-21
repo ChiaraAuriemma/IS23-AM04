@@ -73,9 +73,7 @@ public class Game implements Serializable {
         }else if(numplayers == 3){
             this.board = new B3P();
             this.commonToken1.set(1,6);
-            this.commonToken1.set(3,0);
             this.commonToken2.set(1,6);
-            this.commonToken2.set(3,0);
         }else{
             this.board = new B4P();
             this.commonToken1.set(1,6);
@@ -88,10 +86,9 @@ public class Game implements Serializable {
 
     /**
      * Method that draws a random order for the players
-     * @return the ordered Arraylist of Users
-     * @throws RemoteException .
+     * @return the ordered Arraylist of Users.
      */
-    public ArrayList<User> randomPlayers () throws RemoteException {
+    public ArrayList<User> randomPlayers () {
         ArrayList<User> order = new ArrayList<>(this.numplayers);
         Random rdn = new Random();
         boolean[] checkplayers;
@@ -117,7 +114,7 @@ public class Game implements Serializable {
      * their shelfies' tiles' positions and adjacency.
      * @throws RemoteException .
      */
-    public void pointsFromAdjacent() throws RemoteException {
+    public void pointsFromAdjacent() {
         int tmp_point;
         for(int i=0; i < this.numplayers; i++){
             tmp_point = this.points.get(i);
@@ -133,7 +130,7 @@ public class Game implements Serializable {
      * @param currentPlayer is the player that first finished to fill his shelfie.
      * @throws RemoteException .
      */
-    public void endGame (User currentPlayer) throws RemoteException {
+    public void endGame (User currentPlayer) {
         int i;
         int tmp_point;
         if(this.endToken == -1){
@@ -150,7 +147,7 @@ public class Game implements Serializable {
      * Method that draws 2 random common cards for the Game.
      * @throws RemoteException .
      */
-    public void drawCommonCards() throws RemoteException {
+    public void drawCommonCards() {
         Random rnd = new Random();
         CommonDeck deck = new CommonDeck();
         int c1;
@@ -180,7 +177,7 @@ public class Game implements Serializable {
      * Method that draws a random Personal Card for the players.
      * @throws RemoteException .
      */
-    public void drawPersonalCard () throws RemoteException {
+    public void drawPersonalCard () {
         PersonalGoalCard card;
         Random rnd = new Random();
         int id;
@@ -199,7 +196,7 @@ public class Game implements Serializable {
      * @param player .
      * @throws RemoteException .
      */
-    public void pointCount(User player) throws RemoteException {
+    public void pointCount(User player) {
         int i = players.indexOf(player);
         PersonalGoalCard persCard = this.cards.get(i);
         Shelfie shelfie = player.getShelfie();
@@ -224,10 +221,10 @@ public class Game implements Serializable {
             while(this.commonToken1.get(j) == 0){
                 j++;
             }
-            player.getShelfie().setCommonToken1(this.commonToken1.get(i));
+            player.getShelfie().setCommonToken1(this.commonToken1.get(j));
             tmp_point = this.points.get(i);
-            this.points.set(i, tmp_point + this.commonToken1.get(i));
-            this.commonToken1.set(i, 0);
+            this.points.set(i, tmp_point + this.commonToken1.get(j));
+            this.commonToken1.set(j, 0);
         }
 
         if(player.getShelfie().getCommonToken2() == 0 && card2.checkGoal(shelfie) ){
@@ -235,10 +232,10 @@ public class Game implements Serializable {
             while(this.commonToken2.get(j) == 0){
                 j++;
             }
-            player.getShelfie().setCommonToken2(this.commonToken2.get(i));
+            player.getShelfie().setCommonToken2(this.commonToken2.get(j));
             tmp_point = this.points.get(i);
-            this.points.set(i, tmp_point + this.commonToken2.get(i));
-            this.commonToken2.set(i, 0);
+            this.points.set(i, tmp_point + this.commonToken2.get(j));
+            this.commonToken2.set(j, 0);
         }
         virtualView.pointsUpdate(player, this.points.get(i), commonToken1, commonToken2);
     }
@@ -347,5 +344,6 @@ public class Game implements Serializable {
     public ArrayList<User> playersOrder(){
         return playersOrder;
     }
+
 
 }
