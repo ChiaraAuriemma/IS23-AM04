@@ -900,15 +900,15 @@ public class CommonGroup3Test {
 
         matrix[0][0] = new Tile(0, 0, PossibleColors.BLUE);
         matrix[1][0] = new Tile(1,0,PossibleColors.BLUE);
-        matrix[2][0] = new Tile(2,0,PossibleColors.YELLOW);
-        matrix[3][0] = new Tile(3, 0,PossibleColors.YELLOW);
+        matrix[2][0] = new Tile(2,0,PossibleColors.PINK);
+        matrix[3][0] = new Tile(3, 0,PossibleColors.DEFAULT);
         matrix[4][0] = new Tile(4,0,PossibleColors.DEFAULT);
         matrix[5][0] = new Tile(5,0,PossibleColors.DEFAULT);
 
         matrix[0][1] = new Tile(0, 1, PossibleColors.YELLOW);
         matrix[1][1] = new Tile(1,1,PossibleColors.YELLOW);
-        matrix[2][1] = new Tile(2,1,PossibleColors.DEFAULT);
-        matrix[3][1] = new Tile(3, 1,PossibleColors.DEFAULT);
+        matrix[2][1] = new Tile(2,1,PossibleColors.GREEN);
+        matrix[3][1] = new Tile(3, 1,PossibleColors.PINK);
         matrix[4][1] = new Tile(4,1,PossibleColors.DEFAULT);
         matrix[5][1] = new Tile(5,1,PossibleColors.DEFAULT);
 
@@ -935,7 +935,7 @@ public class CommonGroup3Test {
 
         shelfie.setShelf(matrix);
 
-        if(!card2.checkGoal(shelfie))
+        if(card2.checkGoal(shelfie))
             fail("Test failed");
     }
 

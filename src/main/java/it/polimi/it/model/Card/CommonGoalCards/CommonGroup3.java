@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class CommonGroup3 extends CommonGoalCard  implements Serializable {
 
     private static final long serialVersionUID = -7419756574191643439L;
-    ArrayList<Tile> checked = new ArrayList<>();
+
 
 
     /**
@@ -59,7 +59,7 @@ public class CommonGroup3 extends CommonGoalCard  implements Serializable {
      * @param jsonObject contains information for the check
      * @return list of tiles
      */
-    private  ArrayList<Tile> recursiveAdjacent(Shelfie shelfie, int x, int y, ArrayList<Tile> toVisit, JsonObject jsonObject) {
+    private int recursiveAdjacent(Shelfie shelfie, int x, int y, ArrayList<Tile> toVisit, JsonObject jsonObject, ArrayList<Tile> checked) {
         int i;
         ArrayList<Tile> tmp = new  ArrayList<>();
         try {
@@ -68,7 +68,7 @@ public class CommonGroup3 extends CommonGoalCard  implements Serializable {
                     if(!checked.contains(tile))
                         checked.add(tile);
                 }
-                return toVisit;
+                return toVisit.size();
             }
             ArrayList<Tile> adjacent = adjacent(shelfie, x, y);
             checked.add(shelfie.getCell(x,y));
@@ -77,15 +77,15 @@ public class CommonGroup3 extends CommonGoalCard  implements Serializable {
                     toVisit.add(tile);
                     if(toVisit.size() == jsonObject.get("numOfTile").getAsInt()){
                         checked.add(tile);
-                        return toVisit;
+                        return toVisit.size();
                     }
                     tmp.add(tile);
                 }
             }
             for (Tile tile : tmp) {
-                recursiveAdjacent(shelfie, tile.getColumn(), tile.getRow(), toVisit, jsonObject);
+                recursiveAdjacent(shelfie, tile.getColumn(), tile.getRow(), toVisit, jsonObject, checked);
             }
-            return toVisit;
+            return toVisit.size();
         }catch (Exception e){
            throw new RuntimeException(e);
         }
@@ -98,8 +98,9 @@ public class CommonGroup3 extends CommonGoalCard  implements Serializable {
      * @return true or false
      */
     public Boolean checkGoal(Shelfie shelfie){
+        ArrayList<Tile> checked = new ArrayList<>();
         Gson gson = new Gson();
-        ArrayList<Tile> tmp;
+        int tmp = 0;
         int i,row, column;
         int count=0;
         try{
@@ -111,13 +112,22 @@ public class CommonGroup3 extends CommonGoalCard  implements Serializable {
                 for(column=0; column<5; column++){
                     ArrayList<Tile> toVisit = new ArrayList<>();
                     if((checked.isEmpty() || (!checked.contains(shelfie.getCell(column,row))&& !shelfie.getCell(column,row).getColor().equals("DEFAULT")))){
-                        tmp= recursiveAdjacent(shelfie, column, row,toVisit, jsonObject);
-                        if(tmp.size() == jsonObject.get("numOfTile").getAsInt()){
+                        tmp= recursiveAdjacent(shelfie, column, row,toVisit, jsonObject, checked);
+                        if(tmp == jsonObject.get("numOfTile").getAsInt()){
                             count++;
                         }
                     }
+                    if(shelfie.getCell(column,row).getColor().equals("DEFAULT")){
+                        checked.add(shelfie.getCell(column,row));
+                    }
                     if(count == jsonObject.get("numOfGroups").getAsInt())
                         return true;
+
+                    System.out.println("row" + row);
+                    System.out.println("column" + column);
+                    System.out.println("checked" + checked.size());
+                    System.out.println("count" + count);
+                    System.out.println(" ");
                 }
             }
             return false;
