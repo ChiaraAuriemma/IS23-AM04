@@ -40,6 +40,7 @@ public class ClientTCPHandler implements Runnable,Serializable, RemoteInterface 
     private Timer timer;
     private Message ping;
 
+    private boolean isConnected;
     private boolean pong = true; //false= non ricevuto , true = ricevuto
     public ClientTCPHandler(Lobby lobby, ServerTCP serverTCP){
         this.socket = serverTCP.getClientSocket();
@@ -58,7 +59,6 @@ public class ClientTCPHandler implements Runnable,Serializable, RemoteInterface 
             in = new ObjectInputStream(socket.getInputStream());
         } catch (IOException e) {
             e.printStackTrace();
-
         }
 
         new Thread(this::disconnectionTimer).start();
@@ -72,8 +72,8 @@ public class ClientTCPHandler implements Runnable,Serializable, RemoteInterface 
 
         Message response;
 
-
-        while(true) {//CAMBIAMO : se è ancora connesso rimani nel while
+        this.isConnected = true;
+        while(isConnected) {//CAMBIAMO : se è ancora connesso rimani nel while
 
 
             try {
@@ -232,7 +232,7 @@ public class ClientTCPHandler implements Runnable,Serializable, RemoteInterface 
                 case PONG://risposta del ping del timer
                     System.out.println("Received pong from " );
                     pong = true;
-                break;
+                    break;
 
 /*
                 default: //messaggio non valido
@@ -244,6 +244,13 @@ public class ClientTCPHandler implements Runnable,Serializable, RemoteInterface 
             //trovo dove chiudere il socket e gli input e output stream
         }
 
+        try {
+            in.close();
+            out.close();
+            socket.close();
+        } catch (IOException e) {
+            System.out.println("non sono riuscito a chiudere la connessione con ");
+        }
     }
 
 
