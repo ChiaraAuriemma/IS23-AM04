@@ -359,7 +359,7 @@ public class GUIHandler implements ViewInterface {
     @Override
     public void printError(String error) {
         Platform.runLater(new Thread(()-> {
-                GUIApplication.showAlert(Alert.AlertType.WARNING, "Error", error);
+            GUIApplication.showAlert(Alert.AlertType.WARNING, "Error", error);
             try {
                 GUIApplication.changeScene();
             } catch (IOException e) {

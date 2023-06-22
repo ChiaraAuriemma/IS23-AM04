@@ -32,21 +32,23 @@ public class ClientTCPHandler implements Runnable,Serializable, RemoteInterface 
     private GameController gameController;
     private Lobby lobby;
     private User user;
-
     private ObjectOutputStream out;
     private ObjectInputStream in;
-
-
     private Timer timer;
     private Message ping;
-
     private boolean isConnected;
-    private boolean pong = true; //false= non ricevuto , true = ricevuto
+    private boolean pong = true;
+
+
+    /**
+     * Constructor method
+     * @param lobby is the instance of the lobby
+     * @param serverTCP is the TCP server's instance.
+     */
     public ClientTCPHandler(Lobby lobby, ServerTCP serverTCP){
         this.socket = serverTCP.getClientSocket();
         this.lobby = lobby;
         this.serverTCP = serverTCP;
-
 
         try{
             out = new ObjectOutputStream(socket.getOutputStream());
@@ -54,28 +56,28 @@ public class ClientTCPHandler implements Runnable,Serializable, RemoteInterface 
             e.printStackTrace();
 
         }
-
         try{
             in = new ObjectInputStream(socket.getInputStream());
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         new Thread(this::disconnectionTimer).start();
-        //MESSO QUI FUNZIONAVA
     }
 
+
+    /**
+     * Run method for the class:
+     * the method keeps catching messages from the client. According to the messages' types,
+     * the method performs different actions.
+     */
     @Override
     public void run() {
         Message request;
         MessageType messType;
-
         Message response;
 
         this.isConnected = true;
-        while(isConnected) {//CAMBIAMO : se è ancora connesso rimani nel while
-
-
+        while(isConnected) {
             try {
                 request = (Message) in.readObject();
             } catch (IOException | ClassNotFoundException e) {
@@ -98,18 +100,16 @@ public class ClientTCPHandler implements Runnable,Serializable, RemoteInterface 
                             serverTCP.setUserTCP(user,socket);
                             LoginResponse loginResponse = new LoginResponse(user.getNickname());
                             response = new Message(MessageType.CREATEPLAYERRESPONSE, loginResponse);
-
                         } catch (ExistingNicknameException | EmptyNicknameException | RemoteException e) {
                             ErrorMessage errorMessage = new ErrorMessage(e.getMessage());
                             response = new Message(MessageType.ERROR, errorMessage);
-
                         } catch (InvalidIDException e) {
                             throw new RuntimeException(e);
                         }
                     }
-
                     send(response);
                     break;
+
                 case CREATEGAME:
                     CreateGameRequest createGameRequest = (CreateGameRequest) request.getPayload();
                     synchronized (lobby){
@@ -118,20 +118,16 @@ public class ClientTCPHandler implements Runnable,Serializable, RemoteInterface 
                             this.gameController.getGame().getVirtualView().setUser(createGameRequest.getUsername(), this);
                             CreateGameResponse createGameResponse = new CreateGameResponse(gameController.getGameID());
                             response = new Message(MessageType.CREATEGAMERESPONSE, createGameResponse);
-
                         } catch (WrongPlayerException e) {
                             ErrorMessage errorMessage = new ErrorMessage(e.getMessage());
                             response = new Message(MessageType.ERROR, errorMessage);
-
                         }
                     }
-
                     send(response);
                     break;
+
                 case JOINGAME:
                     JoinGameRequest joinGameRequest = (JoinGameRequest) request.getPayload();
-                    //ottengo il riferimento alla view(dal Gamecontroller) e gli passo lo user come tcp
-
                     synchronized (lobby){
                         try {
                             lobby.getGameController(joinGameRequest.getID()).getGame().getVirtualView().setUser(joinGameRequest.getUsername(), this);
@@ -139,26 +135,21 @@ public class ClientTCPHandler implements Runnable,Serializable, RemoteInterface 
                             JoinGameResponse joinGameResponse = new JoinGameResponse(gameController.getGameID());
                             response = new Message(MessageType.JOINGAMERESPONSE, joinGameResponse);
                         } catch (InvalidIDException | WrongPlayerException | IllegalValueException | RemoteException e) {
-
                             ErrorMessage errorMessage = new ErrorMessage(e.getMessage());
                             response = new Message(MessageType.ERROR, errorMessage);
-
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }
-
                     }
                     send(response);
                     break;
 
                 case TILESNUMMESSAGE:
                     TilesNumRequest tilesNumRequest = (TilesNumRequest) request.getPayload();
-
                     synchronized (gameController){
                         try {
                             this.gameController.getFromViewNTiles(this.user.getNickname(),tilesNumRequest.getNumTiles());
                         } catch (WrongPlayerException | RemoteException | IllegalValueException | InvalidIDException e) {
-
                             ErrorMessage errorMessage = new ErrorMessage(e.getMessage());
                             response = new Message(MessageType.ERROR, errorMessage);
                             send(response);
@@ -170,13 +161,10 @@ public class ClientTCPHandler implements Runnable,Serializable, RemoteInterface 
 
                 case SELECTEDTILES:
                     SelectedTilesRequest selectedTilesRequest = (SelectedTilesRequest) request.getPayload();
-
                     synchronized (gameController){
                         try {
                             this.gameController.getTilesListFromView(this.user.getNickname(), selectedTilesRequest.getChoosenTiles());
-
                         } catch (WrongTileException | WrongPlayerException | WrongListException | RemoteException | IllegalValueException | InvalidIDException e) {
-
                             ErrorMessage errorMessage = new ErrorMessage(e.getMessage());
                             response = new Message(MessageType.ERROR, errorMessage);
                             send(response);
@@ -188,7 +176,6 @@ public class ClientTCPHandler implements Runnable,Serializable, RemoteInterface 
 
                 case CHOOSECOLUMN:
                     ChooseColumnRequest chooseColumnRequest = (ChooseColumnRequest) request.getPayload();
-
                     synchronized (gameController){
                         try {
                             this.gameController.getColumnFromView(this.user.getNickname(), chooseColumnRequest.getColumnNumber());
@@ -226,22 +213,13 @@ public class ClientTCPHandler implements Runnable,Serializable, RemoteInterface 
                             send(response);
                         }
                     }
-
                     break;
 
-                case PONG://risposta del ping del timer
+                case PONG:
                     System.out.println("Received pong from " );
                     pong = true;
                     break;
-
-/*
-                default: //messaggio non valido
-                    System.out.println("User sent an illegal type of message");
-    */
             }
-
-
-            //trovo dove chiudere il socket e gli input e output stream
         }
 
         try {
@@ -254,6 +232,11 @@ public class ClientTCPHandler implements Runnable,Serializable, RemoteInterface 
     }
 
 
+    /**
+     * Disconnection Timer and Timer's Task.
+     * Every 15 seconds a ping message is sent to the client
+     * in order to check if the user is still online.
+     */
     private void disconnectionTimer(){
         timer = new Timer();
         TimerTask timerTask = new TimerTask() {
@@ -264,9 +247,7 @@ public class ClientTCPHandler implements Runnable,Serializable, RemoteInterface 
                     System.out.println(" is still connected, SADLY");
                     ping();
                 }else{
-                    //se il player è già in partita chiamo lo disconnetto
                     if(gameController != null && user.getInGame()){
-                        //se il player si disconnette mentre sta giocando il suo turno chiamo il turndealer
                         if(gameController.getCurrentPlayer() == gameController.getPlayerNumber(user)){
                             try {
                                 gameController.turnDealer();
@@ -275,32 +256,23 @@ public class ClientTCPHandler implements Runnable,Serializable, RemoteInterface 
                             }
                         }
 
-                        //disconnetti dal game
                         lobby.disconnect_user(user.getNickname());
                         serverTCP.removeUserTCP(user.getNickname());
                         System.out.println(" disconnected");
                         timer.cancel();
                     }
-
-                    //TODO:
-                    //gestisco caso in cui il player è in lobby e si disconnette (forse non c'è bisogno... non si userà quel nickname e basta )
-
                 }
             }
         };
         timer.schedule(timerTask, 1000, 15000);
-                    /*
-                    public void schedule(TimerTask task, long delay, long period)
-                        task - task to be scheduled.
-                        delay - delay in milliseconds before task is to be executed.        1000->1secondo
-                        period - time in milliseconds between successive task executions.   200000->20 secondi
-                     */
    }
 
 
-
+    /**
+     * Method that sends already formatted TCP messages to the client
+     * @param message is the message that has to be sent.
+     */
     public void send(Message message){
-
         synchronized (out){
             try {
                 out.writeObject(message);
@@ -309,11 +281,16 @@ public class ClientTCPHandler implements Runnable,Serializable, RemoteInterface 
                 System.out.println(e.getMessage());
             }
         }
-
     }
 
 
-    ///METODI DI RISPOSTA
+    /********************************************************************************************
+     *                                                                                          *
+     * Methods that, given certain parameters, create new messages of a different type each.    *
+     * Later, the formatted message is sent calling the 'send' method.                          *
+     *                                                                                          *
+     ********************************************************************************************/
+
 
     @Override
     public void setStartOrder(ArrayList<String> order) throws RemoteException{
@@ -321,6 +298,7 @@ public class ClientTCPHandler implements Runnable,Serializable, RemoteInterface 
         Message message = new Message(MessageType.STARTORDERPLAYER, startOrderMessage);
         send(message);
     }
+
 
     @Override
     public void setNewBoard(Tile[][] matrix) throws RemoteException{
@@ -330,7 +308,6 @@ public class ClientTCPHandler implements Runnable,Serializable, RemoteInterface 
                 m[k][j] = new Tile(k,j, PossibleColors.valueOf(matrix[k][j].getColor()));
             }
         }
-
         BoardUpdateMessage boardUpdateMessage = new BoardUpdateMessage(m);
         Message message = new Message(MessageType.BOARDUPDATE, boardUpdateMessage);
         send(message);
@@ -344,6 +321,7 @@ public class ClientTCPHandler implements Runnable,Serializable, RemoteInterface 
         send(message);
     }
 
+
     @Override
     public void setNewPersonal(PersonalGoalCard card) throws RemoteException{
         PersonalGoalCard personalCard = card;
@@ -352,12 +330,14 @@ public class ClientTCPHandler implements Runnable,Serializable, RemoteInterface 
         send(message);
     }
 
+
     @Override
     public void notifyTurnStart(int maxValueofTiles) throws RemoteException{
         StartTurnMessage startTurnMessage = new StartTurnMessage(maxValueofTiles);
         Message message = new Message(MessageType.STARTTURN,startTurnMessage);
         send(message);
     }
+
 
     @Override
     public void setStageToNoTurn() throws RemoteException{
@@ -366,6 +346,7 @@ public class ClientTCPHandler implements Runnable,Serializable, RemoteInterface 
         send(message);
     }
 
+
     @Override
     public void takeableTiles(List<List<Tile>> choosableTilesList, int num) throws RemoteException{
         TakeableTilesResponse takeableTilesResponse = new TakeableTilesResponse(choosableTilesList, num);
@@ -373,12 +354,14 @@ public class ClientTCPHandler implements Runnable,Serializable, RemoteInterface 
         send(response);
     }
 
+
     @Override
     public void askColumn(boolean[] choosableColumns) throws RemoteException{
         PossibleColumnsResponse possibleColumnsResponse = new PossibleColumnsResponse(choosableColumns);
         Message response = new Message(MessageType.POSSIBLECOLUMNS , possibleColumnsResponse);
         send(response);
     }
+
 
     @Override
     public void setNewShelfie(String username, Tile[][] shelfie) throws RemoteException{
@@ -388,11 +371,11 @@ public class ClientTCPHandler implements Runnable,Serializable, RemoteInterface 
                 s[k][j] = new Tile(k,j, PossibleColors.valueOf(shelfie[k][j].getColor()));
             }
         }
-
         ShelfieUpdateMessage shelfieUpdateMessage = new ShelfieUpdateMessage(username, s);
         Message message = new Message(MessageType.SHELFIEUPDATE, shelfieUpdateMessage);
         send(message);
     }
+
 
     @Override
     public void setNewPoints(String username, Integer points, List<Integer> commonToken1, List<Integer> commonToken2) throws RemoteException{
@@ -401,12 +384,14 @@ public class ClientTCPHandler implements Runnable,Serializable, RemoteInterface 
         send(message);
     }
 
+
     @Override
     public void setEndToken(String username) throws RemoteException{
         EndTokenTakenMessage endTokenTakenMessage = new EndTokenTakenMessage(username);
         Message message = new Message(MessageType.ENDTOKEN, endTokenTakenMessage);
         send(message);
     }
+
 
     @Override
     public void setFinalPoints(List<String> usernames, ArrayList<Integer> points) throws RemoteException{
@@ -415,12 +400,14 @@ public class ClientTCPHandler implements Runnable,Serializable, RemoteInterface 
         send(message);
     }
 
+
     @Override
     public void updateView() throws RemoteException{
         ViewUpdate viewUpdate = new ViewUpdate();
         Message message = new Message(MessageType.UPDATEVIEW,viewUpdate);
         send(message);
     }
+
 
     @Override
     public void recover(int gameID, Tile[][] matrix, ArrayList<Tile[][]> shelfies, int id1, int id2, PersonalGoalCard personalGoalCard, ArrayList<Integer> points, List<String> playerList) throws RemoteException{
@@ -429,12 +416,14 @@ public class ClientTCPHandler implements Runnable,Serializable, RemoteInterface 
         send(message);
     }
 
+
     @Override
     public void boardRefill() throws RemoteException{
         BoardRefill boardRefill = new BoardRefill();
         Message message = new Message(MessageType.BOARDREFILL, boardRefill);
         send(message);
     }
+
 
     @Override
     public void printError(String s)  throws RemoteException{
@@ -443,12 +432,14 @@ public class ClientTCPHandler implements Runnable,Serializable, RemoteInterface 
         send(message);
     }
 
+
     @Override
     public void updateChat(List<String> currentChat) throws RemoteException{
         ChatUpdate chatUpdate = new ChatUpdate(currentChat);
         Message messageChat = new Message(MessageType.CHATUPDATE, chatUpdate);
         send(messageChat);
     }
+
 
     @Override
     public void ping(){

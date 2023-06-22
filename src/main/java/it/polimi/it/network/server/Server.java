@@ -8,12 +8,14 @@ import it.polimi.it.model.User;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.HashMap;
+import java.util.Objects;
 
 public class Server implements Serializable {
     private static final long serialVersionUID = 3768243144909833291L;
@@ -23,9 +25,8 @@ public class Server implements Serializable {
     public static void main(String[] args) throws FileNotFoundException, RemoteException, AlreadyBoundException {
         int portTCP, portRMI;
         Gson gson = new Gson();
-        JsonReader jsonReader = new JsonReader( new FileReader("src/main/resources/ServerConfig.json"));
+        JsonReader jsonReader = new JsonReader(new InputStreamReader(Objects.requireNonNull(ClassLoader.getSystemResourceAsStream("ServerConfig.json"))));
         JsonObject jsonObject = gson.fromJson(jsonReader,JsonObject.class);
-
 
         //----> prendiamo il numero della porta da terminale
         if(args.length == 3){

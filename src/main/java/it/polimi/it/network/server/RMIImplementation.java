@@ -6,11 +6,7 @@ import it.polimi.it.controller.Lobby;
 import it.polimi.it.Exceptions.WrongListException;
 import it.polimi.it.model.Tiles.Tile;
 import it.polimi.it.model.User;
-import it.polimi.it.network.client.ClientInterface;
 import it.polimi.it.network.client.RemoteInterface;
-import it.polimi.it.network.message.Message;
-import it.polimi.it.network.message.MessageType;
-import it.polimi.it.network.message.others.PingMessage;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -27,13 +23,15 @@ public class RMIImplementation extends UnicastRemoteObject implements ServerInte
     private HashMap<String,GameController> userGame;
     private int port;
     private Timer timer;
-
     private HashMap<String, Boolean> pongs;
     private HashMap<String, RemoteInterface> userRMI;
-
     private boolean first = false;
-
     private Registry registry;
+
+    /**
+     * Constructor method for the class.
+     * @throws RemoteException .
+     */
     public RMIImplementation() throws RemoteException{
         this.userGame = new HashMap<>();
         this.userRMI = new HashMap<>();
@@ -41,6 +39,12 @@ public class RMIImplementation extends UnicastRemoteObject implements ServerInte
         new Thread(this::disconnectionTimer).start();
     }
 
+
+    /**
+     * Method that starts the RMI server given
+     * @param port the port number.
+     * @throws RemoteException .
+     */
     public void startServer(int port) throws RemoteException {
         System.out.println("Server RMI started");
         this.port = port;
@@ -51,17 +55,19 @@ public class RMIImplementation extends UnicastRemoteObject implements ServerInte
             e.printStackTrace();
         }
         System.out.println("Server RMI ready");
-
-       // new Thread(this::disconnectionTimer).start();
-    }
-
-    public RemoteInterface getUserRMI (User user){
-        return userRMI.get(user.getNickname());
     }
 
 
-
-
+    /**
+     * Method called by an RMI client when he needs to perform a login.
+     * @param cr is the client's RemoteInterface
+     * @param username is the username that the player chose.
+     * @return the same nickname string to confirm the login.
+     * @throws RemoteException ,
+     * @throws ExistingNicknameException ,
+     * @throws EmptyNicknameException ,
+     * @throws InvalidIDException .
+     */
     public String login(RemoteInterface cr , String username) throws RemoteException, ExistingNicknameException, EmptyNicknameException, InvalidIDException {
         User user;
         synchronized (lobby) {
@@ -103,7 +109,6 @@ public class RMIImplementation extends UnicastRemoteObject implements ServerInte
         synchronized (gc){
             gc.getFromViewNTiles(username,numTiles);
         }
-        //numTiles è il valore scelto dall'utente (v. javadoc GameController)
     }
 
     public void selectedTiles(String username, List<Tile> choosenTiles) throws IOException, WrongPlayerException, WrongListException, IllegalValueException, InvalidIDException, WrongTileException {
@@ -122,7 +127,6 @@ public class RMIImplementation extends UnicastRemoteObject implements ServerInte
     }
 
     public void chatMessage(String username, String chatMessage) throws RemoteException {
-        //aggiungo il messaggio al model
         GameController gc = userGame.get(username);
         synchronized (gc) {
             gc.pushChatMessage(chatMessage);
@@ -142,62 +146,9 @@ public class RMIImplementation extends UnicastRemoteObject implements ServerInte
     }
 
     public void disconnect_user(String username) {
-
-        //trovare l'istanza dell'utente e mettergli
-        //il bool della connessione a false
-
         lobby.disconnect_user(username);
     }
 
-
-    //per ogni client va mandato un diverso timer    new Thread(this::disconnectionTimer).start();
-    /*private void disconnectionTimer(){
-        timer = new Timer();
-        TimerTask timerTask = new TimerTask() {
-            @Override
-            public void run() {
-                if(userRMI.size()>0){
-
-                    //itero su tutti gli user
-                   String a[] = new String[]{userRMI.toString()};
-
-                   Set<String> set = userRMI.keySet();
-
-                   for (String user: set){
-                       //if(pongs.get(user)==true){//guardo se questo user ha il suo
-
-                       //}
-                       if(lobby.checkIfStillConnected(user)){
-
-                           userRMI.get(user).ping();
-                       }
-                   }
-
-
-                                    for(Map.Entry<String, ClientInterface>entry: userRMI){
-
-                                    }
-                }
-                if(pong == true){
-                    pong = false;
-
-
-                    chiamare metodo rmi sui client che resetti
-                    System.out.println(" is still connected, SADLY");
-                }else{
-                    //disconnetti
-                    System.out.println(" disconnected");
-                }
-            }
-        };
-        timer.schedule(timerTask, 1000, 15000);
-
-                   // public void schedule(TimerTask task, long delay, long period)
-                     //   task - task to be scheduled.
-                     //   delay - delay in milliseconds before task is to be executed.        1000->1secondo
-                     //   period - time in milliseconds between successive task executions.   200000->20 secondi
-
-    }*/
 
     private void disconnectionTimer(){
         timer = new Timer();
@@ -205,7 +156,6 @@ public class RMIImplementation extends UnicastRemoteObject implements ServerInte
             @Override
             public void run() {
                 for(String user: pongs.keySet()){
-
                     if(pongs.get(user)){
                         try{
                             RemoteInterface clientRMI = userRMI.get(user);
@@ -213,37 +163,33 @@ public class RMIImplementation extends UnicastRemoteObject implements ServerInte
                             System.out.println(" is still connected, SADLY");
                         } catch (RemoteException e) {
                             pongs.put(user, false);
-                            //se il player è già in partita chiamo lo disconnetto
                             if(userGame.containsKey(user) && userGame.get(user).getUser(user).getInGame()){
-
                                 if(userGame.get(user).getCurrentPlayer() == userGame.get(user).getPlayerNumber(userGame.get(user).getUser(user))){
-
                                     try {
                                         userGame.get(user).turnDealer();
                                     } catch (InvalidIDException | IllegalValueException | IOException ex) {
                                         throw new RuntimeException(ex);
                                     }
                                 }
-                                //disconnetti dal game
                                 lobby.disconnect_user(user);
                                 System.out.println(" disconnected");
                             }
                         }
                     }
-
-                    //TODO:
-                    //gestisco caso in cui il player è in lobby e si disconnette (forse non c'è bisogno... non si userà quel nickname e basta )
-                }
+               }
             }
         };
         timer.schedule(timerTask, 1000, 15000);
-                    /*
-                    public void schedule(TimerTask task, long delay, long period)
-                        task - task to be scheduled.
-                        delay - delay in milliseconds before task is to be executed.        1000->1secondo
-                        period - time in milliseconds between successive task executions.   200000->20 secondi
-                     */
     }
 
+
+    /**
+     * Getter method for an RMI user's RemoteInterface
+     * @param user as the research parameter
+     * @return a RemoteInterface instance.
+     */
+    public RemoteInterface getUserRMI (User user){
+        return userRMI.get(user.getNickname());
+    }
 
 }

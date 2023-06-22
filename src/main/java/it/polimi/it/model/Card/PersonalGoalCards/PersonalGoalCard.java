@@ -6,10 +6,12 @@ import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonReader;
 import it.polimi.it.model.Shelfie;
 import java.io.FileReader;
+import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 
 public class PersonalGoalCard implements Serializable {
@@ -42,7 +44,7 @@ public class PersonalGoalCard implements Serializable {
         greenPos = new ArrayList<>(Arrays.asList(0, 0));
         Gson gson = new Gson();
         try {
-            JsonReader reader = new JsonReader(new FileReader("src/main/resources/PersonalGoalCards.json"));
+            JsonReader reader = new JsonReader((new InputStreamReader(Objects.requireNonNull(ClassLoader.getSystemResourceAsStream("PersonalGoalCards.json")))));
             JsonArray jsonArray = gson.fromJson(reader, JsonArray.class);
             JsonObject jsonObject = jsonArray.get(id-1).getAsJsonObject();
 
