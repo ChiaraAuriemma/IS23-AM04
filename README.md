@@ -1,5 +1,8 @@
 # Prova finale Ingegneria del Software 2023
 
+![alt text](src/main/resources/Images/LogoWide.png)
+
+
 ## Gruppo AM04
 
 - ###  Chiara Auriemma &nbsp;([@ChiaraAuriemma](https://github.com/ChiaraAuriemma))<br> 10722613&nbsp;&nbsp; chiara.auriemma@mail.polimi.it
@@ -12,6 +15,8 @@
 
 
 <br><br>
+
+### Implemented Functionalities
 
 | Functionality  |                       State                        |
 |:---------------|:--------------------------------------------------:|
@@ -27,7 +32,21 @@
 | Disconnection  | 🟢 |
 
 
-# Legend: 
-- 🟢 Already implemented 
-- 🟡 Currently work in progress
-- 🔴  Currently not implemented
+#### Legend
+🟢 Already implemented &nbsp;&nbsp;&nbsp;&nbsp;🟡 Currently work in progress&nbsp;&nbsp;&nbsp;&nbsp; 🔴  Currently not implemented
+
+<br><br>
+<br><br>
+
+### About My Shelfie and the project's specifications
+#### Functionalities
+
+<br><br>
+<br><br>
+
+### Running The Game
+#### Server
+#### Client
+#### GUI
+#### CLI
+
