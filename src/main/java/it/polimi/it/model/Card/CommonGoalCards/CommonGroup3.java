@@ -63,6 +63,7 @@ public class CommonGroup3 extends CommonGoalCard  implements Serializable {
         int i;
         ArrayList<Tile> tmp = new  ArrayList<>();
         try {
+            /*
             if(toVisit.size() == jsonObject.get("numOfTile").getAsInt()){
                 for(Tile tile : toVisit){
                     if(!checked.contains(tile))
@@ -70,15 +71,21 @@ public class CommonGroup3 extends CommonGoalCard  implements Serializable {
                 }
                 return toVisit.size();
             }
+
+             */
             ArrayList<Tile> adjacent = adjacent(shelfie, x, y);
             checked.add(shelfie.getCell(x,y));
             for (Tile tile : adjacent) {
                 if (!checked.contains(tile) && shelfie.getCell(x,y).getColor().equals(shelfie.getCell(tile.getColumn(),tile.getRow()).getColor())) {
                     toVisit.add(tile);
+                    checked.add(tile);
+                    /*
                     if(toVisit.size() == jsonObject.get("numOfTile").getAsInt()){
                         checked.add(tile);
                         return toVisit.size();
                     }
+
+                     */
                     tmp.add(tile);
                 }
             }
@@ -113,7 +120,7 @@ public class CommonGroup3 extends CommonGoalCard  implements Serializable {
                     ArrayList<Tile> toVisit = new ArrayList<>();
                     if((checked.isEmpty() || (!checked.contains(shelfie.getCell(column,row))&& !shelfie.getCell(column,row).getColor().equals("DEFAULT")))){
                         tmp= recursiveAdjacent(shelfie, column, row,toVisit, jsonObject, checked);
-                        if(tmp == jsonObject.get("numOfTile").getAsInt()){
+                        if(tmp >= jsonObject.get("numOfTile").getAsInt()){
                             count++;
                         }
                     }
