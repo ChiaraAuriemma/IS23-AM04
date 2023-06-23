@@ -1,27 +1,32 @@
 package it.polimi.it.view.GUI;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.stream.JsonReader;
 import it.polimi.it.network.client.ClientInterface;
 import it.polimi.it.network.client.GUIHandler;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.geometry.Pos;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
-import javafx.scene.control.TextArea;
 
 
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 /**
@@ -208,6 +213,22 @@ public class EndTurnController implements GuiInterface, Initializable {
      * @throws IOException ?
      */
     public void GoToPersonalGoalCard(ActionEvent actionEvent) throws IOException {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Personal Goal Card");
+
+        Image image = new Image(GUIApplication.getPersonalCard().toString());
+
+        ImageView imageView = new ImageView(image);
+        imageView.setFitWidth(300);
+        imageView.setPreserveRatio(true);
+
+        DialogPane dialogPane = new DialogPane();
+        dialogPane.setContent(new VBox(10, imageView));
+
+        alert.setDialogPane(dialogPane);
+        alert.getButtonTypes().add(ButtonType.OK);
+        alert.showAndWait();
+        /*
         FXMLLoader fxmlLoader = new FXMLLoader(GUIApplication.class.getResource("/PersonalGoalCard.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         GuiInterface currentController = fxmlLoader.getController();
@@ -217,6 +238,8 @@ public class EndTurnController implements GuiInterface, Initializable {
         stage.setTitle("My Shelfie");
         stage.setScene(scene);
         stage.show();
+
+         */
     }
     /**
      * Method that triggers when the button "Show common goal card" is clicked, and it changes scene to let the client see his personal card
@@ -224,6 +247,57 @@ public class EndTurnController implements GuiInterface, Initializable {
      * @throws IOException ?
      */
     public void GoToCommonGoalCards(ActionEvent actionEvent) throws IOException {
+        int id1 = GUIApplication.getIDCommon1();
+        int id2 = GUIApplication.getIDCommon2();
+
+        Gson gson = new Gson();
+
+        JsonReader reader = new JsonReader((new InputStreamReader(Objects.requireNonNull(ClassLoader.getSystemResourceAsStream("CardsDescription.json")))));
+        JsonArray jsonArray = gson.fromJson(reader, JsonArray.class);
+
+        JsonObject jsonObject1 = jsonArray.get(id1 - 1).getAsJsonObject();
+        String description1 = jsonObject1.get("description").getAsString();
+
+        JsonObject jsonObject2 = jsonArray.get(id2 - 1).getAsJsonObject();
+        String description2 = jsonObject2.get("description").getAsString();
+
+
+        Label label1 = new Label(description1);
+        label1.setFont(Font.font("Helvetica", FontWeight.BOLD, 15));
+        Label label2 = new Label(description2);
+        label2.setFont(Font.font("Helvetica", FontWeight.BOLD, 15));
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Common Goal Card");
+
+        Image common1 = new Image(GUIApplication.getCommonCard1().toString());
+        Image common2 = new Image(GUIApplication.getCommonCard2().toString());
+
+        ImageView imageCommon1 = new ImageView(common1);
+        ImageView imageCommon2 = new ImageView(common2);
+        imageCommon1.setFitWidth(400);
+        imageCommon1.setPreserveRatio(true);
+        imageCommon2.setFitWidth(400);
+        imageCommon2.setPreserveRatio(true);
+
+        VBox vbox1 = new VBox(10, imageCommon1, label1);
+        VBox vbox2 = new VBox(10, imageCommon2, label2);
+
+        HBox hbox = new HBox(20, vbox1, vbox2);
+
+        GridPane gridPane = new GridPane();
+        gridPane.setHgap(100);
+        gridPane.setVgap(20);
+        gridPane.setAlignment(Pos.CENTER);
+        gridPane.add(hbox, 0, 0);
+
+        DialogPane dialogPane = new DialogPane();
+        dialogPane.setContent(gridPane);
+
+        alert.setDialogPane(dialogPane);
+        alert.getButtonTypes().add(ButtonType.OK);
+        alert.showAndWait();
+        /*
         FXMLLoader fxmlLoader = new FXMLLoader(GUIApplication.class.getResource("/CommonGoalCards.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         GuiInterface currentController = fxmlLoader.getController();
@@ -233,6 +307,8 @@ public class EndTurnController implements GuiInterface, Initializable {
         stage.setTitle("My Shelfie");
         stage.setScene(scene);
         stage.show();
+
+         */
     }
     /**
      * Method used to send the chat message written by the client in the text Field when the button "Send" it's pressed

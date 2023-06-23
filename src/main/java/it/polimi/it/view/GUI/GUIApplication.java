@@ -25,7 +25,9 @@ public class GUIApplication extends Application {
 
     private static URL PersonalCard;
     private static URL CommonCard1;
+    private static Integer IDCommon1;
     private static URL CommonCard2;
+    private static Integer IDCommon2;
     private static Image[][] board = new Image[9][9];
     private static Stage stageRef;
 
@@ -257,16 +259,18 @@ public class GUIApplication extends Application {
         return CommonCard1;
     }
 
-    public static void setCommonCard1(URL commonCard1Ref) {
+    public static void setCommonCard1(URL commonCard1Ref, int id) {
         CommonCard1 = commonCard1Ref;
+        IDCommon1 = id;
     }
 
     public static URL getCommonCard2() {
         return CommonCard2;
     }
 
-    public static void setCommonCard2(URL commonCard2Ref) {
+    public static void setCommonCard2(URL commonCard2Ref, int id) {
         CommonCard2 = commonCard2Ref;
+        IDCommon2 = id;
     }
 
     public static Image[][] getBoard() {
@@ -309,7 +313,13 @@ public class GUIApplication extends Application {
         return client;
     }
 
+    public static Integer getIDCommon2() {
+        return IDCommon2;
+    }
 
+    public static Integer getIDCommon1() {
+        return IDCommon1;
+    }
 
     public static void main(String[] args) {
         launch(args);

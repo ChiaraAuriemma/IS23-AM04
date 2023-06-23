@@ -240,51 +240,51 @@ public class GUIHandler implements ViewInterface {
     public void setCommon1View(int id) {
         if(id == 1){
             URL imageUrl = getClass().getResource("/Images/1.jpg");
-            GUIApplication.setCommonCard1(imageUrl);
+            GUIApplication.setCommonCard1(imageUrl, id);
         }
         if(id==2){
             URL imageUrl = getClass().getResource("/Images/2.jpg");
-            GUIApplication.setCommonCard1(imageUrl);
+            GUIApplication.setCommonCard1(imageUrl, id);
         }
         if(id==3){
             URL imageUrl = getClass().getResource("/Images/3.jpg");
-            GUIApplication.setCommonCard1(imageUrl);
+            GUIApplication.setCommonCard1(imageUrl, id);
         }
         if(id==4){
             URL imageUrl = getClass().getResource("/Images/4.jpg");
-            GUIApplication.setCommonCard1(imageUrl);
+            GUIApplication.setCommonCard1(imageUrl, id);
         }
         if(id==5){
             URL imageUrl = getClass().getResource("/Images/5.jpg");
-            GUIApplication.setCommonCard1(imageUrl);
+            GUIApplication.setCommonCard1(imageUrl, id);
         }
         if(id==6){
             URL imageUrl = getClass().getResource("/Images/6.jpg");
-            GUIApplication.setCommonCard1(imageUrl);
+            GUIApplication.setCommonCard1(imageUrl, id);
         }
         if(id==7){
             URL imageUrl = getClass().getResource("/Images/7.jpg");
-            GUIApplication.setCommonCard1(imageUrl);
+            GUIApplication.setCommonCard1(imageUrl, id);
         }
         if(id==8){
             URL imageUrl = getClass().getResource("/Images/8.jpg");
-            GUIApplication.setCommonCard1(imageUrl);
+            GUIApplication.setCommonCard1(imageUrl, id);
         }
         if(id==9){
             URL imageUrl = getClass().getResource("/Images/9.jpg");
-            GUIApplication.setCommonCard1(imageUrl);
+            GUIApplication.setCommonCard1(imageUrl, id);
         }
         if(id==10){
             URL imageUrl = getClass().getResource("/Images/10.jpg");
-            GUIApplication.setCommonCard1(imageUrl);
+            GUIApplication.setCommonCard1(imageUrl, id);
         }
         if(id==11){
             URL imageUrl = getClass().getResource("/Images/11.jpg");
-            GUIApplication.setCommonCard1(imageUrl);
+            GUIApplication.setCommonCard1(imageUrl, id);
         }
         if(id==12){
             URL imageUrl = getClass().getResource("/Images/12.jpg");
-            GUIApplication.setCommonCard1(imageUrl);
+            GUIApplication.setCommonCard1(imageUrl, id);
         }
     }
 
@@ -292,51 +292,51 @@ public class GUIHandler implements ViewInterface {
     public void setCommon2View(int id) {
         if(id == 1){
             URL imageUrl = getClass().getResource("/Images/1.jpg");
-            GUIApplication.setCommonCard2(imageUrl);
+            GUIApplication.setCommonCard2(imageUrl, id);
         }
         if(id==2){
             URL imageUrl = getClass().getResource("/Images/2.jpg");
-            GUIApplication.setCommonCard2(imageUrl);
+            GUIApplication.setCommonCard2(imageUrl, id);
         }
         if(id==3){
             URL imageUrl = getClass().getResource("/Images/3.jpg");
-            GUIApplication.setCommonCard2(imageUrl);
+            GUIApplication.setCommonCard2(imageUrl, id);
         }
         if(id==4){
             URL imageUrl = getClass().getResource("/Images/4.jpg");
-            GUIApplication.setCommonCard2(imageUrl);
+            GUIApplication.setCommonCard2(imageUrl, id);
         }
         if(id==5){
             URL imageUrl = getClass().getResource("/Images/5.jpg");
-            GUIApplication.setCommonCard2(imageUrl);
+            GUIApplication.setCommonCard2(imageUrl, id);
         }
         if(id==6){
             URL imageUrl = getClass().getResource("/Images/6.jpg");
-            GUIApplication.setCommonCard2(imageUrl);
+            GUIApplication.setCommonCard2(imageUrl, id);
         }
         if(id==7){
             URL imageUrl = getClass().getResource("/Images/7.jpg");
-            GUIApplication.setCommonCard2(imageUrl);
+            GUIApplication.setCommonCard2(imageUrl, id);
         }
         if(id==8){
             URL imageUrl = getClass().getResource("/Images/8.jpg");
-            GUIApplication.setCommonCard2(imageUrl);
+            GUIApplication.setCommonCard2(imageUrl, id);
         }
         if(id==9){
             URL imageUrl = getClass().getResource("/Images/9.jpg");
-            GUIApplication.setCommonCard2(imageUrl);
+            GUIApplication.setCommonCard2(imageUrl, id);
         }
         if(id==10){
             URL imageUrl = getClass().getResource("/Images/10.jpg");
-            GUIApplication.setCommonCard2(imageUrl);
+            GUIApplication.setCommonCard2(imageUrl, id);
         }
         if(id==11){
             URL imageUrl = getClass().getResource("/Images/11.jpg");
-            GUIApplication.setCommonCard2(imageUrl);
+            GUIApplication.setCommonCard2(imageUrl, id);
         }
         if(id==12){
             URL imageUrl = getClass().getResource("/Images/12.jpg");
-            GUIApplication.setCommonCard2(imageUrl);
+            GUIApplication.setCommonCard2(imageUrl, id);
         }
     }
 
