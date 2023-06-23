@@ -29,7 +29,7 @@ The Server can handle more than one game at the same time. Every player who deci
 <br><br>
 
 ##### Resilience to Disconnections
-If one or more player from a game disconnect from the game, they have the opportunity to join again the same gane and continue playing.
+If one or more player from a game disconnect from the game, they have the opportunity to join again the same game and continue playing.
 If the player doesn't reconnect in time for his turn, it will be skipped. If only one player is still connected to a certain game, a one-minute timer will start, then the win will be assigned to the only active player if nobody reconnected in time.
 <br>
 <br>
@@ -64,12 +64,12 @@ Every player can send chat messages to the other players in their game. A player
 The Game consists in a jar file named <code>PLACEHOLDER</code> that can be started by command line. In order to start playing you'll need to start the Server and at least two Clients.
 #### Server
 ```shell 
-      > java -jar PLACEHOLDER.jar ALTRI COMANDI
+      > java -jar PLACEHOLDER.jar server
 ```
 The command above has to be used in order to start the Server and is the only command you will need until the Server needs to be shut down.
 #### Client
 ```shell 
-      > java -jar PLACEHOLDER.jar ALTRI COMANDI
+      > java -jar PLACEHOLDER.jar client ALTRI COMANDI
 ```
 The command above has to be used in order to start the Client. Later the player will be asked a nickname and whether he wants to create a new game or join an existing one.
 The client can choose the communication protocol that he likes most between RMI and TCP.
