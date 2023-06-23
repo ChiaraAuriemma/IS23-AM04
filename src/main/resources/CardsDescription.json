@@ -1,30 +1,30 @@
 [
   {
-    "description": "Two groups each containing 4 tiles of the same type in a 2x2 square "
+    "description": "Two groups each containing 4 tiles of the same type \n in a 2x2 square "
   },
   {
     "description": "Two columns each formed by 6 different types of tiles"
   },
   {
-    "description": "Four groups each containing at least 4 tiles of the same type that may differ for each group"
+    "description": "Four groups each containing at least 4 tiles of the \n same that may differ for each group"
   },
   {
-    "description": "Six groups each containing at least 2 tiles of the same type that may differ for each group"
+    "description": "Six groups each containing at least 2 tiles of the \n same type that may differ for each group"
   },
   {
-    "description": "Three columns each formed by 6 tiles of maximum three different types"
+    "description": "Three columns each formed by 6 tiles of maximum three \n different types"
   },
   {
     "description": "Two lines each formed by 5 different types of tiles"
   },
   {
-    "description": "Four lines each formed by 5 tiles of maximum three different types"
+    "description": "Four lines each formed by 5 tiles of maximum three \n different types"
   },
   {
-    "description": "Four tiles of the same type in the four corners of the bookshelf"
+    "description": "Four tiles of the same type in the four corners of \n the bookshelf"
   },
   {
-    "description": "Eight tiles of the same type. There’s no restriction about the position of these tiles"
+    "description": "Eight tiles of the same type. There’s no restriction \n about the position of these tiles"
   },
   {
     "description": "Five tiles of the same type forming an X"
@@ -33,6 +33,6 @@
     "description": "Five tiles of the same type forming a diagonal"
   },
   {
-    "description": "Five columns of increasing or decreasing height from the left to the right"
+    "description": "Five columns of increasing or decreasing height from \n the left to the right"
   }
 ]

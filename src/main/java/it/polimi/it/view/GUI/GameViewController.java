@@ -1,5 +1,9 @@
 package it.polimi.it.view.GUI;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.stream.JsonReader;
 import it.polimi.it.model.Tiles.PossibleColors;
 import it.polimi.it.model.Tiles.Tile;
 import it.polimi.it.network.client.ClientInterface;
@@ -9,30 +13,39 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
+import javafx.scene.control.*;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
 import java.awt.*;
-import javafx.scene.control.TextField;
-import javafx.scene.control.TextArea;
 
 import javafx.scene.paint.Color;
-import javafx.scene.control.Label;
 
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.URL;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
+/**
+ * Controller of PROVAVBOX (cambiare) that manages the client's turn and all of its operation
+ */
 public class GameViewController implements GuiInterface, Initializable {
 
     private static ClientInterface client;
@@ -116,7 +129,11 @@ public class GameViewController implements GuiInterface, Initializable {
     @FXML
     TextArea textMessage;
 
-
+    /**
+     * Method that initialize the scene and all of his parts like the living room, the bookshelves, the nicknames, the chat and the points
+     * @param location ?
+     * @param resources ?
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Tiles = new ArrayList<>(0);
@@ -280,8 +297,29 @@ public class GameViewController implements GuiInterface, Initializable {
         return "choose_num_tiles";
     }
 
-
+    /**
+     * Method that triggers when the button "Show personal goal card" is clicked, and it changes scene to let the client see his personal card
+     * @param actionEvent is the event that trigger this method and in this case it's the click of the button "Show personal goal card"
+     * @throws IOException ?
+     */
     public void GoToPersonalGoalCard(ActionEvent actionEvent) throws IOException {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Personal Goal Card");
+
+        Image image = new Image(GUIApplication.getPersonalCard().toString());
+
+        ImageView imageView = new ImageView(image);
+        imageView.setFitWidth(300);
+        imageView.setPreserveRatio(true);
+
+        DialogPane dialogPane = new DialogPane();
+        dialogPane.setContent(new VBox(10, imageView));
+
+        alert.setDialogPane(dialogPane);
+        alert.getButtonTypes().add(ButtonType.OK);
+        alert.showAndWait();
+
+        /*
         FXMLLoader fxmlLoader = new FXMLLoader(GUIApplication.class.getResource("/PersonalGoalCard.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         GuiInterface currentController = fxmlLoader.getController();
@@ -291,9 +329,68 @@ public class GameViewController implements GuiInterface, Initializable {
         stage.setTitle("My Shelfie");
         stage.setScene(scene);
         stage.show();
+
+
+         */
     }
 
+    /**
+     * Method that triggers when the button "Show common goal card" is clicked, and it changes scene to let the client see his personal card
+     * @param actionEvent is the event that trigger this method and in this case it's the click of the button "Show common goal card"
+     * @throws IOException ?
+     */
     public void GoToCommonGoalCards(ActionEvent actionEvent) throws IOException {
+        int id1 = GUIApplication.getIDCommon1();
+        int id2 = GUIApplication.getIDCommon2();
+
+        Gson gson = new Gson();
+
+        JsonReader reader = new JsonReader((new InputStreamReader(Objects.requireNonNull(ClassLoader.getSystemResourceAsStream("CardsDescription.json")))));
+        JsonArray jsonArray = gson.fromJson(reader, JsonArray.class);
+
+        JsonObject jsonObject1 = jsonArray.get(id1 - 1).getAsJsonObject();
+        String description1 = jsonObject1.get("description").getAsString();
+
+        JsonObject jsonObject2 = jsonArray.get(id2 - 1).getAsJsonObject();
+        String description2 = jsonObject2.get("description").getAsString();
+
+
+        Label label1 = new Label(description1);
+        label1.setFont(Font.font("Helvetica", FontWeight.BOLD, 15));
+        Label label2 = new Label(description2);
+        label2.setFont(Font.font("Helvetica", FontWeight.BOLD, 15));
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Common Goal Card");
+
+        Image common1 = new Image(GUIApplication.getCommonCard1().toString());
+        Image common2 = new Image(GUIApplication.getCommonCard2().toString());
+
+        ImageView imageCommon1 = new ImageView(common1);
+        ImageView imageCommon2 = new ImageView(common2);
+        imageCommon1.setFitWidth(400);
+        imageCommon1.setPreserveRatio(true);
+        imageCommon2.setFitWidth(400);
+        imageCommon2.setPreserveRatio(true);
+
+        VBox vbox1 = new VBox(10, imageCommon1, label1);
+        VBox vbox2 = new VBox(10, imageCommon2, label2);
+
+        HBox hbox = new HBox(20, vbox1, vbox2);
+
+        GridPane gridPane = new GridPane();
+        gridPane.setHgap(100);
+        gridPane.setVgap(20);
+        gridPane.setAlignment(Pos.CENTER);
+        gridPane.add(hbox, 0, 0);
+
+        DialogPane dialogPane = new DialogPane();
+        dialogPane.setContent(gridPane);
+
+        alert.setDialogPane(dialogPane);
+        alert.getButtonTypes().add(ButtonType.OK);
+        alert.showAndWait();
+        /*
         FXMLLoader fxmlLoader = new FXMLLoader(GUIApplication.class.getResource("/CommonGoalCards.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         GuiInterface currentController = fxmlLoader.getController();
@@ -303,22 +400,38 @@ public class GameViewController implements GuiInterface, Initializable {
         stage.setTitle("My Shelfie");
         stage.setScene(scene);
         stage.show();
+
+         */
     }
 
-    public void chooseTiles(ImageView imageView, int i, int j) throws IOException {
+    /**
+     * Method to select the tiles from the Living room that changes the opacity of the tile when is selected
+     * @param imageView is the reference to the living room in the scene
+     * @param row is the row of the tile in the living room
+     * @param column is the column of the tile in the living room
+     * @throws IOException ?
+     */
+    public void chooseTiles(ImageView imageView, int row, int column) throws IOException {
         PossibleColors color = getColor(imageView);
-        Tile t = new Tile(i,j,color);
+        Tile t = new Tile(row,column,color);
         Tiles.add(t);
         imageView.setOnMouseClicked(mouseEvent -> {
             imageView.setOpacity(1);
             try {
-                removeTiles(imageView,i,j);
+                removeTiles(imageView,row,column);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         });
     }
 
+    /**
+     *  ?
+     * @param imageView
+     * @param i
+     * @param j
+     * @throws IOException
+     */
     public void removeTiles(ImageView imageView, int i, int j) throws IOException {
         PossibleColors color = getColor(imageView);
         Tile t = new Tile(i,j,color);
@@ -326,6 +439,11 @@ public class GameViewController implements GuiInterface, Initializable {
         GUIApplication.changeScene(); //--->meglio aggiornare o poter tornare indietro solo una volta??
     }
 
+    /**
+     * Method that triggers when the button "Choose selected tiles" is pressed and sends the list of selected tiles to the server
+     * @param actionEvent is the trigger of this method and in this case it's the click of the button "Choose selected tiles"
+     * @throws IOException ?
+     */
     public void ChooseTiles(ActionEvent actionEvent) throws IOException {
         if(!client.getGameStage().equals(TurnStages.CHOOSETILES)){
             GUIApplication.showAlert(Alert.AlertType.INFORMATION, "Game rules", "It's not time to choose the tiles");
@@ -385,6 +503,11 @@ public class GameViewController implements GuiInterface, Initializable {
 
     }
 
+    /**
+     * Method that trigger when one of the button that represents a column it's pressed and send the chosen column to the server
+     * @param actionEvent is the trigger of this method and in this case it's the click of a button that represents a column
+     * @throws IOException ?
+     */
     public void ChooseColumn(ActionEvent actionEvent) throws IOException {
         if(!client.getGameStage().equals(TurnStages.CHOOSECOLUMN)) {
             GUIApplication.showAlert(Alert.AlertType.INFORMATION, "Game rules", "It's not time to choose the column");
@@ -396,6 +519,12 @@ public class GameViewController implements GuiInterface, Initializable {
 
     }
 
+    /**
+     * Method used to send to the server the number of tiles that the client wants to take; it triggers when the client write a number in
+     * the text field and press the button "Confirm"
+     * @param actionEvent  is the trigger of this method and in this case it's the click of the button "Confirm"
+     * @throws IOException
+     */
     public void ChooseNumberOfTiles(ActionEvent actionEvent) throws IOException {
         if(!client.getGameStage().equals(TurnStages.TILESNUM)) {
             GUIApplication.showAlert(Alert.AlertType.INFORMATION, "Game rules", "It's not time to choose the number of tiles");
@@ -453,6 +582,11 @@ public class GameViewController implements GuiInterface, Initializable {
 
     }
 
+    /**
+     * Method used to send the chat message written by the client in the text Field when the button "Send" it's pressed
+     * @param actionEvent  is the trigger of this method and in this case it's the click of the button "Send"
+     * @throws IOException ?
+     */
     public void sendMessage(ActionEvent actionEvent) throws IOException{
         if(chatMessage.getText().length()!=0){
             String sender = client.getNickname().trim();
