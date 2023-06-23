@@ -103,7 +103,11 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
      */
     @Override
     public void printError(String e)  throws RemoteException{
-        view.printError(e);
+        if(!e.equals("You have won because this game was closed due to the lack of players! :(\n")){
+            view.printError(e);
+        }else{
+            setStageToEndGame();
+        }
     }
 
 
@@ -444,6 +448,21 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
             sr.chatPrivateMessage(this.nickname, chatMessage, receiver);
         }catch (IllegalValueException e){
             view.printError(e.getMessage());
+        }
+    }
+
+    /**
+     * After the end of a game this method gives the possibility to create a new game.
+     * @throws RemoteException .
+     */
+    @Override
+    public void restart() throws RemoteException{
+        stage.setStage(TurnStages.CREATEorJOIN);
+        try {
+            view.clean();
+            view.joinOrCreate(this.nickname);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 

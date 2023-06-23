@@ -35,8 +35,8 @@ public enum MessageType  implements Serializable {
     CHAT("CHAT"),
     PRIVATECHAT("PRIVATECHAT"),
     CHATUPDATE("CHATUPDATE"),
-    BOARDREFILL("BOARDREFILL");
-
+    BOARDREFILL("BOARDREFILL"),
+    RESTART("RESTART");
 
     private final String message;
 

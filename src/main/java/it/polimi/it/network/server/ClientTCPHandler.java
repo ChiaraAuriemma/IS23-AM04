@@ -251,7 +251,7 @@ public class ClientTCPHandler implements Runnable,Serializable, RemoteInterface 
                         if(gameController.getCurrentPlayer() == gameController.getPlayerNumber(user)){
                             try {
                                 gameController.turnDealer();
-                            } catch (InvalidIDException | IllegalValueException | IOException e) {
+                            } catch (InvalidIDException | IOException e) {
                                 throw new RuntimeException(e);
                             }
                         }
@@ -549,5 +549,15 @@ public class ClientTCPHandler implements Runnable,Serializable, RemoteInterface 
         PingMessage pingMessage = new PingMessage(" ");
         ping = new Message(MessageType.PING, pingMessage);
         send(ping);
+    }
+
+    /**
+     *  Send restart game message in order to restart a new game when someone else is finished
+     */
+    @Override
+    public void restart() throws RemoteException{
+        RestartMessage restartMessage = new RestartMessage();
+        Message message = new Message(MessageType.RESTART, restartMessage);
+        send(message);
     }
 }

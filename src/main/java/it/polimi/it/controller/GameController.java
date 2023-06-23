@@ -89,10 +89,9 @@ public class GameController implements Serializable {
 
     /**
      * Method used to control which player needs to move in the current turn
-     * @throws IllegalValueException exception used when an illegal value is given in input
      * @throws InvalidIDException exception used when the game ID is wrong or non-existent
      */
-    public void turnDealer() throws InvalidIDException, IllegalValueException, IOException {
+    public void turnDealer() throws InvalidIDException, IOException {
 
         if(this.endGame && this.currentPlayer == game.getNumplayers()-1){
             game.getVirtualView().viewUpdate();
@@ -122,11 +121,8 @@ public class GameController implements Serializable {
 
     /**
      * Method that freezes the game if there aren't enough people online
-     * @throws InvalidIDException .
-     * @throws IllegalValueException .
-     * @throws IOException .
      */
-    private void freezeGame() throws InvalidIDException, IllegalValueException, IOException {
+    private void freezeGame(){
         System.out.println("freeze game");
         new Thread(this::controlTimer).start();
     }
@@ -147,7 +143,6 @@ public class GameController implements Serializable {
                     System.out.println("Closing game " + gameID + " due to lack of online players");
                     game.getVirtualView().notifyEndGameDisconnection();
                     lobby.notifyEndGame(gameID);
-                    return;
                 } catch (InvalidIDException  e) {
                     throw new RuntimeException(e);
                 }
@@ -155,13 +150,13 @@ public class GameController implements Serializable {
                 try {
                     System.out.println("There are enough players in game " + gameID + " to continue");
                     turnDealer();
-                } catch (InvalidIDException | IllegalValueException | IOException e) {
+                } catch (InvalidIDException |  IOException e) {
                     throw new RuntimeException(e);
                 }
             }
             }
         };
-        long delay = 60000;
+        long delay = 10000;
         timer.schedule(task, delay);
     }
 
@@ -186,7 +181,7 @@ public class GameController implements Serializable {
      * @return a boolean value: true->somebody is still online
      *                          false->everybody is offline or disconnected.
      */
-    private boolean checkIfEverybodyIsDisconnected() {
+    public boolean checkIfEverybodyIsDisconnected() {
         for (User u: playerList){
             if (u.getInGame()){
                 return false;
@@ -200,13 +195,13 @@ public class GameController implements Serializable {
      * Method to get the maximum possible number of tiles that can be selected from the board
      * Calls the view to ask the payer about how many tiles the player wants to retrieve
      */
-    public void firstOperation() throws IllegalValueException, IOException, InvalidIDException {
+    public void firstOperation() throws  IOException, InvalidIDException {
         if(!playerList.get(currentPlayer).getInGame()) {
             turnDealer();
         }else{
-            this.maxTile = playerList.get(currentPlayer).maxValueOfTiles();
-            if(maxTile==-1){
-                System.out.println("ed è qui l'ultimo momento per cambiare giocatore, ma se non lo fai sei un babbo");
+            try{
+                this.maxTile = playerList.get(currentPlayer).maxValueOfTiles();
+            }catch (IllegalValueException e){
                 turnDealer();
                 return;
             }
@@ -271,8 +266,8 @@ public class GameController implements Serializable {
      * @return true is the choice is valid
      */
     private boolean validTilesCheck(List<Tile> chosenList) {
-        List<List<Tile>> choosable = game.getBoard().choosableTiles(chosenList.size());
-        return choosable.stream().anyMatch(list -> new HashSet<>(list).containsAll(chosenList));
+        List<List<Tile>> choosable = game.getBoard().choosableTiles(this.playerList.get(currentPlayer).getTilesNumber());
+        return choosable.stream().anyMatch(list -> new HashSet<>(list).containsAll(chosenList)) && chosenList.size() == this.playerList.get(currentPlayer).getTilesNumber();
     }
 
 
@@ -297,7 +292,7 @@ public class GameController implements Serializable {
                 }
 
                 game.pointCount(playerList.get(currentPlayer));
-                if (this.endGame) {
+                if (firstEnder) {
                     game.endGame(playerList.get(currentPlayer));
                 }
                 turnDealer();
@@ -312,7 +307,7 @@ public class GameController implements Serializable {
      * Method used to initialize the parameters of the game, called before the firs turn of the game
      * Calls the view in order to display the initial board and the cards that have been extracted randomly
      */
-    public void firstTurnStarter() throws IllegalValueException, IOException, InvalidIDException {
+    public void firstTurnStarter() throws IOException, InvalidIDException {
         game.getVirtualView().notifyTurnStart(null);
         playerList = game.randomPlayers();
         for(int i=0; i < game.getNumplayers(); i++){
@@ -463,4 +458,27 @@ public class GameController implements Serializable {
         return playerList.stream().filter(user -> user.getNickname().equals(nickname)).collect(Collectors.toList()).get(0);
     }
 
+    public boolean getEndGame(){
+        return this.endGame;
+    }
+
+    public void setEndGame(boolean endGame) {
+        this.endGame = endGame;
+    }
+
+    public void setCurrentPlayer(int currentPlayer) {
+        this.currentPlayer = currentPlayer;
+    }
+
+    public void setPlayerList(List<User> playerList) {
+        this.playerList = playerList;
+    }
+
+    public void setMaxTile(int maxTile) {
+        this.maxTile = maxTile;
+    }
+
+    public void setPossibleColumnArray(boolean[] possibleColumnArray) {
+        this.possibleColumnArray = possibleColumnArray;
+    }
 }

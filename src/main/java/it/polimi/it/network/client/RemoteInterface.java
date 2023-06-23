@@ -171,4 +171,10 @@ public interface RemoteInterface extends Remote, Serializable {
      * @throws RemoteException .
      */
     void ping() throws RemoteException;
+
+    /**
+     * After the end of a game this method gives the possibility to create a new game.
+     * @throws RemoteException .
+     */
+    void restart() throws RemoteException;
 }

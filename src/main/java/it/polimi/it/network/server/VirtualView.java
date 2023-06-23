@@ -474,10 +474,24 @@ public class VirtualView implements Serializable {
             if (receiver.getInGame() && !disconn_users.contains(receiver.getNickname())) {
                 try {
                     RemoteInterface client = users.get(receiver.getNickname());
-                    client.printError("This game was closed due to the lack of players! :(\n");
+                    client.printError("You have won because this game was closed due to the lack of players! :(\n");
                 } catch (RemoteException e) {
                     throw new RuntimeException(e);
                 }
+            }
+        }
+    }
+
+    /**
+     * Notifies to the clients that they can restart a new game.
+     */
+    public void restart(List<User> receivers){
+        for (User user : receivers) {
+            try {
+                RemoteInterface client = users.get(user.getNickname());
+                client.restart();
+            } catch (RemoteException e) {
+                throw new RuntimeException(e);
             }
         }
     }

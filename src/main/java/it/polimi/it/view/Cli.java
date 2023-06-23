@@ -129,6 +129,17 @@ public class Cli implements ViewInterface, Serializable {
         update();
     }
 
+    /**
+     * method that restart all the variable of the game
+     */
+    @Override
+    public void clean() {
+        playersShelfies.clear();
+        playersPoints.clear();
+        order.clear();
+        names.clear();
+    }
+
 
     /**
      * Setter method for the nicknames in their padded version (fixed 12 chars length)

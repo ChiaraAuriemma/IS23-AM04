@@ -8,7 +8,6 @@ import it.polimi.it.model.Card.CommonGoalCards.*;
 import it.polimi.it.model.Card.PersonalGoalCards.*;
 import it.polimi.it.network.server.VirtualView;
 import java.io.Serializable;
-import java.rmi.RemoteException;
 import java.util.*;
 
 
@@ -113,7 +112,6 @@ public class Game implements Serializable {
     /**
      * Method that calculates the total points scored by the players based on
      * their shelfies' tiles' positions and adjacency.
-     * @throws RemoteException .
      */
     public void pointsFromAdjacent() {
         int tmp_point;
@@ -129,7 +127,6 @@ public class Game implements Serializable {
      * Method that calculates the final points of every player, ends the game
      * and notifies VirtualView about that.
      * @param currentPlayer is the player that first finished to fill his shelfie.
-     * @throws RemoteException .
      */
     public void endGame (User currentPlayer) {
         int i;
@@ -146,7 +143,6 @@ public class Game implements Serializable {
 
     /**
      * Method that draws 2 random common cards for the Game.
-     * @throws RemoteException .
      */
     public void drawCommonCards() {
         Random rnd = new Random();
@@ -176,7 +172,6 @@ public class Game implements Serializable {
 
     /**
      * Method that draws a random Personal Card for the players.
-     * @throws RemoteException .
      */
     public void drawPersonalCard () {
         PersonalGoalCard card;
@@ -195,7 +190,6 @@ public class Game implements Serializable {
     /**
      * Method that counts the total points scored by a given
      * @param player .
-     * @throws RemoteException .
      */
     public void pointCount(User player) {
         int i = players.indexOf(player);
@@ -338,14 +332,22 @@ public class Game implements Serializable {
         return this.cards.get(i);
     }
 
+    public void addPersonalCard(int id, int i){
+        this.cards.add(i,new PersonalGoalCard(id));
+    }
+
+    public void setCard1(CommonGoalCard card1) {
+        this.card1 = card1;
+    }
+
+    public void setCard2(CommonGoalCard card2) {
+        this.card2 = card2;
+    }
+
     public PersonalGoalCard getPersonalCard(User user){
         return this.cards.get(players.indexOf(user));
     }
 
-
-    public ArrayList<User> playersOrder(){
-        return playersOrder;
-    }
 
 
 }

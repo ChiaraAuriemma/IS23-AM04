@@ -90,19 +90,27 @@ public class Lobby implements Serializable {
                         .stream().filter(u -> Objects.equals(u.getNickname(), nickname))
                         .collect(Collectors.toList()).get(0))).getInGame()) {
                     user = new User(nickname);
-                    user.setInGame(true);
-                    user.setShelfie(userList.get(userList.indexOf(userList
-                            .stream().filter(u -> Objects.equals(u.getNickname(), nickname))
-                            .collect(Collectors.toList()).get(0))).getShelfie());
+
                     int gameID = userList.get(userList.indexOf(userList
                             .stream().filter(u -> Objects.equals(u.getNickname(), nickname))
-                            .collect(Collectors.toList()).get(0))).getGame().getGameid();
-                    gameControllerList.stream().filter(gameController -> gameController.getGame().getGameid() == gameID).collect(Collectors.toList()).get(0).swapPlayers(
-                            userList.stream().filter(u -> Objects.equals(u.getNickname(), nickname)).collect(Collectors.toList()).get(0), user);
-                    userList.set(userList.indexOf(userList
-                            .stream().filter(u -> Objects.equals(u.getNickname(), nickname))
-                            .collect(Collectors.toList()).get(0)), user);
-                    System.out.println(user.getNickname() + "reconnected!");
+                            .collect(Collectors.toList()).get(0))).getGameid();
+                    try {
+                        getGameController(gameID);
+                        user.setInGame(true);
+                        user.setShelfie(userList.get(userList.indexOf(userList
+                                .stream().filter(u -> Objects.equals(u.getNickname(), nickname))
+                                .collect(Collectors.toList()).get(0))).getShelfie());
+                        gameControllerList.stream().filter(gameController -> gameController.getGame().getGameid() == gameID).collect(Collectors.toList()).get(0).swapPlayers(
+                                userList.stream().filter(u -> Objects.equals(u.getNickname(), nickname)).collect(Collectors.toList()).get(0), user);
+                        userList.set(userList.indexOf(userList
+                                .stream().filter(u -> Objects.equals(u.getNickname(), nickname))
+                                .collect(Collectors.toList()).get(0)), user);
+                        System.out.println(user.getNickname() + "reconnected!");
+                    } catch (InvalidIDException e) {
+                        userList.set(userList.indexOf(userList
+                                .stream().filter(u -> Objects.equals(u.getNickname(), nickname))
+                                .collect(Collectors.toList()).get(0)), user);
+                    }
 
                 }else{
                     throw new ExistingNicknameException("This nickname already exists!");
@@ -147,15 +155,12 @@ public class Lobby implements Serializable {
      * @throws IllegalValueException if the client write a game ID that not exist
      * @throws RemoteException if there is some problem with RMI
      */
-    public GameController
-    joinGame(String username, int gameID) throws InvalidIDException, WrongPlayerException, IllegalValueException, IOException {
+    public GameController joinGame(String username, int gameID) throws InvalidIDException, WrongPlayerException, IllegalValueException, IOException {
         List<Game> findGame = gameList.stream().filter(game -> game.getGameid() == gameID).collect(Collectors.toList());
         if(gameID<gameCounterID && !findGame.isEmpty()){
             if(findGame.get(0).getCurrentPlayersNum()<findGame.get(0).getNumplayers()){
                 findGame.get(0).joinGame(userList.get(userList.indexOf(userList.stream().filter(u -> Objects.equals(u.getNickname(), username)).collect(Collectors.toList()).get(0))));
-                if(!userList.get(userList.indexOf(userList.stream().filter(u -> Objects.equals(u.getNickname(), username)).collect(Collectors.toList()).get(0))).getInGame()){
-                    userList.get(userList.indexOf(userList.stream().filter(u -> Objects.equals(u.getNickname(), username)).collect(Collectors.toList()).get(0))).setInGame(true);
-                }
+
                 if (findGame.get(0).getNumplayers()==findGame.get(0).getCurrentPlayersNum()){
                     gameControllerList.get(gameList.indexOf(findGame.get(0))).firstTurnStarter();
                 }
@@ -207,6 +212,16 @@ public class Lobby implements Serializable {
      * @throws InvalidIDException if the give game ID is not existing
      */
     public void notifyEndGame(int gameID) throws InvalidIDException {
+        if(!getGameController(gameID).checkIfEverybodyIsDisconnected()){
+            List<User> users = getGameController(gameID).getPlayerList().stream().filter(User::getInGame).collect(Collectors.toList());
+            getGame(gameID).getVirtualView().restart(users);
+
+            for(User u : users){
+                user.setInGame(false);
+                User user2 = new User(user.getNickname());
+                userList.set(userList.indexOf(user), user2);
+            }
+        }
         gameList.remove(getGame(gameID));
         gameControllerList.remove(getGameController(gameID));
     }
@@ -244,5 +259,37 @@ public class Lobby implements Serializable {
                 .collect(Collectors.toList()).get(0)))
                 .getGame().getVirtualView().insertDisconnection(username);
        System.out.println("Player " + username + " got disconnected - lobby \n");
+    }
+
+    /****************************************************
+     *                                                  *
+     *                                                  *
+     * Methods inserted just for test purposes          *
+     *                                                  *
+     *                                                  *
+     ****************************************************/
+
+    public ArrayList<Game> getGameList() {
+        return gameList;
+    }
+
+    public ArrayList<User> getUserList() {
+        return userList;
+    }
+
+    public ArrayList<GameController> getGameControllerList() {
+        return gameControllerList;
+    }
+
+    public int getGameCounterID() {
+        return gameCounterID;
+    }
+
+    public RMIImplementation getServerRMI() {
+        return serverRMI;
+    }
+
+    public ServerTCP getServerTCP() {
+        return serverTCP;
     }
 }

@@ -232,6 +232,16 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
                     view.boardRefill();
                     break;
 
+                case RESTART:
+                    stage.setStage(TurnStages.CREATEorJOIN);
+                    try {
+                        view.clean();
+                        view.joinOrCreate(username);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    break;
+
                 case PING:
                     PingMessage pingMessage= (PingMessage) response.getPayload();
                     PongMessage pongMessage = new PongMessage(" ");

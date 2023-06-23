@@ -96,4 +96,6 @@ public interface ViewInterface {
     void boardRefill();
 
     void recover(int gameID, Tile[][] matrix, ArrayList<Tile[][]> shelfies, int id1, int id2, PersonalGoalCard personalGoalCard, ArrayList<Integer> points, List<String> playerList);
+
+    public void clean();
 }

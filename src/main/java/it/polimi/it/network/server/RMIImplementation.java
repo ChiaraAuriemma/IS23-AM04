@@ -16,7 +16,7 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.*;
 
-public class RMIImplementation extends UnicastRemoteObject implements ServerInterface, Serializable {
+public class RMIImplementation implements ServerInterface, Serializable {
 
     private static final long serialVersionUID = -2905395065429128985L;
     private Lobby lobby;
@@ -48,9 +48,10 @@ public class RMIImplementation extends UnicastRemoteObject implements ServerInte
     public void startServer(int port) throws RemoteException {
         System.out.println("Server RMI started");
         this.port = port;
+        ServerInterface stub = (ServerInterface) UnicastRemoteObject.exportObject(this,port);
         registry = LocateRegistry.createRegistry(port);
         try {
-            registry.bind("server_RMI", this);
+            registry.bind("server_RMI", stub);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -242,7 +243,7 @@ public class RMIImplementation extends UnicastRemoteObject implements ServerInte
                                 if(userGame.get(user).getCurrentPlayer() == userGame.get(user).getPlayerNumber(userGame.get(user).getUser(user))){
                                     try {
                                         userGame.get(user).turnDealer();
-                                    } catch (InvalidIDException | IllegalValueException | IOException ex) {
+                                    } catch (InvalidIDException | IOException ex) {
                                         throw new RuntimeException(ex);
                                     }
                                 }

@@ -544,6 +544,11 @@ public class GUIHandler implements ViewInterface {
         update();
     }
 
+    @Override
+    public void clean() {
+
+    }
+
 
     public ClientInterface getClient(){
         return client;

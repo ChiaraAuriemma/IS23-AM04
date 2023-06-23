@@ -22,6 +22,7 @@ public class User implements Serializable {
     private Board board;
     private Shelfie shelf;
     private Game game;
+    private int gameid;
     private int tilesNumber;
     private final String nickname;
     private boolean inGame;
@@ -171,6 +172,7 @@ public class User implements Serializable {
      */
     public void setGame(Game game){
         this.game = game;
+        this.gameid = game.getGameid();
         this.inGame = true;
     }
 
@@ -183,6 +185,13 @@ public class User implements Serializable {
         return this.game;
     }
 
+    /**
+     * Getter method
+     * @return the gameid.
+     */
+    public int getGameid() {
+        return this.gameid;
+    }
 
     /**
      * Getter method
@@ -244,5 +253,21 @@ public class User implements Serializable {
      */
     public void newPrivateMessage(String chatMessage) {
         chat.newPrivateMessage(chatMessage);
+    }
+
+    /**
+     * Method used to
+     * @return the tilesNumber of the player who is playing.
+     */
+    public int getTilesNumber() {
+        return tilesNumber;
+    }
+
+    /**
+     * Method used to
+     * set the tilesNumber for testing.
+     */
+    public void setTilesNumber(int tilesNumber) {
+        this.tilesNumber = tilesNumber;
     }
 }
