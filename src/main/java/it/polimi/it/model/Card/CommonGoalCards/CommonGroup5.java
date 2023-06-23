@@ -17,11 +17,6 @@ public class CommonGroup5 extends CommonGoalCard  implements Serializable {
      */
     public CommonGroup5(int id){
         super(id);
-        this.numColor = new ArrayList<Integer>(6);
-        int i;
-        for(i=0; i<6; i++) {
-            this.numColor.add(i, 0);
-        }
     }
 
 
@@ -31,7 +26,11 @@ public class CommonGroup5 extends CommonGoalCard  implements Serializable {
      * @return true or false
      */
     public Boolean checkGoal(Shelfie shelfie){
+        numColor= new ArrayList<Integer>(6);
         int i,column,row,tmp;
+        for(i=0; i<6; i++) {
+            this.numColor.add(i, 0);
+        }
         for(column=0;column<5;column++){
             for(row=0; row<6; row++){
                 if(shelfie.getCell(column,row).getColor().equals("PINK")){
