@@ -45,8 +45,11 @@
 <br><br>
 
 ### Running The Game
+The Game consists in a jar file named <code>PLACEHOLDER</code> that can be started by command line. In order to start playing you'll need to start the Server and at least two Clients.
 #### Server
+<code>PLACEHOLDER</code> is the command to start the Server and is the only command you will need until the Server needs to be shut down.
 #### Client
+<code>PLACEHOLDER</code> is the command to start the Server. Later the player will be asked a nickname and whether he wants to create a new game or join an existing one
 #### GUI
 #### CLI
 
