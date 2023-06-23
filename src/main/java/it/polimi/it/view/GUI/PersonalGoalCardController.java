@@ -33,7 +33,6 @@ public class PersonalGoalCardController implements Initializable, GuiInterface {
     public void initialize(URL location, ResourceBundle resources) {
         Image card = new Image(GUIApplication.getPersonalCard().toString());
         PersonalGoalCard.setImage(card);
-
     }
 
 

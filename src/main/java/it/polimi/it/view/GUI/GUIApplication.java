@@ -1,6 +1,5 @@
 package it.polimi.it.view.GUI;
 
-import it.polimi.it.model.Tiles.Tile;
 import it.polimi.it.network.client.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -9,12 +8,8 @@ import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 import javafx.scene.image.Image;
 
-import java.awt.*;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.URL;
-import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -140,7 +135,7 @@ public class GUIApplication extends Application {
             stageRef.show();
         }
         if(client.getGameStage().equals(TurnStages.CHOOSECOLUMN)){
-            FXMLLoader fxmlLoader = new FXMLLoader(GUIApplication.class.getResource("/ProvaVBox.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(GUIApplication.class.getResource("/GameTurn.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
             setCurrentController(fxmlLoader.getController());
             currentController.setClient(client);
@@ -151,7 +146,7 @@ public class GUIApplication extends Application {
             stageRef.show();
         }
         if(client.getGameStage().equals(TurnStages.TILESNUM)){
-            FXMLLoader fxmlLoader = new FXMLLoader(GUIApplication.class.getResource("/ProvaVBox.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(GUIApplication.class.getResource("/GameTurn.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
             setCurrentController(fxmlLoader.getController());
             currentController.setClient(client);
@@ -162,7 +157,7 @@ public class GUIApplication extends Application {
             stageRef.show();
         }
         if(client.getGameStage().equals(TurnStages.CHOOSETILES)){
-            FXMLLoader fxmlLoader = new FXMLLoader(GUIApplication.class.getResource("/ProvaVBox.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(GUIApplication.class.getResource("/GameTurn.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
             setCurrentController(fxmlLoader.getController());
             currentController.setClient(client);

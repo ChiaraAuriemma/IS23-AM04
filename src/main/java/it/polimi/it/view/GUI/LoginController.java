@@ -16,6 +16,10 @@ import javafx.scene.control.TextField;
 import java.io.IOException;
 import java.util.Objects;
 
+/**
+ * Controller of the Login scene that it's visualized when a client connects to the server; here te client has ti write its nickname
+ * and choose between create or join a game
+ */
 public class LoginController implements GuiInterface{
 
     private static Stage stage;
@@ -29,6 +33,11 @@ public class LoginController implements GuiInterface{
     private static GUIHandler guiHandler;
     private static ClientInterface client;
 
+    /**
+     * Method that trigger when the button "Join Game" is pressed after the client has written his nickname; it changes scene to "Join game"
+     * @param actionEvent is the trigger of the method and in this case it's the press of the button "Join Game"
+     * @throws IOException ?
+     */
 
     public void GotoJoinGame(ActionEvent actionEvent) throws IOException {
         GUIApplication.setCreateOrJoin("JOIN");
@@ -43,7 +52,11 @@ public class LoginController implements GuiInterface{
             GUIApplication.showAlert(Alert.AlertType.WARNING, "Login error", "Invalid username, try again");
         }
     }
-
+    /**
+     * Method that trigger when the button "Create Game" is pressed after the client has written his nickname; it changes scene to "Create game"
+     * @param actionEvent is the trigger of the method and in this case it's the press of the button "Create Game"
+     * @throws IOException ?
+     */
     public void GotoCreateGame(ActionEvent actionEvent) throws IOException {
         GUIApplication.setCreateOrJoin("CREATE");
         if(UsernameField.getText().length() > 0 && UsernameField.getText().length() < 12){

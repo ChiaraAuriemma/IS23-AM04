@@ -37,6 +37,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+/**
+ * Controller of the "End Game" scene that is seen when the game ends and give the possibility to the clients to restart a new game o join a new one
+ */
 public class EndGameController implements GuiInterface, Initializable {
 
     ClientInterface client;
@@ -54,8 +57,11 @@ public class EndGameController implements GuiInterface, Initializable {
     TextFlow textFlow;
 
 
-
-
+    /**
+     * Method that initialize the end game scene when the game is finished, taking each client's points and creating a leaderboard in decrescendo order
+     * @param url ?
+     * @param resourceBundle ?
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
