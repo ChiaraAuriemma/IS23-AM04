@@ -52,16 +52,13 @@ public class Cli implements ViewInterface, Serializable {
     private String Line23 = "║                                                    Personal    ║";
     private String Line24 = "║   Common Goal:                                                 ║";
     private String Line25;    private String Line26;    private String Line27;
-    private String Line28;    private String Line29;
-    private String Line30;    private String Line31;
+    private String Line28;    private String Line29;    private String Line30;
+    private String Line31;    private String Line33;
     private final String Line32 = "║                           └─────────────────────────────────┘  ║";
-    private String Line33;
+
 
     private List<String> chatMessages = new ArrayList<>();
-    private Tile[][] p1;
-    private Tile[][] p2;
-    private Tile[][] p3;
-    private Tile[][] p4;
+    private Tile[][] p1;     private Tile[][] p2;     private Tile[][] p3;     private Tile[][] p4;
     private String yourself;
 
 
@@ -106,7 +103,17 @@ public class Cli implements ViewInterface, Serializable {
     }
 
 
-
+    /**
+     * Forces a Cli update after the reconnection to the game
+     * @param gameID is the gameID of the game that the player just reconnected to.
+     * @param matrix is the LivingRoom Board
+     * @param shelfies is a List of the Players' Shelfies
+     * @param id1 is the first CommonGoalCard
+     * @param id2 is the second CommonGoalCard
+     * @param personalGoalCard is the player's PersonaleGoalCard
+     * @param points is the list of the players' points
+     * @param playerList is the list of the players, ordered as their turns are.
+     */
     @Override
     public void recover(int gameID, Tile[][] matrix, ArrayList<Tile[][]> shelfies, int id1, int id2, PersonalGoalCard personalGoalCard, ArrayList<Integer> points, List<String> playerList) {
         setOrderView(new ArrayList<>(playerList));
@@ -159,7 +166,6 @@ public class Cli implements ViewInterface, Serializable {
 
     /**
      * Setter method, used when a player's points amount changed
-     *
      * @param player is the user
      * @param points is the new value of the user's points
      */
@@ -172,7 +178,6 @@ public class Cli implements ViewInterface, Serializable {
 
     /**
      * Helper method that given a
-     *
      * @param points integer
      * @return the corresponding points string, with a fixed length of 2
      */
@@ -186,7 +191,7 @@ public class Cli implements ViewInterface, Serializable {
 
 
     /**
-     * Initializes a new shelf for every user, to be put in the user-shelf hasmap
+     * Initializes a new shelf for every user, to be put in the user-shelf hashmap
      */
     private void shelfieInitializer() {
         User a = new User("a");
@@ -449,7 +454,9 @@ public class Cli implements ViewInterface, Serializable {
 
 
     /**
-     *
+     * Stores in the cli
+     * @param choosableTilesList the list of lists of tiles that the player may choose in this turn
+     * @param num is the number of tiles that the player has to take from the LivingRoom.
      */
     public void takeableTiles(List<List<Tile>> choosableTilesList, int num) {
         this.choosableTilesList = choosableTilesList;
@@ -470,6 +477,9 @@ public class Cli implements ViewInterface, Serializable {
     }
 
 
+    /**
+     * Asks the player to insert his nickname.
+     */
     public void askNickname() {
         out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
         Title();
@@ -636,11 +646,17 @@ public class Cli implements ViewInterface, Serializable {
     }
 
 
+    /**
+     * Prints the newly updated CLI.
+     */
     private void printEveryLine() {
         out.printf("%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n", Line1, Line2, Line3, Line4, Line5, Line6, Line7, Line8, Line9, Line10, Line11, Line12, Line13, Line14, Line15, Line16, Line17, Line18, Line19, Line20, Line21, Line22, Line23, Line24, Line25, Line26, Line27, Line28, Line29, Line30, Line31, Line32, Line33);
     }
 
 
+    /**
+     * Updates and prints the CLI.
+     */
     private void updateEveryLine() {
         Line1 = firstLine;
         Line2 = blankLine;
@@ -656,7 +672,6 @@ public class Cli implements ViewInterface, Serializable {
         setPointsLine();
         Line11 = pointsLine;
         Line12 = blankLine;
-
         Line14 = setLine14();
         Line15 = setLine15();
         Line16 = setLine16();
@@ -664,10 +679,8 @@ public class Cli implements ViewInterface, Serializable {
         Line18 = setLine18();
         Line19 = setLine19();
         Line20 = blankLine;
-
         Line21 = setLine21();
         Line22 = setLine22();
-
         Line23 = setLineBoardChat(0);
         Line24 = setLineBoardChat(1);
         Line25 = setLineBoardChat(2);
@@ -677,9 +690,126 @@ public class Cli implements ViewInterface, Serializable {
         Line29 = setLineBoardChat(6);
         Line30 = setLineBoardChat(7);
         Line31 = setLineBoardChat(8);
-
         Line33 = lastLine;
     }
+
+
+    /**
+     * Given a tiles matrix and a position,
+     * @param shelf is the tiles matrix
+     * @param row is a given row of the matrix
+     * @param col is a given column of the matrix
+     * @return the correct escape character in order to print the tile in the cli.
+     */
+    private String sColorPicker(Tile[][] shelf, int row, int col){
+        return colorPicker(shelf[row][col].getColor());
+    }
+
+
+    /**
+     * Prints the current position and color of a tile
+     * @param color is the tile's color
+     * @param row is the tile's row
+     * @param column is the tile's column
+     */
+    public void printTile(String color, int row, int column) {
+        out.print("row: " + row +  ", column: " + column + ", color: " + color );
+    }
+
+
+    /**
+     * Prints some text or colors.
+     * @param s is the character.
+     */
+    public void printThings(String s) {
+        out.print(s);
+    }
+
+
+    /**
+     * Forces the chat to be updated
+     * @param currentChat is the list of the newest chat messages.
+     */
+    public void updateChat(List<String> currentChat) {
+        chatMessages.clear();
+        chatMessages.addAll(currentChat);
+    }
+
+
+    /**
+     * Sets the player (this client)'s name to the given
+     * @param nickname .
+     */
+    @Override
+    public void setThisNick(String nickname) {
+        this.yourself = nickname;
+    }
+
+
+    /**
+     * Notifies the LivingRoom Board's refill.
+     */
+    public void boardRefill() {
+        out.println("Refilling the board, please wait...\n");
+    }
+
+
+    /**
+     * Sets and prints the disposition of the final leaderboard.
+     * Gets called only once at the end of the game, if the game didn't end due to the lack of players.
+     */
+    public void leaderboardSet(){
+        String up   = "            ╔════════════════════════════════════════╗";
+        String bl   = "            ║                                        ║";
+        String down = "            ╚════════════════════════════════════════╝";
+        LinkedHashMap<String, String> sortedMap = new LinkedHashMap<>();
+        Collection<String> values = playersPoints.values();
+        List<String> valueList = new ArrayList<>(values);
+        Collections.sort(valueList, Collections.reverseOrder());
+        for (String value : valueList) {
+            for (Map.Entry<String, String> entry : playersPoints.entrySet()) {
+                if (entry.getValue().equals(value)) {
+                    sortedMap.put(entry.getKey(), value);
+                    break;
+                }
+            }
+        }
+        out.println(up);
+        out.println(bl);
+        out.println("            ║   This game ended! GG to the winner!   ║");
+        out.println(bl);
+        out.println("            ║           Leaderboard:                 ║");
+        out.println(bl);
+        out.println(bl);
+        for (Map.Entry<String, String> entry : sortedMap.entrySet()) {
+            System.out.println("            ║           "+ entry.getKey() + " => " + entry.getValue()+"           ║");
+        }
+        out.println(bl);
+        out.println(bl);
+        out.println(bl);
+        out.println(down);
+    }
+
+
+    /**
+     * Test-only method.
+     */
+    public void fakePersonal() {
+        playersPersonalCard = new Tile[6][5];
+        for (int row = 0; row < 6; row++) {
+            for (int column = 0; column < 5; column++) {
+                playersPersonalCard[row][column] = new Tile(row, column, PossibleColors.GREEN);
+            }
+        }
+    }
+
+
+    /************************************************
+     *                                              *
+     * Setter methods for specific lines of the cli *
+     *                                              *
+     *************************************************/
+
 
 
     private String setLineBoardChat(int line) {
@@ -793,11 +923,6 @@ public class Cli implements ViewInterface, Serializable {
     }
 
 
-    private String sColorPicker(Tile[][] shelf, int row, int col){
-        return colorPicker(shelf[row][col].getColor());
-    }
-
-
     private String setLine4() {
         String returnString = null;
         switch (numPlayers){
@@ -810,82 +935,10 @@ public class Cli implements ViewInterface, Serializable {
                     " " + border
             ;break;
             case 4: returnString = border + "   " +
-                                    "   0 1 2 3 4   " + "   0 1 2 3 4   " + "   0 1 2 3 4   " + "   0 1 2 3 4   " +
-                                    " " + border
-                                    ;break;
+                    "   0 1 2 3 4   " + "   0 1 2 3 4   " + "   0 1 2 3 4   " + "   0 1 2 3 4   " +
+                    " " + border
+            ;break;
         }
         return returnString;
-    }
-
-
-    public void fakePersonal() {
-        playersPersonalCard = new Tile[6][5];
-        for (int row = 0; row < 6; row++) {
-            for (int column = 0; column < 5; column++) {
-                playersPersonalCard[row][column] = new Tile(row, column, PossibleColors.GREEN);
-            }
-        }
-    }
-
-
-    public void printTile(String color, int row, int column) {
-        out.print("row: " + row +  ", column: " + column + ", color: " + color );
-    }
-
-
-    public void printThings(String s) {
-        out.print(s);
-    }
-
-
-    public void updateChat(List<String> currentChat) {
-        chatMessages.clear();
-        chatMessages.addAll(currentChat);
-    }
-
-    @Override
-    public void setThisNick(String nickname) {
-        this.yourself = nickname;
-    }
-
-
-
-    public void boardRefill() {
-        out.println("Refilling the board, please wait...\n");
-    }
-
-
-
-    public void leaderboardSet(){
-        String up   = "            ╔════════════════════════════════════════╗";
-        String bl   = "            ║                                        ║";
-        String down = "            ╚════════════════════════════════════════╝";
-        LinkedHashMap<String, String> sortedMap = new LinkedHashMap<>();
-        Collection<String> values = playersPoints.values();
-        List<String> valueList = new ArrayList<>(values);
-        Collections.sort(valueList, Collections.reverseOrder());
-        for (String value : valueList) {
-            for (Map.Entry<String, String> entry : playersPoints.entrySet()) {
-                if (entry.getValue().equals(value)) {
-                    sortedMap.put(entry.getKey(), value);
-                    break;
-                }
-            }
-        }
-        out.println(up);
-        out.println(bl);
-        out.println("            ║   This game ended! GG to the winner!   ║");
-        out.println(bl);
-        out.println("            ║           Leaderboard:                 ║");
-        out.println(bl);
-        out.println(bl);
-        for (Map.Entry<String, String> entry : sortedMap.entrySet()) {
-            System.out.println("            ║           "+ entry.getKey() + " => " + entry.getValue()+"           ║");
-        }
-        out.println(bl);
-        out.println(bl);
-        out.println(bl);
-        out.println(down);
-
     }
 }
