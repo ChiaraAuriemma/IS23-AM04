@@ -383,18 +383,15 @@ public class GUIHandler implements ViewInterface {
 
     @Override
     public void setFinalPoints(List<String> users, ArrayList<Integer> points) throws IOException {
-        /*
         Platform.runLater(new Thread(()-> {
             try {
-                client.ser
+                GUIApplication.setFinalPoint(users, points);
                 GUIApplication.changeScene();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }));
         Thread.interrupted();
-
-         */
 
         //devo cambiare scena per mostrare l'End GAME
     }
@@ -445,6 +442,9 @@ public class GUIHandler implements ViewInterface {
             try {
                 StringBuilder stringBuilder = new StringBuilder();
                 for (String str : currentChat) {
+                    if(str.length()>33){
+                        str = "[DM] " + str;
+                    }
                     stringBuilder.append(str).append("\n");
                 }
                 String joinedString = stringBuilder.toString().trim();

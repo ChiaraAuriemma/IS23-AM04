@@ -2,11 +2,11 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.TextFlow?>
 
 <AnchorPane prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.it.view.GUI.EndGameController">
    <children>
@@ -25,47 +25,11 @@
             <Font name="System Bold" size="28.0" />
          </font>
       </Label>
-      <Label fx:id="player1" layoutX="71.0" layoutY="397.0" text="Label">
-         <font>
-            <Font size="22.0" />
-         </font>
-      </Label>
-      <Label fx:id="player2" layoutX="72.0" layoutY="449.0" text="Label">
-         <font>
-            <Font size="22.0" />
-         </font>
-      </Label>
-      <Label fx:id="player3" layoutX="71.0" layoutY="496.0" text="Label">
-         <font>
-            <Font size="22.0" />
-         </font>
-      </Label>
-      <Label fx:id="player4" layoutX="81.0" layoutY="560.0" text="Label">
-         <font>
-            <Font size="22.0" />
-         </font>
-      </Label>
-      <Label fx:id="points1" layoutX="248.0" layoutY="403.0" text="Label">
-         <font>
-            <Font size="16.0" />
-         </font></Label>
-      <Label fx:id="points2" layoutX="246.0" layoutY="458.0" text="Label">
-         <font>
-            <Font size="16.0" />
-         </font></Label>
-      <Label fx:id="points3" layoutX="248.0" layoutY="512.0" text="Label">
-         <font>
-            <Font size="16.0" />
-         </font></Label>
-      <Label fx:id="points4" layoutX="242.0" layoutY="567.0" text="Label">
-         <font>
-            <Font size="16.0" />
-         </font></Label>
-      <Button layoutX="475.0" layoutY="560.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="130.0" text="Play Again">
+      <Button fx:id="playAgain" layoutX="475.0" layoutY="580.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="130.0" text="Play Again">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
-      <ListView fx:id="leaderBoard" layoutX="433.0" layoutY="303.0" prefHeight="200.0" prefWidth="200.0" />
+      <TextFlow fx:id="textFlow" layoutX="420.0" layoutY="300.0" lineSpacing="2.0" prefHeight="200.0" prefWidth="400.0" />
    </children>
 </AnchorPane>

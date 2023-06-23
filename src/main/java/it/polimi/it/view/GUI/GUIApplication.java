@@ -17,6 +17,7 @@ import java.net.URL;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class GUIApplication extends Application {
 
@@ -39,10 +40,21 @@ public class GUIApplication extends Application {
 
     private static ArrayList<String> players = new ArrayList<>(4);
     private static HashMap<String, Image[][]> shelfies = new HashMap<>();
+    private static HashMap<String, Integer> finalPoints = new HashMap<>();
 
     private static String currentChat;
 
+    public static void setFinalPoint(List<String> users, ArrayList<Integer> points) {
+        int i = 0;
+        for(String s: users){
+            finalPoints.put(s, points.get(i));
+            i++;
+        }
+    }
 
+    public static HashMap<String, Integer> getFinalPoints() {
+        return finalPoints;
+    }
 
     @Override
     public void start(Stage stage) throws IOException {

@@ -73,7 +73,6 @@
                 <Font size="18.0" />
             </font>
         </Label>
-        <Label fx:id="Player4" layoutX="959.0" layoutY="382.0" opacity="0.0" text="Label" />
         <Label layoutX="665.0" layoutY="530.0" text="Points:">
             <font>
                 <Font size="18.0" />
@@ -192,5 +191,6 @@
         <Label fx:id="Points3" layoutX="1030.0" layoutY="358.0" opacity="0.0" text="00" />
         <Label fx:id="Player2" layoutX="959.0" layoutY="15.0" text="Label" />
         <Label fx:id="Player3" layoutX="959.0" layoutY="197.0" opacity="0.0" text="Label" />
+        <Label fx:id="Player4" layoutX="959.0" layoutY="382.0" opacity="0.0" text="Label" />
     </children>
 </AnchorPane>

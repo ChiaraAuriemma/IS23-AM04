@@ -215,9 +215,9 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
     @Override
     public void setFinalPoints(List<String> usernames, ArrayList<Integer> points) throws IOException {
         view.setFinalPoints(usernames, points);
-        if(view instanceof Cli){
+        //if(view instanceof Cli){
             setStageToEndGame();
-        }
+        //}
     }
 
 
