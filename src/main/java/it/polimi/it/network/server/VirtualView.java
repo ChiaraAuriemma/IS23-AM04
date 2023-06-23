@@ -18,28 +18,41 @@ public class VirtualView implements Serializable {
 
     private static final long serialVersionUID = -3906432862304671330L;
     private Game game;
-
-    private ServerTCP serverTCP; //tolgo ???  NO
-
-    private RMIImplementation serverRMI; //tolgo ??
-                                            // NO, MI SERVE. Fra
+    private ServerTCP serverTCP;
+    private RMIImplementation serverRMI;
     private HashMap<String, RemoteInterface> users;
     private List<String> disconn_users ;
+
 
     public VirtualView(){
         users = new HashMap<>();
         disconn_users = new ArrayList<>();
     }
 
+
+    /**
+     * Setter method for the instance of
+     * @param game Game that this VirtualView handles.
+     */
     public void setGame(Game game){
         this.game = game;
     }
 
+
+    /**
+     * Setter method for a player in the game.
+     * @param username is the player's nickname
+     * @param remoteInterface is the RemoteInterface of the player (implemented in TCP or RMI)
+     */
     public void setUser(String username, RemoteInterface remoteInterface){
         users.put(username, remoteInterface);
     }
 
 
+    /**
+     * Sends to the clients of this game the players' turn order.
+     * @param order is the ordered ArrayList of players.
+     */
     public void startOrder(ArrayList<User> order) {
         ArrayList<String> orderNames = new ArrayList<>();
         for(User u: order){
@@ -61,6 +74,11 @@ public class VirtualView implements Serializable {
         }
     }
 
+
+    /**
+     * Method that
+     * @param username
+     */
     private void disconnect_user(String username) {
         if (!disconn_users.contains(username))
             serverRMI.disconnect_user(username);

@@ -24,10 +24,14 @@ public class ServerTCP implements Runnable, Serializable{
         this.port = portNumber;
         this.userTCP = new HashMap<>();
     }
-@Override
-    public void run(){
-        ExecutorService executor = Executors.newCachedThreadPool();  //crea un pool di thread che si autogestiscono
 
+
+    /**
+     * Starts the TCP Server
+     */
+    @Override
+    public void run(){
+        ExecutorService executor = Executors.newCachedThreadPool();
         System.out.println("Server TCP started");
 
         try {
@@ -35,21 +39,26 @@ public class ServerTCP implements Runnable, Serializable{
         } catch (IOException e) {
             System.out.print(e.getMessage());
         }
-
         System.out.println("Server TCP ready");
-
 
         while (true) {
             try {
-                clientSocket = serverSocket.accept(); //aspetta che qualcuno si colleghi
-                executor.submit(new ClientTCPHandler( lobby, this)); //l'oggetto all'interno deve essere Runnable
+                clientSocket = serverSocket.accept();
+                executor.submit(new ClientTCPHandler( lobby, this));
             } catch(IOException e) {
-                break; //entro nel caso il server socket venisse chiuso
+                break;
             }
         }
         executor.shutdown();
     }
 
+
+    /**
+     * Getter method for a TCP User
+     * @param user is the instance of the User class
+     * @return the corresponding Socket
+     * @throws NotTcpUserException .
+     */
     public Socket getUserTCP(User user) throws NotTcpUserException {
         if(userTCP.containsKey(user.getNickname())){
             return userTCP.get(user.getNickname());
@@ -58,18 +67,39 @@ public class ServerTCP implements Runnable, Serializable{
         }
     }
 
+
+    /**
+     * Setter method, registers a newly connected player and his socket
+     * @param user is the player
+     * @param socket is his socket.
+     */
     public void setUserTCP(User user, Socket socket){
         userTCP.put(user.getNickname(),socket);
     }
 
+
+    /**
+     * Setter method for the Lobby instance
+     * @param lobby .
+     */
     public void setLobby(Lobby lobby) {
         this.lobby = lobby;
     }
 
+
+    /**
+     * Getter method for the
+     * @return client Socket.
+     */
     public Socket getClientSocket() {
         return clientSocket;
     }
 
+
+    /**
+     * Removes a TCP user that disconnected from the server.
+     * @param user is the player that has to be disconnected.
+     */
     public void removeUserTCP(String user){
         this.userTCP.remove(user);
     }

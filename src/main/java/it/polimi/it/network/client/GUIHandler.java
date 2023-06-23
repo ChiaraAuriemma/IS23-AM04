@@ -1,18 +1,12 @@
 package it.polimi.it.network.client;
 
-import it.polimi.it.model.Card.CommonGoalCards.CommonGoalCard;
 import it.polimi.it.model.Card.PersonalGoalCards.PersonalGoalCard;
-import it.polimi.it.model.Game;
 import it.polimi.it.model.Tiles.Tile;
 import it.polimi.it.view.GUI.*;
 import it.polimi.it.view.ViewInterface;
 import javafx.application.Platform;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
@@ -383,18 +377,15 @@ public class GUIHandler implements ViewInterface {
 
     @Override
     public void setFinalPoints(List<String> users, ArrayList<Integer> points) throws IOException {
-        /*
         Platform.runLater(new Thread(()-> {
             try {
-                client.ser
+                GUIApplication.setFinalPoint(users, points);
                 GUIApplication.changeScene();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }));
         Thread.interrupted();
-
-         */
 
         //devo cambiare scena per mostrare l'End GAME
     }
@@ -445,6 +436,9 @@ public class GUIHandler implements ViewInterface {
             try {
                 StringBuilder stringBuilder = new StringBuilder();
                 for (String str : currentChat) {
+                    if(str.length()>33){
+                        str = "[DM] " + str;
+                    }
                     stringBuilder.append(str).append("\n");
                 }
                 String joinedString = stringBuilder.toString().trim();

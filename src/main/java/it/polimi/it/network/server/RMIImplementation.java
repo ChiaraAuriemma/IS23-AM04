@@ -84,6 +84,16 @@ public class RMIImplementation extends UnicastRemoteObject implements ServerInte
         return user.getNickname();
     }
 
+
+    /**
+     * Method invoked by an RMI client in order to create a new Game.
+     * @param username is the player's nickname
+     * @param playerNumber is the number of players that the host wants to join to the game.
+     * @param client is the RemoteInterface of who invoked the method.
+     * @return the GameID of the newly created game.
+     * @throws RemoteException .
+     * @throws WrongPlayerException .
+     */
     public int createGame(String username,int playerNumber, RemoteInterface client) throws RemoteException, WrongPlayerException {
         GameController gc;
         synchronized (lobby){
@@ -94,6 +104,18 @@ public class RMIImplementation extends UnicastRemoteObject implements ServerInte
         return gc.getGameID();
     }
 
+
+    /**
+     * Method invoked by an RMI client in order to join a Game.
+     * @param username is the player's nickname
+     * @param id is the ID of the game that the player wants to join.
+     * @param client is the RemoteInterface of who invoked the method.
+     * @return the GameID of the newly created game.
+     * @throws IOException .
+     * @throws InvalidIDException .
+     * @throws WrongPlayerException .
+     * @throws IllegalValueException .
+     */
     public int joinGame(String username,int id, RemoteInterface client) throws IOException, InvalidIDException, WrongPlayerException, IllegalValueException {
         GameController gc;
         synchronized (lobby) {
@@ -104,6 +126,16 @@ public class RMIImplementation extends UnicastRemoteObject implements ServerInte
         return gc.getGameID();
     }
 
+
+    /**
+     * Method invoked by an RMI client in order to choose the number of tiles to be taken from the board.
+     * @param username is the player's nickname
+     * @param numTiles is the number of tiles that the player wants to retrieve from the LivingRoom Board.
+     * @throws IOException .
+     * @throws WrongPlayerException .
+     * @throws IllegalValueException .
+     * @throws InvalidIDException .
+     */
     public void tilesNumMessage(String username,int numTiles) throws IOException, WrongPlayerException, IllegalValueException, InvalidIDException {
         GameController gc = userGame.get(username);
         synchronized (gc){
@@ -111,6 +143,18 @@ public class RMIImplementation extends UnicastRemoteObject implements ServerInte
         }
     }
 
+
+    /**
+     * Method invoked by an RMI client in order to take some tiles from the Board.
+     * @param username is the player's nickname
+     * @param choosenTiles is the list of tiles that the player chose to take from the LivingRoom Board.
+     * @throws IOException .
+     * @throws WrongPlayerException .
+     * @throws WrongListException .
+     * @throws IllegalValueException .
+     * @throws InvalidIDException .
+     * @throws WrongTileException .
+     */
     public void selectedTiles(String username, List<Tile> choosenTiles) throws IOException, WrongPlayerException, WrongListException, IllegalValueException, InvalidIDException, WrongTileException {
         GameController gc = userGame.get(username);
         synchronized (gc){
@@ -119,6 +163,15 @@ public class RMIImplementation extends UnicastRemoteObject implements ServerInte
         }
     }
 
+
+    /**
+     * Method invoked by an RMI client in order to put the tiles in a certain column of the Shelfie.
+     * @param username is the player's nickname
+     * @param columnNumber is the chosen column.
+     * @throws IOException .
+     * @throws InvalidIDException .
+     * @throws IllegalValueException .
+     */
     public void chooseColumn (String username,int columnNumber) throws IOException, InvalidIDException, IllegalValueException {
         GameController gc = userGame.get(username);
         synchronized (gc){
@@ -126,6 +179,13 @@ public class RMIImplementation extends UnicastRemoteObject implements ServerInte
         }
     }
 
+
+    /**
+     * Method invoked by an RMI client in order to send a chat message.
+     * @param username is the player's nickname
+     * @param chatMessage is the message.
+     * @throws RemoteException .
+     */
     public void chatMessage(String username, String chatMessage) throws RemoteException {
         GameController gc = userGame.get(username);
         synchronized (gc) {
@@ -133,6 +193,15 @@ public class RMIImplementation extends UnicastRemoteObject implements ServerInte
         }
     }
 
+
+    /**
+     * Method invoked by an RMI client in order to send a private chat message.
+     * @param sender is the sender's username.
+     * @param chatMessage is the message
+     * @param receiver is the receiver's username.
+     * @throws RemoteException .
+     * @throws IllegalValueException .
+     */
     @Override
     public void chatPrivateMessage(String sender, String chatMessage, String receiver) throws RemoteException, IllegalValueException {
         GameController gc = userGame.get(sender);
@@ -141,15 +210,21 @@ public class RMIImplementation extends UnicastRemoteObject implements ServerInte
         }
     }
 
-    public void setLobby(Lobby lobby){
-        this.lobby=lobby;
-    }
 
+
+    /**
+     * Method that notifies to the lobby that the player with
+     * @param username as nickname disconnected from the game.
+     */
     public void disconnect_user(String username) {
         lobby.disconnect_user(username);
     }
 
 
+    /**
+     * Disconnection Timer.
+     * Pings the client every 15 seconds in order to check if the player is still online.
+     */
     private void disconnectionTimer(){
         timer = new Timer();
         TimerTask timerTask = new TimerTask() {
@@ -190,6 +265,15 @@ public class RMIImplementation extends UnicastRemoteObject implements ServerInte
      */
     public RemoteInterface getUserRMI (User user){
         return userRMI.get(user.getNickname());
+    }
+
+
+    /**
+     * Setter method for an instance of
+     * @param lobby class.
+     */
+    public void setLobby(Lobby lobby){
+        this.lobby=lobby;
     }
 
 }

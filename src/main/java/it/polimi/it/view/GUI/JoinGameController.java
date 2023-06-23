@@ -13,6 +13,9 @@ import javafx.scene.control.TextField;
 import java.io.IOException;
 import java.util.Objects;
 
+/**
+ * Controller of the "Join game" scene where the client has to write the game ID of the game it wants to connect
+ */
 public class JoinGameController implements GuiInterface {
 
     private static Stage stage;
@@ -24,7 +27,11 @@ public class JoinGameController implements GuiInterface {
     @FXML
     TextField GameID;
 
-
+    /**
+     * Method that triggers when the button "Start" is pressed after the client has written the game ID to join a certain game
+     * @param actionEvent is the trigger of this method and in this case it's represented by the click of the button "Start"
+     * @throws IOException^
+     */
     public void GotoGame(ActionEvent actionEvent) throws IOException {
         if(GameID.getText().length() != 0) {
             int id = Integer.parseInt(GameID.getText());

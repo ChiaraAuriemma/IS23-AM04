@@ -19,13 +19,14 @@ import javafx.stage.Stage;
 import javafx.scene.control.TextArea;
 
 
-import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
+/**
+ * Controller of the "End Turn" scene that is seen when it's another client's turn of the game
+ */
 public class EndTurnController implements GuiInterface, Initializable {
 
     ClientInterface client;
@@ -93,7 +94,12 @@ public class EndTurnController implements GuiInterface, Initializable {
     private HashMap<Integer, Label> points;
 
 
-
+    /**
+     * Method that initialize the scene where it's not the client's turn to play and set the Living Room, the bookshelves, the nicknames,
+     * the points and the chat
+     * @param url ?
+     * @param resourceBundle ?
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -196,6 +202,11 @@ public class EndTurnController implements GuiInterface, Initializable {
             textMessage.setText(GUIApplication.getCurrentChat());
 
     }
+    /**
+     * Method that triggers when the button "Show personal goal card" is clicked, and it changes scene to let the client see his personal card
+     * @param actionEvent is the event that trigger this method and in this case it's the click of the button "Show personal goal card"
+     * @throws IOException ?
+     */
     public void GoToPersonalGoalCard(ActionEvent actionEvent) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(GUIApplication.class.getResource("/PersonalGoalCard.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
@@ -207,7 +218,11 @@ public class EndTurnController implements GuiInterface, Initializable {
         stage.setScene(scene);
         stage.show();
     }
-
+    /**
+     * Method that triggers when the button "Show common goal card" is clicked, and it changes scene to let the client see his personal card
+     * @param actionEvent is the event that trigger this method and in this case it's the click of the button "Show common goal card"
+     * @throws IOException ?
+     */
     public void GoToCommonGoalCards(ActionEvent actionEvent) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(GUIApplication.class.getResource("/CommonGoalCards.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
@@ -219,7 +234,11 @@ public class EndTurnController implements GuiInterface, Initializable {
         stage.setScene(scene);
         stage.show();
     }
-
+    /**
+     * Method used to send the chat message written by the client in the text Field when the button "Send" it's pressed
+     * @param actionEvent  is the trigger of this method and in this case it's the click of the button "Send"
+     * @throws IOException ?
+     */
     public void sendMessage(ActionEvent actionEvent) throws IOException{
         if(chatMessage.getText().length()!=0){
             String sender = client.getNickname().trim();

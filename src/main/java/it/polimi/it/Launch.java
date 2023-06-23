@@ -7,6 +7,11 @@ import java.io.IOException;
 import java.rmi.AlreadyBoundException;
 import java.rmi.NotBoundException;
 
+
+/**
+ * Jar Application Launcher.
+ * According to the parameters, starts the server or a client.
+ */
 public class Launch {
     public static void main(String[] args) throws AlreadyBoundException, IOException, NotBoundException {
         if(args[0].equalsIgnoreCase("server")){

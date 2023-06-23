@@ -19,11 +19,17 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 
 
 import java.awt.*;
+import java.awt.Button;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -31,6 +37,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+/**
+ * Controller of the "End Game" scene that is seen when the game ends and give the possibility to the clients to restart a new game o join a new one
+ */
 public class EndGameController implements GuiInterface, Initializable {
 
     ClientInterface client;
@@ -40,85 +49,62 @@ public class EndGameController implements GuiInterface, Initializable {
     private GUIApplication guiApp;
 
     private GUIHandler guiHandler;
-    private HashMap<Integer,Label> nicknames;
-    private HashMap<Integer, Label> points;
 
-    @FXML
-    Label player1;
-    @FXML
-    Label player2;
-    @FXML
-    Label player3;
-    @FXML
-    Label player4;
-
-    @FXML
-    Label points1;
-    @FXML
-    Label points2;
-    @FXML
-    Label points3;
-    @FXML
-    Label points4;
-
-    @FXML
-    ListView<Label> leaderBoard;
-
-    private ObservableList<Label> finalPoints;
+    private ArrayList<String> total;
 
 
+    @FXML
+    TextFlow textFlow;
+
+
+    /**
+     * Method that initialize the end game scene when the game is finished, taking each client's points and creating a leaderboard in decrescendo order
+     * @param url ?
+     * @param resourceBundle ?
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        nicknames = new HashMap<>(4);
-        points = new HashMap<>(4);
-        finalPoints = FXCollections.observableArrayList();
+        HashMap<String, Integer> fPoints = new HashMap<>(GUIApplication.getFinalPoints());
+        total = new ArrayList<>(GUIApplication.getPlayers().size());
 
-        nicknames.put(0, player1);
-        points.put(0, points1);
+        for(String s : GUIApplication.getFinalPoints().keySet()){
+            fPoints.put(s, GUIApplication.getFinalPoints().get(s));
+        }
 
-        nicknames.put(1, player2);
-        points.put(1, points2);
-
-        nicknames.put(2, player3);
-        points.put(2, points3);
-
-        nicknames.put(3, player4);
-        points.put(3, points4);
-
-        nicknames.forEach((k, v) -> {
-            if (k < GUIApplication.getPlayers().size() && GUIApplication.getPlayers().get(k) != null){
-                v.setText(GUIApplication.getPlayers().get(k));
-                v.setOpacity(1);
-            }
-        });
-
-        points.forEach((k,v) -> {
-            if (k < GUIApplication.getPlayers().size() && GUIApplication.getPoints().get(k) != null){
-                v.setText(GUIApplication.getPoints().get(k).toString());
-                v.setOpacity(1);
-            }
-        });
-
-
-        while(points.size() != 0) {
+        int j = 1;
+        while (fPoints.size()!= 0){
             int maxValue = 0;
-            int maxKey = 0;
-            for (Map.Entry<Integer, Label> entry : points.entrySet()) {
-                int key = entry.getKey();
-                int value = Integer.parseInt(entry.getValue().toString());
-                if (value > maxValue) {
+            String maxKey = " ";
+            for(String str : fPoints.keySet()){
+                int value = fPoints.get(str);
+                String key = str;
+                if(value > maxValue){
                     maxValue = value;
                     maxKey = key;
                 }
             }
-            String mergedLabel = nicknames.get(maxKey).getText() + "    " +points.get(maxKey).getText();
-            Label person = new Label(mergedLabel);
-            finalPoints.add(person);
-            points.remove(maxKey);
-            nicknames.remove(maxKey);
+            total.add(j + ": " + maxKey + "        " + maxValue);
+            fPoints.remove(maxKey,maxValue);
+            j++;
         }
-        leaderBoard.setItems(finalPoints);
+
+        Text title = new Text("GG to the Winner");
+        title.setFill(Color.RED);
+        title.setFont(Font.font("Helvetica", FontWeight.BOLD, 30));
+        textFlow.getChildren().addAll(title, new Text("\n"), new Text("\n"));
+
+        for (String str : total){
+               Text text = new Text(str);
+               text.setFill(Color.BLUE);
+               text.setFont(Font.font("Helvetica", FontWeight.BOLD, 22));
+               textFlow.getChildren().addAll(text, new Text("\n"), new Text("\n"));
+           }
+
+
+
+
+
     }
 
 
