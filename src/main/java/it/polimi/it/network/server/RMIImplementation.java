@@ -141,15 +141,21 @@ public class RMIImplementation extends UnicastRemoteObject implements ServerInte
         }
     }
 
-    public void setLobby(Lobby lobby){
-        this.lobby=lobby;
-    }
 
+
+    /**
+     * Method that notifies to the lobby that the player with
+     * @param username as nickname disconnected from the game.
+     */
     public void disconnect_user(String username) {
         lobby.disconnect_user(username);
     }
 
 
+    /**
+     * Disconnection Timer.
+     * Pings the client every 15 seconds in order to check if the player is still online.
+     */
     private void disconnectionTimer(){
         timer = new Timer();
         TimerTask timerTask = new TimerTask() {
@@ -190,6 +196,15 @@ public class RMIImplementation extends UnicastRemoteObject implements ServerInte
      */
     public RemoteInterface getUserRMI (User user){
         return userRMI.get(user.getNickname());
+    }
+
+
+    /**
+     * Setter method for an instance of
+     * @param lobby class.
+     */
+    public void setLobby(Lobby lobby){
+        this.lobby=lobby;
     }
 
 }
