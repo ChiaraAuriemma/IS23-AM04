@@ -55,7 +55,7 @@ public class CommonGroup2 extends CommonGoalCard implements Serializable {
                         cell1 = shelfie.getCell(j,i).getColor();
                         cell2 = shelfie.getCell(j+jsonObject.get("addToColumn").getAsInt(),i+jsonObject.get("addToRow").getAsInt()).getColor();
                     }
-                    if(cell1.equals("DEFAULT"))
+                    if(cell1.equals("DEFAULT") || cell2.equals("DEFAULT"))
                         stop=1;
                     if(!colorToSave.contains(cell1))
                         colorToSave.add(cell1);
@@ -72,6 +72,9 @@ public class CommonGroup2 extends CommonGoalCard implements Serializable {
                 }
                 if(stop==0)
                     numRight++;
+
+                System.out.println(numRight);
+                System.out.println(" ");
             }
             if(numRight == jsonObject.get("numRight").getAsInt())
                 return true;

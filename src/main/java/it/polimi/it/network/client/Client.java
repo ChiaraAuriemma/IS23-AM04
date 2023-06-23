@@ -6,7 +6,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonReader;
 import it.polimi.it.view.GUI.GUIApplication;
 
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Serializable;
@@ -41,7 +40,7 @@ public class Client implements Serializable {
             client = clientTCP;
             thread.start();
         } else if(args[0].equalsIgnoreCase("rmi")){
-            ClientRMIApp clientRMI = new ClientRMIApp(jsonObject.get("portRMI").getAsInt(), jsonObject.get("ip").getAsString());
+            ClientRMIApp clientRMI = new ClientRMIApp(jsonObject.get("portRMI").getAsInt(), jsonObject.get("ip").getAsString()/*"192.168.43.10"*/);
             clientRMI.startClient();
             client = clientRMI;
         }else{

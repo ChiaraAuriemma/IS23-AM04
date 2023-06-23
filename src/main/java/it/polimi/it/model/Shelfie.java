@@ -30,7 +30,6 @@ public class Shelfie implements Serializable {
                 shelf[row][column] = new Tile(row, column, PossibleColors.DEFAULT);
             }
         }
-
         this.endToken1 = false;
         this.commonToken1 = 0;
         this.commonToken2 = 0;
