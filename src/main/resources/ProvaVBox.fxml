@@ -192,13 +192,9 @@
                 </GridPane>
             </children>
         </VBox>
-        <VBox fx:id="vBoxNicknames" alignment="CENTER" layoutX="923.0" layoutY="15.0" prefHeight="200.0" prefWidth="100.0" spacing="167.0">
-            <children>
-                <Label fx:id="Player2" layoutX="1010.0" layoutY="174.0" text="Label" />
-                <Label fx:id="Player3" opacity="0.0" text="Label" />
-                <Label fx:id="Player4" opacity="0.0" text="Label" />
-            </children>
-        </VBox>
+          <Label fx:id="Player2" layoutX="959.0" layoutY="15.0" text="Label" />
+          <Label fx:id="Player3" layoutX="959.0" layoutY="197.0" opacity="0.0" text="Label" />
+          <Label fx:id="Player4" layoutX="959.0" layoutY="382.0" opacity="0.0" text="Label" />
         <VBox fx:id="vBoxLabelPoints" alignment="CENTER" layoutX="960.0" layoutY="174.0" prefHeight="200.0" prefWidth="100.0" spacing="167.0">
             <children>
                 <Label fx:id="labelPoints2" text="Points:" />
@@ -220,7 +216,7 @@
         </Label>
         <Button fx:id="ConfirmButton" layoutX="355.0" layoutY="181.0" mnemonicParsing="false" onAction="#ChooseNumberOfTiles" text="Confirm" />
         <TextField fx:id="num" layoutX="179.0" layoutY="180.0" />
-        <Button fx:id="TilesButton" layoutX="175.0" layoutY="704.0" mnemonicParsing="false" onAction="#ChooseTiles" text="Choose the tiles from the board">
+        <Button fx:id="TilesButton" layoutX="137.0" layoutY="704.0" mnemonicParsing="false" onAction="#ChooseTiles" prefWidth="250.0" text="Choose the tiles from the board">
             <font>
                 <Font size="14.0" />
             </font>

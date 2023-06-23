@@ -43,8 +43,6 @@ public class GameViewController implements GuiInterface, Initializable {
 
     private HashMap<Integer,GridPane> gridOfPlayers;
     private HashMap<Integer,Label> nicknames;
-    private HashMap<Integer, ImageView> playersShelfie;
-    private HashMap<Integer, Label> labelPoints;
     private HashMap<Integer, Label> points;
 
     @FXML
@@ -149,32 +147,22 @@ public class GameViewController implements GuiInterface, Initializable {
 
         gridOfPlayers = new HashMap<>(4);
         nicknames = new HashMap<>(4);
-        playersShelfie = new HashMap<>(4);
-        labelPoints = new HashMap<>(4);
         points = new HashMap<>(4);
 
         nicknames.put(0, Player1);
         gridOfPlayers.put(0, Player1Grid);
-        playersShelfie.put(0, shelfieP1);
-        labelPoints.put(0,labelPoints1);
         points.put(0,Points1);
 
         nicknames.put(1, Player2);
         gridOfPlayers.put(1, Player2Grid);
-        playersShelfie.put(1, shelfieP2);
-        labelPoints.put(1,labelPoints2);
         points.put(1,Points2);
 
         nicknames.put(2, Player3);
         gridOfPlayers.put(2, Player3Grid);
-        playersShelfie.put(2, shelfieP3);
-        labelPoints.put(2,labelPoints3);
         points.put(2,Points3);
 
         nicknames.put(3, Player4);
         gridOfPlayers.put(3, Player4Grid);
-        playersShelfie.put(3, shelfieP4);
-        labelPoints.put(3,labelPoints4);
         points.put(3,Points4);
 
         int numPlayer = GUIApplication.getPlayers().size();
