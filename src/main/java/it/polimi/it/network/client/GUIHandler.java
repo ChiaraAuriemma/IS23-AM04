@@ -22,18 +22,13 @@ public class GUIHandler implements ViewInterface {
 
 
 
-
-    //--------------------------------------------------------------------------------------------------------------
-    // metodi per ricevere informazioni dalla network
-
+    // metodo per settare il riferimento al tipo di view inteface usata
     public void setView(ViewInterface view) {
         this.view = view;
     }
 
-    public void setConnectionType(ClientInterface client) {
-        this.client = client;
-    }
-
+    //metodo che riceve un Arrylist di stringhe contenente i nomi dei giocatori ordinati in base all'ordine di gioco,
+    // lo invia alla GUI così che possa stampare a schermo i nickname
     @Override
     public void setOrderView(ArrayList<String> order) {
         Platform.runLater(new Thread(()-> {
@@ -48,6 +43,7 @@ public class GUIHandler implements ViewInterface {
 
     }
 
+    // metodo per inviare alla GUI lo stato della board
     @Override
     public void setBoardView(Tile[][] matrix) {
         Image[][] board = new Image[9][9];
@@ -61,21 +57,25 @@ public class GUIHandler implements ViewInterface {
         GUIApplication.setBoard(board);
     }
 
+    // associa ad ogni tile (al metodo arriva solo il colore) una della 3 immagini disponibili per il colore assegnato
     public Image chooseAnImage(String color){
         Random random = new Random();
         int randomNumber = random.nextInt(3) + 1;
         if(color.equals("CYAN")){
             if(randomNumber == 1){
                 URL imageUrl = getClass().getResource("/Images/Trofei1.1.png");
+                assert imageUrl != null;
                 return new Image(imageUrl.toString());
 
             }
             if(randomNumber == 2){
                 URL imageUrl = getClass().getResource("/Images/Trofei1.2.png");
+                assert imageUrl != null;
                 return new Image(imageUrl.toString());
 
             }else {
                 URL imageUrl = getClass().getResource("/Images/Trofei1.3.png");
+                assert imageUrl != null;
                 return new Image(imageUrl.toString());
 
             }
@@ -84,15 +84,18 @@ public class GUIHandler implements ViewInterface {
         if(color.equals("PINK")){
             if(randomNumber == 1){
                 URL imageUrl = getClass().getResource("/Images/Piante1.1.png");
+                assert imageUrl != null;
                 return new Image(imageUrl.toString());
 
             }
             if(randomNumber == 2){
                 URL imageUrl = getClass().getResource("/Images/Piante1.2.png");
+                assert imageUrl != null;
                 return new Image(imageUrl.toString());
 
             }else {
                 URL imageUrl = getClass().getResource("/Images/Piante1.3.png");
+                assert imageUrl != null;
                 return new Image(imageUrl.toString());
 
             }
@@ -101,15 +104,18 @@ public class GUIHandler implements ViewInterface {
         if(color.equals("YELLOW")){
             if(randomNumber == 1){
                 URL imageUrl = getClass().getResource("/Images/Giochi1.1.png");
+                assert imageUrl != null;
                 return new Image(imageUrl.toString());
 
             }
             if(randomNumber == 2){
                 URL imageUrl = getClass().getResource("/Images/Giochi1.2.png");
+                assert imageUrl != null;
                 return new Image(imageUrl.toString());
 
             }else {
                 URL imageUrl = getClass().getResource("/Images/Giochi1.3.png");
+                assert imageUrl != null;
                 return new Image(imageUrl.toString());
 
             }
@@ -118,15 +124,18 @@ public class GUIHandler implements ViewInterface {
         if(color.equals("BLUE")){
             if(randomNumber == 1){
                 URL imageUrl = getClass().getResource("/Images/Cornici1.png");
+                assert imageUrl != null;
                 return new Image(imageUrl.toString());
 
             }
             if(randomNumber == 2){
                 URL imageUrl = getClass().getResource("/Images/Cornici1.2.png");
+                assert imageUrl != null;
                 return new Image(imageUrl.toString());
 
             }else {
                 URL imageUrl = getClass().getResource("/Images/Cornici1.3.png");
+                assert imageUrl != null;
                 return new Image(imageUrl.toString());
 
             }
@@ -135,15 +144,18 @@ public class GUIHandler implements ViewInterface {
         if(color.equals("GREEN")){
             if(randomNumber == 1){
                 URL imageUrl = getClass().getResource("/Images/Gatti1.1.png");
+                assert imageUrl != null;
                 return new Image(imageUrl.toString());
 
             }
             if(randomNumber == 2){
                 URL imageUrl = getClass().getResource("/Images/Gatti1.2.png");
+                assert imageUrl != null;
                 return new Image(imageUrl.toString());
 
             }else {
                 URL imageUrl = getClass().getResource("/Images/Gatti1.3.png");
+                assert imageUrl != null;
                 return new Image(imageUrl.toString());
 
             }
@@ -152,15 +164,18 @@ public class GUIHandler implements ViewInterface {
         if(color.equals("WHITE")){
             if(randomNumber == 1){
                 URL imageUrl = getClass().getResource("/Images/Libri1.1.png");
+                assert imageUrl != null;
                 return new Image(imageUrl.toString());
 
             }
             if(randomNumber == 2){
                 URL imageUrl = getClass().getResource("/Images/Libri1.2.png");
+                assert imageUrl != null;
                 return new Image(imageUrl.toString());
 
             }else {
                 URL imageUrl = getClass().getResource("/Images/Libri1.3.png");
+                assert imageUrl != null;
                 return new Image(imageUrl.toString());
 
             }
@@ -170,6 +185,7 @@ public class GUIHandler implements ViewInterface {
         return null;
     }
 
+    // metodo che invia alla GUI lo stato della shelfie legata a un determinato player
     @Override
     public void setPlayersShelfiesView(String player, Tile[][] shelfie) {
         Image[][] shelfImage = new Image[6][5];
@@ -183,6 +199,7 @@ public class GUIHandler implements ViewInterface {
         GUIApplication.setShelfies(player,shelfImage);
     }
 
+    // in base alla carta personal estratta (in particolare in base al suo id) viene associata l'immagine corrispondente e settata nella GUI
     @Override
     public void setPlayersPersonalCardView(PersonalGoalCard card) {
         int id = card.getId();
@@ -236,6 +253,7 @@ public class GUIHandler implements ViewInterface {
         }
     }
 
+    // in base alla carta common1 estratta (in particolare in base al suo id) viene associata l'immagine corrispondente e settata nella GUI
     @Override
     public void setCommon1View(int id) {
         if(id == 1){
@@ -288,6 +306,7 @@ public class GUIHandler implements ViewInterface {
         }
     }
 
+    // in base alla carta common2 estratta (in particolare in base al suo id) viene associata l'immagine corrispondente e settata nella GUI
     @Override
     public void setCommon2View(int id) {
         if(id == 1){
@@ -340,16 +359,19 @@ public class GUIHandler implements ViewInterface {
         }
     }
 
+    //metodo che io non uso
     @Override
     public void takeableTiles(List<List<Tile>> choosableTilesList, int num) {
 
     }
 
+    // metodo non usato
     @Override
     public void setPossibleColumns(boolean[] choosableColumns) {
 
     }
 
+    // metodo al quale arriva un errore che poi stampa lato GUI
     @Override
     public void printError(String error) {
         Platform.runLater(new Thread(()-> {
@@ -363,6 +385,7 @@ public class GUIHandler implements ViewInterface {
         Thread.interrupted();
     }
 
+    // metodo per il settaggio dei punti associati a un determinato player
     @Override
     public void setPlayersPointsView(String player, int points) {
         Platform.runLater(new Thread(()-> {
@@ -375,6 +398,8 @@ public class GUIHandler implements ViewInterface {
         Thread.interrupted();
     }
 
+    // metodo al quale arrivano i punti di fine partita legati ai player, si occupa di lancaire la schermata finale per visualizzare
+    // vincitore e punteggi
     @Override
     public void setFinalPoints(List<String> users, ArrayList<Integer> points) throws IOException {
         Platform.runLater(new Thread(()-> {
@@ -387,9 +412,9 @@ public class GUIHandler implements ViewInterface {
         }));
         Thread.interrupted();
 
-        //devo cambiare scena per mostrare l'End GAME
     }
 
+    // metodo che lancia un pop up lato GUI per comunicare al player l'id legato al game che ha creato
     @Override
     public void setGameID(int gameId) {
         Platform.runLater(new Thread(()-> {
@@ -401,11 +426,13 @@ public class GUIHandler implements ViewInterface {
 
     }
 
+    // non usato
     @Override
     public void setEndToken(String user) {
 
     }
 
+    //metodo che notifica alla Gui l'inizio della parta e fa partire la schermata di gioco
     @Override
     public void NotifyTurnStart(int maxValueofTiles, String username) {
         Platform.runLater(new Thread(()-> {
@@ -418,6 +445,8 @@ public class GUIHandler implements ViewInterface {
         Thread.interrupted();
     }
 
+    // metodo che aggiorna la schermata della Gui nel momento in cui ci sono nuove informazioni che arrivano lato server(le shelfie
+    // o le board sono cambiate o altro...)
     @Override
     public void update() {
         Platform.runLater(new Thread(()-> {
@@ -430,6 +459,7 @@ public class GUIHandler implements ViewInterface {
         Thread.interrupted();
     }
 
+    // metodo che aggiorna la chat
     @Override
     public void updateChat(List<String> currentChat) throws IOException {
         Platform.runLater(new Thread(()-> {
@@ -452,20 +482,25 @@ public class GUIHandler implements ViewInterface {
         Thread.interrupted();
     }
 
+
+    // non usato
     @Override
     public void setThisNick(String nickname) {
 
     }
 
+    // non usato
     @Override
     public String getTileColor(int row, int col) {
         return null;
     }
 
+    //non usato
     @Override
     public void askNickname() {
     }
 
+    // metodo che fa visualizzare la schermata di scelta join o create
     @Override
     public void joinOrCreate(String username) throws IOException {
         Platform.runLater(new Thread(()-> {
@@ -478,21 +513,25 @@ public class GUIHandler implements ViewInterface {
         Thread.interrupted();
     }
 
+    //non usato
     @Override
     public void printTile(String color, int row, int column) {
 
     }
 
+    //non usato
     @Override
     public void printThings(String s) {
 
     }
 
+    //non usato
     @Override
     public void printCommands() {
 
     }
 
+    //metodo che notifica alla Gui che è il momento di chiedere all'utente la colonna
     @Override
     public void askColumn() throws IOException {
         Platform.runLater(new Thread(()-> {
@@ -510,25 +549,13 @@ public class GUIHandler implements ViewInterface {
 
 
 
-
+    // non usato
     @Override
     public void boardRefill() {
 
     }
 
-
-
-    /////////////////////////////////////////////
-    /////////////////////////////////////////////
-    /////////////////////////////////////////////
-    /////////////////////////////////////////////
-    /////////////////////////////////////////////
-    //TE L'HO MESSO IO(FRA) OGGI PER FAR PARTIRE LA CLI
-    /////////////////////////////////////////////
-    /////////////////////////////////////////////
-    /////////////////////////////////////////////
-    /////////////////////////////////////////////
-
+    // immaggino sia un metodo legato alla riconnessione (chiedere ad Alby)
     @Override
     public void recover(int gameID, Tile[][] matrix, ArrayList<Tile[][]> shelfies, int id1, int id2, PersonalGoalCard personalGoalCard, ArrayList<Integer> points, List<String> playerList) {
         setOrderView(new ArrayList<>(playerList));
@@ -544,12 +571,13 @@ public class GUIHandler implements ViewInterface {
         update();
     }
 
+    // metodo per cancellare tutti i dati legati alla partita precedente in caso un player volesse giocare ancora
     @Override
     public void clean() {
 
     }
 
-
+    // metodo getter per il client
     public ClientInterface getClient(){
         return client;
     }

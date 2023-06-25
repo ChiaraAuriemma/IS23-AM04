@@ -73,8 +73,7 @@ public class CommonGroup2 extends CommonGoalCard implements Serializable {
                 if(stop==0)
                     numRight++;
 
-                System.out.println(numRight);
-                System.out.println(" ");
+
             }
             if(numRight == jsonObject.get("numRight").getAsInt())
                 return true;

@@ -21,7 +21,6 @@ public class PersonalGoalCard implements Serializable {
     private int id;
     private List<Integer> checkColor;
 
-    private transient JsonArray jsonArray;
     private ArrayList<Integer> pinkPos;
     private ArrayList<Integer> cyanPos;
     private ArrayList<Integer> yellowPos;

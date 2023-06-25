@@ -129,6 +129,8 @@ public class GameViewController implements GuiInterface, Initializable {
     @FXML
     TextArea textMessage;
 
+    // in realtà locatione e resources sono parametri che non usiamo ma che ci devono essere per forza se vogliamo fare l'override
+    // del meetodo initialize (cosa che ci serve fare), quindi meglio non scrivere niente su di loro e basta se si può
     /**
      * Method that initialize the scene and all of his parts like the living room, the bookshelves, the nicknames, the chat and the points
      * @param location ?
@@ -426,10 +428,10 @@ public class GameViewController implements GuiInterface, Initializable {
     }
 
     /**
-     *  ?
-     * @param imageView
-     * @param i
-     * @param j
+     * Method used to deselect the tiles that I have chosen
+     * @param imageView is the image associated with the tile
+     * @param i row is the row of the tile in the living room
+     * @param j is the column of the tile in the living room
      * @throws IOException
      */
     public void removeTiles(ImageView imageView, int i, int j) throws IOException {
@@ -541,7 +543,11 @@ public class GameViewController implements GuiInterface, Initializable {
         }
     }
 
-
+    /**
+     * Method that, starting from the image that represents the tile, returns the color
+     * @param image is the image associated with the tile
+     * @return the color of the tile
+     */
     public PossibleColors getColor(ImageView image){
 
         if((image.getImage().getUrl().equals((getClass().getResource("/Images/Trofei1.1.png")).toString()) || (image.getImage().getUrl().equals((getClass().getResource("/Images/Trofei1.2.png")).toString()))

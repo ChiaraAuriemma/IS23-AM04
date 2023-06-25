@@ -41,6 +41,7 @@ public class GUIApplication extends Application {
 
     private static String currentChat;
 
+    // alby scrivi tu
     public static void setFinalPoint(List<String> users, ArrayList<Integer> points) {
         int i = 0;
         for(String s: users){
@@ -49,10 +50,13 @@ public class GUIApplication extends Application {
         }
     }
 
+    // alby
     public static HashMap<String, Integer> getFinalPoints() {
         return finalPoints;
     }
 
+    // metodo dal quale parte effettivamente la gui, carica la schermata di login e la stampa a video
+    // stage sarebbe la finestra che poi viene visualizzata
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(GUIApplication.class.getResource("/Login.fxml"));
@@ -69,6 +73,11 @@ public class GUIApplication extends Application {
         stage.show();
     }
 
+    // metodo che si occupa di settare una visualizzazione personalizzata delle shelfie in base al giocatore
+    // il giocatore vedrà il suo nome sempre per primo e poi gli altri saranno ordinati in base a quanto dopo
+    // il primo player preso in considerazione dovranno giocare ( quindi non setta un ordine assoluto uguale per tutti ,
+    // ma relativo, personalizzato in
+    // base al giocatore
     public static void setPlayers(ArrayList<String> order){
         int i=0;
         int j=1;
@@ -89,6 +98,7 @@ public class GUIApplication extends Application {
         }
     }
 
+    // cambia scena in base alle notifiche che gli arrivano dal server sullo stato della partita
     public static void changeScene() throws IOException {
         if(client.getGameStage().equals(TurnStages.LOGIN)){
             FXMLLoader fxmlLoader = new FXMLLoader(GUIApplication.class.getResource("/Login.fxml"));
@@ -195,6 +205,7 @@ public class GUIApplication extends Application {
 
     }
 
+    // stampa i pop-up
     public static void showAlert(Alert.AlertType alertType, String title, String content) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);
@@ -202,6 +213,10 @@ public class GUIApplication extends Application {
         alert.setContentText(content);
         alert.showAndWait();
     }
+
+    //-----------------------------------------------------------------------------------------------------------
+    // vari metodi getter e setter
+
 
     public static String getCurrentChat() {
         return currentChat;
