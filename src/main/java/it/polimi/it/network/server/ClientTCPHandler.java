@@ -264,7 +264,7 @@ public class ClientTCPHandler implements Runnable,Serializable, RemoteInterface 
                 }
             }
         };
-        timer.schedule(timerTask, 1000, 15000);
+        timer.schedule(timerTask, 1000, 5000);
    }
 
 

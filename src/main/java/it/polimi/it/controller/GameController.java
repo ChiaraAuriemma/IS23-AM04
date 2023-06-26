@@ -156,7 +156,7 @@ public class GameController implements Serializable {
             }
             }
         };
-        long delay = 10000;
+        long delay = 60000;
         timer.schedule(task, delay);
     }
 
