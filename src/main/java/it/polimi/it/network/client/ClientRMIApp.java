@@ -427,6 +427,11 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
         stage.setStage(TurnStages.ENDGAME);
     }
 
+    @Override
+    public void setStageToCreate() throws RemoteException {
+        stage.setStage(TurnStages.CREATEorJOIN);
+    }
+
 
     /**
      * Ping method.
@@ -457,13 +462,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
      */
     @Override
     public void restart() throws RemoteException{
-        stage.setStage(TurnStages.CREATEorJOIN);
-        try {
-            view.clean();
-            view.joinOrCreate(this.nickname);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        view.clean();
     }
 
 

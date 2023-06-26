@@ -397,6 +397,11 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
         stage.setStage(TurnStages.ENDGAME);
     }
 
+    @Override
+    public void setStageToCreate() {
+        stage.setStage(TurnStages.CREATEorJOIN);
+    }
+
 
     /**
      * Getter method
