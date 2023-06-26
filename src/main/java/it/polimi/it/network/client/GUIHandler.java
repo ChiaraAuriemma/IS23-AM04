@@ -71,26 +71,28 @@ public class GUIHandler implements ViewInterface {
 
         if(color.equals("CYAN")){
             url = url+ "Trofei1.";
-        }
-        if(color.equals("PINK")){
+        }else if(color.equals("PINK")){
             url = url+ "Piante1.";
-        }
-        if(color.equals("YELLOW")){
+        }else if(color.equals("YELLOW")){
             url = url+ "Giochi1.";
-        }
-        if(color.equals("BLUE")){
-            url = url+ "Cornici1.";
-        }
-        if(color.equals("GREEN")){
+        }else if(color.equals("BLUE")){
+            if(randomNumber==1){
+                url = url+ "Cornici";
+            }else{
+                url = url+ "Cornici1.";
+            }
+        }else if(color.equals("GREEN")){
             url = url+ "Gatti1.";
-        }
-        if(color.equals("WHITE")){
+        }else if(color.equals("WHITE")){
             url = url+ "Libri1.";
+        }else{
+            return null;
         }
         url = url + num + ".png";
         URL imageUrl = getClass().getResource(url);
         assert imageUrl != null;
         return new Image(imageUrl.toString());
+
     }
 
 
