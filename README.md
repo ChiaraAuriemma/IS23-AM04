@@ -64,13 +64,25 @@ Every player can send chat messages to the other players in their game. A player
 The Game consists in a jar file named <code>PLACEHOLDER</code> that can be started by command line. In order to start playing you'll need to start the Server and at least two Clients.
 #### Server
 ```shell 
-      > java -jar PLACEHOLDER.jar server
+      > java -jar .\AM04-1.0-SNAPSHOT-jar-with-dependencies.jar server
 ```
 The command above has to be used in order to start the Server and is the only command you will need until the Server needs to be shut down.
 #### Client
 ```shell 
-      > java -jar PLACEHOLDER.jar client ALTRI COMANDI
+      > .\AM04-1.0-SNAPSHOT-jar-with-dependencies.jar client [Connection] [Interface] [ip address]
 ```
+Connection: 
+- tcp
+- rmi
+
+Interface:
+- cli
+- gui
+
+ip address: 
+- Play Online: set the ip to the server's. Use <code> ipconfig </code> in order to retrieve the ip address.
+- Play Locally: you might not specify the ip address, so it will be set to the deault local ip (127.0.0.1)
+
 The command above has to be used in order to start the Client. Later the player will be asked a nickname and whether he wants to create a new game or join an existing one.
 The client can choose the communication protocol that he likes most between RMI and TCP.
 The client can also choose the Interface .

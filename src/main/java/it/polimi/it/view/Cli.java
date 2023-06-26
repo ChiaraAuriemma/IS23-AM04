@@ -129,6 +129,7 @@ public class Cli implements ViewInterface, Serializable {
         update();
     }
 
+
     /**
      * method that restart all the variable of the game
      */

@@ -132,11 +132,19 @@ public class EndGameController implements GuiInterface, Initializable {
 
     @Override
     public String getType() {
-        return "create_game";
+        return "end_game";
     }
 
 
-    public void PlayAgain(ActionEvent actionEvent) throws IOException {
+    public void GoToJoin(ActionEvent actionEvent) throws IOException {
+        GUIApplication.setCreateOrJoin("JOIN");
+        client.setStageToCreate();
+        GUIApplication.changeScene();
+
+    }
+
+    public void GoToCreate(ActionEvent actionEvent) throws IOException {
+        GUIApplication.setCreateOrJoin("CREATE");
         client.setStageToCreate();
         GUIApplication.changeScene();
 

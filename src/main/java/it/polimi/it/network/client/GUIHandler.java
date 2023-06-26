@@ -1,13 +1,14 @@
 package it.polimi.it.network.client;
 
 import it.polimi.it.model.Card.PersonalGoalCards.PersonalGoalCard;
+import it.polimi.it.model.Shelfie;
 import it.polimi.it.model.Tiles.Tile;
+import it.polimi.it.model.User;
 import it.polimi.it.view.GUI.*;
 import it.polimi.it.view.ViewInterface;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -21,14 +22,10 @@ public class GUIHandler implements ViewInterface {
 
 
 
-
-    // metodo per settare il riferimento al tipo di view inteface usata
-    public void setView(ViewInterface view) {
-        this.view = view;
-    }
-
-    //metodo che riceve un Arrylist di stringhe contenente i nomi dei giocatori ordinati in base all'ordine di gioco,
-    // lo invia alla GUI così che possa stampare a schermo i nickname
+    /**
+     * Setter method for the player's turn order
+     * @param order is the ordered arrayList of the users in the game
+     */
     @Override
     public void setOrderView(ArrayList<String> order) {
         Platform.runLater(new Thread(()-> {
@@ -40,10 +37,13 @@ public class GUIHandler implements ViewInterface {
             }
         }));
         Thread.interrupted();
-
     }
 
-    // metodo per inviare alla GUI lo stato della board
+
+    /**
+     * Setter method for the LivingRoom's board.
+     * @param matrix is the tile matrix that represents the LivingRoom.
+     */
     @Override
     public void setBoardView(Tile[][] matrix) {
         Image[][] board = new Image[9][9];
@@ -57,135 +57,50 @@ public class GUIHandler implements ViewInterface {
         GUIApplication.setBoard(board);
     }
 
-    // associa ad ogni tile (al metodo arriva solo il colore) una della 3 immagini disponibili per il colore assegnato
+
+    /**
+     * Extracts a random image out of the available ones given a specific color.
+     * @param color is the Tile's color.
+     * @return the Image
+     */
     public Image chooseAnImage(String color){
         Random random = new Random();
         int randomNumber = random.nextInt(3) + 1;
+        String num = String.valueOf(randomNumber);
+        String url = "/Images/";
+
         if(color.equals("CYAN")){
-            if(randomNumber == 1){
-                URL imageUrl = getClass().getResource("/Images/Trofei1.1.png");
-                assert imageUrl != null;
-                return new Image(imageUrl.toString());
-
+            url = url+ "Trofei1.";
+        }else if(color.equals("PINK")){
+            url = url+ "Piante1.";
+        }else if(color.equals("YELLOW")){
+            url = url+ "Giochi1.";
+        }else if(color.equals("BLUE")){
+            if(randomNumber==1){
+                url = url+ "Cornici";
+            }else{
+                url = url+ "Cornici1.";
             }
-            if(randomNumber == 2){
-                URL imageUrl = getClass().getResource("/Images/Trofei1.2.png");
-                assert imageUrl != null;
-                return new Image(imageUrl.toString());
-
-            }else {
-                URL imageUrl = getClass().getResource("/Images/Trofei1.3.png");
-                assert imageUrl != null;
-                return new Image(imageUrl.toString());
-
-            }
-
+        }else if(color.equals("GREEN")){
+            url = url+ "Gatti1.";
+        }else if(color.equals("WHITE")){
+            url = url+ "Libri1.";
+        }else{
+            return null;
         }
-        if(color.equals("PINK")){
-            if(randomNumber == 1){
-                URL imageUrl = getClass().getResource("/Images/Piante1.1.png");
-                assert imageUrl != null;
-                return new Image(imageUrl.toString());
+        url = url + num + ".png";
+        URL imageUrl = getClass().getResource(url);
+        assert imageUrl != null;
+        return new Image(imageUrl.toString());
 
-            }
-            if(randomNumber == 2){
-                URL imageUrl = getClass().getResource("/Images/Piante1.2.png");
-                assert imageUrl != null;
-                return new Image(imageUrl.toString());
-
-            }else {
-                URL imageUrl = getClass().getResource("/Images/Piante1.3.png");
-                assert imageUrl != null;
-                return new Image(imageUrl.toString());
-
-            }
-
-        }
-        if(color.equals("YELLOW")){
-            if(randomNumber == 1){
-                URL imageUrl = getClass().getResource("/Images/Giochi1.1.png");
-                assert imageUrl != null;
-                return new Image(imageUrl.toString());
-
-            }
-            if(randomNumber == 2){
-                URL imageUrl = getClass().getResource("/Images/Giochi1.2.png");
-                assert imageUrl != null;
-                return new Image(imageUrl.toString());
-
-            }else {
-                URL imageUrl = getClass().getResource("/Images/Giochi1.3.png");
-                assert imageUrl != null;
-                return new Image(imageUrl.toString());
-
-            }
-
-        }
-        if(color.equals("BLUE")){
-            if(randomNumber == 1){
-                URL imageUrl = getClass().getResource("/Images/Cornici1.png");
-                assert imageUrl != null;
-                return new Image(imageUrl.toString());
-
-            }
-            if(randomNumber == 2){
-                URL imageUrl = getClass().getResource("/Images/Cornici1.2.png");
-                assert imageUrl != null;
-                return new Image(imageUrl.toString());
-
-            }else {
-                URL imageUrl = getClass().getResource("/Images/Cornici1.3.png");
-                assert imageUrl != null;
-                return new Image(imageUrl.toString());
-
-            }
-
-        }
-        if(color.equals("GREEN")){
-            if(randomNumber == 1){
-                URL imageUrl = getClass().getResource("/Images/Gatti1.1.png");
-                assert imageUrl != null;
-                return new Image(imageUrl.toString());
-
-            }
-            if(randomNumber == 2){
-                URL imageUrl = getClass().getResource("/Images/Gatti1.2.png");
-                assert imageUrl != null;
-                return new Image(imageUrl.toString());
-
-            }else {
-                URL imageUrl = getClass().getResource("/Images/Gatti1.3.png");
-                assert imageUrl != null;
-                return new Image(imageUrl.toString());
-
-            }
-
-        }
-        if(color.equals("WHITE")){
-            if(randomNumber == 1){
-                URL imageUrl = getClass().getResource("/Images/Libri1.1.png");
-                assert imageUrl != null;
-                return new Image(imageUrl.toString());
-
-            }
-            if(randomNumber == 2){
-                URL imageUrl = getClass().getResource("/Images/Libri1.2.png");
-                assert imageUrl != null;
-                return new Image(imageUrl.toString());
-
-            }else {
-                URL imageUrl = getClass().getResource("/Images/Libri1.3.png");
-                assert imageUrl != null;
-                return new Image(imageUrl.toString());
-
-            }
-
-        }
-
-        return null;
     }
 
-    // metodo che invia alla GUI lo stato della shelfie legata a un determinato player
+
+    /**
+     * Setter method for the user-shelf hashmap
+     * @param player  is the current user
+     * @param shelfie is the new shelfie, used to update the previous shelfie value
+     */
     @Override
     public void setPlayersShelfiesView(String player, Tile[][] shelfie) {
         Image[][] shelfImage = new Image[6][5];
@@ -199,179 +114,76 @@ public class GUIHandler implements ViewInterface {
         GUIApplication.setShelfies(player,shelfImage);
     }
 
-    // in base alla carta personal estratta (in particolare in base al suo id) viene associata l'immagine corrispondente e settata nella GUI
+
+    /**
+     * Setter Method for the PersonalGoalCard.
+     * @param card is the card.
+     */
     @Override
     public void setPlayersPersonalCardView(PersonalGoalCard card) {
         int id = card.getId();
-        if(id == 1){
-            URL imageUrl = getClass().getResource("/Images/Personal_Goals.png");
-            GUIApplication.setPersonalCard(imageUrl);
+        String num = String.valueOf(id);
+        String url = "/Images/Personal_Goals";
+
+        if(id != 1){
+            url = url + num;
         }
-        if(id==2){
-            URL imageUrl = getClass().getResource("/Images/Personal_Goals2.png");
-            GUIApplication.setPersonalCard(imageUrl);
-        }
-        if(id==3){
-            URL imageUrl = getClass().getResource("/Images/Personal_Goals3.png");
-            GUIApplication.setPersonalCard(imageUrl);
-        }
-        if(id==4){
-            URL imageUrl = getClass().getResource("/Images/Personal_Goals4.png");
-            GUIApplication.setPersonalCard(imageUrl);
-        }
-        if(id==5){
-            URL imageUrl = getClass().getResource("/Images/Personal_Goals5.png");
-            GUIApplication.setPersonalCard(imageUrl);
-        }
-        if(id==6){
-            URL imageUrl = getClass().getResource("/Images/Personal_Goals6.png");
-            GUIApplication.setPersonalCard(imageUrl);
-        }
-        if(id==7){
-            URL imageUrl = getClass().getResource("/Images/Personal_Goals7.png");
-            GUIApplication.setPersonalCard(imageUrl);
-        }
-        if(id==8){
-            URL imageUrl = getClass().getResource("/Images/Personal_Goals8.png");
-            GUIApplication.setPersonalCard(imageUrl);
-        }
-        if(id==9){
-            URL imageUrl = getClass().getResource("/Images/Personal_Goals9.png");
-            GUIApplication.setPersonalCard(imageUrl);
-        }
-        if(id==10){
-            URL imageUrl = getClass().getResource("/Images/Personal_Goals10.png");
-            GUIApplication.setPersonalCard(imageUrl);
-        }
-        if(id==11){
-            URL imageUrl = getClass().getResource("/Images/Personal_Goals11.png");
-            GUIApplication.setPersonalCard(imageUrl);
-        }
-        if(id==12){
-            URL imageUrl = getClass().getResource("/Images/Personal_Goals12.png");
-            GUIApplication.setPersonalCard(imageUrl);
-        }
+        url= url + ".png";
+        URL imageUrl = getClass().getResource(url);
+        GUIApplication.setPersonalCard(imageUrl);
     }
 
-    // in base alla carta common1 estratta (in particolare in base al suo id) viene associata l'immagine corrispondente e settata nella GUI
+
+    /**
+     * Setter Method for the first CommonGoalCard.
+     * @param id is the card's id.
+     */
     @Override
     public void setCommon1View(int id) {
-        if(id == 1){
-            URL imageUrl = getClass().getResource("/Images/1.jpg");
-            GUIApplication.setCommonCard1(imageUrl, id);
-        }
-        if(id==2){
-            URL imageUrl = getClass().getResource("/Images/2.jpg");
-            GUIApplication.setCommonCard1(imageUrl, id);
-        }
-        if(id==3){
-            URL imageUrl = getClass().getResource("/Images/3.jpg");
-            GUIApplication.setCommonCard1(imageUrl, id);
-        }
-        if(id==4){
-            URL imageUrl = getClass().getResource("/Images/4.jpg");
-            GUIApplication.setCommonCard1(imageUrl, id);
-        }
-        if(id==5){
-            URL imageUrl = getClass().getResource("/Images/5.jpg");
-            GUIApplication.setCommonCard1(imageUrl, id);
-        }
-        if(id==6){
-            URL imageUrl = getClass().getResource("/Images/6.jpg");
-            GUIApplication.setCommonCard1(imageUrl, id);
-        }
-        if(id==7){
-            URL imageUrl = getClass().getResource("/Images/7.jpg");
-            GUIApplication.setCommonCard1(imageUrl, id);
-        }
-        if(id==8){
-            URL imageUrl = getClass().getResource("/Images/8.jpg");
-            GUIApplication.setCommonCard1(imageUrl, id);
-        }
-        if(id==9){
-            URL imageUrl = getClass().getResource("/Images/9.jpg");
-            GUIApplication.setCommonCard1(imageUrl, id);
-        }
-        if(id==10){
-            URL imageUrl = getClass().getResource("/Images/10.jpg");
-            GUIApplication.setCommonCard1(imageUrl, id);
-        }
-        if(id==11){
-            URL imageUrl = getClass().getResource("/Images/11.jpg");
-            GUIApplication.setCommonCard1(imageUrl, id);
-        }
-        if(id==12){
-            URL imageUrl = getClass().getResource("/Images/12.jpg");
-            GUIApplication.setCommonCard1(imageUrl, id);
-        }
+        String num = String.valueOf(id);
+        String url = "/Images/" + num +".jpg";
+        URL imageUrl = getClass().getResource(url);
+        GUIApplication.setCommonCard1(imageUrl, id);
     }
 
-    // in base alla carta common2 estratta (in particolare in base al suo id) viene associata l'immagine corrispondente e settata nella GUI
+
+    /**
+     * Setter Method for the second CommonGoalCard.
+     * @param id is the card's id.
+     */
     @Override
     public void setCommon2View(int id) {
-        if(id == 1){
-            URL imageUrl = getClass().getResource("/Images/1.jpg");
-            GUIApplication.setCommonCard2(imageUrl, id);
-        }
-        if(id==2){
-            URL imageUrl = getClass().getResource("/Images/2.jpg");
-            GUIApplication.setCommonCard2(imageUrl, id);
-        }
-        if(id==3){
-            URL imageUrl = getClass().getResource("/Images/3.jpg");
-            GUIApplication.setCommonCard2(imageUrl, id);
-        }
-        if(id==4){
-            URL imageUrl = getClass().getResource("/Images/4.jpg");
-            GUIApplication.setCommonCard2(imageUrl, id);
-        }
-        if(id==5){
-            URL imageUrl = getClass().getResource("/Images/5.jpg");
-            GUIApplication.setCommonCard2(imageUrl, id);
-        }
-        if(id==6){
-            URL imageUrl = getClass().getResource("/Images/6.jpg");
-            GUIApplication.setCommonCard2(imageUrl, id);
-        }
-        if(id==7){
-            URL imageUrl = getClass().getResource("/Images/7.jpg");
-            GUIApplication.setCommonCard2(imageUrl, id);
-        }
-        if(id==8){
-            URL imageUrl = getClass().getResource("/Images/8.jpg");
-            GUIApplication.setCommonCard2(imageUrl, id);
-        }
-        if(id==9){
-            URL imageUrl = getClass().getResource("/Images/9.jpg");
-            GUIApplication.setCommonCard2(imageUrl, id);
-        }
-        if(id==10){
-            URL imageUrl = getClass().getResource("/Images/10.jpg");
-            GUIApplication.setCommonCard2(imageUrl, id);
-        }
-        if(id==11){
-            URL imageUrl = getClass().getResource("/Images/11.jpg");
-            GUIApplication.setCommonCard2(imageUrl, id);
-        }
-        if(id==12){
-            URL imageUrl = getClass().getResource("/Images/12.jpg");
-            GUIApplication.setCommonCard2(imageUrl, id);
-        }
+
+        String num = String.valueOf(id);
+        String url = "/Images/" + num +".jpg";
+        URL imageUrl = getClass().getResource(url);
+        GUIApplication.setCommonCard2(imageUrl, id);
     }
 
-    //metodo che io non uso
+
+    /**
+     * CLI only method.
+     */
     @Override
     public void takeableTiles(List<List<Tile>> choosableTilesList, int num) {
 
     }
 
-    // metodo non usato
+
+    /**
+     * Method that prints the list of his Shelfie's columns that have enough empty spaces to contain the new Tiles.
+     * @param choosableColumns is the list of the empty columns.
+     */
     @Override
     public void setPossibleColumns(boolean[] choosableColumns) {
 
     }
 
-    // metodo al quale arriva un errore che poi stampa lato GUI
+
+    /**
+     * Method that prints an error String.
+     * @param error .
+     */
     @Override
     public void printError(String error) {
         Platform.runLater(new Thread(()-> {
@@ -385,7 +197,12 @@ public class GUIHandler implements ViewInterface {
         Thread.interrupted();
     }
 
-    // metodo per il settaggio dei punti associati a un determinato player
+
+    /**
+     * Setter method, used when a player's points amount changed
+     * @param player is the user
+     * @param points is the new value of the user's points
+     */
     @Override
     public void setPlayersPointsView(String player, int points) {
         Platform.runLater(new Thread(()-> {
@@ -398,8 +215,12 @@ public class GUIHandler implements ViewInterface {
         Thread.interrupted();
     }
 
-    // metodo al quale arrivano i punti di fine partita legati ai player, si occupa di lancaire la schermata finale per visualizzare
-    // vincitore e punteggi
+
+    /**
+     * Setter method
+     * @param users is the players list
+     * @param points is the list of the players' points.
+     */
     @Override
     public void setFinalPoints(List<String> users, ArrayList<Integer> points) throws IOException {
         Platform.runLater(new Thread(()-> {
@@ -411,10 +232,13 @@ public class GUIHandler implements ViewInterface {
             }
         }));
         Thread.interrupted();
-
     }
 
-    // metodo che lancia un pop up lato GUI per comunicare al player l'id legato al game che ha creato
+
+    /**
+     * Setter for the
+     * @param gameId .
+     */
     @Override
     public void setGameID(int gameId) {
         Platform.runLater(new Thread(()-> {
@@ -422,17 +246,26 @@ public class GUIHandler implements ViewInterface {
                 GUIApplication.showAlert(Alert.AlertType.INFORMATION, "Create Game ID", "Your game id is " + gameId);
         }));
         Thread.interrupted();
-
-
     }
 
-    // non usato
+
+    /**
+     * Setter method for the EndToken
+     * @param user
+     * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+     * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+     */
     @Override
     public void setEndToken(String user) {
-
+        return;
     }
 
-    //metodo che notifica alla Gui l'inizio della parta e fa partire la schermata di gioco
+
+    /**
+     * Method that, at the beginning of the player's turn, asks him the number of tiles that he wants to get from the board.
+     * @param maxValueofTiles is the maximum number of tiles that the player can get from the board.
+     * @param username is the palyer's nickname.
+     */
     @Override
     public void NotifyTurnStart(int maxValueofTiles, String username) {
         Platform.runLater(new Thread(()-> {
@@ -445,8 +278,10 @@ public class GUIHandler implements ViewInterface {
         Thread.interrupted();
     }
 
-    // metodo che aggiorna la schermata della Gui nel momento in cui ci sono nuove informazioni che arrivano lato server(le shelfie
-    // o le board sono cambiate o altro...)
+
+    /**
+     * Method that updates the GUI scene.
+     */
     @Override
     public void update() {
         Platform.runLater(new Thread(()-> {
@@ -459,7 +294,11 @@ public class GUIHandler implements ViewInterface {
         Thread.interrupted();
     }
 
-    // metodo che aggiorna la chat
+
+    /**
+     * Forces the chat to be updated
+     * @param currentChat is the list of the newest chat messages.
+     */
     @Override
     public void updateChat(List<String> currentChat) throws IOException {
         Platform.runLater(new Thread(()-> {
@@ -472,7 +311,6 @@ public class GUIHandler implements ViewInterface {
                     stringBuilder.append(str).append("\n");
                 }
                 String joinedString = stringBuilder.toString().trim();
-                //String joinedString = String.join("\n", currentChat);
                 GUIApplication.setCurrentChat(joinedString);
                 GUIApplication.changeScene();
             } catch (IOException e) {
@@ -483,25 +321,36 @@ public class GUIHandler implements ViewInterface {
     }
 
 
-    // non usato
+    /**
+     * CLI only method, sets the player's Nickname.
+     */
     @Override
     public void setThisNick(String nickname) {
 
     }
 
-    // non usato
+
+    /**
+     * CLI only method.
+     */
     @Override
     public String getTileColor(int row, int col) {
         return null;
     }
 
-    //non usato
+
+    /**
+     * CLI only method, asks the player for a Nickname.
+     */
     @Override
     public void askNickname() {
     }
 
-    // metodo che fa visualizzare la schermata di scelta join o create
-    @Override
+
+    /**
+     * Method that asks the player whether he wants to Create a new Game or Join an existing one
+     * @param username is the player's nickname.
+     */    @Override
     public void joinOrCreate(String username) throws IOException {
         Platform.runLater(new Thread(()-> {
             try {
@@ -513,25 +362,42 @@ public class GUIHandler implements ViewInterface {
         Thread.interrupted();
     }
 
-    //non usato
+
+    /**
+     * CLI only method, prints a Tile's datas in order to make the player check his move before confirming.
+     * @param color is the Tile's color
+     * @param row is the Tile's row
+     * @param column is the Tile's column
+     */
     @Override
     public void printTile(String color, int row, int column) {
-
+        return;
     }
 
-    //non usato
+
+    /**
+     * CLI only method, deals with errors.
+     * @param s is an errorString.
+     */
     @Override
     public void printThings(String s) {
-
+        return;
     }
 
-    //non usato
+
+    /**
+     * Prints every cli command.
+     * CLI only method.
+     */
     @Override
     public void printCommands() {
-
+        ;
     }
 
-    //metodo che notifica alla Gui che è il momento di chiedere all'utente la colonna
+
+    /**
+     * Method that asks the player in whick column he wants to put the tiles that he took.
+     */
     @Override
     public void askColumn() throws IOException {
         Platform.runLater(new Thread(()-> {
@@ -545,24 +411,33 @@ public class GUIHandler implements ViewInterface {
     }
 
 
-
-
-
-
-    // non usato
+    /**
+     * Notifies the client of a LivingRoom board's refill.
+     * CLI only method
+     */
     @Override
     public void boardRefill() {
-
+        return;
     }
 
-    // immaggino sia un metodo legato alla riconnessione (chiedere ad Alby)
+
+    /**
+     * Forces a Cli update after the reconnection to the game
+     * @param gameID is the gameID of the game that the player just reconnected to.
+     * @param matrix is the LivingRoom Board
+     * @param shelfies is a List of the Players' Shelfies
+     * @param id1 is the first CommonGoalCard
+     * @param id2 is the second CommonGoalCard
+     * @param personalGoalCard is the player's PersonaleGoalCard
+     * @param points is the list of the players' points
+     * @param playerList is the list of the players, ordered as their turns are.
+     */
     @Override
     public void recover(int gameID, Tile[][] matrix, ArrayList<Tile[][]> shelfies, int id1, int id2, PersonalGoalCard personalGoalCard, ArrayList<Integer> points, List<String> playerList) {
         setOrderView(new ArrayList<>(playerList));
         setBoardView(matrix);
         setCommon1View(id1);
         setCommon2View(id2);
-        //this.gameID=gameID;
         setPlayersPersonalCardView(personalGoalCard);
         for(int i=0; i<playerList.size(); i++){
             setPlayersShelfiesView(playerList.get(i), shelfies.get(i));
@@ -571,16 +446,54 @@ public class GUIHandler implements ViewInterface {
         update();
     }
 
-    // metodo per cancellare tutti i dati legati alla partita precedente in caso un player volesse giocare ancora
+
+    /**
+     * Resets all the game's data.
+     */
     @Override
     public void clean() {
+        for(String user: GUIApplication.getPlayers()){
+            User u = new User(" ");
+            Shelfie s = new Shelfie(u);
+            Image[][] s1 = new Image[6][5];
+            for (int i = 0; i < 6; i++) {
+                for (int j = 0; j < 5; j++) {
+                    String color = s.getShelf()[i][j].getColor();
+                    Image image = chooseAnImage(color);
+                    s1[i][j] = image;
+                }
+            }
+            GUIApplication.setShelfies(user,s1);
+        }
+
+        for(String user: GUIApplication.getPlayers()){
+            int i = 0;
+            while (!GUIApplication.getPlayers().get(i).equals(user)){
+                i++;
+            }
+            GUIApplication.setPoints(i,0);
+        }
+
+        GUIApplication.getFinalPoints().clear();
 
     }
 
-    // metodo getter per il client
+
+    /**
+     * Getter Method
+     * @return the ClientInterface instance.
+     */
     public ClientInterface getClient(){
         return client;
     }
 
+
+    /**
+     * Setter method for a
+     * @param view ViewInterface instance [GUI]
+     */
+    public void setView(ViewInterface view) {
+        this.view = view;
+    }
 
 }

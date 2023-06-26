@@ -243,4 +243,13 @@ public class PersonalGoalCardsTest {
         if(personalGoalCard6.checkScore(shelfie) != 0)
             fail("Test failed");
     }
+
+    @Test
+    public void checkGetID(){
+        if(personalGoalCard1.getId() != 1 || personalGoalCard2.getId()!=2 || personalGoalCard3.getId()!=3
+         || personalGoalCard4.getId()!=4 || personalGoalCard5.getId() != 5 || personalGoalCard6.getId() !=6 ||
+         personalGoalCard7.getId() != 7 || personalGoalCard8.getId() != 8 || personalGoalCard9.getId() != 9
+            || personalGoalCard10.getId() !=10 || personalGoalCard11.getId() != 11 || personalGoalCard12.getId()!=12)
+            fail("Test failed");
+    }
 }
