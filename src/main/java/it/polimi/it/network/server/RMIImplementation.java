@@ -255,7 +255,7 @@ public class RMIImplementation implements ServerInterface, Serializable {
                }
             }
         };
-        timer.schedule(timerTask, 1000, 15000);
+        timer.schedule(timerTask, 1000, 5000);
     }
 
 
