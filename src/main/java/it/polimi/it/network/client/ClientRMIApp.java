@@ -427,6 +427,11 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
         stage.setStage(TurnStages.ENDGAME);
     }
 
+    @Override
+    public void setStageToCreate() throws RemoteException {
+        stage.setStage(TurnStages.CREATEorJOIN);
+    }
+
 
     /**
      * Ping method.

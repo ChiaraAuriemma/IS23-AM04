@@ -32,6 +32,7 @@ import java.awt.*;
 import java.awt.Button;
 import java.io.IOException;
 import java.net.URL;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -108,6 +109,8 @@ public class EndGameController implements GuiInterface, Initializable {
     }
 
 
+
+
     public void setClient(ClientInterface clientRef){
         client = clientRef;
     }
@@ -133,4 +136,9 @@ public class EndGameController implements GuiInterface, Initializable {
     }
 
 
+    public void PlayAgain(ActionEvent actionEvent) throws IOException {
+        client.setStageToCreate();
+        GUIApplication.changeScene();
+
+    }
 }

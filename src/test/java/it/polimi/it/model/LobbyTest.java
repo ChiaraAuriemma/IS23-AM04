@@ -1,16 +1,16 @@
 /*package it.polimi.it.model;
 
-
-import it.polimi.it.controller.Exceptions.EmptyNicknameException;
-import it.polimi.it.controller.Exceptions.ExistingNicknameException;
-import it.polimi.it.controller.Exceptions.NotExistingUser;
+import it.polimi.it.Exceptions.*;
 import it.polimi.it.controller.Lobby;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.rmi.RemoteException;
 
+import static org.junit.jupiter.api.Assertions.*;
+*/
+/*
 public class LobbyTest {
 
     private User user;
@@ -30,7 +30,7 @@ public class LobbyTest {
     }
 
     @Test
-    public void createUserTest() throws EmptyNicknameException, ExistingNicknameException {
+    public void createUserTest() throws EmptyNicknameException, ExistingNicknameException, RemoteException {
 
         user = lobby.createUser("Alby");
 
@@ -56,7 +56,7 @@ public class LobbyTest {
     }
 
     @Test
-    public void joinGameTest() throws NotExistingUser, EmptyNicknameException, ExistingNicknameException {
+    public void joinGameTest() throws EmptyNicknameException, ExistingNicknameException, RemoteException {
 
         User user1 = lobby.createUser("Alby");
 
@@ -81,7 +81,7 @@ public class LobbyTest {
     }
 
     @Test
-    public void createGameTest() throws NotExistingUser, EmptyNicknameException, ExistingNicknameException {
+    public void createGameTest() throws EmptyNicknameException, ExistingNicknameException, RemoteException {
 
         User user1 = lobby.createUser("Alby");
 

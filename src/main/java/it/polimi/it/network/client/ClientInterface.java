@@ -96,6 +96,12 @@ public interface ClientInterface extends Serializable {
      */
     void setStageToEndGame() throws RemoteException;
 
+    /**
+     * Forces the GameStage to be CREATEorJOIN
+     * @throws RemoteException .
+     */
+    void setStageToCreate() throws RemoteException;
+
 
     /**
      * Method that sends the private
