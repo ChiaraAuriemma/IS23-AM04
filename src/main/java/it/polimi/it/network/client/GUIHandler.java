@@ -1,7 +1,9 @@
 package it.polimi.it.network.client;
 
 import it.polimi.it.model.Card.PersonalGoalCards.PersonalGoalCard;
+import it.polimi.it.model.Shelfie;
 import it.polimi.it.model.Tiles.Tile;
+import it.polimi.it.model.User;
 import it.polimi.it.view.GUI.*;
 import it.polimi.it.view.ViewInterface;
 import javafx.application.Platform;
@@ -574,6 +576,34 @@ public class GUIHandler implements ViewInterface {
     // metodo per cancellare tutti i dati legati alla partita precedente in caso un player volesse giocare ancora
     @Override
     public void clean() {
+        for(String user: GUIApplication.getPlayers()){
+            User u = new User(" ");
+            Shelfie s = new Shelfie(u);
+            Image[][] s1 = new Image[6][5];
+            for (int i = 0; i < 6; i++) {
+                for (int j = 0; j < 5; j++) {
+                    String color = s.getShelf()[i][j].getColor();
+                    Image image = chooseAnImage(color);
+                    s1[i][j] = image;
+                }
+            }
+            GUIApplication.setShelfies(user,s1);
+        }
+
+        for(String user: GUIApplication.getPlayers()){
+            int i = 0;
+            while (!GUIApplication.getPlayers().get(i).equals(user)){
+                i++;
+            }
+            GUIApplication.setPoints(i,0);
+        }
+/*
+        ArrayList<String> players = new ArrayList<>(4);
+        GUIApplication.setPlayers(players);
+
+ */
+
+        GUIApplication.getFinalPoints().clear();
 
     }
 
@@ -581,6 +611,7 @@ public class GUIHandler implements ViewInterface {
     public ClientInterface getClient(){
         return client;
     }
+
 
 
 }

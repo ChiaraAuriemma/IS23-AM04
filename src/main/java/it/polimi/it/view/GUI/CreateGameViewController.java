@@ -15,6 +15,9 @@ import javafx.scene.control.TextField;
 import java.io.IOException;
 import java.util.Objects;
 
+/**
+ * Controller of the "CreateGame" scene that is seen when the player choose to create a new game
+ */
 public class CreateGameViewController implements GuiInterface{
 
     private static Stage stage;
@@ -26,6 +29,11 @@ public class CreateGameViewController implements GuiInterface{
     @FXML
     TextField NumOfPlayers;
 
+    /**
+     * Method that triggers when the button "Start" is pressed and change the scene in GameTurn
+     * @param actionEvent is the trigger of this method and in this case it's the click of the button "Start"
+     * @throws IOException ?
+     */
     public void GotoGame(ActionEvent actionEvent) throws IOException {
         if(NumOfPlayers.getText().length() != 0) {
             int players = Integer.parseInt(NumOfPlayers.getText());

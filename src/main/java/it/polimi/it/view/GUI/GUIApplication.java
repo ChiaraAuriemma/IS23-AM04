@@ -1,5 +1,9 @@
 package it.polimi.it.view.GUI;
 
+import impl.org.controlsfx.tools.rectangle.change.NewChangeStrategy;
+import it.polimi.it.model.Shelfie;
+import it.polimi.it.model.Tiles.Tile;
+import it.polimi.it.model.User;
 import it.polimi.it.network.client.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -41,6 +45,8 @@ public class GUIApplication extends Application {
 
     private static String currentChat;
 
+
+
     // alby scrivi tu
     public static void setFinalPoint(List<String> users, ArrayList<Integer> points) {
         int i = 0;
@@ -79,6 +85,7 @@ public class GUIApplication extends Application {
     // ma relativo, personalizzato in
     // base al giocatore
     public static void setPlayers(ArrayList<String> order){
+        players.clear();
         int i=0;
         int j=1;
 

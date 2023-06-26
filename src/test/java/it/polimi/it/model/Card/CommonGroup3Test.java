@@ -892,7 +892,7 @@ public class CommonGroup3Test {
         if(card1.checkGoal(shelfie))
             fail("Test failed");
     }
-/*
+
     @Test
     public void checkGoalTest20(){ //testing card 4
         int column, row;
@@ -1122,7 +1122,7 @@ public class CommonGroup3Test {
     }
 
 
- */
+
 
 
 }

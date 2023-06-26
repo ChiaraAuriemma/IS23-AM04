@@ -15,7 +15,7 @@ import static org.junit.Assert.fail;
 public class CommonGroup5Test {
     private CommonGoalCard card1;
     private CommonGoalCard card2;
-    private CommonDeck commonDeck;
+    private CommonDeck commonDeck, commonDeck2;
 
     private Shelfie shelfie;
     private TilesBag bag;
@@ -23,9 +23,11 @@ public class CommonGroup5Test {
     @Before
     public void card(){
         this.commonDeck = new CommonDeck();
+        this.commonDeck2 = new CommonDeck();
         commonDeck.createCards(9,1);
         this.card1 = commonDeck.getCommonCard1();
         this.card2 = commonDeck.getCommonCard2();
+        commonDeck2.createCards(1,9);
         this.shelfie = new Shelfie(u);
         this.bag = new TilesBag();
     }

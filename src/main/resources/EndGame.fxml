@@ -8,7 +8,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.TextFlow?>
 
-<AnchorPane prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.it.view.GUI.EndGameController">
+<AnchorPane prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.it.view.GUI.EndGameController">
    <children>
       <ImageView fitHeight="720.0" fitWidth="1080.0" pickOnBounds="true">
          <image>
@@ -25,13 +25,13 @@
             <Font name="System Bold" size="28.0" />
          </font>
       </Label>
-      <Button fx:id="playAgain" layoutX="310.0" layoutY="580.0" mnemonicParsing="false" onAction="#PlayAgain" prefHeight="40.0" prefWidth="130.0" text="Join Game">
+      <Button fx:id="JoinButton" layoutX="310.0" layoutY="580.0" mnemonicParsing="false" onAction="#GoToJoin" prefHeight="40.0" prefWidth="130.0" text="Join Game">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
       <TextFlow fx:id="textFlow" layoutX="420.0" layoutY="300.0" lineSpacing="2.0" prefHeight="200.0" prefWidth="400.0" />
-      <Button fx:id="playAgain1" layoutX="630.0" layoutY="580.0" mnemonicParsing="false" onAction="#PlayAgain" prefHeight="40.0" prefWidth="130.0" text="Create Game">
+      <Button fx:id="CreateButton" layoutX="630.0" layoutY="580.0" mnemonicParsing="false" onAction="#GoToCreate" prefHeight="40.0" prefWidth="130.0" text="Create Game">
          <font>
             <Font size="18.0" />
          </font>
