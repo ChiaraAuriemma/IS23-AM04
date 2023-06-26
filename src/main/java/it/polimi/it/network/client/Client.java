@@ -26,7 +26,7 @@ public class Client implements Serializable {
 
         ClientInterface client;
 
-        if (args.length != 2) {
+        if (args.length < 2) {
             System.out.println("Invalid number of parameter: write RMI or TCP and CLI or GUI");
             return;
         }
@@ -34,13 +34,20 @@ public class Client implements Serializable {
         Gson gson = new Gson();
         JsonReader jsonReader = new JsonReader(new InputStreamReader(Objects.requireNonNull(ClassLoader.getSystemResourceAsStream("ServerConfig.json"))));
         JsonObject jsonObject = gson.fromJson(jsonReader, JsonObject.class);
+        String ipString = jsonObject.get("ip").getAsString();
+
+        if(args.length==3){
+            if (args[2]!=null){
+                ipString=args[2];
+            }
+        }
         if (args[0].equalsIgnoreCase("tcp")) {
-            ClientTCP clientTCP = new ClientTCP(jsonObject.get("portTCP").getAsInt(), jsonObject.get("ip").getAsString());
+            ClientTCP clientTCP = new ClientTCP(jsonObject.get("portTCP").getAsInt(), ipString);
             Thread thread = new Thread(clientTCP);
             client = clientTCP;
             thread.start();
         } else if(args[0].equalsIgnoreCase("rmi")){
-            ClientRMIApp clientRMI = new ClientRMIApp(jsonObject.get("portRMI").getAsInt(), jsonObject.get("ip").getAsString()/*"192.168.43.10"*/);
+            ClientRMIApp clientRMI = new ClientRMIApp(jsonObject.get("portRMI").getAsInt(), ipString);
             clientRMI.startClient();
             client = clientRMI;
         }else{

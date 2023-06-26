@@ -17,9 +17,12 @@ public class Launch {
         if(args[0].equalsIgnoreCase("server")){
             Server.main(args);
         }else if(args[0].equalsIgnoreCase("client")){
-            String [] specifics = new String[2];
+            String [] specifics = new String[3];
             specifics[0] = args[1];
             specifics[1] = args[2];
+            if(args.length==4){
+                specifics[2] = args[3];
+            }
             Client.main(specifics);
         }
     }

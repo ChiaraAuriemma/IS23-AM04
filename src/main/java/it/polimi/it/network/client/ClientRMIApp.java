@@ -68,7 +68,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
      */
     public void startClient() {
         try {
-            registry = LocateRegistry.getRegistry(/*"192.168.43.176"*/ip, port);
+            registry = LocateRegistry.getRegistry(ip, port);
             this.sr = (ServerInterface) registry.lookup("server_RMI");
         } catch (RemoteException | NotBoundException e) {
             System.out.println(e.getMessage());
@@ -83,7 +83,6 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
      */
     public void login(String userName) throws RemoteException,IOException {
         try {
-            System.out.println("try login to" + sr);
             this.nickname = sr.login(this, userName);
             if(!stage.getStage().equals(TurnStages.NOTURN)){
                 stage.setStage(TurnStages.CREATEorJOIN);
