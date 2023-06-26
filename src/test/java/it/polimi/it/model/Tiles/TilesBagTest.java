@@ -60,5 +60,9 @@ public class TilesBagTest {
         t = bag.randomTiles(1, 2);
         assertEquals(d.getColor(), t.getColor());
         assertEquals(0, bag.getTotRemaining());
+        Tile tile1 = new Tile();
+        Tile tile2 = new Tile();
+        tile2 = bag.randomTiles(1, 2);
+        bag.boardCleaner(tile2.getColor());
     }
 }
