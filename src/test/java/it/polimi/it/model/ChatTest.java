@@ -1,6 +1,5 @@
 package it.polimi.it.model;
 
-import it.polimi.it.view.Cli;
 import org.junit.Before;
 import org.junit.Test;
 
