@@ -65,10 +65,13 @@ public class TestCli {
         order.add(u4);
 
         ArrayList<String> a = new ArrayList<>();
-        for (User uefwjrej: order){
-            a.add(testView.nickPadder(uefwjrej.getNickname()));
+        for (User use: order){
+            a.add(testView.nickPadder(use.getNickname()));
         }
+        testView.setThisNick("JackB");
         testView.setOrderView(a);
+        testView.setNamesLine();
+        testView.setPaddedNames();
 
         testView.setPlayersPointsView(a.get(0), 3);
         testView.setPlayersPointsView(a.get(1), 39);
@@ -148,8 +151,10 @@ public class TestCli {
         for (User uefwjrej: order){
             a.add(testView.nickPadder(uefwjrej.getNickname()));
         }
+        testView.setThisNick("JackB");
         testView.setOrderView(a);
-
+        testView.setNamesLine();
+        testView.setPaddedNames();
         testView.setPlayersPointsView(a.get(0), 3);
         testView.setPlayersPointsView(a.get(1), 39);
 
@@ -214,7 +219,10 @@ public class TestCli {
         for (User uefwjrej: order){
             a.add(testView.nickPadder(uefwjrej.getNickname()));
         }
+        testView.setThisNick("JackB");
         testView.setOrderView(a);
+        testView.setNamesLine();
+        testView.setPaddedNames();
 
         testView.setPlayersPointsView(a.get(0), 3);
         testView.setPlayersPointsView(a.get(1), 39);
@@ -290,8 +298,10 @@ public class TestCli {
         for (User uefwjrej: order){
             a.add(testView.nickPadder(uefwjrej.getNickname()));
         }
+        testView.setThisNick("JackB");
         testView.setOrderView(a);
-
+        testView.setNamesLine();
+        testView.setPaddedNames();
         testView.setPlayersPointsView(a.get(0), 3);
         testView.setPlayersPointsView(a.get(1), 39);
         testView.setPlayersPointsView(a.get(2), 6);
