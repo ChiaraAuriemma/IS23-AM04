@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Chat implements Serializable {
     private static final long serialVersionUID = 8457851963563892967L;
-    private List<String> chatList = new ArrayList<>();
+    private List<String> chatList;
     private List<String> currentChat = new ArrayList<>(9);
 
 
