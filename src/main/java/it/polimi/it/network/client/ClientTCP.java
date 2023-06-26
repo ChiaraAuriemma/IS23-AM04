@@ -190,9 +190,7 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
                     FinalPointsMessage finalPointsMessage = (FinalPointsMessage) response.getPayload();
                     try {
                         view.setFinalPoints(finalPointsMessage.getUsernames(),finalPointsMessage.getPoints());
-                        //if(view instanceof Cli){
                             setStageToEndGame();
-                        //}
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
@@ -251,7 +249,13 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
 
                 case ERROR:
                     ErrorMessage errorMessage = (ErrorMessage) response.getPayload();
-                    view.printError(errorMessage.getError());
+                    //view.printError(errorMessage.getError());
+                    if(!errorMessage.getError().equals("You have won because this game was closed due to the lack of players! :(\n")){
+                        view.printError(errorMessage.getError());
+                    }else{
+                        setStageToEndGame();
+                        view.printError(errorMessage.getError() + " Type create_game>>* or join_game>>* if you want to play again...  ");
+                    }
                     break;
             }
         }

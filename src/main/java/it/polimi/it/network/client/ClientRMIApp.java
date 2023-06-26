@@ -106,6 +106,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
             view.printError(e);
         }else{
             setStageToEndGame();
+            view.printError(e + " Type create_game>>* or join_game>>* if you want to play again...  ");
         }
     }
 
