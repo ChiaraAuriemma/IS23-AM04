@@ -509,9 +509,9 @@ public class Cli implements ViewInterface, Serializable {
      */
     public void Title() {
         String title = "\n\n\n\n\n\n\n\n\n\n" +
-                        " \u001B[33m    ▒█▀▄▀█ █▒ █ 　 ▒█▀▀▀█ █░ █ █▀▀ █▒░ █▀▀ ░▀░ █▀▀\n" +
-                                 "     ▒█▒█░█ █▄▄█ 　 ░▀▀▀▄▄ █▀▀█ █▀▀ █▒░ █▀▀ ▀█▀ █▀▀\n" +
-                                 "     ▒█░░░█ ▄▄▄█ 　 ▒█▄▄▄█ ▀░ ▀ ▀▀▀ ▀▀▀ ▀░  ▀▀▀ ▀▀▀\n \u001B[39m \n\n\n\n";
+                        " \u001B[33m    ▒█▀▄▀█ █▒ █    ▒█▀▀▀█ █░ █ █▀▀ █▒░ █▀▀ ░▀░ █▀▀\n" +
+                                  "     ▒█▒█░█ █▄▄█    ░▀▀▀▄▄ █▀▀█ █▀▀ █▒░ █▀▀ ▀█▀ █▀▀\n" +
+                                  "     ▒█░░░█ ▄▄▄█    ▒█▄▄▄█ ▀░ ▀ ▀▀▀ ▀▀▀ ▀░  ▀▀▀ ▀▀▀\n \u001B[39m \n\n\n\n";
         out.println(title);
     }
 
@@ -799,6 +799,10 @@ public class Cli implements ViewInterface, Serializable {
         out.println(bl);
         out.println(bl);
         out.println(down);
+        out.println(bl);
+        out.println(bl);
+        out.println(" Type create_game>>* or join_game>>* if you want to play again...  ");
+
     }
 
 
