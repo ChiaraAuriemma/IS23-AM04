@@ -216,7 +216,7 @@ public class Lobby implements Serializable {
             List<User> users = getGameController(gameID).getPlayerList().stream().filter(User::getInGame).collect(Collectors.toList());
             getGame(gameID).getVirtualView().restart(users);
 
-            for(User u : users){
+            for(User user : users){
                 user.setInGame(false);
                 User user2 = new User(user.getNickname());
                 userList.set(userList.indexOf(user), user2);
