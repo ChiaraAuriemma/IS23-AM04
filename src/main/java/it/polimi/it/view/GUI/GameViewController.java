@@ -44,7 +44,7 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 
 /**
- * Controller of PROVAVBOX (cambiare) that manages the client's turn and all of its operation
+ * Controller of GameTurn that manages the client's turn and all of its operation
  */
 public class GameViewController implements GuiInterface, Initializable {
 
@@ -129,8 +129,7 @@ public class GameViewController implements GuiInterface, Initializable {
     @FXML
     TextArea textMessage;
 
-    // in realtà locatione e resources sono parametri che non usiamo ma che ci devono essere per forza se vogliamo fare l'override
-    // del meetodo initialize (cosa che ci serve fare), quindi meglio non scrivere niente su di loro e basta se si può
+
     /**
      * Method that initialize the scene and all of his parts like the living room, the bookshelves, the nicknames, the chat and the points
      * @param location ?
@@ -408,7 +407,7 @@ public class GameViewController implements GuiInterface, Initializable {
 
     /**
      * Method to select the tiles from the Living room that changes the opacity of the tile when is selected
-     * @param imageView is the reference to the living room in the scene
+     * @param imageView is the image associated with the tile
      * @param row is the row of the tile in the living room
      * @param column is the column of the tile in the living room
      * @throws IOException ?
@@ -432,13 +431,13 @@ public class GameViewController implements GuiInterface, Initializable {
      * @param imageView is the image associated with the tile
      * @param i row is the row of the tile in the living room
      * @param j is the column of the tile in the living room
-     * @throws IOException
+     * @throws IOException ?
      */
     public void removeTiles(ImageView imageView, int i, int j) throws IOException {
         PossibleColors color = getColor(imageView);
         Tile t = new Tile(i,j,color);
         Tiles.remove(t);
-        GUIApplication.changeScene(); //--->meglio aggiornare o poter tornare indietro solo una volta??
+        GUIApplication.changeScene();
     }
 
     /**
@@ -525,7 +524,7 @@ public class GameViewController implements GuiInterface, Initializable {
      * Method used to send to the server the number of tiles that the client wants to take; it triggers when the client write a number in
      * the text field and press the button "Confirm"
      * @param actionEvent  is the trigger of this method and in this case it's the click of the button "Confirm"
-     * @throws IOException
+     * @throws IOException ?
      */
     public void ChooseNumberOfTiles(ActionEvent actionEvent) throws IOException {
         if(!client.getGameStage().equals(TurnStages.TILESNUM)) {
@@ -589,7 +588,7 @@ public class GameViewController implements GuiInterface, Initializable {
     }
 
     /**
-     * Method used to send the chat message written by the client in the text Field when the button "Send" it's pressed
+     * Method used to send the chat message (private or public) written by the client in the text Field when the button "Send" it's pressed
      * @param actionEvent  is the trigger of this method and in this case it's the click of the button "Send"
      * @throws IOException ?
      */

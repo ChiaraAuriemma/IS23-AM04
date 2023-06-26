@@ -111,7 +111,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
         </GridPane>
-        <TextArea fx:id="textMessage" layoutX="550.0" layoutY="570.0" prefHeight="120.0" prefWidth="584.0" />
+        <TextArea fx:id="textMessage" editable="false" layoutX="550.0" layoutY="570.0" prefHeight="120.0" prefWidth="584.0" />
         <TextField fx:id="chatMessage" layoutX="550.0" layoutY="689.0" prefHeight="30.0" prefWidth="509.0" />
         <Button layoutX="1059.0" layoutY="679.0" mnemonicParsing="false" onAction="#sendMessage" prefHeight="30.0" prefWidth="75.0" text="Send">
             <font>
