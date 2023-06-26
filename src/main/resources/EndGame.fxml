@@ -25,11 +25,16 @@
             <Font name="System Bold" size="28.0" />
          </font>
       </Label>
-      <Button fx:id="playAgain" layoutX="475.0" layoutY="580.0" mnemonicParsing="false" onAction="#PlayAgain" prefHeight="40.0" prefWidth="130.0" text="Play Again">
+      <Button fx:id="playAgain" layoutX="310.0" layoutY="580.0" mnemonicParsing="false" onAction="#PlayAgain" prefHeight="40.0" prefWidth="130.0" text="Join Game">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
       <TextFlow fx:id="textFlow" layoutX="420.0" layoutY="300.0" lineSpacing="2.0" prefHeight="200.0" prefWidth="400.0" />
+      <Button fx:id="playAgain1" layoutX="630.0" layoutY="580.0" mnemonicParsing="false" onAction="#PlayAgain" prefHeight="40.0" prefWidth="130.0" text="Create Game">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

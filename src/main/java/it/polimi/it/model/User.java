@@ -9,6 +9,7 @@ import it.polimi.it.model.Tiles.Tile;
 import java.io.IOException;
 import java.io.Serializable;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -53,10 +54,6 @@ public class User implements Serializable {
             return -1;
         }
         int max = shelf.possibleTiles();
-
-        if(max < 1 || max > 3){
-            throw new IllegalValueException("Wrong tiles number");
-        }
 
         max = board.findMaxAdjacent(max);
         System.out.println("Asking to " + nickname + "the tiles num \n");
@@ -269,5 +266,13 @@ public class User implements Serializable {
      */
     public void setTilesNumber(int tilesNumber) {
         this.tilesNumber = tilesNumber;
+    }
+
+    /**
+     * Method used to
+     * @return the chat for testing
+     */
+    public Chat getChat() {
+        return chat;
     }
 }
