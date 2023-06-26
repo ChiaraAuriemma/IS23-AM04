@@ -449,7 +449,6 @@ public class GUIHandler implements ViewInterface {
 
     /**
      * Resets all the game's data.
-     * CLI only method.
      */
     @Override
     public void clean() {
@@ -474,11 +473,6 @@ public class GUIHandler implements ViewInterface {
             }
             GUIApplication.setPoints(i,0);
         }
-/*
-        ArrayList<String> players = new ArrayList<>(4);
-        GUIApplication.setPlayers(players);
-
- */
 
         GUIApplication.getFinalPoints().clear();
 
