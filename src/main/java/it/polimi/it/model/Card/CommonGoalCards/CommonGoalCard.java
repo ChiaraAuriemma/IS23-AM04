@@ -3,6 +3,9 @@ package it.polimi.it.model.Card.CommonGoalCards;
 import it.polimi.it.model.Shelfie;
 import java.io.Serializable;
 
+/**
+ * Abstract class for the common goal cards
+ */
 public abstract class CommonGoalCard implements Serializable {
 
     private static final long serialVersionUID = -3433170783937394388L;
