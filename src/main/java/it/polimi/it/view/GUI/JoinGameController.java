@@ -30,7 +30,7 @@ public class JoinGameController implements GuiInterface {
     /**
      * Method that triggers when the button "Start" is pressed after the client has written the game ID to join a certain game
      * @param actionEvent is the trigger of this method and in this case it's represented by the click of the button "Start"
-     * @throws IOException^
+     * @throws IOException ^
      */
     public void GotoGame(ActionEvent actionEvent) throws IOException {
         if(GameID.getText().length() != 0) {
