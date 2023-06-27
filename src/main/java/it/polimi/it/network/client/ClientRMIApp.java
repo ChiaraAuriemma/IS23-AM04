@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface, RemoteInterface {
-    //private static final long serialVersionUID = 5072588874360370885L;
     private int port;
     private String ip;
     private Registry registry;
@@ -71,7 +70,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
             registry = LocateRegistry.getRegistry(ip, port);
             this.sr = (ServerInterface) registry.lookup("server_RMI");
         } catch (RemoteException | NotBoundException e) {
-            System.out.println(e.getMessage());
+            System.out.println("Couldn't reach the Server...");
         }
     }
 
@@ -83,7 +82,11 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
      */
     public void login(String userName) throws RemoteException,IOException {
         try {
-            this.nickname = sr.login(this, userName);
+            try {
+                this.nickname = sr.login(this, userName);
+            }catch (RemoteException r){
+                view.printError("Server Unreachable");
+            }
             if(!stage.getStage().equals(TurnStages.NOTURN)){
                 stage.setStage(TurnStages.CREATEorJOIN);
                 view.joinOrCreate(this.nickname);
@@ -118,8 +121,13 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
      */
     @Override
     public void createGame(int playerNumber) throws RemoteException {
+        int gameid = 0;
         try {
-            int gameid = sr.createGame(this.nickname, playerNumber, this);
+            try{
+                gameid = sr.createGame(this.nickname, playerNumber, this);
+            }catch (RemoteException r){
+                view.printError("Server Unreachable");
+            }
             stage.setStage(TurnStages.NOTHING);
             view.setGameID(gameid);
         } catch (WrongPlayerException e) {
@@ -135,7 +143,12 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
      */
     public void joinGame(int gameID) throws RemoteException {
         try {
-            int gameid = sr.joinGame(this.nickname, gameID, this);
+            int gameid = 0;
+            try{
+                gameid = sr.joinGame(this.nickname, gameID, this);
+            } catch (RemoteException r){
+                view.printError("Server Unreachable");
+            }
 
             if(stage.getStage().equals(TurnStages.CREATEorJOIN)){
                 stage.setStage(TurnStages.NOTHING);
@@ -155,7 +168,11 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
     @Override
     public void tilesNumMessage(int numOfTiles) throws RemoteException {
         try {
-            sr.tilesNumMessage(this.nickname, numOfTiles);
+            try{
+                sr.tilesNumMessage(this.nickname, numOfTiles);
+            }catch (RemoteException r){
+                view.printError("Server Unreachable");
+            }
             stage.setStage(TurnStages.CHOOSETILES);
         } catch (IllegalValueException | WrongPlayerException | InvalidIDException | IOException e) {
             view.printError(e.getMessage());
@@ -171,7 +188,11 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
     @Override
     public void selectedTiles(List<Tile> choosenTiles) throws IOException {
         try {
-            sr.selectedTiles(this.nickname, choosenTiles);
+            try{
+                sr.selectedTiles(this.nickname, choosenTiles);
+            }catch (RemoteException r){
+                view.printError("Server Unreachable");
+            }
             stage.setStage(TurnStages.CHOOSECOLUMN);
         } catch (WrongTileException | WrongPlayerException | WrongListException | IllegalValueException | InvalidIDException | IOException e) {
             view.printError(e.getMessage());
@@ -187,7 +208,11 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
     @Override
     public void chooseColumn(int numOfColum) throws RemoteException {
         try {
-            sr.chooseColumn(this.nickname, numOfColum);
+            try{
+                sr.chooseColumn(this.nickname, numOfColum);
+            }catch (RemoteException r){
+                view.printError("Server Unreachable");
+            }
             System.out.println("End of your turn\n");
         } catch (InvalidIDException | IllegalValueException | IOException e) {
             view.printError(e.getMessage());
@@ -252,8 +277,12 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
      * @throws RemoteException .
      */
     @Override
-    public void sendChatMessage(String chatMessage) throws RemoteException {
-        sr.chatMessage(this.nickname, chatMessage);
+    public void sendChatMessage(String chatMessage){
+        try {
+            sr.chatMessage(this.nickname, chatMessage);
+        } catch (RemoteException e) {
+            view.printError("Server Unreachable");
+        }
     }
 
 
@@ -449,6 +478,8 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
     public void sendChatPrivateMessage(String chatMessage, String receiver) throws RemoteException {
         try {
             sr.chatPrivateMessage(this.nickname, chatMessage, receiver);
+        }catch (RemoteException r){
+            view.printError("Server Unreachable");
         }catch (IllegalValueException e){
             view.printError(e.getMessage());
         }
