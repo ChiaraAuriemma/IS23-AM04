@@ -26,8 +26,8 @@ public class Shelfie implements Serializable {
     public Shelfie(User user){
         shelf = new Tile[6][5];
         for(int row=0; row<6; row++){
-            for(int column=0; column<5; column++){
-                shelf[row][column] = new Tile(row, column, PossibleColors.DEFAULT);
+            for(int column=0; column<4; column++){
+                shelf[row][column] = new Tile(row, column, PossibleColors.GREEN);
             }
         }
         this.endToken1 = false;
