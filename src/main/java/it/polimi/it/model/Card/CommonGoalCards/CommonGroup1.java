@@ -6,23 +6,18 @@ import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonReader;
 import it.polimi.it.model.Shelfie;
 import it.polimi.it.model.Tiles.Tile;
-import java.io.FileReader;
 import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Class used to handle cards 1 and 10
+ */
 public class CommonGroup1 extends CommonGoalCard  implements Serializable {
 
     private static final long serialVersionUID = 274381445832608000L;
-    private List<Tile> pink;
-    private List<Tile> cyan;
-    private List<Tile> yellow;
-    private List<Tile> blue;
-    private List<Tile> white;
-    private List<Tile> green;
-
 
     /**
      * constructor of the CommonGroup1. We use the ArrayLists to save the tiles that are useful to reach the goal
@@ -46,12 +41,12 @@ public class CommonGroup1 extends CommonGoalCard  implements Serializable {
             JsonArray jsonArray = gson.fromJson(reader, JsonArray.class);
             for(i=0; jsonArray.get(i).getAsJsonObject().get("id").getAsInt() != id ; i++);
             JsonObject jsonObject= jsonArray.get(i).getAsJsonObject();
-            pink = new ArrayList<Tile>(0);
-            cyan = new ArrayList<Tile>(0);
-            yellow = new ArrayList<Tile>(0);
-            blue = new ArrayList<Tile>(0);
-            white = new ArrayList<Tile>(0);
-            green = new ArrayList<Tile>(0);
+            List<Tile> pink = new ArrayList<>(0);
+            List<Tile> cyan = new ArrayList<>(0);
+            List<Tile> yellow = new ArrayList<>(0);
+            List<Tile> blue = new ArrayList<>(0);
+            List<Tile> white = new ArrayList<>(0);
+            List<Tile> green = new ArrayList<>(0);
             for(column=0;column<5;column++){
                 for(row=0; row<6; row++){
                     if(column+jsonObject.get("tile2Column").getAsInt() < 5 && row+jsonObject.get("tile2Row").getAsInt()<6 &&

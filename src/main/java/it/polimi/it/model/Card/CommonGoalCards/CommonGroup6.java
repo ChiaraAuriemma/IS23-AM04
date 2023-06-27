@@ -5,11 +5,13 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonReader;
 import it.polimi.it.model.Shelfie;
-import java.io.FileReader;
 import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.util.Objects;
 
+/**
+ * Class used to handle card 12
+ */
 public class CommonGroup6 extends CommonGoalCard  implements Serializable {
 
     private static final long serialVersionUID = -4150054123609637705L;
@@ -19,7 +21,7 @@ public class CommonGroup6 extends CommonGoalCard  implements Serializable {
      * constructor of the CommonGroup6.
      * @param id is the identification code of the CommonGoalCard, in this group the option for the id is 12
      */
-    public CommonGroup6(int id){ //solo carta 12
+    public CommonGroup6(int id){
         super(id);
     }
 

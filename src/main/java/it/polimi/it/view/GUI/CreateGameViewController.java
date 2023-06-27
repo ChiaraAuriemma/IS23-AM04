@@ -19,9 +19,8 @@ public class CreateGameViewController implements GuiInterface{
     /**
      * Method that triggers when the button "Start" is pressed and change the scene in GameTurn
      * @param actionEvent is the trigger of this method and in this case it's the click of the button "Start"
-     * @throws IOException ?
+     * @throws IOException .
      */
-
     public void GotoGame(ActionEvent actionEvent) throws IOException {
         if(NumOfPlayers.getText().length() != 0) {
             int players = Integer.parseInt(NumOfPlayers.getText());
@@ -32,7 +31,10 @@ public class CreateGameViewController implements GuiInterface{
         }
     }
 
-
+    /**
+     * Setter method for the reference of the client
+     * @param clientRef clientRef is the reference of the client
+     */
     public void setClient(ClientInterface clientRef){
         client = clientRef;
     }

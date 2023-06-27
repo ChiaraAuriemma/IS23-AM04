@@ -112,8 +112,8 @@ public class GameViewController implements GuiInterface, Initializable {
 
     /**
      * Method that initialize the scene and all of his parts like the living room, the bookshelves, the nicknames, the chat and the points
-     * @param location ?
-     * @param resources ?
+     * @param location the location used to resolve relative paths for the root object, or null if the location is not known.
+     * @param resources the resources used to localize the root object, or null if the root object was not localized.
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -236,7 +236,7 @@ public class GameViewController implements GuiInterface, Initializable {
     /**
      * Method that triggers when the button "Show personal goal card" is clicked, and it changes scene to let the client see his personal card
      * @param actionEvent is the event that trigger this method and in this case it's the click of the button "Show personal goal card"
-     * @throws IOException ?
+     * @throws IOException .
      */
     public void GoToPersonalGoalCard(ActionEvent actionEvent) throws IOException {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -259,7 +259,7 @@ public class GameViewController implements GuiInterface, Initializable {
     /**
      * Method that triggers when the button "Show common goal card" is clicked, and it changes scene to let the client see his personal card
      * @param actionEvent is the event that trigger this method and in this case it's the click of the button "Show common goal card"
-     * @throws IOException ?
+     * @throws IOException .
      */
     public void GoToCommonGoalCards(ActionEvent actionEvent) throws IOException {
         int id1 = GUIApplication.getIDCommon1();
@@ -319,7 +319,7 @@ public class GameViewController implements GuiInterface, Initializable {
      * @param imageView is the image associated with the tile
      * @param row is the row of the tile in the living room
      * @param column is the column of the tile in the living room
-     * @throws IOException ?
+     * @throws IOException .
      */
     public void chooseTiles(ImageView imageView, int row, int column) throws IOException {
         PossibleColors color = getColor(imageView);
@@ -340,7 +340,7 @@ public class GameViewController implements GuiInterface, Initializable {
      * @param imageView is the image associated with the tile
      * @param i row is the row of the tile in the living room
      * @param j is the column of the tile in the living room
-     * @throws IOException ?
+     * @throws IOException .
      */
     public void removeTiles(ImageView imageView, int i, int j) throws IOException {
         PossibleColors color = getColor(imageView);
@@ -352,7 +352,7 @@ public class GameViewController implements GuiInterface, Initializable {
     /**
      * Method that triggers when the button "Choose selected tiles" is pressed and sends the list of selected tiles to the server
      * @param actionEvent is the trigger of this method and in this case it's the click of the button "Choose selected tiles"
-     * @throws IOException ?
+     * @throws IOException .
      */
     public void ChooseTiles(ActionEvent actionEvent) throws IOException {
         if(!client.getGameStage().equals(TurnStages.CHOOSETILES)){
@@ -372,7 +372,7 @@ public class GameViewController implements GuiInterface, Initializable {
     /**
      * Method that trigger when one of the button that represents a column it's pressed and send the chosen column to the server
      * @param actionEvent is the trigger of this method and in this case it's the click of a button that represents a column
-     * @throws IOException ?
+     * @throws IOException .
      */
     public void ChooseColumn(ActionEvent actionEvent) throws IOException {
         if(!client.getGameStage().equals(TurnStages.CHOOSECOLUMN)) {
@@ -389,7 +389,7 @@ public class GameViewController implements GuiInterface, Initializable {
      * Method used to send to the server the number of tiles that the client wants to take; it triggers when the client write a number in
      * the text field and press the button "Confirm"
      * @param actionEvent  is the trigger of this method and in this case it's the click of the button "Confirm"
-     * @throws IOException ?
+     * @throws IOException .
      */
     public void ChooseNumberOfTiles(ActionEvent actionEvent) throws IOException {
         if(!client.getGameStage().equals(TurnStages.TILESNUM)) {
@@ -455,7 +455,7 @@ public class GameViewController implements GuiInterface, Initializable {
     /**
      * Method used to send the chat message (private or public) written by the client in the text Field when the button "Send" it's pressed
      * @param actionEvent  is the trigger of this method and in this case it's the click of the button "Send"
-     * @throws IOException ?
+     * @throws IOException .
      */
     public void sendMessage(ActionEvent actionEvent) throws IOException{
         if(chatMessage.getText().length()!=0){
