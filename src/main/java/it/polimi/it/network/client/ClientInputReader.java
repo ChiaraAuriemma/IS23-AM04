@@ -7,6 +7,9 @@ import java.io.*;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
+/**
+ * Class that manages what the client's writes in the TUI
+ */
 public class ClientInputReader implements Runnable, Serializable{
 
     private static final long serialVersionUID = 8133446441839369630L;

@@ -15,6 +15,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * Class that manages the communication between the server and the client that choose GUI
+ */
 public class GUIHandler implements ViewInterface {
 
 

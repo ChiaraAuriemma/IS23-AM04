@@ -1,6 +1,8 @@
 package it.polimi.it.model.Tiles;
 
-
+/**
+ * Enumeration used to define all possible colors of the tiles
+ */
 public enum PossibleColors {
     BLUE("BLUE"),
     CYAN("CYAN"),

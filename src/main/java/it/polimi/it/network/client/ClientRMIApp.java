@@ -277,7 +277,6 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
     /**
      * Sends to the server the latest chat message that the user wrote in the chat
      * @param chatMessage is the latest chat message that the user wrote in the chat
-     * @throws RemoteException .
      */
     @Override
     public void sendChatMessage(String chatMessage){

@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class that manages the client's chat
+ */
 public class Chat implements Serializable {
     private static final long serialVersionUID = 8457851963563892967L;
     private List<String> currentChat;

@@ -10,6 +10,9 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Interface that ClientRMI and ClientTCPHandler implements
+ */
 public interface RemoteInterface extends Remote, Serializable {
 
 
