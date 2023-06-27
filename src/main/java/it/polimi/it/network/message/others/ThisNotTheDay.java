@@ -10,7 +10,7 @@ import java.util.List;
 
 
 /**
- * Ping Message: empty message which is used for recovering a TCP client's data after a reconnection.
+ * TCP Message: empty message which is used for recovering a TCP client's data after a reconnection.
  */
 public class ThisNotTheDay extends Payload  implements Serializable {
     private static final long serialVersionUID = -3294233920082178659L;

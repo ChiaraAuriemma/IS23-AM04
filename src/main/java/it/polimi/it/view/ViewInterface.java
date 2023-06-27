@@ -7,6 +7,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * View Interface. Contains the methods that are implemented by the CLI and GUI classes.
+ */
 public interface ViewInterface {
 
     /**
