@@ -139,6 +139,7 @@ public class Cli implements ViewInterface, Serializable {
         playersPoints.clear();
         order.clear();
         names.clear();
+        endToken=null;
     }
 
 
@@ -800,8 +801,9 @@ public class Cli implements ViewInterface, Serializable {
         out.println(bl);
         out.println(bl);
         out.println(down);
-        out.println(bl);
-        out.println(bl);
+        out.println("\n");
+        out.println("\n");
+        out.println("\n");
         out.println(" Type create_game>>* or join_game>>* if you want to play again...  ");
 
     }
