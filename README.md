@@ -15,7 +15,7 @@
 
 <br><br>
 <br><br>
-
+ 
 ### About My Shelfie and the project's specifications
 The goal of the project is to create a software version of the board game "My Shelfie" by Cranio Games.
 The client-server application needs to fulfill all the rules of the classic board game.
