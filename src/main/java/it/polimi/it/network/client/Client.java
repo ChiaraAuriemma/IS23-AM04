@@ -70,8 +70,6 @@ public class Client implements Serializable {
             GameStage gameStage = new GameStage();
             client.setGameStage(gameStage);
             GUIApplication.setClient(client);
-            GUIHandler guiHandler = (GUIHandler) client.getView();
-            GUIApplication.setGuiHandler(guiHandler);
             GUIApplication.main(args);
         }else{
             System.out.println("Invalid number of parameter: write RMI or TCP and CLI or GUI");
