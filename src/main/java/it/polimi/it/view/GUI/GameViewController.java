@@ -7,15 +7,11 @@ import com.google.gson.stream.JsonReader;
 import it.polimi.it.model.Tiles.PossibleColors;
 import it.polimi.it.model.Tiles.Tile;
 import it.polimi.it.network.client.ClientInterface;
-import it.polimi.it.network.client.GUIHandler;
 import it.polimi.it.network.client.TurnStages;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -28,16 +24,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import javafx.stage.Stage;
-
-import java.awt.*;
-
 import javafx.scene.paint.Color;
-
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
@@ -49,41 +39,12 @@ import java.util.ResourceBundle;
 public class GameViewController implements GuiInterface, Initializable {
 
     private static ClientInterface client;
-    private static GUIApplication  guiApp;
-    private static GUIHandler guiHandler;
-    private static Stage stage;
     private static ArrayList<Tile> Tiles;
-
-    private HashMap<Integer,GridPane> gridOfPlayers;
-    private HashMap<Integer,Label> nicknames;
-    private HashMap<Integer, Label> points;
 
     @FXML
     GridPane LivingRoom;
-
     @FXML
     Label Player1;
-    @FXML
-    GridPane Player1Grid;
-    @FXML
-    Label Points1;
-    @FXML
-    ImageView shelfieP1;
-
-    @FXML
-    Label labelPoints1;
-
-    @FXML
-    VBox vBoxGrid;
-    @FXML
-    GridPane Player2Grid;
-    @FXML
-    GridPane Player3Grid;
-    @FXML
-    GridPane Player4Grid;
-
-    @FXML
-    VBox vBoxNicknames;
     @FXML
     Label Player2;
     @FXML
@@ -92,25 +53,16 @@ public class GameViewController implements GuiInterface, Initializable {
     Label Player4;
 
     @FXML
-    VBox vBoxShelfie;
+    GridPane Player1Grid;
     @FXML
-    ImageView shelfieP2;
+    GridPane Player2Grid;
     @FXML
-    ImageView shelfieP3;
+    GridPane Player3Grid;
     @FXML
-    ImageView shelfieP4;
+    GridPane Player4Grid;
 
     @FXML
-    VBox vBoxLabelPoints;
-    @FXML
-    Label labelPoints2;
-    @FXML
-    Label labelPoints3;
-    @FXML
-    Label labelPoints4;
-
-    @FXML
-    VBox vBoxPoints;
+    Label Points1;
     @FXML
     Label Points2;
     @FXML
@@ -120,10 +72,38 @@ public class GameViewController implements GuiInterface, Initializable {
 
 
     @FXML
+    Label labelPoints1;
+    @FXML
+    Label labelPoints2;
+    @FXML
+    Label labelPoints3;
+    @FXML
+    Label labelPoints4;
+
+    @FXML
+    ImageView shelfieP2;
+    @FXML
+    ImageView shelfieP3;
+    @FXML
+    ImageView shelfieP4;
+
+    @FXML
+    VBox vBoxGrid;
+
+    @FXML
+    VBox vBoxShelfie;
+    @FXML
+    VBox vBoxLabelPoints;
+
+    @FXML
+    VBox vBoxPoints;
+
+
+
+    @FXML
     Label Text;
     @FXML
     TextField num;
-
     @FXML
     TextField chatMessage;
     @FXML
@@ -163,9 +143,9 @@ public class GameViewController implements GuiInterface, Initializable {
         }
 
 
-        gridOfPlayers = new HashMap<>(4);
-        nicknames = new HashMap<>(4);
-        points = new HashMap<>(4);
+        HashMap<Integer, GridPane> gridOfPlayers = new HashMap<>(4);
+        HashMap<Integer, Label> nicknames = new HashMap<>(4);
+        HashMap<Integer, Label> points = new HashMap<>(4);
 
         nicknames.put(0, Player1);
         gridOfPlayers.put(0, Player1Grid);
@@ -212,7 +192,7 @@ public class GameViewController implements GuiInterface, Initializable {
         });
         Player1.setTextFill(Color.BLUE);
 
-        points.forEach((k,v) -> {
+        points.forEach((k, v) -> {
             if (k < GUIApplication.getPlayers().size() && GUIApplication.getPoints().get(k) != null){
                 v.setText(GUIApplication.getPoints().get(k).toString());
                 v.setOpacity(1);
@@ -245,57 +225,12 @@ public class GameViewController implements GuiInterface, Initializable {
 
         });
 
-        /*
-        try {
-            if (client.getGameStage().equals(TurnStages.TILESNUM))
-                Text.setText("Choose how many tiles you want by clicking on the board");
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
-        }
-
-        try {
-            if (client.getGameStage().equals(TurnStages.CHOOSETILES))
-                Text.setText("You have already chosen number of tiles, now choose the tiles");
-
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
-        }
-
-        try {
-            if (client.getGameStage().equals(TurnStages.CHOOSECOLUMN))
-                Text.setText("You have already chosen number of tiles and tiles , you just have to choose the column!");
-
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
-        }
-
-         */
-
         if(GUIApplication.getCurrentChat() != null)
             textMessage.setText(GUIApplication.getCurrentChat());
     }
 
-    @Override
-    public void setReferenceGUI(GUIApplication guiRef) {
-        guiApp = guiRef;
-    }
-
     public void setClient(ClientInterface clientRef){
         client = clientRef;
-    }
-
-    @Override
-    public void setReferenceHandler(GUIHandler handlerRef) {
-        guiHandler = handlerRef;
-    }
-    @Override
-    public void setStage(Stage stageRef) {
-        stage = stageRef;
-    }
-
-    @Override
-    public String getType() {
-        return "choose_num_tiles";
     }
 
     /**
@@ -319,20 +254,6 @@ public class GameViewController implements GuiInterface, Initializable {
         alert.setDialogPane(dialogPane);
         alert.getButtonTypes().add(ButtonType.OK);
         alert.showAndWait();
-
-        /*
-        FXMLLoader fxmlLoader = new FXMLLoader(GUIApplication.class.getResource("/PersonalGoalCard.fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
-        GuiInterface currentController = fxmlLoader.getController();
-        currentController.setClient(client);
-        GUIApplication.setCurrentController(currentController);
-        stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
-        stage.setTitle("My Shelfie");
-        stage.setScene(scene);
-        stage.show();
-
-
-         */
     }
 
     /**
@@ -391,18 +312,6 @@ public class GameViewController implements GuiInterface, Initializable {
         alert.setDialogPane(dialogPane);
         alert.getButtonTypes().add(ButtonType.OK);
         alert.showAndWait();
-        /*
-        FXMLLoader fxmlLoader = new FXMLLoader(GUIApplication.class.getResource("/CommonGoalCards.fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
-        GuiInterface currentController = fxmlLoader.getController();
-        currentController.setClient(client);
-        GUIApplication.setCurrentController(currentController);
-        stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
-        stage.setTitle("My Shelfie");
-        stage.setScene(scene);
-        stage.show();
-
-         */
     }
 
     /**
@@ -458,50 +367,6 @@ public class GameViewController implements GuiInterface, Initializable {
             }
         }
 
-        /*
-        if(Tiles.size() == 0){
-            GUIApplication.showAlert(Alert.AlertType.WARNING, "Tiles error", "Invalid number, try again");
-            GUIApplication.changeScene();
-        }else {
-            int num = Tiles.size();
-            client.tilesNumMessage(num);
-            //wait...
-            client.selectedTiles(Tiles);
-            int id = Integer.parseInt(((Button) (actionEvent.getSource())).getId());
-            client.chooseColumn(id);
-        }
-
-         */
-
-        /*
-        if (client.getGameStage().equals(TurnStages.TILESNUM)) {
-            if(Tiles.size() == 0){
-                GUIApplication.showAlert(Alert.AlertType.WARNING, "Tiles error", "Invalid number, try again");
-                GUIApplication.changeScene();
-            }else {
-                int num = Tiles.size();
-                client.tilesNumMessage(num);
-                GUIApplication.showAlert(Alert.AlertType.INFORMATION, "Game rules", "You have chosen"+num + "tiles");
-            }
-
-        }else if(client.getGameStage().equals(TurnStages.CHOOSETILES)){
-            if(Tiles.size() == 0){
-                GUIApplication.showAlert(Alert.AlertType.WARNING, "Tiles error", "Invalid number, try again");
-                GUIApplication.changeScene();
-            }else {
-                client.selectedTiles(Tiles);
-                GUIApplication.showAlert(Alert.AlertType.INFORMATION, "Game rules", "You have chosen the tiles");
-            }
-
-        }else if(client.getGameStage().equals(TurnStages.CHOOSECOLUMN)){
-            int id = Integer.parseInt(((Button) (actionEvent.getSource())).getId());
-            client.chooseColumn(id);
-        }
-
-         */
-
-
-
     }
 
     /**
@@ -549,37 +414,37 @@ public class GameViewController implements GuiInterface, Initializable {
      */
     public PossibleColors getColor(ImageView image){
 
-        if((image.getImage().getUrl().equals((getClass().getResource("/Images/Trofei1.1.png")).toString()) || (image.getImage().getUrl().equals((getClass().getResource("/Images/Trofei1.2.png")).toString()))
-                || (image.getImage().getUrl().equals((getClass().getResource("/Images/Trofei1.3.png")).toString())))){
+        if((image.getImage().getUrl().equals((Objects.requireNonNull(getClass().getResource("/Images/Trofei1.1.png"))).toString()) || (image.getImage().getUrl().equals((Objects.requireNonNull(getClass().getResource("/Images/Trofei1.2.png"))).toString()))
+                || (image.getImage().getUrl().equals((Objects.requireNonNull(getClass().getResource("/Images/Trofei1.3.png"))).toString())))){
             return PossibleColors.CYAN;
         }
 
 
-        if((image.getImage().getUrl().equals((getClass().getResource("/Images/Piante1.1.png")).toString()) || (image.getImage().getUrl().equals((getClass().getResource("/Images/Piante1.2.png")).toString()))
-                || (image.getImage().getUrl().equals((getClass().getResource("/Images/Piante1.3.png")).toString())))){
+        if((image.getImage().getUrl().equals((Objects.requireNonNull(getClass().getResource("/Images/Piante1.1.png"))).toString()) || (image.getImage().getUrl().equals((Objects.requireNonNull(getClass().getResource("/Images/Piante1.2.png"))).toString()))
+                || (image.getImage().getUrl().equals((Objects.requireNonNull(getClass().getResource("/Images/Piante1.3.png"))).toString())))){
             return PossibleColors.PINK;
         }
 
 
-        if((image.getImage().getUrl().equals((getClass().getResource("/Images/Giochi1.1.png")).toString()) || (image.getImage().getUrl().equals((getClass().getResource("/Images/Giochi1.2.png")).toString()))
-                || (image.getImage().getUrl().equals((getClass().getResource("/Images/Giochi1.3.png")).toString())))){
+        if((image.getImage().getUrl().equals((Objects.requireNonNull(getClass().getResource("/Images/Giochi1.1.png"))).toString()) || (image.getImage().getUrl().equals((Objects.requireNonNull(getClass().getResource("/Images/Giochi1.2.png"))).toString()))
+                || (image.getImage().getUrl().equals((Objects.requireNonNull(getClass().getResource("/Images/Giochi1.3.png"))).toString())))){
             return PossibleColors.YELLOW;
         }
 
 
-        if((image.getImage().getUrl().equals((getClass().getResource("/Images/Cornici1.png")).toString()) || (image.getImage().getUrl().equals((getClass().getResource("/Images/Cornici1.2.png")).toString()))
-                || (image.getImage().getUrl().equals((getClass().getResource("/Images/Cornici1.3.png")).toString())))){
+        if((image.getImage().getUrl().equals((Objects.requireNonNull(getClass().getResource("/Images/Cornici1.png"))).toString()) || (image.getImage().getUrl().equals((Objects.requireNonNull(getClass().getResource("/Images/Cornici1.2.png"))).toString()))
+                || (image.getImage().getUrl().equals((Objects.requireNonNull(getClass().getResource("/Images/Cornici1.3.png"))).toString())))){
             return PossibleColors.BLUE;
         }
 
 
-        if((image.getImage().getUrl().equals((getClass().getResource("/Images/Gatti1.1.png")).toString()) || (image.getImage().getUrl().equals((getClass().getResource("/Images/Gatti1.2.png")).toString()))
-                || (image.getImage().getUrl().equals((getClass().getResource("/Images/Gatti1.3.png")).toString())))){
+        if((image.getImage().getUrl().equals((Objects.requireNonNull(getClass().getResource("/Images/Gatti1.1.png"))).toString()) || (image.getImage().getUrl().equals((Objects.requireNonNull(getClass().getResource("/Images/Gatti1.2.png"))).toString()))
+                || (image.getImage().getUrl().equals((Objects.requireNonNull(getClass().getResource("/Images/Gatti1.3.png"))).toString())))){
             return PossibleColors.GREEN;
         }
 
-        if((image.getImage().getUrl().equals((getClass().getResource("/Images/Libri1.1.png")).toString()) || (image.getImage().getUrl().equals((getClass().getResource("/Images/Libri1.2.png")).toString()))
-                || (image.getImage().getUrl().equals((getClass().getResource("/Images/Libri1.3.png")).toString())))){
+        if((image.getImage().getUrl().equals((Objects.requireNonNull(getClass().getResource("/Images/Libri1.1.png"))).toString()) || (image.getImage().getUrl().equals((Objects.requireNonNull(getClass().getResource("/Images/Libri1.2.png"))).toString()))
+                || (image.getImage().getUrl().equals((Objects.requireNonNull(getClass().getResource("/Images/Libri1.3.png"))).toString())))){
             return PossibleColors.WHITE;
         }
 

@@ -1,9 +1,5 @@
 package it.polimi.it.view.GUI;
 
-import impl.org.controlsfx.tools.rectangle.change.NewChangeStrategy;
-import it.polimi.it.model.Shelfie;
-import it.polimi.it.model.Tiles.Tile;
-import it.polimi.it.model.User;
 import it.polimi.it.network.client.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

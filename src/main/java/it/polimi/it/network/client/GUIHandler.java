@@ -17,10 +17,6 @@ import java.util.Random;
 
 public class GUIHandler implements ViewInterface {
 
-    private ClientInterface client;
-    private ViewInterface view;
-
-
 
     /**
      * Setter method for the player's turn order
@@ -481,22 +477,5 @@ public class GUIHandler implements ViewInterface {
 
     }
 
-
-    /**
-     * Getter Method
-     * @return the ClientInterface instance.
-     */
-    public ClientInterface getClient(){
-        return client;
-    }
-
-
-    /**
-     * Setter method for a
-     * @param view ViewInterface instance [GUI]
-     */
-    public void setView(ViewInterface view) {
-        this.view = view;
-    }
 
 }
