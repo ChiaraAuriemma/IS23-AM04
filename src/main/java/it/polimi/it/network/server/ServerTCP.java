@@ -23,6 +23,11 @@ public class ServerTCP implements Runnable, Serializable{
     private Lobby lobby;
 
     private Socket clientSocket;
+
+    /**
+     * Constructor of the class
+     * @param portNumber is the server port
+     */
     public ServerTCP(int portNumber){
         this.port = portNumber;
         this.userTCP = new HashMap<>();

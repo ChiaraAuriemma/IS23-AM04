@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Random;
 
+/**
+ * Class that represent the bag where the Tiles are
+ */
 public class TilesBag implements Serializable{
 
     private static final long serialVersionUID = -6550378525445784789L;

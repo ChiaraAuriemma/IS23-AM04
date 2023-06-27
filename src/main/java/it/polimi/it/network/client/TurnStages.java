@@ -2,6 +2,9 @@ package it.polimi.it.network.client;
 
 import java.io.Serializable;
 
+/**
+ * Enumeration that manages the stages of the client from when it connects to when it disconnects
+ */
 public enum TurnStages implements Serializable {
     /**
      * "Not your Turn" stage

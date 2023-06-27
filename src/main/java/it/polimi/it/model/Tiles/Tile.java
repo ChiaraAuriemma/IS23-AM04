@@ -3,6 +3,9 @@ package it.polimi.it.model.Tiles;
 import java.io.Serializable;
 import java.util.Objects;
 
+/**
+ * Class that manages the Tiles in the Living Room and in the Bookshelves
+ */
 public class Tile implements Serializable {
 
     private static final long serialVersionUID = 479529136617934717L;

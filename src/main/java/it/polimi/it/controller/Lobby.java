@@ -14,6 +14,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+/**
+ * Class that manages the client's when they aren't yet in a game on when they finish a game
+ */
 public class Lobby implements Serializable {
 
     private static final long serialVersionUID = 2013868577459101390L;

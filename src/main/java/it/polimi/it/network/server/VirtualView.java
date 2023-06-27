@@ -26,7 +26,9 @@ public class VirtualView implements Serializable {
     private HashMap<String, RemoteInterface> users;
     private List<String> disconn_users ;
 
-
+    /**
+     * Constructor of the class
+     */
     public VirtualView(){
         users = new HashMap<>();
         disconn_users = new ArrayList<>();
