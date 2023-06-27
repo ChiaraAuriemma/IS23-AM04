@@ -86,6 +86,18 @@ ip address:
 The command above has to be used in order to start the Client. Later the player will be asked a nickname and whether he wants to create a new game or join an existing one.
 The client can choose the communication protocol that he likes most between RMI and TCP.
 The client can also choose the Interface .
+<br><br>
+<br><br>
+
 #### GUI
+<br>
+![alt text](src/main/resources/Screenshot/Screen1.png)
+<br>
+![alt text](src/main/resources/Screenshot/Screen4.png)
+<br>
+![alt text](src/main/resources/Screenshot/Screen5.png)
+<br><br>
+<br><br>
+
 #### CLI
 
