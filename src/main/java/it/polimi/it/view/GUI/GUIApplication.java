@@ -19,7 +19,6 @@ import java.util.List;
  */
 public class GUIApplication extends Application {
 
-    private static GUIHandler guiHandler;
     private static GuiInterface currentController;
     private static ClientInterface client;
     private static String createOrJoin;
@@ -232,7 +231,6 @@ public class GUIApplication extends Application {
         alert.showAndWait();
     }
 
-    //-----------------------------------------------------------------------------------------------------------
 
     /**
      * Getter that get the client's chat
@@ -265,14 +263,6 @@ public class GUIApplication extends Application {
      */
     public static void setCreateOrJoin(String createOrJoinRef) {
         createOrJoin = createOrJoinRef;
-    }
-
-    /**
-     * Setter of the reference of the GuiHandler class
-     * @param guiHandlerRef that is the reference to the GuiHandler class
-     */
-    public static void setGuiHandler(GUIHandler guiHandlerRef){
-        guiHandler = guiHandlerRef;
     }
 
 
