@@ -87,8 +87,8 @@ public class EndTurnController implements GuiInterface, Initializable {
     /**
      * Method that initialize the scene where it's not the client's turn to play and set the Living Room, the bookshelves, the nicknames,
      * the points and the chat
-     * @param url ?
-     * @param resourceBundle ?
+     * @param url the location used to resolve relative paths for the root object, or null if the location is not known.
+     * @param resourceBundle the resources used to localize the root object, or null if the root object was not localized.
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -195,7 +195,7 @@ public class EndTurnController implements GuiInterface, Initializable {
     /**
      * Method that triggers when the button "Show personal goal card" is clicked, and it changes scene to let the client see his personal card
      * @param actionEvent is the event that trigger this method and in this case it's the click of the button "Show personal goal card"
-     * @throws IOException ?
+     * @throws IOException .
      */
     public void GoToPersonalGoalCard(ActionEvent actionEvent) throws IOException {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -217,7 +217,7 @@ public class EndTurnController implements GuiInterface, Initializable {
     /**
      * Method that triggers when the button "Show common goal card" is clicked, and it changes scene to let the client see his personal card
      * @param actionEvent is the event that trigger this method and in this case it's the click of the button "Show common goal card"
-     * @throws IOException ?
+     * @throws IOException .
      */
     public void GoToCommonGoalCards(ActionEvent actionEvent) throws IOException {
         int id1 = GUIApplication.getIDCommon1();
@@ -274,7 +274,7 @@ public class EndTurnController implements GuiInterface, Initializable {
     /**
      * Method used to send the chat message written by the client in the text Field when the button "Send" it's pressed
      * @param actionEvent  is the trigger of this method and in this case it's the click of the button "Send"
-     * @throws IOException ?
+     * @throws IOException .
      */
     public void sendMessage(ActionEvent actionEvent) throws IOException{
         if(chatMessage.getText().length()!=0){
@@ -296,6 +296,10 @@ public class EndTurnController implements GuiInterface, Initializable {
         }
     }
 
+    /**
+     * Setter method for the reference of the client
+     * @param clientRef clientRef is the reference of the client
+     */
     public void setClient(ClientInterface clientRef){
         client = clientRef;
     }

@@ -247,9 +247,8 @@ public class GUIHandler implements ViewInterface {
 
     /**
      * Setter method for the EndToken
+     * Cli only method
      * @param user
-     * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-     * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
      */
     @Override
     public void setEndToken(String user) {
@@ -260,7 +259,7 @@ public class GUIHandler implements ViewInterface {
     /**
      * Method that, at the beginning of the player's turn, asks him the number of tiles that he wants to get from the board.
      * @param maxValueofTiles is the maximum number of tiles that the player can get from the board.
-     * @param username is the palyer's nickname.
+     * @param username is the player's nickname.
      */
     @Override
     public void NotifyTurnStart(int maxValueofTiles, String username) {

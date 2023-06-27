@@ -19,7 +19,7 @@ public class JoinGameController implements GuiInterface {
     /**
      * Method that triggers when the button "Start" is pressed after the client has written the game ID to join a certain game
      * @param actionEvent is the trigger of this method and in this case it's represented by the click of the button "Start"
-     * @throws IOException ^
+     * @throws IOException .
      */
     public void GotoGame(ActionEvent actionEvent) throws IOException {
         if(GameID.getText().length() != 0) {
@@ -30,6 +30,11 @@ public class JoinGameController implements GuiInterface {
             GUIApplication.showAlert(Alert.AlertType.WARNING, "Join Game error", "You must enter a game id");
         }
     }
+
+    /**
+     * Setter method for the reference of the client
+     * @param clientRef clientRef is the reference of the client
+     */
     public void setClient(ClientInterface clientRef){
         client = clientRef;
     }

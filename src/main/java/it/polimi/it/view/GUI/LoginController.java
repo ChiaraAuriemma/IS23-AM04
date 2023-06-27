@@ -24,7 +24,7 @@ public class LoginController implements GuiInterface{
     /**
      * Method that trigger when the button "Join Game" is pressed after the client has written his nickname; it changes scene to "Join game"
      * @param actionEvent is the trigger of the method and in this case it's the press of the button "Join Game"
-     * @throws IOException ?
+     * @throws IOException .
      */
 
     public void GotoJoinGame(ActionEvent actionEvent) throws IOException {
@@ -43,7 +43,7 @@ public class LoginController implements GuiInterface{
     /**
      * Method that trigger when the button "Create Game" is pressed after the client has written his nickname; it changes scene to "Create game"
      * @param actionEvent is the trigger of the method and in this case it's the press of the button "Create Game"
-     * @throws IOException ?
+     * @throws IOException .
      */
     public void GotoCreateGame(ActionEvent actionEvent) throws IOException {
         GUIApplication.setCreateOrJoin("CREATE");
@@ -58,6 +58,11 @@ public class LoginController implements GuiInterface{
             GUIApplication.showAlert(Alert.AlertType.WARNING, "Login error", "Invalid username, try again");
         }
     }
+
+    /**
+     * Setter method for the reference of the client
+     * @param clientRef is the reference of the client
+     */
     @Override
     public void setClient(ClientInterface clientRef) {
         client = clientRef;
