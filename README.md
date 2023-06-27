@@ -61,7 +61,7 @@ Every player can send chat messages to the other players in their game. A player
 <br><br>
 
 ### Running The Game
-The Game consists in a jar file named <code>PLACEHOLDER</code> that can be started by command line. In order to start playing you'll need to start the Server and at least two Clients.
+The Game consists in a jar file named <code>AM04-1.0-SNAPSHOT-jar-with-dependencies</code> that can be started by command line. In order to start playing you'll need to start the Server and at least two Clients.
 #### Server
 ```shell 
       > java -jar .\AM04-1.0-SNAPSHOT-jar-with-dependencies.jar server
