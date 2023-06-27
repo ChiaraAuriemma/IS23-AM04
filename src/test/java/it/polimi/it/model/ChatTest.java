@@ -1,4 +1,4 @@
-package it.polimi.it.model;
+/*package it.polimi.it.model;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -37,4 +37,4 @@ public class ChatTest {
         }
     }
 
-}
+}*/

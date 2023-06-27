@@ -66,20 +66,9 @@ public class VirtualView implements Serializable {
                     client.setStartOrder(orderNames);
                 } catch (RemoteException e) {
                     System.out.println(e.getMessage() + " user: " + username + "/n");
-                    disconnect_user(username);
                 }
             }
         }
-    }
-
-
-    /**
-     * Disconnects an RMI user
-     * @param username is the disconnected player.
-     */
-    private void disconnect_user(String username) {
-        if (!disconn_users.contains(username))
-            serverRMI.disconnect_user(username);
     }
 
 
@@ -114,7 +103,6 @@ public class VirtualView implements Serializable {
                     client.setNewBoard(matrix);
                 }catch(RemoteException e){
                     System.out.println(e.getMessage() + " user: " + username +"/n");
-                    disconnect_user(username);
                 }
             }
         }
@@ -137,7 +125,6 @@ public class VirtualView implements Serializable {
                     client.setNewCommon(card1.getID(), card2.getID(), commonToken1, commonToken2);
                 } catch (RemoteException e) {
                     System.out.println(e.getMessage() + " user: " + username + "/n");
-                    disconnect_user(username);
                 }
             }
         }
@@ -156,7 +143,6 @@ public class VirtualView implements Serializable {
                 client.setNewPersonal(card);
             } catch (RemoteException e) {
                 System.out.println(e.getMessage() + " user: " + username + "/n");
-                disconnect_user(username);
             }
         }
     }
@@ -174,7 +160,6 @@ public class VirtualView implements Serializable {
                 client.notifyTurnStart(maxValueofTiles);
             } catch (RemoteException e) {
                 System.out.println(e.getMessage() + " user: " + username + "/n");
-                disconnect_user(username);
             }
         }
     }
@@ -193,7 +178,6 @@ public class VirtualView implements Serializable {
                     client.setStageToNoTurn();
                 }catch(RemoteException e){
                     System.out.println(e.getMessage() + " user: " + receiver.getNickname() +"/n");
-                    disconnect_user(receiver.getNickname());
                 }
             }
         }
@@ -213,7 +197,6 @@ public class VirtualView implements Serializable {
                 client.takeableTiles(choosableTilesList, num);
             } catch (RemoteException e) {
                 System.out.println(e.getMessage() + " user: " + username + "/n");
-                disconnect_user(username);
             }
         }
     }
@@ -231,7 +214,6 @@ public class VirtualView implements Serializable {
                 client.askColumn(choosableColumns);
             } catch (RemoteException e) {
                 System.out.println(e.getMessage() + " user: " + username + "/n");
-                disconnect_user(username);
             }
         }
     }
@@ -250,7 +232,6 @@ public class VirtualView implements Serializable {
                    client.setNewShelfie(user.getNickname(), user.getShelfie().getShelf());
                } catch (RemoteException e) {
                    System.out.println(e.getMessage() + " user: " + receiver.getNickname() + "/n");
-                   disconnect_user(receiver.getNickname());
                }
            }
        }
@@ -270,7 +251,6 @@ public class VirtualView implements Serializable {
                     client.setNewBoard(matrix);
                 } catch (RemoteException e) {
                     System.out.println(e.getMessage() + " user: " + receiver.getNickname() + "/n");
-                    disconnect_user(receiver.getNickname());
                 }
             }
         }
@@ -293,7 +273,6 @@ public class VirtualView implements Serializable {
                     client.setNewPoints(user.getNickname(), points, commonToken1, commonToken2);
                 } catch (RemoteException e) {
                     System.out.println(e.getMessage() + " user: " + receiver.getNickname() + "/n");
-                    disconnect_user(receiver.getNickname());
                 }
             }
         }
@@ -313,7 +292,6 @@ public class VirtualView implements Serializable {
                     client.setEndToken(user.getNickname());
                 } catch (RemoteException e) {
                     System.out.println(e.getMessage() + " user: " + receiver.getNickname() + "/n");
-                    disconnect_user(receiver.getNickname());
                 }
             }
         }
@@ -338,7 +316,6 @@ public class VirtualView implements Serializable {
                     client.setFinalPoints(usernames, points);
                 } catch (RemoteException e) {
                     System.out.println(e.getMessage() + " user: " + receiver.getNickname() + "/n");
-                    disconnect_user(receiver.getNickname());
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -361,7 +338,6 @@ public class VirtualView implements Serializable {
                     client.updateView();
                 }catch(RemoteException e){
                     System.out.println(e.getMessage() + " user: " + receiver.getNickname() +"/n");
-                    disconnect_user(receiver.getNickname());
                 }
             }
         }
@@ -387,7 +363,6 @@ public class VirtualView implements Serializable {
                 client.recover(gameID, matrix, shelfies, card1.getID(), card2.getID(), personalGoalCard, points, playerList);
             } catch (RemoteException e) {
                 System.out.println(e.getMessage() + " user: " + user + "/n");
-                disconnect_user(user);
             }
         }
     }
@@ -423,7 +398,6 @@ public class VirtualView implements Serializable {
                 client.updateChat(currentChat);
             }catch(RemoteException e){
                 System.out.println(e.getMessage() + " user: " + receiver.getNickname() +"/n");
-                disconnect_user(receiver.getNickname());
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -436,7 +410,6 @@ public class VirtualView implements Serializable {
                     client.updateChat(u.getChatList());
                 }catch(RemoteException e){
                     System.out.println(e.getMessage() + " user: " + u.getNickname() +"/n");
-                    disconnect_user(u.getNickname());
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -458,7 +431,6 @@ public class VirtualView implements Serializable {
                     client.boardRefill();
                 } catch (RemoteException e) {
                     System.out.println(e.getMessage() + " user: " + receiver.getNickname() + "/n");
-                    disconnect_user(receiver.getNickname());
                 }
             }
         }
@@ -476,7 +448,7 @@ public class VirtualView implements Serializable {
                     RemoteInterface client = users.get(receiver.getNickname());
                     client.printError("You have won because this game was closed due to the lack of players! :(\n");
                 } catch (RemoteException e) {
-                    throw new RuntimeException(e);
+                    System.out.println(e.getMessage() + " user: " + receiver.getNickname() + "/n");
                 }
             }
         }
@@ -491,7 +463,7 @@ public class VirtualView implements Serializable {
                 RemoteInterface client = users.get(user.getNickname());
                 client.restart();
             } catch (RemoteException e) {
-                throw new RuntimeException(e);
+                System.out.println(e.getMessage() + " user: " + user.getNickname() + "/n");
             }
         }
     }

@@ -28,6 +28,7 @@ public class RMIImplementation implements ServerInterface, Serializable {
     private boolean first = false;
     private Registry registry;
 
+
     /**
      * Constructor method for the class.
      * @throws RemoteException .
@@ -211,17 +212,6 @@ public class RMIImplementation implements ServerInterface, Serializable {
         }
     }
 
-
-
-    /**
-     * Method that notifies to the lobby that the player with
-     * @param username as nickname disconnected from the game.
-     */
-    public void disconnect_user(String username) {
-        lobby.disconnect_user(username);
-    }
-
-
     /**
      * Disconnection Timer.
      * Pings the client every 15 seconds in order to check if the player is still online.
@@ -232,24 +222,26 @@ public class RMIImplementation implements ServerInterface, Serializable {
             @Override
             public void run() {
                 for(String user: pongs.keySet()){
-                    if(pongs.get(user)){
-                        try{
+                    if(pongs.get(user) && userRMI.containsKey(user)) {
+                        try {
                             RemoteInterface clientRMI = userRMI.get(user);
                             clientRMI.ping();
-                            System.out.println(" is still connected, SADLY");
+                            System.out.println(user + " is still connected");
                         } catch (RemoteException e) {
                             pongs.put(user, false);
-                            if(userGame.containsKey(user) && userGame.get(user).getUser(user).getInGame()){
-                                if(userGame.get(user).getCurrentPlayer() == userGame.get(user).getPlayerNumber(userGame.get(user).getUser(user))){
-                                    try {
-                                        userGame.get(user).turnDealer();
-                                    } catch (InvalidIDException | IOException ex) {
-                                        throw new RuntimeException(ex);
-                                    }
+                        }
+                    }else if(!pongs.get(user) && userRMI.containsKey(user)){
+                        if(userGame.containsKey(user) && userGame.get(user).getUser(user).getInGame()){
+                            if(userGame.get(user).getCurrentPlayer() == userGame.get(user).getPlayerNumber(userGame.get(user).getUser(user))){
+                                try {
+                                    userGame.get(user).turnDealer();
+                                } catch (InvalidIDException | IOException ex) {
+                                    throw new RuntimeException(ex);
                                 }
-                                lobby.disconnect_user(user);
-                                System.out.println(" disconnected");
                             }
+                            lobby.disconnect_user(user);
+                            userRMI.remove(user);
+                            System.out.println(user + " disconnected");
                         }
                     }
                }
