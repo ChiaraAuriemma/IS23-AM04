@@ -336,7 +336,6 @@ public class VirtualView implements Serializable {
         for (int i=0; i < game.getNumplayers(); i++) {
             User  receiver = game.getPlayer(i);
         if(receiver.getInGame() && !disconn_users.contains(receiver.getNickname())){
-
             sendChatUpdate(receiver.getChatList(), receiver);
                 try{
                     RemoteInterface client = users.get(receiver.getNickname());
