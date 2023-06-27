@@ -40,8 +40,8 @@ public class Shelfie implements Serializable {
     /**
      * Method that given
      * @param column and
-     * @param row that represent a specific position in the Shelfie
-     * @return the Tile that is contained in that position of the Shelfie.
+     * @param row that represent a specific position in the bookshelf
+     * @return the Tile that is contained in that position of the bookshelf
      */
     public Tile getCell(int column, int row){
         return shelf[row][column];

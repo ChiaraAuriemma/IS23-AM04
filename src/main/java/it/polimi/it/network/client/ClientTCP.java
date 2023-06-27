@@ -18,6 +18,9 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.List;
 
+/**
+ * Class of the clients which choose to connect via TCP
+ */
 public class ClientTCP implements ClientInterface, Serializable, Runnable {
 
     private static final long serialVersionUID = -1334206444743011550L;
@@ -34,8 +37,8 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
     private boolean isConnected;
     /**
      * Constructor method of the ClientTCP class
-     * @param port and
-     * @param ip are the port and ip address necessary for the TCP communication protocol.
+     * @param port is the server port
+     * @param ip is the ip address necessary for the TCP communication protocol.
      */
     public ClientTCP(int port, String ip){
         this.port = port;

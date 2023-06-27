@@ -10,6 +10,9 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.List;
 
+/**
+ * Interface that ServerRMI implements
+ */
 public interface ServerInterface extends Remote, Serializable {
 
     /**

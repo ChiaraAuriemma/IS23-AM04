@@ -15,6 +15,9 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class of the clients which choose to connect via RMI
+ */
 public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface, RemoteInterface {
     private int port;
     private String ip;
@@ -28,8 +31,8 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
 
     /**
      * Constructor method of the ClientRMIApp class
-     * @param port and
-     * @param ip are the port and ip address necessary for the RMI communication protocol.
+     * @param port is the server port
+     * @param ip is the ip address necessary for the RMI communication protocol.
      */
     public ClientRMIApp(int port, String ip) throws RemoteException {
         this.port = port;
@@ -38,8 +41,8 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
 
 
     /**
-     * Setter method: given a
-     * @param viewChoice string, instances either a CLI or a GUI
+     * Setter method: given a string, instances either a CLI or a GUI
+     * @param viewChoice is the client's choice of CLI or GUI
      */
     public void setView(String viewChoice) throws RemoteException{
        if(viewChoice.equalsIgnoreCase("CLI")){
@@ -52,7 +55,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
 
 
     /**
-     * Getter method
+     * Getter method of the view instance
      * @return the view instance
      * @throws RemoteException .
      */
@@ -77,9 +80,10 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
 
     /**
      * Method called by startClient, sends the server the chosen username
-     * @param userName .
+     * @param userName is the client's username
+     * @throws RemoteException .
      */
-    public void login(String userName) throws IOException {
+    public void login(String userName) throws RemoteException,IOException {
         try {
             try {
                 this.nickname = sr.login(this, userName);
@@ -99,7 +103,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
 
     /**
      * Method that prints an error message
-     * @param e that contains an error message.
+     * @param e is the string that contains an error message.
      * @throws RemoteException .
      */
     @Override
@@ -115,7 +119,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
 
     /**
      * Communicates the server the number of people that the user wants in his new game
-     * @param playerNumber .
+     * @param playerNumber is the number of people that the user wants in his new game
      * @throws RemoteException .
      */
     @Override
@@ -137,7 +141,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
 
     /**
      * Method that communicates to the server the ID of the game that the user wants to join
-     * @param gameID .
+     * @param gameID is the server the ID of the game that the user wants to join
      * @throws RemoteException .
      */
     public void joinGame(int gameID) throws RemoteException {
@@ -160,8 +164,8 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
 
 
     /**
-     * Communicates to the server the
-     * @param numOfTiles number of tiles that the user wants to take from the LivingRoom.
+     * Communicates to the server the  number of tiles that the user wants to take from the LivingRoom.
+     * @param numOfTiles is the number of tiles that the user wants to take from the LivingRoom.
      * @throws RemoteException .
      */
     @Override
@@ -180,8 +184,8 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
 
 
     /**
-     * Communicates to the server the
-     * @param choosenTiles list of tiles that the user wants to take from the LivingRoom.
+     * Communicates to the server the list of tiles that the user wants to take from the LivingRoom.
+     * @param choosenTiles is the list of tiles that the user wants to take from the LivingRoom.
      * @throws RemoteException .
      */
     @Override
@@ -200,8 +204,8 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
 
 
     /**
-     * Communicates to the server the
-     * @param numOfColum column in which the user wants to put the tiles that he took from the LivingRoom.
+     * Communicates to the server the column in which the user wants to put the tiles that he took from the LivingRoom.
+     * @param numOfColum is the column in which the user wants to put the tiles that he took from the LivingRoom.
      * @throws RemoteException .
      */
     @Override
@@ -243,8 +247,8 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
 
 
     /**
-     * Method that restores all the game information after a reconnections.
-     * @param gameID ,
+     * Method that restores all the game informations after a reconnections.
+     * @param gameID is the game ID
      * @param matrix is the LivingRoom,
      * @param shelfies is a list of the players' shelves,
      * @param id1 is the ID of the first CommonGoalCard,
@@ -271,8 +275,9 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
 
 
     /**
-     * Sends to the server the latest
-     * @param chatMessage that the user wrote in the chat
+     * Sends to the server the latest chat message that the user wrote in the chat
+     * @param chatMessage is the latest chat message that the user wrote in the chat
+     * @throws RemoteException .
      */
     @Override
     public void sendChatMessage(String chatMessage){
@@ -319,9 +324,9 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
 
 
     /**
-     * Setter method for a player's shelfie.
-     * @param username is the player's nickname,
-     * @param shelfie is the player's Shelfie.
+     * Setter method for a player's bookshelf
+     * @param username is the player's nickname
+     * @param shelfie is the player's bookshelf
      */
     @Override
     public void setNewShelfie(String username, Tile[][] shelfie) {
@@ -341,10 +346,10 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
 
     /**
      * Setter method for the points of a given user.
-     * @param username ,
-     * @param points ,
-     * @param commonToken1 is the list of the player's tokens for the first CommonGoalCard,
-     * @param commonToken2 is the list of the player's tokens for the second CommonGoalCard,
+     * @param username is the client's username
+     * @param points are the client's points
+     * @param commonToken1 is the list of the player's tokens for the first CommonGoalCard
+     * @param commonToken2 is the list of the player's tokens for the second CommonGoalCard
      */
     @Override
     public void setNewPoints(String username, Integer points, List<Integer> commonToken1, List<Integer> commonToken2) {
@@ -376,8 +381,8 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
 
 
     /**
-     * Setter method for:
-     * @param order players' order.
+     * Setter method for the game order
+     * @param order is the players' order.
      */
     @Override
     public void setStartOrder(ArrayList<String> order) {
@@ -387,11 +392,11 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
 
 
     /**
-     * Setter method for the following parameters:
-     * @param id1 CommonGoalCard's ID 1,
-     * @param id2 CommonGoalCard's ID 2,
-     * @param commonToken1 CommonGoalCard's token 1,
-     * @param commonToken2 CommonGoalCard's token 2,
+     * Setter method for the ID's of the common cards and the ID's of the personal cards
+     * @param id1 CommonGoalCard's ID 1
+     * @param id2 CommonGoalCard's ID 2
+     * @param commonToken1 CommonGoalCard's token 1
+     * @param commonToken2 CommonGoalCard's token 2
      */
     @Override
     public void setNewCommon(int id1, int id2, List<Integer> commonToken1, List<Integer> commonToken2) {
@@ -401,8 +406,8 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
 
 
     /**
-     * Setter method.
-     * @param card PersonalGoalCard
+     * Setter method of the personal card
+     * @param card is the PersonalGoalCard
      */
     @Override
     public void setNewPersonal(PersonalGoalCard card) {
@@ -411,9 +416,10 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
 
 
     /**
-     * Method that sends from the server to the client the following parameters:
-     * @param choosableTilesList is a list of groups of tiles
-     *                           which are all the possible groups of tiles that the player might choose.
+     * Method that sends from the server to the client the list of groups of tiles which are all the possible groups
+     * of tiles that the player might choose.
+     * @param choosableTilesList is a list of groups of tiles which are all the possible groups of tiles that
+     * the player might choose.
      * @param num is the exact number of tiles that the player has to take.
      */
     @Override
@@ -424,7 +430,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
 
 
     /**
-     * Setter method
+     * Setter method of the GameStage class of the client
      * @param gameStage is the new GameStage instance, also sets the stage to LOGIN
      * @throws RemoteException .
      */
@@ -435,7 +441,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
 
 
     /**
-     * Getter method
+     * Getter method of the GameStage
      * @return the current GameStage.
      */
     @Override
@@ -467,12 +473,13 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
 
 
     /**
-     * Method that sends the private
-     * @param chatMessage written by this player to the
-     * @param receiver of the message
+     * Method that sends the private chat message written by this player to the receiver
+     * @param chatMessage is the chat message written by this player
+     * @param receiver is the receiver of the message
+     * @throws RemoteException .
      */
     @Override
-    public void sendChatPrivateMessage(String chatMessage, String receiver) {
+    public void sendChatPrivateMessage(String chatMessage, String receiver) throws RemoteException {
         try {
             sr.chatPrivateMessage(this.nickname, chatMessage, receiver);
         }catch (RemoteException r){
@@ -493,7 +500,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
 
 
     /**
-     * Getter method
+     * Getter method of the nickname
      * @return the nickname String
      * @throws RemoteException .
      */
@@ -504,7 +511,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
 
 
     /**
-     * Getter method
+     * Getter method of the current GameStage
      * @return the current GameStage.
      */
     public GameStage getStage() {

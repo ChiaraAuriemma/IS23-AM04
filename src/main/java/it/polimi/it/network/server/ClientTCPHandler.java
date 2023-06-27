@@ -25,6 +25,9 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ * Class that manages the communication from the ClientTCP and the ServerTCP
+ */
 public class ClientTCPHandler implements Runnable,Serializable, RemoteInterface {
     private static final long serialVersionUID = -3839996564824280040L;
     private Socket socket;
