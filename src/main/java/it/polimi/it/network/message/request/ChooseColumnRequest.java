@@ -1,10 +1,12 @@
 package it.polimi.it.network.message.request;
 
-import it.polimi.it.model.Tiles.Tile;
 import it.polimi.it.network.message.Payload;
 
 import java.io.Serializable;
-import java.util.List;
+
+/**
+ * TCP message used for sending to the server the client's column chosen
+ */
 
 public class ChooseColumnRequest extends Payload  implements Serializable {
 

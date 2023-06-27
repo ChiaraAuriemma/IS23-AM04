@@ -5,6 +5,9 @@ import it.polimi.it.network.message.Payload;
 import java.awt.*;
 import java.io.Serializable;
 
+/**
+ * NoTurnSetter Message: sets a TCP client's stage to NOTURN.
+ */
 public class NoTurnSetter extends Payload implements Serializable {
 
     private static final long serialVersionUID = 1935617357374678737L;

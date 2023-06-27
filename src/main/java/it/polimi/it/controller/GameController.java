@@ -12,6 +12,10 @@ import java.rmi.RemoteException;
 import java.util.*;
 import java.util.stream.Collectors;
 
+
+/**
+ * Main Controller of the project. Deals with the players, their model classes and the turns of the game.
+ */
 public class GameController implements Serializable {
 
     private static final long serialVersionUID = 9016415749066492223L;

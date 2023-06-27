@@ -6,6 +6,9 @@ import it.polimi.it.network.message.Payload;
 
 import java.io.Serializable;
 
+/**
+ * ShelfieUpdate Message: notifies a TCP client that a shelfie was updated.
+ */
 public class ShelfieUpdateMessage extends Payload  implements Serializable {
 
     private static final long serialVersionUID = 3886151742823681824L;

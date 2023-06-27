@@ -5,6 +5,9 @@ import it.polimi.it.network.message.Payload;
 
 import java.io.Serializable;
 
+/**
+ * DrawnPersonalCard Message: notifies a TCP client about which PersonalCard was extracted.
+ */
 public class DrawnPersonalCardMessage extends Payload  implements Serializable {
 
     private static final long serialVersionUID = 2453415242475482909L;

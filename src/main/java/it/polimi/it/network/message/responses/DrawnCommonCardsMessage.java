@@ -1,11 +1,12 @@
 package it.polimi.it.network.message.responses;
 
-import it.polimi.it.model.Card.CommonGoalCards.CommonGoalCard;
 import it.polimi.it.network.message.Payload;
-
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * DrawnCommonCards Message: notifies a TCP client about which CommonCards were extracted.
+ */
 public class DrawnCommonCardsMessage extends Payload  implements Serializable {
 
     private static final long serialVersionUID = 8895460901257459083L;

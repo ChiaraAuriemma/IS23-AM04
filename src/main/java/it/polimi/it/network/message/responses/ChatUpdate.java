@@ -6,6 +6,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * ChatUpdate Message: notifies a TCP client that his chat now contains more messages.
+ */
 public class ChatUpdate extends Payload implements Serializable {
     private static final long serialVersionUID = 3624252035577253733L;
     private List<String> currChat;
