@@ -27,8 +27,8 @@ public class EndGameController implements GuiInterface, Initializable {
 
     /**
      * Method that initialize the end game scene when the game is finished, taking each client's points and creating a leaderboard in decrescendo order
-     * @param url ?
-     * @param resourceBundle ?
+     * @param url the location used to resolve relative paths for the root object, or null if the location is not known.
+     * @param resourceBundle the resources used to localize the root object, or null if the root object was not localized.
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -73,11 +73,19 @@ public class EndGameController implements GuiInterface, Initializable {
 
 
 
-
+    /**
+     * Setter method for the reference of the client
+     * @param clientRef clientRef is the reference of the client
+     */
     public void setClient(ClientInterface clientRef){
         client = clientRef;
     }
 
+    /**
+     * scene-switching method in JoinGame
+     * @param actionEvent is the trigger of this method and in this case it's the click of the button "JoinGame"
+     * @throws IOException .
+     */
     public void GoToJoin(ActionEvent actionEvent) throws IOException {
         GUIApplication.setCreateOrJoin("JOIN");
         client.setStageToCreate();
@@ -85,6 +93,11 @@ public class EndGameController implements GuiInterface, Initializable {
 
     }
 
+    /**
+     * scene-switching method in CreateGame
+     * @param actionEvent is the trigger of this method and in this case it's the click of the button "CreateGame"
+     * @throws IOException .
+     */
     public void GoToCreate(ActionEvent actionEvent) throws IOException {
         GUIApplication.setCreateOrJoin("CREATE");
         client.setStageToCreate();

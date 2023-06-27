@@ -83,7 +83,7 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
      * then operates the right action according to the message type.
      */
     public void run()  {
-        Message response;
+        Message response=null;
         MessageType messType;
 
         this.isConnected = true;
@@ -91,7 +91,8 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
             try {
                 response = (Message) in.readObject();
             } catch (IOException | ClassNotFoundException e) {
-                throw new RuntimeException(e);
+                System.out.println("SERVER DISCONNECTED!");
+                isConnected=false;
             }
             messType = response.getType();
 
@@ -249,7 +250,6 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
 
                 case ERROR:
                     ErrorMessage errorMessage = (ErrorMessage) response.getPayload();
-                    //view.printError(errorMessage.getError());
                     if(!errorMessage.getError().equals("You have won because this game was closed due to the lack of players! :(\n")){
                         view.printError(errorMessage.getError());
                     }else{
@@ -265,9 +265,8 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
             out.close();
             serverSocket.close();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.out.println("\n");
         }
-
     }
 
 
@@ -364,7 +363,7 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
                 out.writeObject(message);
                 out.flush();
             } catch (IOException e) {
-                System.out.println(e.getMessage());
+                System.out.println("Couldn't reach the server...\n");
             }
         }
     }
