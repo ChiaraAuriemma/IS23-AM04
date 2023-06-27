@@ -10,6 +10,9 @@ import java.util.*;
 
 import static java.lang.System.out;
 
+/**
+ * Class that represent the TUI
+ */
 public class Cli implements ViewInterface, Serializable {
     private static final long serialVersionUID = 892639889752766985L;
     private HashMap<String, Tile[][]> playersShelfies = new HashMap<String, Tile[][]>();
@@ -133,7 +136,7 @@ public class Cli implements ViewInterface, Serializable {
 
 
     /**
-     * method that restart all the variable of the game
+     * Method that restart all the variables of the game
      */
     @Override
     public void clean() {
@@ -156,8 +159,8 @@ public class Cli implements ViewInterface, Serializable {
 
 
     /**
-     * Helper method that given a
-     * @param nick nickname string
+     * Helper method that given a nickname return the nickname string padded to a fixed length of 12 chars
+     * @param nick is nickname string
      * @return the nickname string padded to a fixed length of 12 chars
      */
     public String nickPadder(String nick) {
@@ -192,9 +195,9 @@ public class Cli implements ViewInterface, Serializable {
 
 
     /**
-     * Helper method that given a
-     * @param points integer
-     * @return the corresponding points string, with a fixed length of 2
+     * Helper method that given a points integer, returns the corresponding points string, with a fixed length of 2
+     * @param points is integer that represents the client's points
+     * @return the corresponding points string
      */
     private String pTS(int points) {
         String pointString = Integer.toString(points);
@@ -255,9 +258,9 @@ public class Cli implements ViewInterface, Serializable {
 
 
     /**
-     * Helper for the Shelfie's setter method
-     * @param player ,
-     * @param shelfie ,
+     * Helper for the Bookshelves' setter method
+     * @param player is the client's nickname
+     * @param shelfie is the client's bookshelf
      * @param p1 are the requested parameters.
      */
     private void shelfieSetterHelper(String player, Tile[][] shelfie, Tile[][] p1) {
@@ -271,8 +274,8 @@ public class Cli implements ViewInterface, Serializable {
 
 
     /**
-     * Setter Method
-     * @param card given the personal card, sets the example Shelf to get it visualized on screen
+     * Setter Method of the Personal card
+     * @param card is the given the personal card, sets the example Shelf to get it visualized on screen
      */
     public void setPlayersPersonalCardView(PersonalGoalCard card) {
         playersPersonalCard = new Tile[6][5];
@@ -291,8 +294,8 @@ public class Cli implements ViewInterface, Serializable {
 
 
     /**
-     * Setter method
-     * @param id given the card id, chooses the output messages
+     * Setter method of the first common card
+     * @param id is given the card id
      */
     public void setCommon1View(int id) {
         common1 = commonDescription(id);
@@ -301,8 +304,8 @@ public class Cli implements ViewInterface, Serializable {
 
 
     /**
-     * Setter method
-     * @param id given the card id, chooses the output messages
+     * Setter method of the second common card
+     * @param id is the given the card id
      */
     public void setCommon2View(int id) {
         common2 = commonDescription(id);
@@ -324,8 +327,9 @@ public class Cli implements ViewInterface, Serializable {
 
 
     /**
-     * Method that given a
-     * @param color , which is a Tile's color
+     * Method that given a color of a Tile return  the correct escape character in order to represent that
+     * Tile in the CLi
+     * @param color is color of a Tile
      * @return the correct escape character in order to represent that Tile in the View.
      */
     private String colorPicker(String color) {
@@ -398,8 +402,8 @@ public class Cli implements ViewInterface, Serializable {
 
 
     /**
-     * Method that, given
-     * @param id a CommonGoalCard's id
+     * Method that, given common card id return the String that contains the first part of that card's description
+     * @param id is a CommonGoalCard's id
      * @return the String that contains the first part of that card's description.
      */
     public String commonDescription(int id) {
@@ -435,8 +439,8 @@ public class Cli implements ViewInterface, Serializable {
 
 
     /**
-     * Method that, given
-     * @param id a CommonGoalCard's id
+     * Method that, given a common card id returns the String that contains the second part of that card's description
+     * @param id is a CommonGoalCard's id
      * @return the String that contains the second part of that card's description.
      */
     public String commonDescriptionSecondPart(int id) {
@@ -469,8 +473,8 @@ public class Cli implements ViewInterface, Serializable {
 
 
     /**
-     * Stores in the cli
-     * @param choosableTilesList the list of lists of tiles that the player may choose in this turn
+     * Stores in the cli the list of lists of tiles that the player may choose in this turn
+     * @param choosableTilesList is the list of lists of tiles that the player may choose in this turn
      * @param num is the number of tiles that the player has to take from the LivingRoom.
      */
     public void takeableTiles(List<List<Tile>> choosableTilesList, int num) {
@@ -538,7 +542,7 @@ public class Cli implements ViewInterface, Serializable {
     /**
      * Method that, at the beginning of the player's turn, asks him the number of tiles that he wants to get from the board.
      * @param maxValueofTiles is the maximum number of tiles that the player can get from the board.
-     * @param username is the palyer's nickname.
+     * @param username is the player's nickname.
      */
     public void NotifyTurnStart(int maxValueofTiles, String username) {
         out.print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nHey " + username.trim() +" it's your turn!\nChoose how many Tiles you want to take from the LivingRoom... ( Use num_tiles>>\"number of tiles\" ) \n\n");
@@ -565,8 +569,8 @@ public class Cli implements ViewInterface, Serializable {
 
 
     /**
-     * Setter for the
-     * @param gameId .
+     * Setter for the game ID
+     * @param gameId is the game ID
      */
     public void setGameID(int gameId) {
         this.gameID = gameId;
@@ -575,8 +579,8 @@ public class Cli implements ViewInterface, Serializable {
 
 
     /**
-     * Setter method: sets the EndToken to the player which has
-     * @param user as nickname.
+     * Setter method: sets the EndToken to the player
+     * @param user is the client's nickname.
      */
     public void setEndToken(String user) {
         user=nickPadder(user);
@@ -591,7 +595,7 @@ public class Cli implements ViewInterface, Serializable {
 
 
     /**
-     * Method that asks the player in whick column he wants to put the tiles that he took.
+     * Method that asks the player in which column he wants to put the tiles that he took.
      */
     public void askColumn() {
         out.println("Please choose in which column you want to put the tiles that you took... ( Use choose_column>>\"column number\" ) \n");
@@ -600,7 +604,7 @@ public class Cli implements ViewInterface, Serializable {
 
     /**
      * Method that prints an error String.
-     * @param error .
+     * @param error is the message to be written
      */
     public void printError(String error) {
         out.println(error);
@@ -608,8 +612,8 @@ public class Cli implements ViewInterface, Serializable {
 
 
     /**
-     * Setter method
-     * @param users is the players list
+     * Setter method of the players' usernames and the players' points at the end of the game
+     * @param users is the players' usernames list
      * @param points is the list of the players' points.
      */
     public void setFinalPoints(List<String> users, ArrayList<Integer> points) {
@@ -622,7 +626,7 @@ public class Cli implements ViewInterface, Serializable {
 
 
     /**
-     * Method that prints the list of his Shelfie's columns that have enough empty spaces to contain the new Tiles.
+     * Method that prints the list of his Bookshelf columns that have enough empty spaces to contain the new Tiles.
      * @param choosableColumns is the list of the empty columns.
      */
     public void setPossibleColumns(boolean[] choosableColumns) {
@@ -710,7 +714,7 @@ public class Cli implements ViewInterface, Serializable {
 
 
     /**
-     * Given a tiles matrix and a position,
+     * Given a tiles matrix and a position returns the correct escape character in order to print the tile in the cli.
      * @param shelf is the tiles matrix
      * @param row is a given row of the matrix
      * @param col is a given column of the matrix
@@ -763,8 +767,8 @@ public class Cli implements ViewInterface, Serializable {
     }
 
     /**
-     * Method that given a public
-     * @param message , updates the chat list
+     * Method that given a public message, pads it and update the chat list
+     * @param message is the public chat message
      */
     public List<String> newMessage(String message){
         List<String> chat = new ArrayList<>();
@@ -787,8 +791,8 @@ public class Cli implements ViewInterface, Serializable {
     }
 
     /**
-     * Method that given a private
-     * @param chatMessage , updates the chat list
+     * Method that given a private message, pads it and updates the chat list
+     * @param chatMessage is the private message
      */
     public List<String> newPrivateMessage(String chatMessage) {
         String temp;
@@ -822,8 +826,8 @@ public class Cli implements ViewInterface, Serializable {
     }
 
     /**
-     * Method that pads the length of
-     * @param message to 43, then
+     * Method that pads the length of message to 43 and return the padded message
+     * @param message is the message to pad
      * @return the padded message.
      */
     private String padTo43(String message) {
@@ -834,8 +838,8 @@ public class Cli implements ViewInterface, Serializable {
     }
 
     /**
-     * Method that pads the length of
-     * @param message to 33, then
+     * Method that pads the length of 33 and return the padded message
+     * @param message is the message to pad
      * @return the padded message.
      */
     private String padTo33(String message) {
@@ -847,7 +851,7 @@ public class Cli implements ViewInterface, Serializable {
 
     /**
      * Sets the player (this client)'s name to the given
-     * @param nickname .
+     * @param nickname is the client's nickname
      */
     @Override
     public void setThisNick(String nickname) {

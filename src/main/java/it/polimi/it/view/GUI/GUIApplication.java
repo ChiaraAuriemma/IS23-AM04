@@ -14,6 +14,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * Class of the GUI that manages the flow of the game in the GUI
+ */
 public class GUIApplication extends Application {
 
     private static GUIHandler guiHandler;
