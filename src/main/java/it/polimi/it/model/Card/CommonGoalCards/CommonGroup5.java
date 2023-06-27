@@ -5,10 +5,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class used to handle card 9
+ */
 public class CommonGroup5 extends CommonGoalCard  implements Serializable {
 
     private static final long serialVersionUID = -7822537206787354297L;
-    private List<Integer> numColor;
 
 
     /**
@@ -26,10 +28,10 @@ public class CommonGroup5 extends CommonGoalCard  implements Serializable {
      * @return true or false
      */
     public Boolean checkGoal(Shelfie shelfie){
-        numColor= new ArrayList<Integer>(6);
+        List<Integer> numColor = new ArrayList<Integer>(6);
         int i,column,row,tmp;
         for(i=0; i<6; i++) {
-            this.numColor.add(i, 0);
+            numColor.add(i, 0);
         }
         for(column=0;column<5;column++){
             for(row=0; row<6; row++){

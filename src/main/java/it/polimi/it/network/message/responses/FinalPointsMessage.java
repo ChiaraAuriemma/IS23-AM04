@@ -1,12 +1,13 @@
 package it.polimi.it.network.message.responses;
 
-import it.polimi.it.model.User;
 import it.polimi.it.network.message.Payload;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * FinalPoints Message: notifies a TCP client about the last points in order to print the final leaderboard.
+ */
 public class FinalPointsMessage extends Payload  implements Serializable {
 
     private static final long serialVersionUID = 5907269673872489026L;

@@ -16,7 +16,6 @@ import it.polimi.it.view.ViewInterface;
 import java.io.*;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.rmi.RemoteException;
 import java.util.List;
 
 /**
@@ -260,6 +259,8 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
                         view.printError(errorMessage.getError() + " Type create_game>>* or join_game>>* if you want to play again...  ");
                     }
                     break;
+
+                default: break;
             }
         }
 
@@ -274,7 +275,7 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
 
 
     /**
-     * Sends to the server a
+     * Sends to the server the player's nickname String
      * @param nickname String.
      */
     @Override
@@ -310,8 +311,8 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
 
 
     /**
-     * Communicates to the server the
-     * @param numOfTiles number of tiles that the user wants to take from the LivingRoom.
+     * Communicates to the server the number of tiles that the user wants to take from the LivingRoom.
+     * @param numOfTiles .
      */
     @Override
     public void tilesNumMessage(int numOfTiles){
@@ -322,7 +323,7 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
 
 
     /**
-     * Getter method
+     * Getter method for the ViewInterface.
      * @return the instance of the view.
      */
     @Override
@@ -332,8 +333,8 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
 
 
     /**
-     * Communicates to the server the
-     * @param choices list of tiles that the user wants to take from the LivingRoom.
+     * Communicates to the server the list of tiles that the user wants to take from the LivingRoom.
+     * @param choices .
      */
     @Override
     public void selectedTiles(List<Tile> choices){
@@ -344,8 +345,8 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
 
 
     /**
-     * Communicates to the server the
-     * @param column column in which the user wants to put the tiles that he took from the LivingRoom.
+     * Communicates to the server the column in which the user wants to put the tiles that he took from the LivingRoom.
+     * @param column .
      */
     @Override
     public void chooseColumn (int column){
@@ -357,8 +358,8 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
 
 
     /**
-     * Method that sends a
-     * @param message to the server.
+     * Method that sends a TCP message to the server.
+     * @param message is the message to be sent to the server.
      */
     public void send(Message message){
         synchronized (out){
@@ -373,7 +374,7 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
 
 
     /**
-     * Sends to the server the latest
+     * Sends to the server the latest chatMessage written by the player.
      * @param chatMessage that the user wrote in the chat
      */
     @Override
@@ -403,6 +404,10 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
         stage.setStage(TurnStages.ENDGAME);
     }
 
+
+    /**
+     *  Forces the GameStage to be CREATEorJOIN
+     */
     @Override
     public void setStageToCreate() {
         stage.setStage(TurnStages.CREATEorJOIN);
@@ -410,7 +415,7 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
 
 
     /**
-     * Getter method
+     * Getter method for the TurnStage
      * @return the current turn Stage.
      */
     @Override
@@ -420,7 +425,7 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
 
 
     /**
-     * Method that sends the private
+     * Method that sends a new private chatMessage.
      * @param chatMessage written by this player to the
      * @param receiver of the message
      */
@@ -433,7 +438,7 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
 
 
     /**
-     * Getter method
+     * Getter method of the nickname
      * @return the nickname String
      */
     @Override
