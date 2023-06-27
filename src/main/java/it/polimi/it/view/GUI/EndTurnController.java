@@ -19,9 +19,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import javafx.stage.Stage;
-
-
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
@@ -35,16 +32,6 @@ import java.util.ResourceBundle;
 public class EndTurnController implements GuiInterface, Initializable {
 
     ClientInterface client;
-
-    Stage stage;
-
-    private GUIApplication guiApp;
-
-    private GUIHandler guiHandler;
-
-    private HashMap<Integer,GridPane> gridOfPlayers;
-    private HashMap<Integer,Label> nicknames;
-
     @FXML
     GridPane LivingRoom;
     @FXML
@@ -96,8 +83,6 @@ public class EndTurnController implements GuiInterface, Initializable {
     @FXML
     TextArea textMessage;
 
-    private HashMap<Integer, Label> points;
-
 
     /**
      * Method that initialize the scene where it's not the client's turn to play and set the Living Room, the bookshelves, the nicknames,
@@ -122,9 +107,9 @@ public class EndTurnController implements GuiInterface, Initializable {
             }
         }
 
-        gridOfPlayers = new HashMap<>(4);
-        nicknames = new HashMap<>(4);
-        points = new HashMap<>(4);
+        HashMap<Integer, GridPane> gridOfPlayers = new HashMap<>(4);
+        HashMap<Integer, Label> nicknames = new HashMap<>(4);
+        HashMap<Integer, Label> points = new HashMap<>(4);
 
         nicknames.put(0, Player1);
         gridOfPlayers.put(0, Player1Grid);
@@ -170,7 +155,7 @@ public class EndTurnController implements GuiInterface, Initializable {
         });
         Player1.setTextFill(Color.BLUE);
 
-        points.forEach((k,v) -> {
+        points.forEach((k, v) -> {
             if (k < GUIApplication.getPlayers().size() && GUIApplication.getPoints().get(k) != null){
                 v.setText(GUIApplication.getPoints().get(k).toString());
                 v.setOpacity(1);
@@ -228,18 +213,6 @@ public class EndTurnController implements GuiInterface, Initializable {
         alert.setDialogPane(dialogPane);
         alert.getButtonTypes().add(ButtonType.OK);
         alert.showAndWait();
-        /*
-        FXMLLoader fxmlLoader = new FXMLLoader(GUIApplication.class.getResource("/PersonalGoalCard.fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
-        GuiInterface currentController = fxmlLoader.getController();
-        currentController.setClient(client);
-        GUIApplication.setCurrentController(currentController);
-        stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
-        stage.setTitle("My Shelfie");
-        stage.setScene(scene);
-        stage.show();
-
-         */
     }
     /**
      * Method that triggers when the button "Show common goal card" is clicked, and it changes scene to let the client see his personal card
@@ -297,18 +270,6 @@ public class EndTurnController implements GuiInterface, Initializable {
         alert.setDialogPane(dialogPane);
         alert.getButtonTypes().add(ButtonType.OK);
         alert.showAndWait();
-        /*
-        FXMLLoader fxmlLoader = new FXMLLoader(GUIApplication.class.getResource("/CommonGoalCards.fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
-        GuiInterface currentController = fxmlLoader.getController();
-        currentController.setClient(client);
-        GUIApplication.setCurrentController(currentController);
-        stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
-        stage.setTitle("My Shelfie");
-        stage.setScene(scene);
-        stage.show();
-
-         */
     }
     /**
      * Method used to send the chat message written by the client in the text Field when the button "Send" it's pressed
@@ -335,29 +296,8 @@ public class EndTurnController implements GuiInterface, Initializable {
         }
     }
 
-
     public void setClient(ClientInterface clientRef){
         client = clientRef;
-    }
-
-    @Override
-    public void setReferenceGUI(GUIApplication guiRef) {
-        guiApp = guiRef;
-    }
-
-    @Override
-    public void setReferenceHandler(GUIHandler handlerRef) {
-        guiHandler = handlerRef;
-    }
-
-    @Override
-    public void setStage(Stage stageRef) {
-        stage = stageRef;
-    }
-
-    @Override
-    public String getType() {
-        return "create_game";
     }
 
 
