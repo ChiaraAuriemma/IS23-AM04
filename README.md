@@ -87,17 +87,19 @@ The command above has to be used in order to start the Client. Later the player 
 The client can choose the communication protocol that he likes most between RMI and TCP.
 The client can also choose the Interface .
 <br><br>
-<br><br>
 
 #### GUI
 <br>
-![alt text](src/main/resources/Screenshot/Screen1.png)
+<div  align="center">
+<img width="70%" src="https://github.com/ChiaraAuriemma/IS23-AM04/blob/main/src/main/resources/Screenshot/Screen1.png" align="center" />
 <br>
-![alt text](src/main/resources/Screenshot/Screen4.png)
 <br>
-![alt text](src/main/resources/Screenshot/Screen5.png)
-<br><br>
-<br><br>
+<img width="70%" src="https://github.com/ChiaraAuriemma/IS23-AM04/blob/main/src/main/resources/Screenshot/Screen4.png" align="center" />
+<br>
+<br>
+<img width="70%" src="https://github.com/ChiaraAuriemma/IS23-AM04/blob/main/src/main/resources/Screenshot/Screen5.png" align="center" />
+</div>
+ <br><br>
 
 #### CLI
 
