@@ -256,6 +256,8 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
                         view.printError(errorMessage.getError() + " Type create_game>>* or join_game>>* if you want to play again...  ");
                     }
                     break;
+
+                default: break;
             }
         }
 
