@@ -91,11 +91,11 @@ The client can also choose the Interface .
 
 #### GUI
 <br>
-![alt text](src/main/resources/Screenshot/Screen1.png)
+<img src="https://github.com/ChiaraAuriemma/IS23-AM04/blob/main/src/main/resources/Screenshot/Screen1.png" align="center" />
 <br>
-![alt text](src/main/resources/Screenshot/Screen4.png)
+<img src="https://github.com/ChiaraAuriemma/IS23-AM04/blob/main/src/main/resources/Screenshot/Screen4.png" align="center" />
 <br>
-![alt text](src/main/resources/Screenshot/Screen5.png)
+<img src="https://github.com/ChiaraAuriemma/IS23-AM04/blob/main/src/main/resources/Screenshot/Screen5.png" align="center" />
 <br><br>
 <br><br>
 
