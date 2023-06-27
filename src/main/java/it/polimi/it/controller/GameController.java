@@ -98,9 +98,9 @@ public class GameController implements Serializable {
             game.pointsFromAdjacent();
             lobby.notifyEndGame(gameID);
         }else{
-            System.out.println("turndealer");
+            System.out.println("Turn dealer");
             currentPlayer = (currentPlayer + 1) % game.getNumplayers();
-            System.out.println("turndealer: player " + currentPlayer + "\n");
+            System.out.println("Turn dealer: player " + currentPlayer + "\n");
             if(!playerList.get(currentPlayer).getInGame()){
                 if(checkIfEverybodyIsDisconnected()){
                     lobby.notifyEndGame(gameID);
@@ -111,7 +111,7 @@ public class GameController implements Serializable {
                 } else{
                     while(!playerList.get(currentPlayer).getInGame()){
                         currentPlayer= (currentPlayer + 1) % game.getNumplayers();
-                        System.out.println("turndealer - while: player " + currentPlayer + "\n");
+                        System.out.println("Turn dealer - while: player " + currentPlayer + "\n");
                     }
                 }
             }
@@ -123,7 +123,7 @@ public class GameController implements Serializable {
      * Method that freezes the game if there aren't enough people online
      */
     private void freezeGame(){
-        System.out.println("freeze game");
+        System.out.println("Freeze game - 1 minute to reconnect.");
         new Thread(this::controlTimer).start();
     }
 
@@ -140,7 +140,7 @@ public class GameController implements Serializable {
             System.out.println("One minute has passed for Game" + gameID);
             if (numDisconnected() == 1){
                 try {
-                    System.out.println("Closing game " + gameID + " due to lack of online players");
+                    System.out.println("Closing game " + gameID + " due to lack of online players...");
                     game.getVirtualView().notifyEndGameDisconnection();
                     lobby.notifyEndGame(gameID);
                 } catch (InvalidIDException  e) {
@@ -148,7 +148,7 @@ public class GameController implements Serializable {
                 }
             }else{
                 try {
-                    System.out.println("There are enough players in game " + gameID + " to continue");
+                    System.out.println("There are enough players in game " + gameID + " to continue...");
                     turnDealer();
                 } catch (InvalidIDException |  IOException e) {
                     throw new RuntimeException(e);

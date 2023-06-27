@@ -5,7 +5,6 @@ import it.polimi.it.Exceptions.WrongTileException;
 import it.polimi.it.model.Board.Board;
 import it.polimi.it.model.Tiles.PossibleColors;
 import it.polimi.it.model.Tiles.Tile;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -383,8 +382,107 @@ public class UserTest {
         }
     }
     @Test
-    public void insertTileTest(){
+    public void insertTileTest() throws RemoteException {
+        List<Tile> chosen = new ArrayList<>();
+        chosen.add(new Tile(3, 4, PossibleColors.BLUE));
+        chosen.add(new Tile(3, 5, PossibleColors.GREEN));
+        chosen.add(new Tile(3, 6, PossibleColors.WHITE));
 
+        host.insertTile(0, chosen);
+
+        assertEquals(host.getShelfie().getCell(0, 0).getColor(), PossibleColors.BLUE.toString());
+        assertEquals(host.getShelfie().getCell(0, 1).getColor(), PossibleColors.GREEN.toString());
+        assertEquals(host.getShelfie().getCell(0, 2).getColor(), PossibleColors.WHITE.toString());
+
+        Tile x = new Tile(PossibleColors.XTILE);
+        Tile d = new Tile(PossibleColors.DEFAULT);
+
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                if (i == 0 && j < 3) {
+                    assertEquals(x.getColor(), host.getBoard().getMatrix()[i][j].getColor());
+                } else if (i == 0 && j > 4) {
+                    assertEquals(x.getColor(), host.getBoard().getMatrix()[i][j].getColor());
+                } else if (i == 8 && j < 4) {
+                    assertEquals(x.getColor(), host.getBoard().getMatrix()[i][j].getColor());
+                } else if (i == 8 && j > 5) {
+                    assertEquals(x.getColor(), host.getBoard().getMatrix()[i][j].getColor());
+                } else if (i == 1 && j < 3) {
+                    assertEquals(x.getColor(), host.getBoard().getMatrix()[i][j].getColor());
+                } else if (i == 2 && j < 2) {
+                    assertEquals(x.getColor(), host.getBoard().getMatrix()[i][j].getColor());
+                } else if (i == 1 && j > 5) {
+                    assertEquals(x.getColor(), host.getBoard().getMatrix()[i][j].getColor());
+                } else if (i == 2 && j > 6) {
+                    assertEquals(x.getColor(), host.getBoard().getMatrix()[i][j].getColor());
+                } else if (i == 3 && j == 0) {
+                    assertEquals(x.getColor(), host.getBoard().getMatrix()[i][j].getColor());
+                } else if (i == 5 && j == 8) {
+                    assertEquals(x.getColor(), host.getBoard().getMatrix()[i][j].getColor());
+                } else if (i == 6 && j < 2) {
+                    assertEquals(x.getColor(), host.getBoard().getMatrix()[i][j].getColor());
+                } else if (i == 6 && j > 6) {
+                    assertEquals(x.getColor(), host.getBoard().getMatrix()[i][j].getColor());
+                } else if (i == 7 && j < 3) {
+                    assertEquals(x.getColor(), host.getBoard().getMatrix()[i][j].getColor());
+                } else if (i == 7 && j > 5) {
+                    assertEquals(x.getColor(), host.getBoard().getMatrix()[i][j].getColor());
+                } else {
+                    host.getBoard().getMatrix()[i][j] = new Tile(i, j, PossibleColors.DEFAULT);
+                }
+            }
+        }
+
+        host.insertTile(0, chosen);
+    }
+    @Test
+    public void BoardTest(){
+        Board b = host.getBoard();
+        assertNotNull(b);
+        host.setBoard(b);
+        assertEquals(host.getBoard(), b);
+
+    }
+
+    @Test
+    public void getGameIDTest(){
+        assertEquals(host.getGameid(),0);
+    }
+
+    @Test
+    public void getGameTest(){
+        assertNotNull(host.getGame());
+    }
+
+    @Test
+    public void setShelfieTest(){
+        Shelfie s = new Shelfie(joiner);
+        host.setShelfie(s);
+        assertEquals(host.getShelfie(), s);
+    }
+
+    @Test
+    public void getChatListTest(){
+        assertNotNull(host.getChatList());
+    }
+
+    @Test
+    public void chatMessageTest(){
+        String message = "ciao";
+        host.newMessage(message);
+        while(message.length()<33){
+            message = message + " ";
+        }
+        host.newMessage(message);
+        assertTrue(host.getChatList().contains(message));
+
+        String message1 = "mamma";
+        host.newPrivateMessage(message1);
+        while(message1.length()<43){
+            message1 = message1 + " ";
+        }
+        host.newPrivateMessage(message1);
+        assertTrue(host.getChatList().contains(message1));
     }
 
 }

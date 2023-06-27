@@ -61,7 +61,6 @@ public class ClientTCPHandler implements Runnable,Serializable, RemoteInterface 
         } catch (IOException e) {
             e.printStackTrace();
         }
-        new Thread(this::disconnectionTimer).start();
     }
 
 
@@ -108,6 +107,7 @@ public class ClientTCPHandler implements Runnable,Serializable, RemoteInterface 
                         }
                     }
                     send(response);
+                    new Thread(this::disconnectionTimer).start();
                     break;
 
                 case CREATEGAME:
@@ -216,7 +216,6 @@ public class ClientTCPHandler implements Runnable,Serializable, RemoteInterface 
                     break;
 
                 case PONG:
-                    System.out.println("Received pong from " );
                     pong = true;
                     break;
             }
@@ -244,7 +243,7 @@ public class ClientTCPHandler implements Runnable,Serializable, RemoteInterface 
             public void run() {
                 if(pong){
                     pong = false;
-                    System.out.println(" is still connected, SADLY");
+                    System.out.println(user.getNickname() + " is still connected");
                     ping();
                 }else{
                     if(gameController != null && user.getInGame()){
@@ -258,7 +257,7 @@ public class ClientTCPHandler implements Runnable,Serializable, RemoteInterface 
 
                         lobby.disconnect_user(user.getNickname());
                         serverTCP.removeUserTCP(user.getNickname());
-                        System.out.println(" disconnected");
+                        System.out.println(user.getNickname() + " disconnected");
                         timer.cancel();
                     }
                 }

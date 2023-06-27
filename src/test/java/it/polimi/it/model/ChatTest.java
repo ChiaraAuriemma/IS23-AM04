@@ -1,4 +1,4 @@
-package it.polimi.it.model;
+/*package it.polimi.it.model;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -19,6 +19,17 @@ public class ChatTest {
     public void basic(){
         chat.newMessage("Franco: Trentatre trentini arrivarono in Trento tutti e trentatre trotterellando");
         chat.newPrivateMessage("[DM]Fvanco: Tventatve tventini avvivavono in Tvento tutti e tventatve tvottevellando");
+        chat.newPrivateMessage("mamamama");
+        chat.newMessage("ciao");
+        chat.newMessage("ciao");
+        chat.newMessage("ciao");
+        chat.newMessage("ciao");
+        chat.newMessage("ciao");
+        chat.newMessage("ciao");
+        chat.newMessage("ciao");
+        chat.newMessage("ciao");
+        chat.newMessage("ciao");
+        chat.newMessage("ciao");
 
         List<String> c = chat.getCurrentChat();
         for (String s: c){
@@ -26,4 +37,4 @@ public class ChatTest {
         }
     }
 
-}
+}*/
