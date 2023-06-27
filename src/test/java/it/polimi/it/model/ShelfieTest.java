@@ -35,7 +35,7 @@ public class ShelfieTest {
 
         for(int row = 0; row < 6; row++){
             for(int column = 0; column < 5; column++){
-                //assertEquals(d.getColor(), shelf.getCell(column, row).getColor());
+                assertEquals(d.getColor(), shelf.getCell(column, row).getColor());
             }
         }
     }
