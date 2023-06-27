@@ -91,7 +91,6 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
             try {
                 response = (Message) in.readObject();
             } catch (IOException | ClassNotFoundException e) {
-                //throw new RuntimeException(e);
                 System.out.println("SERVER DISCONNECTED!");
                 isConnected=false;
             }
@@ -251,7 +250,6 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
 
                 case ERROR:
                     ErrorMessage errorMessage = (ErrorMessage) response.getPayload();
-                    //view.printError(errorMessage.getError());
                     if(!errorMessage.getError().equals("You have won because this game was closed due to the lack of players! :(\n")){
                         view.printError(errorMessage.getError());
                     }else{
@@ -267,9 +265,8 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
             out.close();
             serverSocket.close();
         } catch (IOException e) {
-            System.out.println("Client Socket Closed");
+            System.out.println("\n");
         }
-
     }
 
 
