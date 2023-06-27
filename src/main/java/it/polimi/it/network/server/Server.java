@@ -14,6 +14,10 @@ import java.rmi.RemoteException;
 import java.util.HashMap;
 import java.util.Objects;
 
+/**
+ * Main class of the Server
+ * Instances the ServerRMI, the ServerTCP and the Lobby
+ */
 public class Server implements Serializable {
     private static final long serialVersionUID = 3768243144909833291L;
     private static Lobby lobby;

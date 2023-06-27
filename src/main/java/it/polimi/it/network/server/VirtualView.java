@@ -14,6 +14,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * Class that manages the communication of the controllers with the clients
+ */
 public class VirtualView implements Serializable {
 
     private static final long serialVersionUID = -3906432862304671330L;

@@ -12,6 +12,9 @@ import java.util.HashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * Class that implements the methods for the TCP connection
+ */
 public class ServerTCP implements Runnable, Serializable{
     private static final long serialVersionUID = 2221472440957074825L;
     private  int port;

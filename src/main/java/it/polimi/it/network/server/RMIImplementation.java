@@ -16,6 +16,9 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.*;
 
+/**
+ * Class that implements the methods for the RMI connection
+ */
 public class RMIImplementation implements ServerInterface, Serializable {
 
     private static final long serialVersionUID = -2905395065429128985L;
