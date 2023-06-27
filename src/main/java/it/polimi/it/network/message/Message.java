@@ -2,6 +2,10 @@ package it.polimi.it.network.message;
 
 import java.io.Serializable;
 
+
+/**
+ * Message Class. Every message is made of a Type and a Payload.
+ */
 public class Message implements Serializable {
     private static final long serialVersionUID = -5546544051959622771L;
     private final MessageType messageType;

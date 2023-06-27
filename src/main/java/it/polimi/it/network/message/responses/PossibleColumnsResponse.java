@@ -4,7 +4,9 @@ import it.polimi.it.network.message.Payload;
 
 import java.io.Serializable;
 
-
+/**
+ * PossibleColumnsResponse Message: notifies a TCP client sending the empty columns of his shelfie.
+ */
 public class PossibleColumnsResponse extends Payload implements Serializable {
 
     private static final long serialVersionUID = 3708993146076032130L;

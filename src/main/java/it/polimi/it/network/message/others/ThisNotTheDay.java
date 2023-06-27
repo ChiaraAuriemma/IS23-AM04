@@ -1,8 +1,6 @@
 package it.polimi.it.network.message.others;
 
-import it.polimi.it.model.Card.CommonGoalCards.CommonGoalCard;
 import it.polimi.it.model.Card.PersonalGoalCards.PersonalGoalCard;
-import it.polimi.it.model.Game;
 import it.polimi.it.model.Tiles.Tile;
 import it.polimi.it.network.message.Payload;
 
@@ -10,6 +8,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+
+/**
+ * Ping Message: empty message which is used for recovering a TCP client's data after a reconnection.
+ */
 public class ThisNotTheDay extends Payload  implements Serializable {
     private static final long serialVersionUID = -3294233920082178659L;
     private int gameID;
@@ -21,7 +23,6 @@ public class ThisNotTheDay extends Payload  implements Serializable {
     private ArrayList<Integer> points;
     private List<String> playerList = new ArrayList<>();
 
-    //Tile[][] matrix, ArrayList<Tile[][]> shelfies, it.polimi.it.model.Card.CommonGoalCards.CommonGoalCard card1, CommonGoalCard card2, PersonalGoalCard personalGoalCard, ArrayList<Integer> points, List<String> playerList
 
     public ThisNotTheDay(int gameID, Tile[][] matrix, ArrayList<Tile[][]> shelfies, int id1, int id2, PersonalGoalCard personalGoalCard, ArrayList<Integer> points, List<String> playerList
     ){

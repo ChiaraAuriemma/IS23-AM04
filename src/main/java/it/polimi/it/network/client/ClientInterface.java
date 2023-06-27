@@ -12,10 +12,9 @@ public interface ClientInterface extends Serializable {
     /**
      * Sends to the Server the
      * @param userName String chosen by the player
-     * @throws RemoteException .
      * @throws IOException .
      */
-    void login(String userName) throws RemoteException, IOException;
+    void login(String userName) throws IOException;
 
 
     /**

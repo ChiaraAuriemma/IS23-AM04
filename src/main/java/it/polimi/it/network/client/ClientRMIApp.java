@@ -78,9 +78,8 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
     /**
      * Method called by startClient, sends the server the chosen username
      * @param userName .
-     * @throws RemoteException .
      */
-    public void login(String userName) throws RemoteException,IOException {
+    public void login(String userName) throws IOException {
         try {
             try {
                 this.nickname = sr.login(this, userName);
@@ -244,7 +243,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
 
 
     /**
-     * Method that restores all the game informations after a reconnections.
+     * Method that restores all the game information after a reconnections.
      * @param gameID ,
      * @param matrix is the LivingRoom,
      * @param shelfies is a list of the players' shelves,
@@ -274,7 +273,6 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
     /**
      * Sends to the server the latest
      * @param chatMessage that the user wrote in the chat
-     * @throws RemoteException .
      */
     @Override
     public void sendChatMessage(String chatMessage){
@@ -472,10 +470,9 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
      * Method that sends the private
      * @param chatMessage written by this player to the
      * @param receiver of the message
-     * @throws RemoteException .
      */
     @Override
-    public void sendChatPrivateMessage(String chatMessage, String receiver) throws RemoteException {
+    public void sendChatPrivateMessage(String chatMessage, String receiver) {
         try {
             sr.chatPrivateMessage(this.nickname, chatMessage, receiver);
         }catch (RemoteException r){

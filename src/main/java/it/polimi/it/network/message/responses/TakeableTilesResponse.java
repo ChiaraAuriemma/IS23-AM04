@@ -6,6 +6,10 @@ import it.polimi.it.network.message.Payload;
 import java.io.Serializable;
 import java.util.List;
 
+
+/**
+ * TakeAbleTiles Message: sets a TCP client's take-able tiles.
+ */
 public class TakeableTilesResponse extends Payload  implements Serializable {
 
     private static final long serialVersionUID = -4063188883685505347L;
