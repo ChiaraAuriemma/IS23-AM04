@@ -1,5 +1,4 @@
-#borderPane{
+#anchorPane{
     -fx-background-image: url("/Images/sfondo_parquet.jpg");
     -fx-background-size: stretch;
-    /* Altre proprietà di stile */
 }

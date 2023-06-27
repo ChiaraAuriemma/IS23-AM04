@@ -8,13 +8,8 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.it.view.GUI.LoginController">
+<AnchorPane id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1080.0" stylesheets="@background.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.it.view.GUI.LoginController">
    <children>
-      <ImageView fx:id="background" fitHeight="720.0" fitWidth="1080.0" pickOnBounds="true">
-         <image>
-            <Image url="@Images/sfondo_parquet.jpg" />
-         </image>
-      </ImageView>
       <Label fx:id="LoginText" layoutX="395.0" layoutY="200.0" text="Choose an username">
          <font>
             <Font name="System Bold" size="28.0" />

@@ -1,18 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.it.view.GUI.JoinGameController">
+<AnchorPane id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1080.0" stylesheets="@background.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.it.view.GUI.JoinGameController">
    <children>
-      <ImageView fitHeight="735.0" fitWidth="1101.0" layoutX="-20.0" layoutY="-10.0" pickOnBounds="true">
-         <image>
-            <Image url="@Images/sfondo_parquet.jpg" />
-         </image>
-      </ImageView>
       <Label layoutX="371.0" layoutY="303.0" prefHeight="64.0" prefWidth="359.0" text="We are looking for other players">
          <font>
             <Font name="System Bold" size="23.0" />

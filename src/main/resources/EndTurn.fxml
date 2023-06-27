@@ -12,13 +12,8 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.it.view.GUI.EndTurnController">
+<AnchorPane id="anchorPane" prefHeight="720.0" prefWidth="1080.0" stylesheets="@background.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.it.view.GUI.EndTurnController">
     <children>
-        <ImageView fitHeight="743.0" fitWidth="1162.0" pickOnBounds="true">
-            <image>
-                <Image url="@Images/sfondo_parquet.jpg" />
-            </image>
-        </ImageView>
         <ImageView fitHeight="150.0" fitWidth="350.0" layoutX="406.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
             <image>
                 <Image url="@Images/Title 2000x618px.png" />
