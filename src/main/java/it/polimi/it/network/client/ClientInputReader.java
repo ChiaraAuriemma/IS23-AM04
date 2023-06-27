@@ -77,7 +77,7 @@ public class ClientInputReader implements Runnable, Serializable{
         if(inp[1]!=null && inp[1].length() >= 0){
             String action = inp[1];
             command = command.toLowerCase();
-            if(!command.equalsIgnoreCase("chat") && !command.equalsIgnoreCase("login")){
+            if(!command.equalsIgnoreCase("chat") && !command.equalsIgnoreCase("login") && !command.equalsIgnoreCase("private_chat")){
                     action = action.replaceAll("\\s+","");
             }
 

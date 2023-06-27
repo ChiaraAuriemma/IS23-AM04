@@ -323,7 +323,7 @@ public class EndTurnController implements GuiInterface, Initializable {
                 if(splittedMessage.length == 1){
                     GUIApplication.showAlert(Alert.AlertType.WARNING, "Empty message error", "You didn't write anything");
                 }else{
-                    String message = sender + ": " + splittedMessage[1];
+                    String message = "\u001B[33m" + sender + "\u001B[39m" + ": " + splittedMessage[1];
                     String receiver = splittedMessage[0];
                     client.sendChatPrivateMessage(message, receiver);
                 }

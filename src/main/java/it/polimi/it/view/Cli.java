@@ -38,6 +38,8 @@ public class Cli implements ViewInterface, Serializable {
     private List<List<Tile>> choosableTilesList = new ArrayList<>();
     private int gameID;
     private String endToken = null;
+    
+    private ArrayList<String> chatList = new ArrayList<>();
 
 
 
@@ -739,14 +741,108 @@ public class Cli implements ViewInterface, Serializable {
 
 
     /**
-     * Forces the chat to be updated
+     * Format the chat to be contained in the cli and forces the chat to be updated
      * @param currentChat is the list of the newest chat messages.
      */
     public void updateChat(List<String> currentChat) {
+        ArrayList<String> tempChat = new ArrayList<>();
+        for(String str : currentChat){
+            if(str.contains("\u001B[33m")){
+                chatList.clear();
+                chatList.addAll(newPrivateMessage(str));
+            }else{
+                chatList.clear();
+                chatList.addAll(newMessage(str));
+            }
+            tempChat.addAll(chatList);
+        }
         chatMessages.clear();
-        chatMessages.addAll(currentChat);
+        chatMessages.addAll(tempChat);
+        updateChatDisplayer(chatMessages);
     }
 
+    /**
+     * Method that given a public
+     * @param message , updates the chat list
+     */
+    public List<String> newMessage(String message){
+        List<String> chat = new ArrayList<>();
+        String temp;
+        while(message!=null){
+            if(message.length()>=33){
+                temp = message.substring(0, 32);
+                temp = padTo33(temp);
+                chat.add(temp);
+                temp=null;
+                message = message.substring(33);
+            }
+            else {
+                temp = padTo33(message);
+                chat.add(temp);
+                message=null;
+            }
+        }
+       return chat;
+    }
+
+    /**
+     * Method that given a private
+     * @param chatMessage , updates the chat list
+     */
+    public List<String> newPrivateMessage(String chatMessage) {
+        String temp;
+        ArrayList<String> chat = new ArrayList<>();
+        if(chatMessage.length()>=43){
+            temp = chatMessage.substring(0, 42);
+            temp = padTo43(temp);
+            chatList.add(temp);
+            temp=null;
+            chatMessage = chatMessage.substring(43);
+            while(chatMessage!=null){
+                if(chatMessage.length()>=33){
+                    temp = chatMessage.substring(0, 32);
+                    temp = padTo33(temp);
+                    chat.add(temp);
+                    temp=null;
+                    chatMessage = chatMessage.substring(33);
+                }
+                else {
+                    temp = padTo33(chatMessage);
+                    chat.add(temp);
+                    chatMessage=null;
+                }
+            }
+        }else{
+            temp = padTo43(chatMessage);
+            chat.add(temp);
+            chatMessage=null;
+        }
+        return chat;
+    }
+
+    /**
+     * Method that pads the length of
+     * @param message to 43, then
+     * @return the padded message.
+     */
+    private String padTo43(String message) {
+        while(message.length()<43){
+            message = message + " ";
+        }
+        return message;
+    }
+
+    /**
+     * Method that pads the length of
+     * @param message to 33, then
+     * @return the padded message.
+     */
+    private String padTo33(String message) {
+        while(message.length()<33){
+            message = message + " ";
+        }
+        return message;
+    }
 
     /**
      * Sets the player (this client)'s name to the given
@@ -819,6 +915,24 @@ public class Cli implements ViewInterface, Serializable {
         }
     }
 
+    /**
+     * Method that updates the list of the latest messages.
+     */
+    private void updateChatDisplayer(List<String> chatMessages) {
+
+        int size = chatMessages.size();
+        if(size>=9){
+            List<String> tempChat = new ArrayList<>(chatMessages.subList(size - 9, size));
+            chatMessages.clear();
+            chatMessages.addAll(tempChat);
+        }else{
+            for (int i =0; i<9-size; i++){
+                String blankChatLine = "                                 ";
+                chatMessages.add(blankChatLine);
+            }
+        }
+    }
+
 
     /************************************************
      *                                              *
@@ -829,6 +943,8 @@ public class Cli implements ViewInterface, Serializable {
 
 
     private String setLineBoardChat(int line) {
+
+        updateChatDisplayer(chatMessages);
         String returnString = null;
         if(chatMessages.size() > line){
             returnString =  border + "   " + boardRow(line) + "\u001B[0m    " + chatBorder + chatMessages.get(line) + chatBorder +  "\u001B[0m  " + border;
@@ -837,6 +953,8 @@ public class Cli implements ViewInterface, Serializable {
         }
         return returnString;
     }
+
+
 
 
     private String setLine21() {

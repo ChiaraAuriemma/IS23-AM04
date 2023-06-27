@@ -305,10 +305,13 @@ public class GUIHandler implements ViewInterface {
             try {
                 StringBuilder stringBuilder = new StringBuilder();
                 for (String str : currentChat) {
-                    if(str.length()>33){
-                        str = "[DM] " + str;
+                    if(str.contains("\u001B[33m")){
+                        String privateMessage1 = str.replace("\u001B[33m", "[DM] ");
+                        String privateMessage2 = privateMessage1.replace("\u001B[39m","" );
+                        stringBuilder.append(privateMessage2).append("\n");
+                    }else {
+                        stringBuilder.append(str).append("\n");
                     }
-                    stringBuilder.append(str).append("\n");
                 }
                 String joinedString = stringBuilder.toString().trim();
                 GUIApplication.setCurrentChat(joinedString);
