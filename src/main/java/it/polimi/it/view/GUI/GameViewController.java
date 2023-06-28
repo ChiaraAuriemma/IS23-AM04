@@ -477,4 +477,13 @@ public class GameViewController implements GuiInterface, Initializable {
         }
     }
 
+    /*
+    public void updateBoard(ArrayList<ImageView> newTiles){
+        for(ImageView imageView: newTiles){
+            LivingRoom.getChildren().remove(imageView);
+        }
+    }
+
+     */
+
 }

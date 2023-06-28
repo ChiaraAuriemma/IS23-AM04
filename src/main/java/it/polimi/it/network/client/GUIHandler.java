@@ -45,15 +45,19 @@ public class GUIHandler implements ViewInterface {
      */
     @Override
     public void setBoardView(Tile[][] matrix) {
-        Image[][] board = new Image[9][9];
-        for (int i = 0; i < 9; i++) {
-            for (int j = 0; j < 9; j++) {
-                String color = matrix[i][j].getColor();
-                Image image = chooseAnImage(color);
-                board[i][j] = image;
+        Platform.runLater(new Thread(()-> {
+            Image[][] board = new Image[9][9];
+            for (int i = 0; i < 9; i++) {
+                for (int j = 0; j < 9; j++) {
+                    String color = matrix[i][j].getColor();
+                    Image image = chooseAnImage(color);
+                    board[i][j] = image;
+                }
             }
-        }
-        GUIApplication.setBoard(board);
+            GUIApplication.setBoard(board);
+        }));
+        Thread.interrupted();
+        System.gc();
     }
 
 
@@ -102,15 +106,18 @@ public class GUIHandler implements ViewInterface {
      */
     @Override
     public void setPlayersShelfiesView(String player, Tile[][] shelfie) {
-        Image[][] shelfImage = new Image[6][5];
-        for (int i = 0; i < 6; i++) {
-            for (int j = 0; j < 5; j++) {
-                String color = shelfie[i][j].getColor();
-                Image image = chooseAnImage(color);
-                shelfImage[i][j] = image;
+        Platform.runLater(new Thread(()-> {
+            Image[][] shelfImage = new Image[6][5];
+            for (int i = 0; i < 6; i++) {
+                for (int j = 0; j < 5; j++) {
+                    String color = shelfie[i][j].getColor();
+                    Image image = chooseAnImage(color);
+                    shelfImage[i][j] = image;
+                }
             }
-        }
-        GUIApplication.setShelfies(player,shelfImage);
+            GUIApplication.setShelfies(player,shelfImage);
+        }));
+        Thread.interrupted();
     }
 
 
@@ -120,16 +127,19 @@ public class GUIHandler implements ViewInterface {
      */
     @Override
     public void setPlayersPersonalCardView(PersonalGoalCard card) {
-        int id = card.getId();
-        String num = String.valueOf(id);
-        String url = "/Images/Personal_Goals";
+        Platform.runLater(new Thread(()-> {
+            int id = card.getId();
+            String num = String.valueOf(id);
+            String url = "/Images/Personal_Goals";
 
-        if(id != 1){
-            url = url + num;
-        }
-        url= url + ".png";
-        URL imageUrl = getClass().getResource(url);
-        GUIApplication.setPersonalCard(imageUrl);
+            if(id != 1){
+                url = url + num;
+            }
+            url= url + ".png";
+            URL imageUrl = getClass().getResource(url);
+            GUIApplication.setPersonalCard(imageUrl);
+        }));
+        Thread.interrupted();
     }
 
 
@@ -139,10 +149,13 @@ public class GUIHandler implements ViewInterface {
      */
     @Override
     public void setCommon1View(int id) {
-        String num = String.valueOf(id);
-        String url = "/Images/" + num +".jpg";
-        URL imageUrl = getClass().getResource(url);
-        GUIApplication.setCommonCard1(imageUrl, id);
+        Platform.runLater(new Thread(()-> {
+            String num = String.valueOf(id);
+            String url = "/Images/" + num +".jpg";
+            URL imageUrl = getClass().getResource(url);
+            GUIApplication.setCommonCard1(imageUrl, id);
+        }));
+        Thread.interrupted();
     }
 
 
@@ -152,11 +165,13 @@ public class GUIHandler implements ViewInterface {
      */
     @Override
     public void setCommon2View(int id) {
-
-        String num = String.valueOf(id);
-        String url = "/Images/" + num +".jpg";
-        URL imageUrl = getClass().getResource(url);
-        GUIApplication.setCommonCard2(imageUrl, id);
+        Platform.runLater(new Thread(()-> {
+            String num = String.valueOf(id);
+            String url = "/Images/" + num +".jpg";
+            URL imageUrl = getClass().getResource(url);
+            GUIApplication.setCommonCard2(imageUrl, id);
+        }));
+        Thread.interrupted();
     }
 
 
@@ -212,6 +227,7 @@ public class GUIHandler implements ViewInterface {
             GUIApplication.setPoints(i,points);
         }));
         Thread.interrupted();
+        System.gc();
     }
 
 
@@ -255,7 +271,7 @@ public class GUIHandler implements ViewInterface {
      */
     @Override
     public void setEndToken(String user) {
-        return;
+
     }
 
 
@@ -290,6 +306,7 @@ public class GUIHandler implements ViewInterface {
             }
         }));
         Thread.interrupted();
+        System.gc();
     }
 
 
@@ -319,6 +336,7 @@ public class GUIHandler implements ViewInterface {
             }
         }));
         Thread.interrupted();
+        System.gc();
     }
 
 
@@ -372,7 +390,6 @@ public class GUIHandler implements ViewInterface {
      */
     @Override
     public void printTile(String color, int row, int column) {
-        return;
     }
 
 
@@ -382,7 +399,6 @@ public class GUIHandler implements ViewInterface {
      */
     @Override
     public void printThings(String s) {
-        return;
     }
 
 
@@ -401,6 +417,7 @@ public class GUIHandler implements ViewInterface {
      */
     @Override
     public void askColumn() throws IOException {
+        /*
         Platform.runLater(new Thread(()-> {
             try {
                 GUIApplication.changeScene();
@@ -409,6 +426,9 @@ public class GUIHandler implements ViewInterface {
             }
         }));
         Thread.interrupted();
+        System.gc();
+
+         */
     }
 
 
@@ -418,7 +438,7 @@ public class GUIHandler implements ViewInterface {
      */
     @Override
     public void boardRefill() {
-        return;
+
     }
 
 
@@ -453,30 +473,33 @@ public class GUIHandler implements ViewInterface {
      */
     @Override
     public void clean() {
-        for(String user: GUIApplication.getPlayers()){
-            User u = new User(" ");
-            Shelfie s = new Shelfie(u);
-            Image[][] s1 = new Image[6][5];
-            for (int i = 0; i < 6; i++) {
-                for (int j = 0; j < 5; j++) {
-                    String color = s.getShelf()[i][j].getColor();
-                    Image image = chooseAnImage(color);
-                    s1[i][j] = image;
+        Platform.runLater(new Thread(()-> {
+            for(String user: GUIApplication.getPlayers()){
+                User u = new User(" ");
+                Shelfie s = new Shelfie(u);
+                Image[][] s1 = new Image[6][5];
+                for (int i = 0; i < 6; i++) {
+                    for (int j = 0; j < 5; j++) {
+                        String color = s.getShelf()[i][j].getColor();
+                        Image image = chooseAnImage(color);
+                        s1[i][j] = image;
+                    }
                 }
+                GUIApplication.setShelfies(user,s1);
             }
-            GUIApplication.setShelfies(user,s1);
-        }
 
-        for(String user: GUIApplication.getPlayers()){
-            int i = 0;
-            while (!GUIApplication.getPlayers().get(i).equals(user)){
-                i++;
+            for(String user: GUIApplication.getPlayers()){
+                int i = 0;
+                while (!GUIApplication.getPlayers().get(i).equals(user)){
+                    i++;
+                }
+                GUIApplication.setPoints(i,0);
             }
-            GUIApplication.setPoints(i,0);
-        }
 
-        GUIApplication.getFinalPoints().clear();
-
+            GUIApplication.getFinalPoints().clear();
+        }));
+        Thread.interrupted();
+        System.gc();
     }
 
 
