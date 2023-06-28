@@ -192,8 +192,8 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
                 case FINALPOINTS:
                     FinalPointsMessage finalPointsMessage = (FinalPointsMessage) response.getPayload();
                     try {
+                        setStageToEndGame();
                         view.setFinalPoints(finalPointsMessage.getUsernames(),finalPointsMessage.getPoints());
-                            setStageToEndGame();
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
@@ -234,13 +234,7 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
                     break;
 
                 case RESTART:
-                    stage.setStage(TurnStages.CREATEorJOIN);
-                    try {
-                        view.clean();
-                        view.joinOrCreate(username);
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
+                    view.clean();
                     break;
 
                 case PING:
