@@ -107,6 +107,7 @@ public class GameController implements Serializable {
             System.out.println("Turn dealer: player " + currentPlayer + "\n");
             if(!playerList.get(currentPlayer).getInGame()){
                 if(checkIfEverybodyIsDisconnected()){
+                    System.out.println("Closing game " + gameID + " because none remain...");
                     lobby.notifyEndGame(gameID);
                     return;
                 } else if (numDisconnected() == 1) {
