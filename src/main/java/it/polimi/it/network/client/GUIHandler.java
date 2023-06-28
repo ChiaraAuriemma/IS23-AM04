@@ -295,18 +295,11 @@ public class GUIHandler implements ViewInterface {
 
     /**
      * Method that updates the GUI scene.
+     * Cli only method
      */
     @Override
     public void update() {
-        Platform.runLater(new Thread(()-> {
-            try {
-                GUIApplication.changeScene();
-            } catch (IOException e) {
-                System.out.println(e.getMessage());
-            }
-        }));
-        Thread.interrupted();
-        System.gc();
+
     }
 
 
@@ -414,21 +407,11 @@ public class GUIHandler implements ViewInterface {
 
     /**
      * Method that asks the player in whick column he wants to put the tiles that he took.
+     * Cli only method
      */
     @Override
     public void askColumn() throws IOException {
-        /*
-        Platform.runLater(new Thread(()-> {
-            try {
-                GUIApplication.changeScene();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }));
-        Thread.interrupted();
-        System.gc();
 
-         */
     }
 
 

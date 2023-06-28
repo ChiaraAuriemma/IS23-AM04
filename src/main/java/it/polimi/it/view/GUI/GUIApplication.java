@@ -163,7 +163,6 @@ public class GUIApplication extends Application {
             stageRef.show();
         }
         if(client.getGameStage().equals(TurnStages.CHOOSECOLUMN)){
-            /*
             FXMLLoader fxmlLoader = new FXMLLoader(GUIApplication.class.getResource("/GameTurn.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
             setCurrentController(fxmlLoader.getController());
@@ -174,7 +173,6 @@ public class GUIApplication extends Application {
             stageRef.setResizable(false);
             stageRef.show();
 
-             */
         }
         if(client.getGameStage().equals(TurnStages.TILESNUM)){
             FXMLLoader fxmlLoader = new FXMLLoader(GUIApplication.class.getResource("/GameTurn.fxml"));
@@ -188,7 +186,6 @@ public class GUIApplication extends Application {
             stageRef.show();
         }
         if(client.getGameStage().equals(TurnStages.CHOOSETILES)){
-            /*
             FXMLLoader fxmlLoader = new FXMLLoader(GUIApplication.class.getResource("/GameTurn.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
             setCurrentController(fxmlLoader.getController());
@@ -198,8 +195,6 @@ public class GUIApplication extends Application {
             stageRef.setScene(scene);
             stageRef.setResizable(false);
             stageRef.show();
-
-             */
         }
         if(client.getGameStage().equals(TurnStages.NOTURN)){
             FXMLLoader fxmlLoader = new FXMLLoader(GUIApplication.class.getResource("/EndTurn.fxml"));
@@ -385,33 +380,7 @@ public class GUIApplication extends Application {
      * @param boardRef is the Image of the Living Room
      */
     public static void setBoard(Image[][] boardRef) {
-        /*
-        if(!firstInitialization) {
-            board = boardRef;
-            firstInitialization = true;
-        }
-        else {
-            ArrayList<ImageView> newTiles = new ArrayList<>();
-            for (int i = 0; i < 9; i++) {
-                for (int j = 0; j < 9; j++) {
-                    if (boardRef[i][j] != null) {
-                        if(board[i][j] != boardRef[i][j]){
-                            ImageView imageView = new ImageView();
-                            imageView.setFitHeight(45);
-                            imageView.setFitWidth(47);
-                            imageView.setImage(boardRef[i][j]);
-                            newTiles.add(imageView);
-                        }
-                    }
-                }
-            }
-            GameViewController controller = (GameViewController) currentController ;
-            controller.updateBoard(newTiles);
-
-         */
-            board = boardRef;
-        //}
-
+        board = boardRef;
     }
 
 
