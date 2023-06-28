@@ -258,6 +258,7 @@ public class ClientTCPHandler implements Runnable,Serializable, RemoteInterface 
                                 throw new RuntimeException(e);
                             }
                         }
+                        lobby.removeUserFromGame(user.getNickname());
                         serverTCP.removeUserTCP(user.getNickname());
                         System.out.println(user.getNickname() + " disconnected");
                         timer.cancel();
@@ -329,13 +330,11 @@ public class ClientTCPHandler implements Runnable,Serializable, RemoteInterface 
      * Send a new TCP message that contains
      * @param id1 CommonGoalCard's ID 1,
      * @param id2 CommonGoalCard's ID 2,
-     * @param commonToken1 CommonGoalCard's token 1,
-     * @param commonToken2 CommonGoalCard's token 2,
      * @throws RemoteException .
      */
     @Override
-    public void setNewCommon(int id1, int id2, List<Integer> commonToken1, List<Integer> commonToken2) throws RemoteException{
-        DrawnCommonCardsMessage drawnCommonCardsMessage = new DrawnCommonCardsMessage(id1,id2,commonToken1,commonToken2);
+    public void setNewCommon(int id1, int id2) throws RemoteException{
+        DrawnCommonCardsMessage drawnCommonCardsMessage = new DrawnCommonCardsMessage(id1,id2);
         Message message = new Message(MessageType.DRAWNCOMMONCARDS, drawnCommonCardsMessage);
         send(message);
     }
@@ -433,13 +432,11 @@ public class ClientTCPHandler implements Runnable,Serializable, RemoteInterface 
      * Send a new TCP message that contains:
      * @param username ,
      * @param points ,
-     * @param commonToken1 the list of the player's tokens for the first CommonGoalCard,
-     * @param commonToken2 the list of the player's tokens for the second CommonGoalCard,
      * @throws RemoteException .
      */
     @Override
-    public void setNewPoints(String username, Integer points, List<Integer> commonToken1, List<Integer> commonToken2) throws RemoteException{
-        PointsUpdateMessage pointsUpdateMessage = new PointsUpdateMessage(username,points,commonToken1,commonToken2);
+    public void setNewPoints(String username, Integer points) throws RemoteException{
+        PointsUpdateMessage pointsUpdateMessage = new PointsUpdateMessage(username,points);
         Message message = new Message(MessageType.POINTSUPDATE, pointsUpdateMessage);
         send(message);
     }

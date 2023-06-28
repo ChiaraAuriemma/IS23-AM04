@@ -34,7 +34,7 @@ public class VirtualViewStub extends VirtualView {
     }
 
     @Override
-    public void drawnCommonCards(CommonGoalCard card1, CommonGoalCard card2, List<Integer> commonToken1, List<Integer> commonToken2){
+    public void drawnCommonCards(CommonGoalCard card1, CommonGoalCard card2){
 
     }
     @Override
@@ -73,7 +73,7 @@ public class VirtualViewStub extends VirtualView {
     }
 
     @Override
-    public void pointsUpdate(User user, Integer points, List<Integer> commonToken1, List<Integer> commonToken2) {
+    public void pointsUpdate(User user, Integer points) {
 
     }
 

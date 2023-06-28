@@ -243,6 +243,7 @@ public class RMIImplementation implements ServerInterface, Serializable {
                                     throw new RuntimeException(ex);
                                 }
                             }
+                            lobby.removeUserFromGame(user);
                             userRMI.remove(user);
                             System.out.println(user + " disconnected");
                         }

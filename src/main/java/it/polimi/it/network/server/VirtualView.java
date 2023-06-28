@@ -115,19 +115,17 @@ public class VirtualView implements Serializable {
 
 
     /**
-     * Sends to every player in the game the CommonGoalCards that were drawn from the game and their respective token lists.
+     * Sends to every player in the game the CommonGoalCards that were drawn from the game.
      * @param card1 is the first CommonGoalCard.
      * @param card2 is the second CommonGoalCard.
-     * @param commonToken1 is the list of tokens of the first CommonGoalCard.
-     * @param commonToken2 is the list of tokens of the second CommonGoalCard.
      */
-    public void drawnCommonCards(CommonGoalCard card1, CommonGoalCard card2, List<Integer> commonToken1, List<Integer> commonToken2) {
+    public void drawnCommonCards(CommonGoalCard card1, CommonGoalCard card2) {
         for (int i=0; i < game.getNumplayers(); i++) {
             String username = game.getPlayer(i).getNickname();
             if(!disconn_users.contains(username)) {
                 try {
                     RemoteInterface client = users.get(username);
-                    client.setNewCommon(card1.getID(), card2.getID(), commonToken1, commonToken2);
+                    client.setNewCommon(card1.getID(), card2.getID());
                 } catch (RemoteException e) {
                     System.out.println(e.getMessage() + " user: " + username + "/n");
                 }
@@ -266,16 +264,14 @@ public class VirtualView implements Serializable {
      * Sends to the clients the newly updated points
      * @param user is the player who now has a different amount of points
      * @param points is the player's current score.
-     * @param commonToken1 is the number of points got from the first CommonGoalCard.
-     * @param commonToken2 is the number of points got from the second CommonGoalCard.
      */
-    public void pointsUpdate(User user, Integer points, List<Integer> commonToken1, List<Integer> commonToken2) {
+    public void pointsUpdate(User user, Integer points) {
         for (int i=0; i < game.getNumplayers(); i++) {
             User  receiver = game.getPlayer(i);
             if(!disconn_users.contains(receiver.getNickname())) {
                 try {
                     RemoteInterface client = users.get(receiver.getNickname());
-                    client.setNewPoints(user.getNickname(), points, commonToken1, commonToken2);
+                    client.setNewPoints(user.getNickname(), points);
                 } catch (RemoteException e) {
                     System.out.println(e.getMessage() + " user: " + receiver.getNickname() + "/n");
                 }
