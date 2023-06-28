@@ -14,8 +14,8 @@
 - ####  Alberto Cavallotti &nbsp;([@Bertos1812](https://github.com/Bertos1812))<br>  10721275&nbsp;&nbsp; alberto1.cavallotti@mail.polimi.it
 
 <br><br>
-<br><br>
- 
+<br>
+
 ### About My Shelfie and the project's specifications
 The goal of the project is to create a software version of the board game "My Shelfie" by Cranio Games.
 The client-server application needs to fulfill all the rules of the classic board game.
@@ -59,7 +59,7 @@ Every player can send chat messages to the other players in their game. A player
 🟢 Already implemented &nbsp;&nbsp;&nbsp;&nbsp;🟡 Currently work in progress&nbsp;&nbsp;&nbsp;&nbsp; 🔴  Currently not implemented
 
 <br><br>
-<br><br>
+<br>
 
 ### Running The Game
 The Game consists in a jar file named <code>AM04-1.0-SNAPSHOT-jar-with-dependencies</code> that can be started by command line. In order to start playing you'll need to start the Server and at least two Clients.
@@ -105,12 +105,12 @@ The client can also choose the Interface .
 #### CLI
 <br>
 <div  align="center">
-<img width="70%" src="https://github.com/ChiaraAuriemma/IS23-AM04/blob/main/src/main/resources/Screenshot/CLI1.png" align="center" />
+<img width="50%" src="https://github.com/ChiaraAuriemma/IS23-AM04/blob/main/src/main/resources/Screenshot/CLI1.png" align="center" />
 <br>
 <br>
-<img width="70%" src="https://github.com/ChiaraAuriemma/IS23-AM04/blob/main/src/main/resources/Screenshot/CLI2.png" align="center" />
+<img width="50%" src="https://github.com/ChiaraAuriemma/IS23-AM04/blob/main/src/main/resources/Screenshot/CLI2.png" align="center" />
 <br>
 <br>
-<img width="70%" src="https://github.com/ChiaraAuriemma/IS23-AM04/blob/main/src/main/resources/Screenshot/CLI3.png" align="center" />
+<img width="50%" src="https://github.com/ChiaraAuriemma/IS23-AM04/blob/main/src/main/resources/Screenshot/CLI3.png" align="center" />
 </div>
  <br><br>
