@@ -103,14 +103,12 @@ public interface RemoteInterface extends Remote, Serializable {
 
 
     /**
-     * Setter method for the common cards and their tokens.
+     * Setter method for the common cards.
      * @param id1 CommonGoalCard's ID 1,
      * @param id2 CommonGoalCard's ID 2,
-     * @param commonToken1 CommonGoalCard's token 1,
-     * @param commonToken2 CommonGoalCard's token 2,
      * @throws RemoteException .
      */
-    void setNewCommon(int id1, int id2, List<Integer> commonToken1, List<Integer> commonToken2) throws RemoteException;
+    void setNewCommon(int id1, int id2) throws RemoteException;
 
 
     /**
@@ -131,14 +129,12 @@ public interface RemoteInterface extends Remote, Serializable {
 
 
     /**
-     * Setter method for various points related parameters.
+     * Setter method for various points.
      * @param username ,
      * @param points ,
-     * @param commonToken1 is the list of the player's tokens for the first CommonGoalCard,
-     * @param commonToken2 is the list of the player's tokens for the second CommonGoalCard,
      * @throws RemoteException .
      */
-    void setNewPoints(String username, Integer points, List<Integer> commonToken1, List<Integer> commonToken2) throws RemoteException;
+    void setNewPoints(String username, Integer points) throws RemoteException;
 
 
     /**

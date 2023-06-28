@@ -61,7 +61,7 @@ public class RemoteInterfaceStub implements RemoteInterface {
     }
 
     @Override
-    public void setNewCommon(int id1, int id2, List<Integer> commonToken1, List<Integer> commonToken2) throws RemoteException {
+    public void setNewCommon(int id1, int id2) throws RemoteException {
 
     }
 
@@ -76,7 +76,7 @@ public class RemoteInterfaceStub implements RemoteInterface {
     }
 
     @Override
-    public void setNewPoints(String username, Integer points, List<Integer> commonToken1, List<Integer> commonToken2) throws RemoteException {
+    public void setNewPoints(String username, Integer points) throws RemoteException {
 
     }
 

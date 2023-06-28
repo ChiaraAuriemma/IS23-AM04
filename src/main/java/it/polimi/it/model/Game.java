@@ -156,7 +156,7 @@ public class Game implements Serializable {
         deck.createCards(c1,c2);
         this.card1 = deck.getCommonCard1();
         this.card2 = deck.getCommonCard2();
-        virtualView.drawnCommonCards(card1,card2,commonToken1,commonToken2);
+        virtualView.drawnCommonCards(card1,card2);
     }
 
 
@@ -233,7 +233,7 @@ public class Game implements Serializable {
             this.points.set(i, tmp_point + this.commonToken2.get(j));
             this.commonToken2.set(j, 0);
         }
-        virtualView.pointsUpdate(player, this.points.get(i), commonToken1, commonToken2);
+        virtualView.pointsUpdate(player, this.points.get(i));
     }
 
 
