@@ -237,13 +237,13 @@ public class RMIImplementation implements ServerInterface, Serializable {
                         if(userGame.containsKey(user) && userGame.get(user).getUser(user).getInGame()){
                             if(userGame.get(user).getCurrentPlayer() == userGame.get(user).getPlayerNumber(userGame.get(user).getUser(user))){
                                 try {
-                                    //lobby.disconnect_user(user);
+                                    lobby.disconnect_user(user);
                                     userGame.get(user).turnDealer();
                                 } catch (InvalidIDException | IOException ex) {
                                     throw new RuntimeException(ex);
                                 }
                             }
-                            lobby.disconnect_user(user);
+                            lobby.removeUserFromGame(user);
                             userRMI.remove(user);
                             System.out.println(user + " disconnected");
                         }

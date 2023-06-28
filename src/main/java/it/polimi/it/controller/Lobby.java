@@ -250,18 +250,25 @@ public class Lobby implements Serializable {
 
     /**
      * Given a
-     * @param username string, finds the User instance of that player, then disconnects him from the game.
+     * @param username string, finds the User instance of that player, then disconnects him.
      */
     public void disconnect_user(String username) {
-       userList.get(userList.indexOf(userList
-                        .stream().filter(u -> Objects.equals(u.getNickname(), username))
-                        .collect(Collectors.toList()).get(0)))
-                        .setInGame(false);
         userList.get(userList.indexOf(userList
                 .stream().filter(u -> Objects.equals(u.getNickname(), username))
                 .collect(Collectors.toList()).get(0)))
                 .getGame().getVirtualView().insertDisconnection(username);
        System.out.println("Player " + username + " got disconnected - lobby \n");
+    }
+
+    /**
+     * Given a
+     * @param username string, finds the User instance of that player, then set his game false.
+     */
+    public void removeUserFromGame(String username){
+        userList.get(userList.indexOf(userList
+                        .stream().filter(u -> Objects.equals(u.getNickname(), username))
+                        .collect(Collectors.toList()).get(0)))
+                .setInGame(false);
     }
 
     /****************************************************

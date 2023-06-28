@@ -260,6 +260,7 @@ public class LobbyTest {
             lobby.joinGame(username2,0);
             assertTrue(lobby.getUserList().get(1).getInGame());
             lobby.disconnect_user(username2);
+            lobby.removeUserFromGame(username2);
             assertFalse(lobby.getUserList().get(1).getInGame());
         } catch (InvalidIDException | WrongPlayerException | IllegalValueException | IOException e) {
             System.out.println(e.getMessage());
@@ -304,6 +305,7 @@ public class LobbyTest {
         }
 
         lobby.disconnect_user(username2);
+        lobby.removeUserFromGame(username2);
         User user2 = lobby.getUserList().get(1);
 
         try {

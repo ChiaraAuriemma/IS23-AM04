@@ -252,13 +252,13 @@ public class ClientTCPHandler implements Runnable,Serializable, RemoteInterface 
                     if(gameController != null && user.getInGame()){
                         if(gameController.getCurrentPlayer() == gameController.getPlayerNumber(user)){
                             try {
-                                //lobby.disconnect_user(user.getNickname());
+                                lobby.disconnect_user(user.getNickname());
                                 gameController.turnDealer();
                             } catch (InvalidIDException | IOException e) {
                                 throw new RuntimeException(e);
                             }
                         }
-                        lobby.disconnect_user(user.getNickname());
+                        lobby.removeUserFromGame(user.getNickname());
                         serverTCP.removeUserTCP(user.getNickname());
                         System.out.println(user.getNickname() + " disconnected");
                         timer.cancel();
