@@ -81,7 +81,6 @@ public class GUIApplication extends Application {
         }
         stage.setTitle("My Shelfie");
         stage.setScene(scene);
-        stage.setResizable(false);
         stage.show();
     }
 
@@ -124,7 +123,6 @@ public class GUIApplication extends Application {
             GUIApplication.setCurrentController(currentController);
             stageRef.setTitle("My Shelfie");
             stageRef.setScene(scene);
-            stageRef.setResizable(false);
             stageRef.show();
         }
         if(client.getGameStage().equals(TurnStages.CREATEorJOIN)){
@@ -136,7 +134,6 @@ public class GUIApplication extends Application {
                 GUIApplication.setCurrentController(currentController);
                 stageRef.setTitle("My Shelfie");
                 stageRef.setScene(scene);
-                stageRef.setResizable(false);
                 stageRef.show();
             }
             else{
@@ -147,7 +144,6 @@ public class GUIApplication extends Application {
                 GUIApplication.setCurrentController(currentController);
                 stageRef.setTitle("My Shelfie");
                 stageRef.setScene(scene);
-                stageRef.setResizable(false);
                 stageRef.show();
             }
         }
@@ -159,7 +155,6 @@ public class GUIApplication extends Application {
             GUIApplication.setCurrentController(currentController);
             stageRef.setTitle("My Shelfie");
             stageRef.setScene(scene);
-            stageRef.setResizable(false);
             stageRef.show();
         }
         if(client.getGameStage().equals(TurnStages.CHOOSECOLUMN)){
@@ -170,7 +165,6 @@ public class GUIApplication extends Application {
             GUIApplication.setCurrentController(currentController);
             stageRef.setTitle("My Shelfie");
             stageRef.setScene(scene);
-            stageRef.setResizable(false);
             stageRef.show();
 
         }
@@ -182,7 +176,6 @@ public class GUIApplication extends Application {
             GUIApplication.setCurrentController(currentController);
             stageRef.setTitle("My Shelfie");
             stageRef.setScene(scene);
-            stageRef.setResizable(false);
             stageRef.show();
         }
         if(client.getGameStage().equals(TurnStages.CHOOSETILES)){
@@ -193,7 +186,6 @@ public class GUIApplication extends Application {
             GUIApplication.setCurrentController(currentController);
             stageRef.setTitle("My Shelfie");
             stageRef.setScene(scene);
-            stageRef.setResizable(false);
             stageRef.show();
         }
         if(client.getGameStage().equals(TurnStages.NOTURN)){
@@ -204,7 +196,6 @@ public class GUIApplication extends Application {
             GUIApplication.setCurrentController(currentController);
             stageRef.setTitle("My Shelfie");
             stageRef.setScene(scene);
-            stageRef.setResizable(false);
             stageRef.show();
         }
         if(client.getGameStage().equals(TurnStages.ENDGAME)){
@@ -215,7 +206,6 @@ public class GUIApplication extends Application {
             GUIApplication.setCurrentController(currentController);
             stageRef.setTitle("My Shelfie");
             stageRef.setScene(scene);
-            stageRef.setResizable(false);
             stageRef.show();
         }
 
