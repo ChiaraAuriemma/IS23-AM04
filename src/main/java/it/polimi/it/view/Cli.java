@@ -4,6 +4,7 @@ import it.polimi.it.model.Card.PersonalGoalCards.PersonalGoalCard;
 import it.polimi.it.model.Tiles.PossibleColors;
 import it.polimi.it.model.Tiles.Tile;
 import it.polimi.it.model.User;
+import it.polimi.it.view.GUI.GUIApplication;
 
 import java.io.Serializable;
 import java.util.*;
@@ -875,18 +876,39 @@ public class Cli implements ViewInterface, Serializable {
         String up   = "            ╔════════════════════════════════════════╗";
         String bl   = "            ║                                        ║";
         String down = "            ╚════════════════════════════════════════╝";
-        LinkedHashMap<String, String> sortedMap = new LinkedHashMap<>();
-        Collection<String> values = playersPoints.values();
-        List<String> valueList = new ArrayList<>(values);
-        Collections.sort(valueList, Collections.reverseOrder());
-        for (String value : valueList) {
-            for (Map.Entry<String, String> entry : playersPoints.entrySet()) {
-                if (entry.getValue().equals(value)) {
-                    sortedMap.put(entry.getKey(), value);
-                    break;
+
+        ArrayList<String> total = new ArrayList<>(playersPoints.size());
+
+        int oldSize = playersPoints.size();
+        String p="";
+        while (playersPoints.size()!= 0){
+            int maxValue = 0;
+            String maxKey = " ";
+            for(String str : playersPoints.keySet()){
+                String points  = playersPoints.get(str);
+
+                if(Integer.parseInt(points.trim()) > maxValue){
+                    maxValue = Integer.parseInt(points.trim());
+                    maxKey = str;
+                    p=points;
                 }
             }
+            playersPoints.remove(maxKey,p);
+
+            StringBuilder sb = new StringBuilder();
+            sb.append("            ║           ")
+                    .append(maxKey)
+                    .append(" => ")
+                    .append(p)
+                    .append("           ║");
+            String help = sb.toString();
+            total.add(help);
+            if(total.size()==oldSize){
+                break;
+            }
+
         }
+
         out.println(up);
         out.println(bl);
         out.println("            ║   This game ended! GG to the winner!   ║");
@@ -894,8 +916,9 @@ public class Cli implements ViewInterface, Serializable {
         out.println("            ║           Leaderboard:                 ║");
         out.println(bl);
         out.println(bl);
-        for (Map.Entry<String, String> entry : sortedMap.entrySet()) {
-            System.out.println("            ║           "+ entry.getKey() + " => " + entry.getValue()+"           ║");
+
+        for( String st: total) {
+            out.println(st);
         }
         out.println(bl);
         out.println(bl);
@@ -938,7 +961,6 @@ public class Cli implements ViewInterface, Serializable {
             }
         }
     }
-
 
     /************************************************
      *                                              *
