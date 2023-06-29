@@ -4,6 +4,7 @@ import it.polimi.it.model.Card.PersonalGoalCards.PersonalGoalCard;
 import it.polimi.it.model.Shelfie;
 import it.polimi.it.model.Tiles.Tile;
 import it.polimi.it.model.User;
+import it.polimi.it.network.client.TurnStages;
 import it.polimi.it.view.ViewInterface;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
@@ -309,7 +310,9 @@ public class GUIHandler implements ViewInterface {
                 }
                 String joinedString = stringBuilder.toString().trim();
                 GUIApplication.setCurrentChat(joinedString);
-                GUIApplication.changeScene();
+                if(!GUIApplication.getClient().getGameStage().equals(TurnStages.CHOOSECOLUMN) && !GUIApplication.getClient().getGameStage().equals(TurnStages.TILESNUM)
+                    && !GUIApplication.getClient().getGameStage().equals(TurnStages.CHOOSETILES))
+                    GUIApplication.changeScene();
             } catch (IOException e) {
                 System.out.println(e.getMessage());
             }
