@@ -6,7 +6,7 @@ package it.polimi.it.view.GUI;
 public class GUILauncher {
     /**
      * Launch of the Gui application main
-     * @param args
+     * @param args .
      */
     public static void main(String[] args){
         GUIApplication.main(args);

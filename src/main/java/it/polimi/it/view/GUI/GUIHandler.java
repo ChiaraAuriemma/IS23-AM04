@@ -4,7 +4,6 @@ import it.polimi.it.model.Card.PersonalGoalCards.PersonalGoalCard;
 import it.polimi.it.model.Shelfie;
 import it.polimi.it.model.Tiles.Tile;
 import it.polimi.it.model.User;
-import it.polimi.it.view.GUI.*;
 import it.polimi.it.view.ViewInterface;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;

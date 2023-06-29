@@ -1,12 +1,11 @@
 package it.polimi.it.view.GUI;
 
-import it.polimi.it.model.Tiles.Tile;
+
 import it.polimi.it.network.client.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.scene.image.Image;
 
