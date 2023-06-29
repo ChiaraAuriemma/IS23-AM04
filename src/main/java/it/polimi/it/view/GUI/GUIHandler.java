@@ -34,7 +34,6 @@ public class GUIHandler implements ViewInterface {
                 throw new RuntimeException(e);
             }
         }));
-        Thread.interrupted();
     }
 
 
@@ -55,8 +54,6 @@ public class GUIHandler implements ViewInterface {
             }
             GUIApplication.setBoard(board);
         }));
-        Thread.interrupted();
-        System.gc();
     }
 
 
@@ -116,7 +113,6 @@ public class GUIHandler implements ViewInterface {
             }
             GUIApplication.setShelfies(player,shelfImage);
         }));
-        Thread.interrupted();
     }
 
 
@@ -138,7 +134,6 @@ public class GUIHandler implements ViewInterface {
             URL imageUrl = getClass().getResource(url);
             GUIApplication.setPersonalCard(imageUrl);
         }));
-        Thread.interrupted();
     }
 
 
@@ -154,7 +149,6 @@ public class GUIHandler implements ViewInterface {
             URL imageUrl = getClass().getResource(url);
             GUIApplication.setCommonCard1(imageUrl, id);
         }));
-        Thread.interrupted();
     }
 
 
@@ -170,7 +164,6 @@ public class GUIHandler implements ViewInterface {
             URL imageUrl = getClass().getResource(url);
             GUIApplication.setCommonCard2(imageUrl, id);
         }));
-        Thread.interrupted();
     }
 
 
@@ -202,7 +195,6 @@ public class GUIHandler implements ViewInterface {
         Platform.runLater(new Thread(()-> {
             GUIApplication.showAlert(Alert.AlertType.WARNING, "Error", error);
         }));
-        Thread.interrupted();
     }
 
 
@@ -220,8 +212,6 @@ public class GUIHandler implements ViewInterface {
             }
             GUIApplication.setPoints(i,points);
         }));
-        Thread.interrupted();
-        System.gc();
     }
 
 
@@ -240,7 +230,6 @@ public class GUIHandler implements ViewInterface {
                 throw new RuntimeException(e);
             }
         }));
-        Thread.interrupted();
     }
 
 
@@ -259,7 +248,6 @@ public class GUIHandler implements ViewInterface {
                 throw new RuntimeException(e);
             }
         }));
-        Thread.interrupted();
     }
 
 
@@ -288,7 +276,6 @@ public class GUIHandler implements ViewInterface {
                 System.out.println(e.getMessage());
             }
         }));
-        Thread.interrupted();
     }
 
 
@@ -327,8 +314,6 @@ public class GUIHandler implements ViewInterface {
                 System.out.println(e.getMessage());
             }
         }));
-        Thread.interrupted();
-        System.gc();
     }
 
 
@@ -370,7 +355,6 @@ public class GUIHandler implements ViewInterface {
                 throw new RuntimeException(e);
             }
         }));
-        Thread.interrupted();
     }
 
 
@@ -453,7 +437,6 @@ public class GUIHandler implements ViewInterface {
                 throw new RuntimeException(e);
             }
         }));
-        Thread.interrupted();
 
     }
 
@@ -488,8 +471,6 @@ public class GUIHandler implements ViewInterface {
 
             GUIApplication.getFinalPoints().clear();
         }));
-        Thread.interrupted();
-        System.gc();
     }
 
 
