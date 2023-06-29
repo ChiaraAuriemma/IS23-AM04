@@ -14,11 +14,12 @@
 - ####  Alberto Cavallotti &nbsp;([@Bertos1812](https://github.com/Bertos1812))<br>  10721275&nbsp;&nbsp; alberto1.cavallotti@mail.polimi.it
 
 <br><br>
-<br><br>
- 
+<br>
+
 ### About My Shelfie and the project's specifications
 The goal of the project is to create a software version of the board game "My Shelfie" by Cranio Games.
 The client-server application needs to fulfill all the rules of the classic board game.
+The game is divided in turns in which a player must take 1,2 or 3 tiles from the LivingRoom board and to put them in a column of his Shelfie. All the tiles that theplayers take must be adjacent to each other and have at least one side free. The main goal of the game is to fill the Shelfie, earning points by completing the tasks on the Coommon & Personal Goal Cards. 
 <br><br>
 Rulebooks: [ENG](src/main/resources/Rulebooks/MyShelfie_Ruleboo_ENG.pdf) or [ITA](src/main/resources/Rulebooks/MyShelfie_Rulebook_ITA.pdf) .
 <br><br>
@@ -58,10 +59,10 @@ Every player can send chat messages to the other players in their game. A player
 🟢 Already implemented &nbsp;&nbsp;&nbsp;&nbsp;🟡 Currently work in progress&nbsp;&nbsp;&nbsp;&nbsp; 🔴  Currently not implemented
 
 <br><br>
-<br><br>
+<br>
 
 ### Running The Game
-The Game consists in a jar file named <code>AM04-1.0-SNAPSHOT-jar-with-dependencies</code> that can be started by command line. In order to start playing you'll need to start the Server and at least two Clients.
+The Game consists in a [jar](jar/AM04-1.0-SNAPSHOT-jar-with-dependencies.jar) file named <code>AM04-1.0-SNAPSHOT-jar-with-dependencies</code> that can be started by command line. In order to start playing you'll need to start the Server and at least two Clients.
 #### Server
 ```shell 
       > java -jar .\AM04-1.0-SNAPSHOT-jar-with-dependencies.jar server
@@ -69,7 +70,7 @@ The Game consists in a jar file named <code>AM04-1.0-SNAPSHOT-jar-with-dependenc
 The command above has to be used in order to start the Server and is the only command you will need until the Server needs to be shut down.
 #### Client
 ```shell 
-      > .\AM04-1.0-SNAPSHOT-jar-with-dependencies.jar client [Connection] [Interface] [ip address]
+      > java -jar .\AM04-1.0-SNAPSHOT-jar-with-dependencies.jar client [Connection] [Interface] [ip address]
 ```
 Connection: 
 - tcp
@@ -102,4 +103,14 @@ The client can also choose the Interface .
  <br><br>
 
 #### CLI
-
+<br>
+<div  align="center">
+<img width="50%" src="https://github.com/ChiaraAuriemma/IS23-AM04/blob/main/src/main/resources/Screenshot/CLI1.png" align="center" />
+<br>
+<br>
+<img width="50%" src="https://github.com/ChiaraAuriemma/IS23-AM04/blob/main/src/main/resources/Screenshot/CLI2.png" align="center" />
+<br>
+<br>
+<img width="50%" src="https://github.com/ChiaraAuriemma/IS23-AM04/blob/main/src/main/resources/Screenshot/CLI3.png" align="center" />
+</div>
+ <br><br>

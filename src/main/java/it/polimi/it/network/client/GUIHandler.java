@@ -202,11 +202,6 @@ public class GUIHandler implements ViewInterface {
     public void printError(String error) {
         Platform.runLater(new Thread(()-> {
             GUIApplication.showAlert(Alert.AlertType.WARNING, "Error", error);
-            try {
-                GUIApplication.changeScene();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
         }));
         Thread.interrupted();
     }
@@ -259,6 +254,11 @@ public class GUIHandler implements ViewInterface {
         Platform.runLater(new Thread(()-> {
             if(GUIApplication.getCreateOrJoin().equals("CREATE"))
                 GUIApplication.showAlert(Alert.AlertType.INFORMATION, "Create Game ID", "Your game id is " + gameId);
+            try {
+                GUIApplication.changeScene();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }));
         Thread.interrupted();
     }
@@ -295,18 +295,11 @@ public class GUIHandler implements ViewInterface {
 
     /**
      * Method that updates the GUI scene.
+     * Cli only method
      */
     @Override
     public void update() {
-        Platform.runLater(new Thread(()-> {
-            try {
-                GUIApplication.changeScene();
-            } catch (IOException e) {
-                System.out.println(e.getMessage());
-            }
-        }));
-        Thread.interrupted();
-        System.gc();
+
     }
 
 
@@ -414,21 +407,11 @@ public class GUIHandler implements ViewInterface {
 
     /**
      * Method that asks the player in whick column he wants to put the tiles that he took.
+     * Cli only method
      */
     @Override
     public void askColumn() throws IOException {
-        /*
-        Platform.runLater(new Thread(()-> {
-            try {
-                GUIApplication.changeScene();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }));
-        Thread.interrupted();
-        System.gc();
 
-         */
     }
 
 
@@ -443,7 +426,7 @@ public class GUIHandler implements ViewInterface {
 
 
     /**
-     * Forces a Cli update after the reconnection to the game
+     * Forces a GUI update after the reconnection to the game
      * @param gameID is the gameID of the game that the player just reconnected to.
      * @param matrix is the LivingRoom Board
      * @param shelfies is a List of the Players' Shelfies
@@ -464,7 +447,15 @@ public class GUIHandler implements ViewInterface {
             setPlayersShelfiesView(playerList.get(i), shelfies.get(i));
             setPlayersPointsView(playerList.get(i), points.get(i));
         }
-        update();
+        Platform.runLater(new Thread(()-> {
+            try {
+                GUIApplication.changeScene();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }));
+        Thread.interrupted();
+
     }
 
 
