@@ -192,7 +192,7 @@ public class EndTurnController implements GuiInterface, Initializable {
 
     }
     /**
-     * Method that triggers when the button "Show personal goal card" is clicked, and it changes scene to let the client see his personal card
+     * Method that triggers when the button "Show personal goal card" is clicked, it shows a pop-up with the card
      * @param actionEvent is the event that trigger this method and in this case it's the click of the button "Show personal goal card"
      * @throws IOException .
      */
@@ -214,7 +214,7 @@ public class EndTurnController implements GuiInterface, Initializable {
         alert.showAndWait();
     }
     /**
-     * Method that triggers when the button "Show common goal card" is clicked, and it changes scene to let the client see his personal card
+     * Method that triggers when the button "Show common goal card" is clicked, it shows a pop-up with the cards
      * @param actionEvent is the event that trigger this method and in this case it's the click of the button "Show common goal card"
      * @throws IOException .
      */
