@@ -471,8 +471,8 @@ public class GUIHandler implements ViewInterface {
                 }
                 GUIApplication.setPoints(i,0);
             }
-
             GUIApplication.getFinalPoints().clear();
+            GUIApplication.setCurrentChat(null);
         }));
     }
 
