@@ -396,8 +396,12 @@ public class GameViewController implements GuiInterface, Initializable {
                 GUIApplication.showAlert(Alert.AlertType.WARNING, "Tiles error", "Invalid number, try again");
             }else {
                 String tmp = num.getText();
-                int num = Integer.parseInt(tmp);
-                client.tilesNumMessage(num);
+                try {
+                    int num = Integer.parseInt(tmp);
+                    client.tilesNumMessage(num);
+                }catch (NumberFormatException e){
+                    GUIApplication.showAlert(Alert.AlertType.WARNING, "Tiles error", "Invalid number, try again");
+                }
             }
         }
     }
