@@ -1,4 +1,4 @@
-package it.polimi.it.network.client;
+package it.polimi.it.view.GUI;
 
 import it.polimi.it.model.Card.PersonalGoalCards.PersonalGoalCard;
 import it.polimi.it.model.Shelfie;

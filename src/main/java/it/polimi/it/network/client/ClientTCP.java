@@ -11,6 +11,7 @@ import it.polimi.it.network.message.request.*;
 import it.polimi.it.network.message.responses.*;
 import it.polimi.it.view.Cli;
 import it.polimi.it.view.GUI.GUIApplication;
+import it.polimi.it.view.GUI.GUIHandler;
 import it.polimi.it.view.ViewInterface;
 
 import java.io.*;

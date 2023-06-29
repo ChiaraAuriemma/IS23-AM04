@@ -5,6 +5,7 @@ import it.polimi.it.model.Card.PersonalGoalCards.PersonalGoalCard;
 import it.polimi.it.model.Tiles.Tile;
 import it.polimi.it.network.server.ServerInterface;
 import it.polimi.it.view.Cli;
+import it.polimi.it.view.GUI.GUIHandler;
 import it.polimi.it.view.ViewInterface;
 import java.io.IOException;
 import java.rmi.NotBoundException;
