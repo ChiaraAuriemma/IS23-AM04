@@ -426,7 +426,7 @@ public class GUIHandler implements ViewInterface {
 
 
     /**
-     * Forces a Cli update after the reconnection to the game
+     * Forces a GUI update after the reconnection to the game
      * @param gameID is the gameID of the game that the player just reconnected to.
      * @param matrix is the LivingRoom Board
      * @param shelfies is a List of the Players' Shelfies
@@ -447,7 +447,15 @@ public class GUIHandler implements ViewInterface {
             setPlayersShelfiesView(playerList.get(i), shelfies.get(i));
             setPlayersPointsView(playerList.get(i), points.get(i));
         }
-        update();
+        Platform.runLater(new Thread(()-> {
+            try {
+                GUIApplication.changeScene();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }));
+        Thread.interrupted();
+
     }
 
 
