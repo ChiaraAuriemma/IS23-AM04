@@ -25,7 +25,6 @@ public class CreateGameViewController implements GuiInterface{
         if(NumOfPlayers.getText().length() != 0) {
             int players = Integer.parseInt(NumOfPlayers.getText());
             client.createGame(players);
-            GUIApplication.changeScene();
         }else {
             GUIApplication.showAlert(Alert.AlertType.WARNING, "Create Game error", "You must enter a number of players");
         }

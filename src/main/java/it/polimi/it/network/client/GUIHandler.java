@@ -254,6 +254,11 @@ public class GUIHandler implements ViewInterface {
         Platform.runLater(new Thread(()-> {
             if(GUIApplication.getCreateOrJoin().equals("CREATE"))
                 GUIApplication.showAlert(Alert.AlertType.INFORMATION, "Create Game ID", "Your game id is " + gameId);
+            try {
+                GUIApplication.changeScene();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }));
         Thread.interrupted();
     }
