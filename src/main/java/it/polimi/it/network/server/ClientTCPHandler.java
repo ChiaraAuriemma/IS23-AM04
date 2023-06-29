@@ -102,6 +102,7 @@ public class ClientTCPHandler implements Runnable,Serializable, RemoteInterface 
                             serverTCP.setUserTCP(user,socket);
                             LoginResponse loginResponse = new LoginResponse(user.getNickname());
                             response = new Message(MessageType.CREATEPLAYERRESPONSE, loginResponse);
+                            new Thread(this::disconnectionTimer).start();
                         } catch (ExistingNicknameException | EmptyNicknameException | RemoteException e) {
                             ErrorMessage errorMessage = new ErrorMessage(e.getMessage());
                             response = new Message(MessageType.ERROR, errorMessage);
@@ -110,7 +111,6 @@ public class ClientTCPHandler implements Runnable,Serializable, RemoteInterface 
                         }
                     }
                     send(response);
-                    new Thread(this::disconnectionTimer).start();
                     break;
 
                 case CREATEGAME:
