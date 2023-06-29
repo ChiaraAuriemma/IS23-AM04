@@ -202,11 +202,14 @@ public class GUIHandler implements ViewInterface {
     public void printError(String error) {
         Platform.runLater(new Thread(()-> {
             GUIApplication.showAlert(Alert.AlertType.WARNING, "Error", error);
+            /*
             try {
                 GUIApplication.changeScene();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
+
+             */
         }));
         Thread.interrupted();
     }
