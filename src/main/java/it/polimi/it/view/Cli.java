@@ -876,11 +876,6 @@ public class Cli implements ViewInterface, Serializable {
         String up   = "            ╔════════════════════════════════════════╗";
         String bl   = "            ║                                        ║";
         String down = "            ╚════════════════════════════════════════╝";
-        /*LinkedHashMap<String, String> sortedMap = new LinkedHashMap<>();
-        Collection<String> values = playersPoints.values();
-        List<String> valueList = new ArrayList<>(values);
-        Collections.sort(valueList, Collections.reverseOrder());
-*/
 
         ArrayList<String> total = new ArrayList<>(playersPoints.size());
 
@@ -908,30 +903,12 @@ public class Cli implements ViewInterface, Serializable {
                     .append("           ║");
             String help = sb.toString();
             total.add(help);
-            out.println(help);
             if(total.size()==oldSize){
                 break;
             }
 
         }
 
-
-
-
-
-
-
-
-
-/*
-        for (String value : valueList) {
-            for (Map.Entry<String, String> entry : playersPoints.entrySet()) {
-                if (entry.getValue().equals(value)) {
-                    sortedMap.put(entry.getKey(), value);
-                    break;
-                }
-            }
-        }*/
         out.println(up);
         out.println(bl);
         out.println("            ║   This game ended! GG to the winner!   ║");
@@ -939,11 +916,10 @@ public class Cli implements ViewInterface, Serializable {
         out.println("            ║           Leaderboard:                 ║");
         out.println(bl);
         out.println(bl);
-        /*for (Map.Entry<String, String> entry : sortedMap.entrySet()) {
-            System.out.println("            ║           "+ entry.getKey() + " => " + entry.getValue()+"           ║");
-        }*/
-        for( String st: total)
+
+        for( String st: total) {
             out.println(st);
+        }
         out.println(bl);
         out.println(bl);
         out.println(bl);
@@ -985,7 +961,6 @@ public class Cli implements ViewInterface, Serializable {
             }
         }
     }
-
 
     /************************************************
      *                                              *
