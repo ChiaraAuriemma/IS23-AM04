@@ -4,6 +4,9 @@ target/
 # for idea dir
 .idea/
 
+# for shade dir
+.shade/
+
 # Created by https://www.toptal.com/developers/gitignore/api/java
 # Edit at https://www.toptal.com/developers/gitignore?templates=java
 

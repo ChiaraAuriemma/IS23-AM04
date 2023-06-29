@@ -229,7 +229,7 @@ public class ClientTCPHandler implements Runnable,Serializable, RemoteInterface 
             out.close();
             socket.close();
         } catch (IOException e) {
-            System.out.println("non sono riuscito a chiudere la connessione con ");
+            System.out.println("non sono riuscito a chiudere la connessione con " + user.getNickname());
         }
     }
 
