@@ -59,6 +59,9 @@ Every player can send chat messages to the other players in their game. A player
 🟢 Already implemented &nbsp;&nbsp;&nbsp;&nbsp;🟡 Currently work in progress&nbsp;&nbsp;&nbsp;&nbsp; 🔴  Currently not implemented
 
 <br><br>
+
+<br>
+
 <br>
 
 ### Running The Game
@@ -114,3 +117,11 @@ The client can also choose the Interface .
 <img width="50%" src="https://github.com/ChiaraAuriemma/IS23-AM04/blob/main/src/main/resources/Screenshot/CLI3.png" align="center" />
 </div>
  <br><br>
+
+
+
+
+#### Test Reports
+<br>
+<img width="99%" src="https://github.com/ChiaraAuriemma/IS23-AM04/blob/main/src/main/resources/Screenshot/test_report.png" align="center" />
+<br>
