@@ -381,9 +381,8 @@ public class GameController implements Serializable {
      * Method that swaps an old instance
      * @param old of a User class with its newer
      * @param newborn reconnected version.
-     * @throws RemoteException
      */
-    public void swapPlayers(User old, User newborn) throws RemoteException {
+    public void swapPlayers(User old, User newborn){
         playerList.set(playerList.indexOf(old), newborn);
         game.swapPlayers(old, newborn);
     }
