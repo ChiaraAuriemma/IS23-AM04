@@ -77,7 +77,7 @@ public class GameController implements Serializable {
 
     /**
      * Constructor method
-     * @param game is the game which this controller references to
+     * @param game is the game which this controller references to the lobby
      * @param lobbyIn is the reference to the external lobby
      */
     public GameController(Game game, Lobby lobbyIn){
@@ -94,6 +94,7 @@ public class GameController implements Serializable {
     /**
      * Method used to control which player needs to move in the current turn
      * @throws InvalidIDException exception used when the game ID is wrong or non-existent
+     * @throws IOException .
      */
     public void turnDealer() throws InvalidIDException, IOException {
 
@@ -167,7 +168,7 @@ public class GameController implements Serializable {
 
 
     /**
-     * Method that
+     * Method that return the number of players of this game that disconnected.
      * @return the number of players of this game that disconnected.
      */
     private int numDisconnected() {
@@ -199,6 +200,8 @@ public class GameController implements Serializable {
     /**
      * Method to get the maximum possible number of tiles that can be selected from the board
      * Calls the view to ask the payer about how many tiles the player wants to retrieve
+     * @throws InvalidIDException if the game ID is not the game ID of this game controller
+     * @throws IOException .
      */
     public void firstOperation() throws  IOException, InvalidIDException {
         if(!playerList.get(currentPlayer).getInGame()) {
@@ -216,6 +219,11 @@ public class GameController implements Serializable {
      * The method also sends to the view the list of lists of tiles that the user can choose
      *  in order to highlight them on the board.
      * @param chosenNumber is the input from the user
+     * @param user is the nickname of the player
+     * @throws InvalidIDException if the game ID is not the game ID of this game controller
+     * @throws WrongPlayerException if it's not the turn of this player
+     * @throws IllegalValueException if the client's wants to take more Tiles than it could
+     * @throws IOException .
      */
     public void getFromViewNTiles(String user, int chosenNumber) throws WrongPlayerException, IOException, IllegalValueException, InvalidIDException {
         if(!playerList.get(currentPlayer).getInGame()) {
@@ -239,7 +247,13 @@ public class GameController implements Serializable {
      * The method also sends to the view the list of 'empty-enough' columns in which the chosen
      *  tiles might be put in.
      * @param chosenList is the list of selected tiles
+     * @param user is the nickname of the player
      * @throws WrongTileException exception used when a wrong tile is selected
+     * @throws WrongPlayerException if it's not the turn of this player
+     * @throws WrongListException if the client chooses a wrong set of Tiles from the Living room
+     * @throws InvalidIDException if the game ID is not the game ID of this game controller
+     * @throws WrongTileException if the client chooses a Tiles that is "DEFAULT" or "XTILE"
+     * @throws IOException .
      */
     public void getTilesListFromView(String user, List<Tile> chosenList) throws WrongPlayerException, WrongListException, IllegalValueException, InvalidIDException, IOException, WrongTileException {
         if(!playerList.get(currentPlayer).getInGame()) {
@@ -275,7 +289,11 @@ public class GameController implements Serializable {
      * Method that gets from the view the column that the player wants to put his chosen tiles and
      *  in which order he wants the tiles to be.
      *  The method also calls the view to display the new points acquired by the player
-     * @param col is the column of the shelfie where to put the tiles in
+     * @param col is the column of the Bookshelf where to put the tiles in
+     * @param user is the nickname of the player
+     * @throws IllegalValueException if the column choice of the client is wrong
+     * @throws InvalidIDException if the game ID is not the game ID of this game controller
+     * @throws IOException .
      */
     public void getColumnFromView(String user, int col) throws IllegalValueException, InvalidIDException, IOException {
         if(col >= 0 && col <= 4) {
@@ -306,6 +324,8 @@ public class GameController implements Serializable {
     /**
      * Method used to initialize the parameters of the game, called before the firs turn of the game
      * Calls the view in order to display the initial board and the cards that have been extracted randomly
+     * @throws InvalidIDException if the game ID is not the game ID of this game controller
+     * @throws IOException .
      */
     public void firstTurnStarter() throws IOException, InvalidIDException {
         game.getVirtualView().notifyTurnStart(null);
@@ -339,8 +359,8 @@ public class GameController implements Serializable {
 
 
     /**
-     * Method to reset the instances of
-     * @param user user and
+     * Method to reset the instances of user and all of its parameters when a client finishes a game and wants to restart a new one
+     * @param user is the nickname of the client
      * @throws RemoteException .
      */
      public void resetGame(User user) throws RemoteException {
@@ -378,23 +398,24 @@ public class GameController implements Serializable {
 
 
     /**
-     * Method that swaps an old instance
-     * @param old of a User class with its newer
-     * @param newborn reconnected version.
+     * Method that swaps an old instance of a user and the new one of it when it reconnects
+     * @param old is the old instance of the reconnected user
+     * @param newborn is the new instance of the reconnected user
+     * @throws RemoteException .
      */
-    public void swapPlayers(User old, User newborn){
+    public void swapPlayers(User old, User newborn) throws RemoteException {
         playerList.set(playerList.indexOf(old), newborn);
         game.swapPlayers(old, newborn);
     }
 
 
     /**
-     * Given
-     * @param sender ,
-     * @param chatMessage and
-     * @param receiver inserts in the right data structures the private messages that were sent
+     * Send a private chat message to a single client, written from another client
+     * @param sender is the nickname of the client who sends a message
+     * @param chatMessage is the message written
+     * @param receiver is the nickname of the client who receives a message
      * @throws RemoteException .
-     * @throws IllegalValueException .
+     * @throws IllegalValueException if the receiver nickname doesn't exist in this game
      */
     public void pushChatPrivateMessage(String sender, String chatMessage, String receiver) throws RemoteException, IllegalValueException {
         while (sender.length()<12){
