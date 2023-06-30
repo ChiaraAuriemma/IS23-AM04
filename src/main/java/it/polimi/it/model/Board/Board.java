@@ -93,7 +93,7 @@ public abstract class Board implements Serializable {
                             return false;
                         }
                     }
-                    if (i > 0) {
+                    if (j > 0) {
                         if (!matrix[i][j - 1].getColor().equals("DEFAULT") && !matrix[i][j - 1].getColor().equals("XTILE")) {
                             return false;
                         }

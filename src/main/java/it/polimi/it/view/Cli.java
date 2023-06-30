@@ -4,7 +4,6 @@ import it.polimi.it.model.Card.PersonalGoalCards.PersonalGoalCard;
 import it.polimi.it.model.Tiles.PossibleColors;
 import it.polimi.it.model.Tiles.Tile;
 import it.polimi.it.model.User;
-import it.polimi.it.view.GUI.GUIApplication;
 
 import java.io.Serializable;
 import java.util.*;
