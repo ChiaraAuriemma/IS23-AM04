@@ -447,6 +447,8 @@ public class UserTest {
     @Test
     public void getGameIDTest(){
         assertEquals(host.getGameid(),0);
+        User user = new User("Chiara");
+        assertEquals(user.getGameid(), -1);
     }
 
     @Test

@@ -10,7 +10,6 @@ import it.polimi.it.network.message.others.ThisNotTheDay;
 import it.polimi.it.network.message.request.*;
 import it.polimi.it.network.message.responses.*;
 import it.polimi.it.view.Cli;
-import it.polimi.it.view.GUI.GUIApplication;
 import it.polimi.it.view.GUI.GUIHandler;
 import it.polimi.it.view.ViewInterface;
 
@@ -18,6 +17,8 @@ import java.io.*;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Class of the clients which choose to connect via TCP
@@ -28,13 +29,12 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
     private int port;
     private String ip;
     private ViewInterface view;
-    private GUIApplication guiApplication;
     private String username;
     private ObjectInputStream in;
     private ObjectOutputStream out;
     private Socket serverSocket;
     private GameStage stage;
-
+    private int ping = 0;
     private boolean isConnected;
     /**
      * Constructor method of the ClientTCP class
@@ -114,7 +114,6 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
                     }else {
                         view.update();
                     }
-
                     break;
 
                 case CREATEGAMERESPONSE:
@@ -240,6 +239,10 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
 
                 case PING:
                     PingMessage pingMessage= (PingMessage) response.getPayload();
+                    if(ping == 0){
+                        new Thread(this::pingTimer).start();
+                    }
+                    ping = 1;
                     PongMessage pongMessage = new PongMessage(" ");
                     Message request = new Message(MessageType.PONG, pongMessage);
                     send(request);
@@ -266,6 +269,25 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
         } catch (IOException e) {
             System.out.println("\n");
         }
+    }
+
+    /**
+     * ping timer method that control if the server does not send the ping
+     */
+    public void pingTimer(){
+        Timer timer = new Timer();
+        TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                if(ping == 1){
+                    ping = 2;
+                }else{
+                    view.printError("Server is unreacheable");
+                    timer.cancel();
+                }
+            }
+        };
+        timer.schedule(timerTask, 1000, 5000);
     }
 
 
@@ -362,7 +384,8 @@ public class ClientTCP implements ClientInterface, Serializable, Runnable {
                 out.writeObject(message);
                 out.flush();
             } catch (IOException e) {
-                System.out.println("Couldn't reach the server...\n");
+                if(ping == 2)
+                    view.printError("Couldn't reach the server...\n");
             }
         }
     }

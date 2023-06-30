@@ -187,7 +187,11 @@ public class User implements Serializable {
      * @return the gameid.
      */
     public int getGameid() {
-        return this.gameid;
+        if(game != null) {
+            return this.gameid;
+        }else{
+            return -1;
+        }
     }
 
     /**

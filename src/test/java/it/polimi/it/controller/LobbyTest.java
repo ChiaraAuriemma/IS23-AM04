@@ -319,6 +319,24 @@ public class LobbyTest {
         } catch (ExistingNicknameException | EmptyNicknameException | RemoteException e) {
             System.out.println(e.getMessage());
         }
+
+        String username3 = "Francesco";
+
+        try {
+            lobby.createUser(username3);
+        } catch (ExistingNicknameException | EmptyNicknameException | RemoteException e) {
+            System.out.println(e.getMessage());
+        }
+
+        User user3 = lobby.getUserList().get(2);
+
+        try {
+            lobby.createUser(username3);
+            assertEquals(user3.getNickname(),lobby.getUserList().get(2).getNickname());
+            assertFalse(lobby.getUserList().get(2).getInGame());
+        } catch (ExistingNicknameException | EmptyNicknameException | RemoteException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     @Test

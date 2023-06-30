@@ -250,9 +250,9 @@ public class ClientTCPHandler implements Runnable,Serializable, RemoteInterface 
                     ping();
                 }else{
                     if(gameController != null && user.getInGame()){
+                        lobby.disconnect_user(user.getNickname());
                         if(gameController.getCurrentPlayer() == gameController.getPlayerNumber(user)){
                             try {
-                                lobby.disconnect_user(user.getNickname());
                                 gameController.turnDealer();
                             } catch (InvalidIDException | IOException e) {
                                 throw new RuntimeException(e);

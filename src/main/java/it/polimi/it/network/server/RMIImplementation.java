@@ -235,9 +235,9 @@ public class RMIImplementation implements ServerInterface, Serializable {
                         }
                     }else if(!pongs.get(user) && userRMI.containsKey(user)){
                         if(userGame.containsKey(user) && userGame.get(user).getUser(user).getInGame()){
+                            lobby.disconnect_user(user);
                             if(userGame.get(user).getCurrentPlayer() == userGame.get(user).getPlayerNumber(userGame.get(user).getUser(user))){
                                 try {
-                                    lobby.disconnect_user(user);
                                     userGame.get(user).turnDealer();
                                 } catch (InvalidIDException | IOException ex) {
                                     throw new RuntimeException(ex);

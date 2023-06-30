@@ -15,6 +15,8 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Class of the clients which choose to connect via RMI
@@ -28,7 +30,7 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
     ViewInterface view;
     private List<Tile> lastChosen = new ArrayList<>();
     private GameStage stage;
-
+    private int ping = 0;
 
     /**
      * Constructor method of the ClientRMIApp class
@@ -465,6 +467,29 @@ public class ClientRMIApp extends UnicastRemoteObject implements ClientInterface
      * @throws RemoteException : if this exception is invoked, the server gets to know that this client disconnected
      */
     public void ping() throws RemoteException{
+        if(ping == 0){
+            new Thread(this::pingTimer).start();
+        }
+        ping = 1;
+    }
+
+    /**
+     * ping timer method that control if the server does not send the ping
+     */
+    public void pingTimer(){
+        Timer timer = new Timer();
+        TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                if(ping == 1){
+                    ping = 2;
+                }else{
+                    view.printError("Server is unreacheable");
+                    timer.cancel();
+                }
+            }
+        };
+        timer.schedule(timerTask, 1000, 5000);
     }
 
 

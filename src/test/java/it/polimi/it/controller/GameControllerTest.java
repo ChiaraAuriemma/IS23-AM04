@@ -284,7 +284,7 @@ public class GameControllerTest {
         host.getShelfie().setShelf(matrix);
         try {
             gameController.firstOperation();
-           // assertEquals(1,gameController.getCurrentPlayer());
+            //assertEquals(1,gameController.getCurrentPlayer());
         } catch (InvalidIDException | IOException e) {
             System.out.println(e.getMessage());
         }
@@ -563,6 +563,29 @@ public class GameControllerTest {
         } catch (RemoteException e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    @Test
+    public void otherTest(){
+        virtualViewStub = new VirtualViewStub();
+        host = new User("Giacomo");
+        joiner = new User("Francesco");
+        game = new Game(2, host, 0, virtualViewStub);
+        game.joinGame(joiner);
+        lobby = new LobbyStub();
+        gameController = new GameController(game,lobby);
+
+        ArrayList<User> users = new ArrayList<>();
+        users.add(host);
+        users.add(joiner);
+        gameController.setPlayerList(users);
+        gameController.setCurrentPlayer(0);
+
+        assertEquals(0, gameController.getPlayerNumber(host));
+        assertEquals(1, gameController.getPlayerNumber(joiner));
+
+        assertEquals(host, gameController.getUser(host.getNickname()));
+        assertEquals(joiner, gameController.getUser(joiner.getNickname()));
     }
 
 
