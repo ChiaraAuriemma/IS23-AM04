@@ -204,12 +204,7 @@ public class GameController implements Serializable {
         if(!playerList.get(currentPlayer).getInGame()) {
             turnDealer();
         }else{
-            try{
-                this.maxTile = playerList.get(currentPlayer).maxValueOfTiles();
-            }catch (IllegalValueException e){
-                turnDealer();
-                return;
-            }
+            this.maxTile = playerList.get(currentPlayer).maxValueOfTiles();
             game.getVirtualView().notifyTurnStart(playerList.get(currentPlayer));
             game.getVirtualView().viewUpdate();
         }

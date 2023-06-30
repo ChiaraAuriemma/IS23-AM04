@@ -46,10 +46,8 @@ public class User implements Serializable {
     /**
      * Method that
      * @return the maximum number of tiles that the user can take to put them in the shelfie
-     * @throws IllegalValueException .
-     * @throws IOException .
      */
-    public int maxValueOfTiles() throws IllegalValueException, IOException {
+    public int maxValueOfTiles() {
         if(!inGame){
             return -1;
         }
