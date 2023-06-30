@@ -588,5 +588,41 @@ public class GameControllerTest {
         assertEquals(joiner, gameController.getUser(joiner.getNickname()));
     }
 
+    @Test
+    public void pushChatMessageTest() throws RemoteException, IllegalValueException {
+        virtualViewStub = new VirtualViewStub();
+        host = new User("Giacomo     ");
+        joiner = new User("Francesco   ");
+        User third = new User("Alberto     ");
+        game = new Game(3, host, 0, virtualViewStub);
+        game.joinGame(joiner);
+        game.joinGame(third);
+        lobby = new LobbyStub();
+        gameController = new GameController(game, lobby);
+        ArrayList<User> users = new ArrayList<>();
+        users.add(host);
+        users.add(joiner);
+        users.add(third);
+        gameController.setPlayerList(users);
+
+
+        gameController.pushChatMessage("ciao raga");
+        assertTrue(host.getChatList().contains("ciao raga"));
+        assertTrue(joiner.getChatList().contains("ciao raga"));
+        assertTrue(third.getChatList().contains("ciao raga"));
+
+        gameController.pushChatPrivateMessage("Giacomo", "Buongiorno amici", "Alberto");
+        assertTrue(host.getChatList().contains("Buongiorno amici"));
+        assertTrue(third.getChatList().contains("Buongiorno amici"));
+        assertFalse(joiner.getChatList().contains("Buongiorno amici"));
+
+
+        try {
+            gameController.pushChatPrivateMessage("Giacomo", "Buongiorno amici", "Gianni");
+        }catch (IllegalValueException e){
+            assertEquals("There is no player with this nickname!", e.getMessage());
+        }
+
+    }
 
 }
