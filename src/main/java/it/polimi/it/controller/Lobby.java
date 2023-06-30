@@ -71,7 +71,9 @@ public class Lobby implements Serializable {
 
 
     /**
-     * Method that check if the nickname is already used, check if the nickname is used by a client that disconnected and create a new user if neither of the previous check is true
+     * Method that check if the nickname is already used,
+     *  check if the nickname is used by a client that
+     *  disconnected and create a new user if neither of the previous check is true.
      * @param nickname is the username of the user wrote by the client
      * @return the initialized user
      * @throws ExistingNicknameException if the nickname is already used
@@ -125,7 +127,7 @@ public class Lobby implements Serializable {
 
 
     /**
-     * Method used to create a new game with a game controller and a virtual view
+     * Method that creates a new game with a game controller and a virtual view.
      * @param username is the nickname of the user who wants to create a game
      * @param playerNumber is the number of player that have to join to start the game
      * @return the game controller of the game
@@ -149,7 +151,7 @@ public class Lobby implements Serializable {
 
 
     /**
-     * Method used to join an already created game using the game ID
+     * Method used to join an already created game using the game ID.
      * @param username is the nickname of the user that wants to join a game
      * @param gameID is the unique identifier of an already created game
      * @return the game controller of the game
@@ -178,7 +180,7 @@ public class Lobby implements Serializable {
 
 
     /**
-     * Getter method that given the
+     * Getter method that given the gameID of a game gets the actual Game instance.
      * @param ID id of a game
      * @return the instance of the game that contains that gameID
      * @throws InvalidIDException if the given gameID is invalid
@@ -194,7 +196,7 @@ public class Lobby implements Serializable {
 
 
     /**
-     * Getter method that given the
+     * Getter method that given the ID of a game returns the instance of the GameController.
      * @param gameID id of a game
      * @return the instance of the game-controller that contains that gameID
      * @throws InvalidIDException if the given gameID is invalid
@@ -210,7 +212,7 @@ public class Lobby implements Serializable {
 
 
     /**
-     * Method used to notify that the game is finished and destroy the game and the respective game controller
+     * Method used to notify that the game is finished and destroy the game and the respective game controller.
      * @param gameID is the unique identifier of an already created game
      * @throws InvalidIDException if the give game ID is not existing
      */
@@ -231,7 +233,7 @@ public class Lobby implements Serializable {
 
 
     /**
-     * Setter method for the
+     * Setter method for the serverRMI.
      * @param serverRMI rmi server
      */
     public void setServerRMI(RMIImplementation serverRMI) {
@@ -240,7 +242,7 @@ public class Lobby implements Serializable {
 
 
     /**
-     * Setter method for the
+     * Setter method for the serverTCP.
      * @param serverTCP tcp server
      */
     public void setServerTCP(ServerTCP serverTCP) {
@@ -249,8 +251,8 @@ public class Lobby implements Serializable {
 
 
     /**
-     * Given a
-     * @param username string, finds the User instance of that player, then disconnects him.
+     * Given a username disconnects the player.
+     * @param username string with the player's username.
      */
     public void disconnect_user(String username) {
         userList.get(userList.indexOf(userList
@@ -261,8 +263,8 @@ public class Lobby implements Serializable {
     }
 
     /**
-     * Given a
-     * @param username string, finds the User instance of that player, then set his game false.
+     * Given a username finds the User instance of that player, then set his game false.
+     * @param username string with the player's username.
      */
     public void removeUserFromGame(String username){
         userList.get(userList.indexOf(userList
