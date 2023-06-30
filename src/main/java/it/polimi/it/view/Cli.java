@@ -425,7 +425,7 @@ public class Cli implements ViewInterface, Serializable {
             case 8:
                 return "Four tiles of the same type in the four corners";
             case 9:
-                return "Eight tiles of the same type. There’s no       ";
+                return "Eight tiles of the same type. There is no      ";
             case 10:
                 return "Five tiles of the same type forming an X.      ";
             case 11:
